@@ -9,10 +9,12 @@ import { getStep } from "../../utils";
 export const ProfileWizard = () => {
   const step = useWizardStore((state) => state.step);
   const setStep = useWizardStore((state) => state.setStep);
+  const stepResults = useWizardStore((state) => state.stepResults);
 
   return (
     <div className="relative h-screen">
       <div>
+        <>{console.log(stepResults)}</>
         <ProfileWizardProgress />
         <Formik
           initialValues={{}}

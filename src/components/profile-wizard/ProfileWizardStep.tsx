@@ -8,6 +8,7 @@ interface Props {
 export const ProfileWizardStep = ({ wizardStep }: Props) => {
   const step = useWizardStore((state) => state.step);
   const setStep = useWizardStore((state) => state.setStep);
+  const setStepResult = useWizardStore((state) => state.setStepResult);
 
   return (
     <div className="mt-10">
@@ -33,6 +34,7 @@ export const ProfileWizardStep = ({ wizardStep }: Props) => {
             <div className="mt-4">
               <textarea
                 placeholder={wizardStep.placeholder}
+                onChange={(e) => setStepResult(wizardStep.step, e.target.value)}
                 className="bg-transparent text-2xl w-full outline-none text-zinc-500"
               />
             </div>
@@ -42,9 +44,13 @@ export const ProfileWizardStep = ({ wizardStep }: Props) => {
               <div className="flex flex-wrap">
                 {wizardStep.choices.map((choice: string) => {
                   return (
-                    <div className="bg-white border border-zinc-600 px-10 py-2 mr-4 rounded-full mt-5">
+                    <button
+                      type="button"
+                      className="bg-white border border-zinc-600 px-10 py-2 mr-4 rounded-full mt-5 cusrsor-pointer"
+                      onClick={() => setStepResult(wizardStep.step, choice)}
+                    >
                       {choice}
-                    </div>
+                    </button>
                   );
                 })}
               </div>

@@ -4,7 +4,7 @@ import {
   WizardStepType,
 } from "../models/wizard";
 
-// Define a list of all of the Wizard Steps to be rendered
+// Define a list of all of the Wizard Steps to be rendered dynamic
 export const WIZARD_STEPS: Array<WizardStep> = [
   {
     step: WizardStepType.GENDER,

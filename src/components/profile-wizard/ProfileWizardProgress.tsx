@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { useWizardStore } from "../../stores/wizard";
 import { WIZARD_STEPS } from "../../constants/wizard";
+import { getStepIndex } from "../../utils";
 
 export const ProfileWizardProgress = () => {
   const step = useWizardStore((state) => state.step);
@@ -8,7 +9,7 @@ export const ProfileWizardProgress = () => {
 
   // Everytime the step changes, calculate the percentage completed
   useEffect(() => {
-    setPercentageCompleted((step / WIZARD_STEPS.length) * 100);
+    setPercentageCompleted((getStepIndex(step) / WIZARD_STEPS.length) * 100);
   }, [step]);
 
   return (

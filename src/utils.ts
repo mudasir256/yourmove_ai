@@ -1,12 +1,15 @@
 import { WizardStepType } from "./models/wizard";
 const steps = Object.values(WizardStepType);
 
-export const getStep = (step: WizardStepType, stepIndex: number) => {
-  const steps = Object.values(WizardStepType);
+export const getStepIndex = (step: WizardStepType) => {
   const currentIndex = steps.indexOf(step);
 
   if (currentIndex === -1 || currentIndex === steps.length - 1) {
-    return steps[steps.length - 1]; // Already at the last step
+    return steps.length - 1;
   }
-  return steps[currentIndex + stepIndex];
+  return currentIndex;
+};
+
+export const getStep = (step: WizardStepType, stepIndex: number) => {
+  return steps[getStepIndex(step) + stepIndex];
 };

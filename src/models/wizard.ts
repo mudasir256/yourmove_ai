@@ -1,4 +1,4 @@
-// Define the different step types
+// Define the different step types (might not need this. we will)
 export enum WizardStepType {
   WELCOME = "welcome",
   GENDER = "gender",
