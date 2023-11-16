@@ -3,6 +3,9 @@ import { Wizard } from "./components/wizard/Wizard";
 import { useWizardStore } from "./stores/wizard";
 import { PaymentPlans } from "./components/payment/PaymentPlans";
 import { PaymentForm } from "./components/payment/PaymentForm";
+import { Loading } from "./components/Loading";
+import { Error } from "./components/Error";
+import { Profile } from "./components/profile/Profile";
 
 function App() {
   const { wizardComplete } = useWizardStore();
@@ -39,7 +42,7 @@ function App() {
             </svg>
           </div>
         </div>
-        {wizardComplete ? <PaymentPlans /> : <Wizard />}
+        {wizardComplete ? <Profile /> : <Wizard />}
       </div>
     </div>
   );
