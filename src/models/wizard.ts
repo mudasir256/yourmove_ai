@@ -1,3 +1,5 @@
+import * as yup from "yup";
+
 // Define the different step types (might not need this. we will)
 export enum WizardStepType {
   WELCOME = "welcome",
@@ -8,13 +10,21 @@ export enum WizardStepType {
   BUCKET_LIST = "bucketList",
   TALKING_ABOUT = "talkingAbout",
   WORK_AS = "workAs",
+  PROFILE_TYPE = "profileType",
+  WRITING_STYLE = "writingStyle",
   EMAIL = "email",
 }
 
 // Wizard steps can either be text fields or selects
 export enum WizardStepInputType {
-  TEXT = 0,
-  SELECT = 1,
+  // For simple Input fields
+  TEXT,
+  // For wrapped selectable options
+  RADIO,
+  // Email input
+  EMAIL,
+  // For a full width select option
+  SELECT,
 }
 
 // The actual step type to define what is in it
@@ -24,4 +34,5 @@ export interface WizardStep {
   label: string;
   placeholder?: string;
   choices?: string[];
+  validator: yup.AnySchema;
 }

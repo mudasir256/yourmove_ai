@@ -3,49 +3,81 @@ import {
   WizardStepInputType,
   WizardStepType,
 } from "../models/wizard";
+import * as yup from "yup";
 
 // Define a list of all of the Wizard Steps to be rendered dynamic
 export const WIZARD_STEPS: Array<WizardStep> = [
   {
     step: WizardStepType.GENDER,
-    type: WizardStepInputType.SELECT,
+    type: WizardStepInputType.RADIO,
     label: "You are a ",
     choices: ["Man", "Woman", "Other"],
+    validator: yup.string(),
   },
   {
     step: WizardStepType.LOOKING_FOR,
-    type: WizardStepInputType.SELECT,
+    type: WizardStepInputType.RADIO,
     label: "What are you looking for? ",
     choices: ["something casual", "long term partner", "not sure yet"],
+    validator: yup.string(),
   },
   {
     step: WizardStepType.CHARACTERISTICS,
     type: WizardStepInputType.TEXT,
     label: "What characteristics are you looking for in your partner?",
     placeholder: "Adventurous, witty, spontaneous",
+    validator: yup.string(),
   },
   {
     step: WizardStepType.UNUSUAL_SKILL,
     type: WizardStepInputType.TEXT,
     label: "What unusual skill do you have?",
     placeholder: "Knowing the best spot for brunch",
+    validator: yup.string(),
   },
   {
     step: WizardStepType.BUCKET_LIST,
     type: WizardStepInputType.TEXT,
     label: "What's one thing on your bucket list?",
-    placeholder: "Climnb Mt. Everest",
+    placeholder: "Climb Mt. Everest",
+    validator: yup.string(),
   },
   {
     step: WizardStepType.TALKING_ABOUT,
     type: WizardStepInputType.TEXT,
     label: "What do you enjoy talking about?",
     placeholder: "90s sitcoms and craft beer",
+    validator: yup.string(),
   },
   {
     step: WizardStepType.WORK_AS,
     type: WizardStepInputType.TEXT,
     label: "What do you do for work?",
     placeholder: "Build awesome React Apps",
+    validator: yup.string(),
+  },
+  {
+    step: WizardStepType.PROFILE_TYPE,
+    type: WizardStepInputType.SELECT,
+    label: "Which app profile should we create for you?",
+    choices: ["Bumble", "Hinge", "Tinder", "Coffee Meets Bagel"],
+    validator: yup.string(),
+  },
+  {
+    step: WizardStepType.WRITING_STYLE,
+    type: WizardStepInputType.SELECT,
+    label: "Pick your writing style",
+    choices: ["Flirty", "Thoughtful"],
+    validator: yup.string(),
+  },
+  {
+    step: WizardStepType.EMAIL,
+    type: WizardStepInputType.EMAIL,
+    label: "What's your email?",
+    placeholder: "your.email@gmail.com",
+    validator: yup
+      .string()
+      .email("Please enter a valid email")
+      .required("Email is required"),
   },
 ];

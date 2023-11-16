@@ -1,12 +1,14 @@
-import { ProfileWizard } from "./components/profile-wizard/ProfileWizard";
+import { Toaster } from "react-hot-toast";
+import { Wizard } from "./components/wizard/Wizard";
+import { useWizardStore } from "./stores/wizard";
+import { PaymentPlans } from "./components/payment/PaymentPlans";
+import { PaymentForm } from "./components/payment/PaymentForm";
 
-/*
-  Maybe have a Wizard step that has all the questions, then for the paying for stuff and the showing, that can be different pages
-*/
 function App() {
+  const { wizardComplete } = useWizardStore();
   return (
     <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-      {/* We've used 3xl here, but feel free to try other max-widths based on your needs */}
+      <Toaster />
       <div className="mx-auto max-w-xl">
         <div className="flex">
           <div className="w-1/2">
@@ -26,19 +28,18 @@ function App() {
               xmlns="http://www.w3.org/2000/svg"
               fill="none"
               viewBox="0 0 24 24"
-              stroke-width="2"
+              strokeWidth="2"
               className="w-8 h-8 stroke-zinc-400"
             >
               <path
-                stroke-linecap="round"
-                stroke-linejoin="round"
+                strokeLinecap="round"
+                strokeLinejoin="round"
                 d="M3.75 5.25h16.5m-16.5 4.5h16.5m-16.5 4.5h16.5m-16.5 4.5h16.5"
               />
             </svg>
           </div>
         </div>
-        {/* Content goes here */}
-        <ProfileWizard />
+        {wizardComplete ? <PaymentPlans /> : <Wizard />}
       </div>
     </div>
   );
