@@ -2,23 +2,39 @@ import { ProfileResponse } from "../../models/profile";
 import { FeedbackModal } from "../FeedbackModal";
 import { ProfileItem } from "./ProfileItem";
 
-export const PROFILE_RESPONSE: Array<ProfileResponse> = [
-  {
-    question: "I'm known for",
-    answer:
-      "Being a sports fanatic, devouring delicious food, and always having a squad of awesome friends by my side. Basically, I'm the triple threat you never knew you needed",
-  },
-  {
-    question: "Swipe right if",
-    answer:
-      "You're looking for a kind heart, confident spirit, and a helpful hand to hold. Let's write our happily ever after together! ",
-  },
-  {
-    question: "My real life superpower is",
-    answer:
-      "Killing it when I get passed the aux cord. Let me play you a little something and we'll see where the night takes us.",
-  },
-];
+// Response for when they have paid
+// export const PROFILE_RESPONSE = {
+//   hasPaid: true,
+//   responses: [
+//     {
+//       question: "I'm known for",
+//       answer:
+//         "Being a sports fanatic, devouring delicious food, and always having a squad of awesome friends by my side. Basically, I'm the triple threat you never knew you needed",
+//     },
+//     {
+//       question: "Swipe right if",
+//       answer:
+//         "You're looking for a kind heart, confident spirit, and a helpful hand to hold. Let's write our happily ever after together! ",
+//     },
+//     {
+//       question: "My real life superpower is",
+//       answer:
+//         "Killing it when I get passed the aux cord. Let me play you a little something and we'll see where the night takes us.",
+//     },
+//   ],
+// };
+
+// Response for when they haven't paid
+export const PROFILE_RESPONSE = {
+  hasPaid: false,
+  responses: [
+    {
+      question: "I'm known for",
+      answer:
+        "Being a sports fanatic, devouring delicious food, and always having a squad of awesome friends by my side. Basically, I'm the triple threat you never knew you needed",
+    },
+  ],
+};
 
 export const Profile = () => {
   return (
@@ -42,7 +58,7 @@ export const Profile = () => {
         <div className="mb-5">
           <h1 className="text-4xl font-bold">Your profile</h1>
         </div>
-        {PROFILE_RESPONSE.map((profileResponse: ProfileResponse) => {
+        {PROFILE_RESPONSE.responses.map((profileResponse: ProfileResponse) => {
           return (
             <ProfileItem
               key={profileResponse.answer}
@@ -50,6 +66,19 @@ export const Profile = () => {
             />
           );
         })}
+        {!PROFILE_RESPONSE.hasPaid && (
+          <div>
+            <ProfileItem
+              key="1"
+              lockItem={true}
+              profileResponse={{
+                question: "This is a dummy question",
+                answer:
+                  "This is a dummy answer that is hidden from the user and is meaningless. If they pay, then this will have a proper answer. If you are reading this you edited css",
+              }}
+            />
+          </div>
+        )}
       </div>
     </div>
   );

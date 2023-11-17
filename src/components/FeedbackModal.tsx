@@ -8,16 +8,17 @@ export const FeedbackModal = () => {
   const [open, setOpen] = useState(false);
   const cancelButtonRef = useRef(null);
 
-  useEffect(() => {
-    setTimeout(() => {
-      setOpen(true);
-    }, 1000);
-  }, []);
+  // Make modal show after X time
+  // useEffect(() => {
+  //   setTimeout(() => {
+  //     setOpen(true);
+  //   }, 1000);
+  // }, []);
 
   return (
     <>
       {open ? (
-        <div className="h-screen w-full absolute left-0 top-0 flex items-center justify-center z-50 backdrop-blur-sm">
+        <div className="h-screen w-full left-0 top-0 flex items-center justify-center z-50 backdrop-blur-sm fixed">
           <div className="relative transform overflow-hidden rounded-lg bg-white px-4 pb-4 pt-5 text-left shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-sm sm:p-6 border-2 border-black w-full z-50 mx-8">
             <div className="w-full">
               <div className="w-full flex justify-end">
@@ -102,7 +103,7 @@ export const FeedbackModal = () => {
                           {errors.details}
                         </div>
                       )}
-                      <div className="-mt-4">
+                      <div className="-mt-6">
                         <button
                           type="button"
                           onClick={() => handleSubmit()}

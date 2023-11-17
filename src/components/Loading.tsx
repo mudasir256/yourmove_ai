@@ -1,4 +1,8 @@
-export const Loading = () => {
+interface Props {
+  title?: string;
+}
+
+export const Loading = ({ title }: Props) => {
   return (
     <div className="h-screen flex items-center justify-center">
       <div className="-mt-32">
@@ -24,9 +28,11 @@ export const Loading = () => {
             ></path>
           </svg>
         </div>
-        <div className="mt-5">
-          <h2 className="text-xl font-semibold">writing your profile</h2>
-        </div>
+        {title && (
+          <div className="mt-5">
+            <h2 className="text-xl font-semibold">{title}</h2>
+          </div>
+        )}
       </div>
     </div>
   );
