@@ -34,13 +34,13 @@ export const ProfileItem = ({ lockItem, profileResponse }: Props) => {
       <div className="mb-4">
         <ListBox />
       </div>
-      <p className="text-xl font-medium">{profileResponse.answer}</p>
+      <p className="text-xl font-medium">{profileResponse.response}</p>
       <div className="flex flex-row-reverse mt-4">
         <button
           type="button"
           className="bg-brand-primary p-2 rounded-full"
           onClick={() => {
-            navigator.clipboard.writeText(profileResponse.answer);
+            navigator.clipboard.writeText(profileResponse.response);
             toast.success("Answer copied to clipboard");
           }}
         >

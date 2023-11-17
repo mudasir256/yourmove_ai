@@ -2,18 +2,20 @@ import { Toaster } from "react-hot-toast";
 import { Wizard } from "./components/wizard/Wizard";
 import { useWizardStore } from "./stores/wizard";
 import { PaymentPlans } from "./components/payment/PaymentPlans";
-import { Loading } from "./components/Loading";
-import { Error } from "./components/Error";
 import { Profile } from "./components/profile/Profile";
 import { QueryClient, QueryClientProvider } from "react-query";
+import { useProfileStore } from "./stores/profile";
+import { ProfileStep } from "./constants/profile";
 
 const queryClient = new QueryClient();
 
 function App() {
   const { wizardComplete } = useWizardStore();
+  const { step } = useProfileStore();
+
   return (
     <QueryClientProvider client={queryClient}>
-      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 lg:pt-10 pt-4">
         <Toaster />
         <div className="mx-auto max-w-xl">
           <div className="flex">
@@ -45,7 +47,17 @@ function App() {
               </svg>
             </div>
           </div>
-          {wizardComplete ? <PaymentPlans /> : <Wizard />}
+          {wizardComplete ? (
+            <>
+              {step === ProfileStep.PAYMENT_PLANS ? (
+                <PaymentPlans />
+              ) : (
+                <Profile />
+              )}
+            </>
+          ) : (
+            <Wizard />
+          )}
         </div>
       </div>
     </QueryClientProvider>

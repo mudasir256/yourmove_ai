@@ -1,6 +1,12 @@
+import { useQuery } from "react-query";
 import { ProfileResponse } from "../../models/profile";
 import { FeedbackModal } from "../FeedbackModal";
 import { ProfileItem } from "./ProfileItem";
+import { useEffect } from "react";
+import { generateProfile } from "../../queries";
+import { useProfileStore } from "../../stores/profile";
+import { Loading } from "../Loading";
+import { ProfileStep } from "../../constants/profile";
 
 // Response for when they have paid
 // export const PROFILE_RESPONSE = {
@@ -37,49 +43,68 @@ export const PROFILE_RESPONSE = {
 };
 
 export const Profile = () => {
+  const { profile, setProfile, setStep } = useProfileStore();
+
+  useEffect(() => {
+    const stepResults = JSON.parse(localStorage.getItem("stepResults") || "{}");
+    generateProfile(stepResults).then((response) => {
+      setProfile(response.data);
+    });
+  }, []);
+
   return (
-    <div className="mt-4">
-      <FeedbackModal />
-      <svg
-        onClick={() => {}}
-        xmlns="http://www.w3.org/2000/svg"
-        fill="none"
-        viewBox="0 0 24 24"
-        strokeWidth="2.5"
-        className="w-12 h-12 stroke-zinc-400"
-      >
-        <path
-          strokeLinecap="round"
-          strokeLinejoin="round"
-          d="M15.75 19.5L8.25 12l7.5-7.5"
-        />
-      </svg>
-      <div className="mt-4 px-2">
-        <div className="mb-5">
-          <h1 className="text-4xl font-bold">Your profile</h1>
-        </div>
-        {PROFILE_RESPONSE.responses.map((profileResponse: ProfileResponse) => {
-          return (
-            <ProfileItem
-              key={profileResponse.answer}
-              profileResponse={profileResponse}
+    <>
+      {profile.length > 0 ? (
+        <div className="mt-4">
+          <FeedbackModal />
+          <svg
+            onClick={() => {
+              setProfile([]);
+              setStep(ProfileStep.PAYMENT_PLANS);
+            }}
+            xmlns="http://www.w3.org/2000/svg"
+            fill="none"
+            viewBox="0 0 24 24"
+            strokeWidth="2.5"
+            className="w-12 h-12 stroke-zinc-400"
+          >
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              d="M15.75 19.5L8.25 12l7.5-7.5"
             />
-          );
-        })}
-        {!PROFILE_RESPONSE.hasPaid && (
-          <div>
-            <ProfileItem
-              key="1"
-              lockItem={true}
-              profileResponse={{
-                question: "This is a dummy question",
-                answer:
-                  "This is a dummy answer that is hidden from the user and is meaningless. If they pay, then this will have a proper answer. If you are reading this you edited css",
-              }}
-            />
+          </svg>
+          <div className="mt-4 px-2">
+            <div className="mb-5">
+              <h1 className="text-4xl font-bold">Your profile</h1>
+            </div>
+            {profile.map((profileResponse: ProfileResponse) => {
+              return (
+                <ProfileItem
+                  lockItem={false}
+                  key={profileResponse.prompt}
+                  profileResponse={profileResponse}
+                />
+              );
+            })}
+            {/* {!PROFILE_RESPONSE.hasPaid && (
+              <div>
+                <ProfileItem
+                  key="1"
+                  lockItem={true}
+                  profileResponse={{
+                    question: "This is a dummy question",
+                    answer:
+                      "This is a dummy answer that is hidden from the user and is meaningless. If they pay, then this will have a proper answer. If you are reading this you edited css",
+                  }}
+                />
+              </div>
+            )} */}
           </div>
-        )}
-      </div>
-    </div>
+        </div>
+      ) : (
+        <Loading title="writing your profile" />
+      )}
+    </>
   );
 };

@@ -109,9 +109,9 @@ export const WizardStep = ({ wizardStep }: Props) => {
                       key={choice}
                       className={`${
                         getStepValue() === choice
-                          ? "bg-black text-white border-2 pl-5 pr-3"
-                          : "border-zinc-600 px-5"
-                      } bg-white border py-2 mr-4 rounded-md mt-5 cursor-pointer flex hover:border-2`}
+                          ? "bg-black text-white border-2 pl-5 pr-3 border-black"
+                          : "border-zinc-600 px-5 bg-white"
+                      } border py-2 mr-4 rounded-md mt-5 cursor-pointer flex hover:border-2`}
                       onClick={() => setStepResult(wizardStep.step, choice)}
                     >
                       {choice}
