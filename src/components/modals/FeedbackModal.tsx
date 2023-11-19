@@ -4,7 +4,6 @@ import * as yup from "yup";
 
 export const FeedbackModal = () => {
   const [open, setOpen] = useState(false);
-  const cancelButtonRef = useRef(null);
 
   // Make modal show after X time
   // useEffect(() => {

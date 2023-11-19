@@ -1,5 +1,5 @@
 import { ProfileResponse } from "../../models/profile";
-import { FeedbackModal } from "../FeedbackModal";
+import { FeedbackModal } from "../modals/FeedbackModal";
 import { ProfileItem } from "./ProfileItem";
 import { useEffect } from "react";
 import { generateProfile, getPrompts } from "../../queries";

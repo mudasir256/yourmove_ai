@@ -21,3 +21,8 @@ export interface Prompt {
   number: number;
   text: string;
 }
+
+export interface HasUserPaidResponse {
+  email: string;
+  hasPaid: boolean;
+}

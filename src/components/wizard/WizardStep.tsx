@@ -7,8 +7,9 @@ import { getStep } from "../../utils";
 
 interface Props {
   wizardStep: WizardStepModel;
+  goToNextStep: () => void;
 }
-export const WizardStep = ({ wizardStep }: Props) => {
+export const WizardStep = ({ wizardStep, goToNextStep }: Props) => {
   const { step, setStep, stepResults, setStepResult } = useWizardStore(
     (state) => state
   );
@@ -51,6 +52,7 @@ export const WizardStep = ({ wizardStep }: Props) => {
               />
             </div>
           )}
+
           {wizardStep.type === WizardStepInputType.EMAIL && (
             <div className="mt-4">
               <input
@@ -62,6 +64,7 @@ export const WizardStep = ({ wizardStep }: Props) => {
               />
             </div>
           )}
+
           {wizardStep.type === WizardStepInputType.RADIO &&
             wizardStep.choices && (
               <div className="flex flex-wrap">
@@ -74,7 +77,10 @@ export const WizardStep = ({ wizardStep }: Props) => {
                           ? "border-brand-primary border-2 pl-5 pr-3"
                           : "border-zinc-600 px-10"
                       } bg-white border py-2 mr-4 rounded-full mt-5 cursor-pointer flex hover:border-2`}
-                      onClick={() => setStepResult(wizardStep.step, choice)}
+                      onClick={() => {
+                        setStepResult(wizardStep.step, choice);
+                        goToNextStep();
+                      }}
                     >
                       {choice}
 
@@ -112,7 +118,10 @@ export const WizardStep = ({ wizardStep }: Props) => {
                           ? "bg-black text-white border-2 pl-5 pr-3 border-black"
                           : "border-zinc-600 px-5 bg-white"
                       } border py-2 mr-4 rounded-md mt-5 cursor-pointer flex hover:border-2`}
-                      onClick={() => setStepResult(wizardStep.step, choice)}
+                      onClick={() => {
+                        setStepResult(wizardStep.step, choice);
+                        goToNextStep();
+                      }}
                     >
                       {choice}
 

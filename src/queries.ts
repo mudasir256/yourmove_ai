@@ -1,8 +1,13 @@
 import axios, { AxiosResponse } from "axios";
 import { ClientSecretResponse } from "./models/payment";
-import { ProfileRequest, ProfileResponse, Prompt } from "./models/profile";
+import {
+  HasUserPaidResponse,
+  ProfileRequest,
+  ProfileResponse,
+  Prompt,
+} from "./models/profile";
 
-const BASE_URL = "http://127.0.0.1:8000";
+const BASE_URL = import.meta.env.VITE_API_BASE_URL;
 
 export const getClientSecret = (
   email: string,
@@ -34,4 +39,10 @@ export const generateSingleProfileResponse = (
     `${BASE_URL}/profile/prompt?prompt=${prompt}`,
     profileRequest
   );
+};
+
+export const hasUserPaid = (
+  email: string
+): Promise<AxiosResponse<HasUserPaidResponse>> => {
+  return axios.get(`${BASE_URL}/user/has-paid?email=${email}`);
 };

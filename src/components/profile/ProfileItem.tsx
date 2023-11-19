@@ -4,7 +4,7 @@ import { PromptsListBox } from "../PromptListBox";
 import { useProfileStore } from "../../stores/profile";
 import { useState } from "react";
 import { generateSingleProfileResponse } from "../../queries";
-import { UnlockModal } from "../UnlockModal";
+import { UnlockModal } from "../modals/UnlockModal";
 
 interface Props {
   lockItem: boolean;

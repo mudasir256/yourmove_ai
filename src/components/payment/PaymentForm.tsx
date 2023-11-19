@@ -85,7 +85,7 @@ export default function PaymentForm() {
   };
 
   return (
-    <div id="payment-form">
+    <div id="payment-form" className="max-h-90">
       <PaymentElement id="payment-element" options={paymentElementOptions} />
       <button
         type="button"

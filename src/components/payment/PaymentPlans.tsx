@@ -1,6 +1,6 @@
 import { loadStripe } from "@stripe/stripe-js";
 import { useEffect, useState } from "react";
-import { getClientSecret } from "../../queries";
+import { getClientSecret, hasUserPaid } from "../../queries";
 import { ClientSecretResponse } from "../../models/payment";
 import { Elements } from "@stripe/react-stripe-js";
 import PaymentForm from "./PaymentForm";
@@ -8,6 +8,9 @@ import { Loading } from "../Loading";
 import { ProfileWizardProgress } from "../wizard/WizardProgress";
 import { useProfileStore } from "../../stores/profile";
 import { ProfileStep } from "../../constants/profile";
+import { useWizardStore } from "../../stores/wizard";
+import { WizardStepType } from "../../models/wizard";
+import { LearnMoreModal } from "../modals/LearnMoreModal";
 
 const PLAN_FEATURES = [
   "Profiles for Hinge, Tinder and more",
@@ -25,18 +28,37 @@ interface Props {
 
 export const PaymentPlans = ({ hideHeaders }: Props) => {
   const { setStep } = useProfileStore();
+  const { stepResults, setWizardComplete } = useWizardStore();
   const [chosenPlan, setChosenPlan] = useState("");
   const [clientSecret, setClientSecret] = useState("");
+  const [showPlans, setShowPlans] = useState(false);
+  const [learnMoreModalOpen, setLearnMoreModalOpen] = useState(false);
+
+  // Check to see if the user has paid already
+  useEffect(() => {
+    hasUserPaid(stepResults.email).then((response) => {
+      if (response.data.hasPaid) {
+        // Already paid, go to profile step
+        skipPlans();
+      } else {
+        setShowPlans(true);
+      }
+    });
+  }, []);
 
   // Get the client secret from the server when the component lodas
   useEffect(() => {
     if (chosenPlan) {
-      getClientSecret("mark@mail.com", "premium_profile").then((response) => {
+      getClientSecret(stepResults.email, "premium_profile").then((response) => {
         const clientSecretResponse = response.data as ClientSecretResponse;
         setClientSecret(clientSecretResponse.clientSecret);
       });
     }
   }, [chosenPlan]);
+
+  const skipPlans = () => {
+    setStep(ProfileStep.PROFILE);
+  };
 
   const appearance = {
     theme: "stripe",
@@ -46,13 +68,21 @@ export const PaymentPlans = ({ hideHeaders }: Props) => {
     appearance,
   };
 
-  return (
+  return showPlans ? (
     <>
+      <LearnMoreModal
+        open={learnMoreModalOpen}
+        setOpen={setLearnMoreModalOpen}
+      />
       {!hideHeaders && <ProfileWizardProgress />}
       <div className="mt-6">
         {!hideHeaders && (
           <svg
-            onClick={() => {}}
+            onClick={() => {
+              const setStep = useWizardStore.getState().setStep;
+              setWizardComplete(false);
+              setStep(WizardStepType.EMAIL);
+            }}
             xmlns="http://www.w3.org/2000/svg"
             fill="none"
             viewBox="0 0 24 24"
@@ -186,14 +216,19 @@ export const PaymentPlans = ({ hideHeaders }: Props) => {
                   </button>
 
                   <div className="flex items-center justify-center mt-4 -mb-1">
-                    <h3 className="text-lg underline">learn more</h3>
+                    <h3
+                      className="text-lg underline cursor-pointer"
+                      onClick={() => setLearnMoreModalOpen(true)}
+                    >
+                      learn more
+                    </h3>
                   </div>
                 </div>
               </div>
               <div className="mt-4 flex items-center justify-center mb-6">
                 <h3
                   className="cursor-pointer text-lg text-zinc-500 hover:text-zinc-600 hover:underline"
-                  onClick={() => setStep(ProfileStep.PROFILE)}
+                  onClick={() => skipPlans()}
                 >
                   no thanks
                 </h3>
@@ -203,5 +238,7 @@ export const PaymentPlans = ({ hideHeaders }: Props) => {
         </div>
       </div>
     </>
+  ) : (
+    <Loading />
   );
 };

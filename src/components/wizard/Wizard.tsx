@@ -75,7 +75,11 @@ export const Wizard = () => {
             <>
               {WIZARD_STEPS.map((wizardStep: WizardStepModel) => {
                 return wizardStep.step === step ? (
-                  <WizardStep key={wizardStep.label} wizardStep={wizardStep} />
+                  <WizardStep
+                    key={wizardStep.label}
+                    wizardStep={wizardStep}
+                    goToNextStep={goToNextStep}
+                  />
                 ) : null;
               })}
             </>
