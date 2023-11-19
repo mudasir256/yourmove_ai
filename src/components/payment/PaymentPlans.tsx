@@ -19,7 +19,11 @@ const stripePromise = loadStripe(
   "pk_test_51Lm3WZDEUIiuNNmxpeslz6iwYRn1XcrQ4qahHfuAzZ7Iffeso3dlKKBGRsqclvzSF1Vgj1q1aX0RuIWdiqJy6W4l00lnH5rauz"
 );
 
-export const PaymentPlans = () => {
+interface Props {
+  hideHeaders?: boolean;
+}
+
+export const PaymentPlans = ({ hideHeaders }: Props) => {
   const { setStep } = useProfileStore();
   const [chosenPlan, setChosenPlan] = useState("");
   const [clientSecret, setClientSecret] = useState("");
@@ -44,22 +48,24 @@ export const PaymentPlans = () => {
 
   return (
     <>
-      <ProfileWizardProgress />
+      {!hideHeaders && <ProfileWizardProgress />}
       <div className="mt-6">
-        <svg
-          onClick={() => {}}
-          xmlns="http://www.w3.org/2000/svg"
-          fill="none"
-          viewBox="0 0 24 24"
-          strokeWidth="2.5"
-          className="w-12 h-12 stroke-zinc-400"
-        >
-          <path
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            d="M15.75 19.5L8.25 12l7.5-7.5"
-          />
-        </svg>
+        {!hideHeaders && (
+          <svg
+            onClick={() => {}}
+            xmlns="http://www.w3.org/2000/svg"
+            fill="none"
+            viewBox="0 0 24 24"
+            strokeWidth="2.5"
+            className="w-12 h-12 stroke-zinc-400"
+          >
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              d="M15.75 19.5L8.25 12l7.5-7.5"
+            />
+          </svg>
+        )}
         <div className="mt-4 px-2">
           <div className="mb-5">
             <h1 className="text-4xl font-bold">3x Your Matches with Premium</h1>

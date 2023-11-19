@@ -32,7 +32,7 @@ export const Profile = () => {
       {profile.length > 0 ? (
         <div className="mt-4">
           <FeedbackModal />
-          <svg
+          {/* <svg
             onClick={() => {
               setProfile([]);
               setStep(ProfileStep.PAYMENT_PLANS);
@@ -48,7 +48,7 @@ export const Profile = () => {
               strokeLinejoin="round"
               d="M15.75 19.5L8.25 12l7.5-7.5"
             />
-          </svg>
+          </svg> */}
           <div className="mt-4 px-2">
             <div className="mb-5">
               <h1 className="text-4xl font-bold">Your profile</h1>
@@ -63,6 +63,18 @@ export const Profile = () => {
                 />
               );
             })}
+            {profile.length == 1 && (
+              <ProfileItem
+                lockItem={true}
+                key="dummy"
+                profileResponse={{
+                  prompt: "im known for",
+                  response:
+                    "This is dummy text, it's here to show you what your profile will look like if you purchase the premium version. If you are reading this you probably removed the CSS that hides this text.",
+                }}
+                index={profile.length + 1}
+              />
+            )}
           </div>
         </div>
       ) : (

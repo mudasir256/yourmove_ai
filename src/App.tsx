@@ -6,12 +6,44 @@ import { Profile } from "./components/profile/Profile";
 import { QueryClient, QueryClientProvider } from "react-query";
 import { useProfileStore } from "./stores/profile";
 import { ProfileStep } from "./constants/profile";
+import { useEffect, useState } from "react";
+import { Loading } from "./components/Loading";
 
 const queryClient = new QueryClient();
 
 function App() {
-  const { wizardComplete } = useWizardStore();
-  const { step } = useProfileStore();
+  const { wizardComplete, setWizardComplete } = useWizardStore();
+  const { step, setStep } = useProfileStore();
+  const [paymentProcessing, setPaymentProcessing] = useState(false);
+
+  useEffect(() => {
+    // We got a payment and a redirect
+    if (window.location.search) {
+      // Set that we are processing the payment
+      setPaymentProcessing(true);
+
+      // Get the search params
+      const searchParams = new URLSearchParams(window.location.search);
+
+      // Delete the params
+      searchParams.delete("payment_intent");
+      searchParams.delete("payment_intent_client_secret");
+      searchParams.delete("redirect_status");
+
+      // Create a new URL with the updated search parameters
+      const newURL = `${window.location.pathname}?${searchParams.toString()}`;
+
+      // Replace the current URL with the updated one
+      window.history.replaceState({}, document.title, newURL);
+
+      // Set a timeout (maybe a query to the API layer, to check if the payment is complete)
+      setTimeout(() => {
+        setStep(ProfileStep.PROFILE);
+        setWizardComplete(true);
+        setPaymentProcessing(false);
+      }, 2000);
+    }
+  }, [window.location]);
 
   return (
     <QueryClientProvider client={queryClient}>
@@ -47,16 +79,22 @@ function App() {
               </svg>
             </div>
           </div>
-          {wizardComplete ? (
+          {paymentProcessing ? (
+            <Loading title="Payment Processing" />
+          ) : (
             <>
-              {step === ProfileStep.PAYMENT_PLANS ? (
-                <PaymentPlans />
+              {wizardComplete ? (
+                <>
+                  {step === ProfileStep.PAYMENT_PLANS ? (
+                    <PaymentPlans />
+                  ) : (
+                    <Profile />
+                  )}
+                </>
               ) : (
-                <Profile />
+                <Wizard />
               )}
             </>
-          ) : (
-            <Wizard />
           )}
         </div>
       </div>

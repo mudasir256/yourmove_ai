@@ -1,23 +1,16 @@
+import { XCircleIcon } from "@heroicons/react/24/outline";
 import {
-  EmbeddedCheckout,
-  EmbeddedCheckoutProvider,
   PaymentElement,
   useElements,
   useStripe,
 } from "@stripe/react-stripe-js";
-import { loadStripe } from "@stripe/stripe-js";
-import { useQuery } from "react-query";
-import { getClientSecret } from "../../queries";
+import { StripePaymentElementOptions } from "@stripe/stripe-js";
 import { useEffect, useState } from "react";
-import { Loading } from "../Loading";
-import { ClientSecretResponse } from "../../models/payment";
-import { AxiosResponse } from "axios";
-
-const stripePromise = loadStripe(
-  "pk_live_51MlBoME7ZMI8bNeHk4StWcYgnYZuzEEGKT6eEy26qvZ7JuKQsD5piXBAVFOgi5j3u10fUWuuGFI8jLEm5Iic40Ky00umAHNi43"
-);
+import { useProfileStore } from "../../stores/profile";
+import { ProfileStep } from "../../constants/profile";
 
 export default function PaymentForm() {
+  const { setStep } = useProfileStore();
   const stripe = useStripe();
   const elements = useElements();
 
@@ -56,6 +49,7 @@ export default function PaymentForm() {
   }, [stripe]);
 
   const handleSubmit = async (e) => {
+    setIsLoading(true);
     e.preventDefault();
 
     if (!stripe || !elements) {
@@ -64,13 +58,11 @@ export default function PaymentForm() {
       return;
     }
 
-    setIsLoading(true);
-
     const { error } = await stripe.confirmPayment({
       elements,
       confirmParams: {
         // Make sure to change this to your payment completion page
-        return_url: "http://localhost:3000",
+        return_url: "http://localhost:5173",
       },
     });
 
@@ -88,25 +80,66 @@ export default function PaymentForm() {
     setIsLoading(false);
   };
 
-  const paymentElementOptions = {
+  const paymentElementOptions: StripePaymentElementOptions = {
     layout: "tabs",
   };
 
   return (
-    <form id="payment-form" onSubmit={handleSubmit}>
+    <div id="payment-form">
       <PaymentElement id="payment-element" options={paymentElementOptions} />
       <button
         type="button"
-        disabled={isLoading || !stripe || !elements}
+        onClick={(e) => handleSubmit(e)}
+        // disabled={isLoading || !stripe || !elements}
         id="submit"
         className="mt-4 flex items-center justify-center w-full bg-brand-primary text-white py-3 rounded-full font-semibold -mb-1"
       >
         <span id="button-text">
-          {isLoading ? <div className="spinner" id="spinner"></div> : "Pay now"}
+          {isLoading ? (
+            <div className="flex items-center justify-center">
+              Processing
+              <svg
+                className="animate-spin -ml-1 ml-3 h-5 w-5 text-white"
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+              >
+                <circle
+                  className="opacity-25"
+                  cx="12"
+                  cy="12"
+                  r="10"
+                  stroke="currentColor"
+                  strokeWidth="4"
+                ></circle>
+                <path
+                  className="opacity-75"
+                  fill="currentColor"
+                  d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
+                ></path>
+              </svg>
+            </div>
+          ) : (
+            "Pay now"
+          )}
         </span>
       </button>
       {/* Show any error or success messages */}
-      {message && <div id="payment-message">{message}</div>}
-    </form>
+      {message && (
+        <div className="rounded-md bg-red-50 p-4 mt-5">
+          <div className="flex">
+            <div className="flex-shrink-0">
+              <XCircleIcon
+                className="h-5 w-5 text-red-400"
+                aria-hidden="true"
+              />
+            </div>
+            <div className="ml-3">
+              <h3 className="text-sm font-medium text-red-800">{message}</h3>
+            </div>
+          </div>
+        </div>
+      )}
+    </div>
   );
 }

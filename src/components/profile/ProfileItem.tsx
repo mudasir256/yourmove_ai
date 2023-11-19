@@ -4,6 +4,7 @@ import { PromptsListBox } from "../PromptListBox";
 import { useProfileStore } from "../../stores/profile";
 import { useState } from "react";
 import { generateSingleProfileResponse } from "../../queries";
+import { UnlockModal } from "../UnlockModal";
 
 interface Props {
   lockItem: boolean;
@@ -15,6 +16,7 @@ export const ProfileItem = ({ lockItem, profileResponse, index }: Props) => {
   // All prompts
   const { prompts, profile, setProfile } = useProfileStore();
   const [isProfileItemLoading, setIsProfileItemLoading] = useState(false);
+  const [unlockModalIsOpen, setUnlockModalIsOpen] = useState(false);
 
   const onPromptChange = (promptText: string) => {
     setIsProfileItemLoading(true);
@@ -30,6 +32,7 @@ export const ProfileItem = ({ lockItem, profileResponse, index }: Props) => {
 
   return (
     <div className="bg-white mb-4 shadow-md rounded-md p-4 relative">
+      <UnlockModal open={unlockModalIsOpen} setOpen={setUnlockModalIsOpen} />
       {isProfileItemLoading ? (
         <div className="flex items-center justify-center h-40">
           <svg
@@ -56,20 +59,24 @@ export const ProfileItem = ({ lockItem, profileResponse, index }: Props) => {
       ) : (
         <>
           {lockItem && (
-            <div className="-m-4 absolute h-full w-full z-50 flex flex items-center justify-center backdrop-blur-md rounded-md">
-              <button className="cursor-pointer border border-black bg-white mx-10 py-2 text-lg font-semibold w-full flex items-center justify-center shadow-lg rounded-md">
+            <div className="-m-4 absolute h-full w-full z-40 flex flex items-center justify-center backdrop-blur-md rounded-md">
+              <button
+                type="button"
+                onClick={() => setUnlockModalIsOpen(true)}
+                className="cursor-pointer border border-black bg-white mx-10 py-2 text-lg font-semibold w-full flex items-center justify-center shadow-lg rounded-md"
+              >
                 Unlock Full Profile
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   fill="none"
                   viewBox="0 0 24 24"
-                  stroke-width="2.5"
+                  strokeWidth="2.5"
                   stroke="currentColor"
                   className="w-5 h-5 ml-3"
                 >
                   <path
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
                     d="M13.5 10.5V6.75a4.5 4.5 0 119 0v3.75M3.75 21.75h10.5a2.25 2.25 0 002.25-2.25v-6.75a2.25 2.25 0 00-2.25-2.25H3.75a2.25 2.25 0 00-2.25 2.25v6.75a2.25 2.25 0 002.25 2.25z"
                   />
                 </svg>
