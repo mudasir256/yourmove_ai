@@ -123,10 +123,10 @@ export const WizardStep = ({ wizardStep, goToNextStep }: Props) => {
                         goToNextStep();
                       }}
                     >
-                      {choice}
+                      <div className="w-1/2">{choice}</div>
 
                       {getStepValue() === choice && (
-                        <div className="w-full flex flex-row-reverse">
+                        <div className="flex flex-row-reverse w-1/2">
                           <svg
                             xmlns="http://www.w3.org/2000/svg"
                             fill="none"
