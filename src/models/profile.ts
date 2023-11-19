@@ -15,3 +15,9 @@ export interface ProfileRequest {
   writingStyle: string;
   email: string;
 }
+
+export interface Prompt {
+  app: string;
+  number: number;
+  text: string;
+}
