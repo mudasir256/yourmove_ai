@@ -14,7 +14,11 @@ export const Profile = () => {
 
   // Get Prompts
   useEffect(() => {
-    getPrompts(stepResults.profileType.toLowerCase()).then((response) => {
+    // Get profileType if its there if not default to bumble
+    const profileType = stepResults.profileType
+      ? stepResults.profileType.toLowerCase()
+      : "bumble";
+    getPrompts(profileType).then((response) => {
       setPrompts(response.data);
     });
   }, []);

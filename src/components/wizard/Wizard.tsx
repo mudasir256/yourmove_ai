@@ -24,11 +24,6 @@ export const Wizard = () => {
         return wizardStep.step === step;
       });
 
-      // If there is no more next step, we are at the end
-      if (!nextStep) {
-        setWizardComplete(true);
-      }
-
       if (wizardStep) {
         try {
           await wizardStep.validator.validate(stepValue);
@@ -36,6 +31,10 @@ export const Wizard = () => {
           setStep(nextStep);
           localStorage.setItem("step", step);
           localStorage.setItem("stepResults", JSON.stringify(stepResults));
+          // If there is no more next step, we are at the end
+          if (!nextStep) {
+            setWizardComplete(true);
+          }
         } catch (error: any) {
           toast.error(error.message);
         }
@@ -62,14 +61,6 @@ export const Wizard = () => {
                   ✨
                 </p>
               </div>
-              <span
-                onClick={() => {
-                  localStorage.removeItem("step");
-                  localStorage.removeItem("stepResults");
-                }}
-              >
-                Reset
-              </span>
             </div>
           ) : (
             <>
