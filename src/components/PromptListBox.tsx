@@ -33,15 +33,17 @@ export const PromptsListBox = ({
   }, [profile]);
 
   // For setting the selected prompt
-  // useEffect(() => {
-  //   if (prompts) {
-  //     setSelected(
-  //       prompts.find(
-  //         (prompt: Prompt) => prompt.text.toLowerCase() === promptSelected
-  //       )
-  //     );
-  //   }
-  // }, [prompts]);
+  useEffect(() => {
+    console.log("in use effect and the prompts are");
+    console.log(prompts);
+    if (prompts) {
+      setSelected(
+        prompts.find(
+          (prompt: Prompt) => prompt.text.toLowerCase() === promptSelected
+        )
+      );
+    }
+  }, [prompts]);
 
   return (
     <>
