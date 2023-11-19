@@ -20,20 +20,28 @@ export const PromptsListBox = ({
   onChange,
 }: Props) => {
   const { profile } = useProfileStore();
-  const [selected, setSelected] = useState(
-    prompts.find(
-      (prompt: Prompt) => prompt.text.toLowerCase() === promptSelected
-    )
-  );
+  const [selected, setSelected] = useState<Prompt>();
 
   // Prompts returned in the profile
   const [profilePrompts, setProfilePrompts] = useState<Array<string>>([]);
 
+  // For setting profile prompts
   useEffect(() => {
     setProfilePrompts(
       profile.map((profile: ProfileResponse) => profile.prompt)
     );
   }, [profile]);
+
+  // For setting the selected prompt
+  useEffect(() => {
+    if (prompts) {
+      setSelected(
+        prompts.find(
+          (prompt: Prompt) => prompt.text.toLowerCase() === promptSelected
+        )
+      );
+    }
+  }, [prompts]);
 
   return (
     <>
