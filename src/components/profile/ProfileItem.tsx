@@ -84,11 +84,13 @@ export const ProfileItem = ({ lockItem, profileResponse, index }: Props) => {
             </div>
           )}
           <div className="mb-4">
-            <PromptsListBox
-              prompts={prompts}
-              promptSelected={profileResponse.prompt}
-              onChange={onPromptChange}
-            />
+            {prompts && (
+              <PromptsListBox
+                prompts={prompts}
+                promptSelected={profileResponse.prompt}
+                onChange={onPromptChange}
+              />
+            )}
           </div>
           <p className="text-xl font-medium">{profileResponse.response}</p>
           <div className="flex flex-row-reverse mt-4">
