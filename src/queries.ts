@@ -9,6 +9,9 @@ import {
 
 const BASE_URL = import.meta.env.VITE_API_BASE_URL;
 
+// temporary for testing
+axios.defaults.headers.common["ngrok-skip-browser-warning"] = "something";
+
 export const getClientSecret = (
   email: string,
   product: string
