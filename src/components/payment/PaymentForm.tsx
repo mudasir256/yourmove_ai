@@ -62,7 +62,7 @@ export default function PaymentForm() {
       elements,
       confirmParams: {
         // Make sure to change this to your payment completion page
-        return_url: "http://localhost:5173",
+        return_url: import.meta.env.VITE_UI_BASE_URL,
       },
     });
 
