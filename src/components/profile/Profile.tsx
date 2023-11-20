@@ -1,16 +1,20 @@
 import { ProfileResponse } from "../../models/profile";
 import { FeedbackModal } from "../modals/FeedbackModal";
 import { ProfileItem } from "./ProfileItem";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { generateProfile, getPrompts } from "../../queries";
 import { useProfileStore } from "../../stores/profile";
 import { Loading } from "../Loading";
 import { ProfileStep } from "../../constants/profile";
 import { useWizardStore } from "../../stores/wizard";
+import { TextingAssistantModal } from "../modals/TextingAssistantModal";
 
 export const Profile = () => {
   const { profile, setProfile, setStep, setPrompts } = useProfileStore();
   const { stepResults } = useWizardStore();
+  const [feedbackModalOpen, setFeedbackModalOpen] = useState(false);
+  const [textingAssistantModalOpen, setTextingAssistantModalOpen] =
+    useState(false);
 
   // Get Prompts
   useEffect(() => {
@@ -35,24 +39,14 @@ export const Profile = () => {
     <>
       {profile.length > 0 ? (
         <div className="mt-4">
-          <FeedbackModal />
-          {/* <svg
-            onClick={() => {
-              setProfile([]);
-              setStep(ProfileStep.PAYMENT_PLANS);
-            }}
-            xmlns="http://www.w3.org/2000/svg"
-            fill="none"
-            viewBox="0 0 24 24"
-            strokeWidth="2.5"
-            className="w-12 h-12 stroke-zinc-400"
-          >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              d="M15.75 19.5L8.25 12l7.5-7.5"
-            />
-          </svg> */}
+          <FeedbackModal
+            open={feedbackModalOpen}
+            setOpen={setFeedbackModalOpen}
+          />
+          <TextingAssistantModal
+            open={textingAssistantModalOpen}
+            setOpen={setTextingAssistantModalOpen}
+          />
           <div className="mt-4 px-2">
             <div className="mb-5">
               <h1 className="text-4xl font-bold">Your profile</h1>
@@ -79,6 +73,29 @@ export const Profile = () => {
                 index={profile.length + 1}
               />
             )}
+          </div>
+          <div>
+            <button
+              type="button"
+              className="mt-4 flex items-center justify-center w-full bg-white text-black py-3 rounded-full font-semibold -mb-1 border border-black"
+            >
+              choose another app or style
+            </button>
+            <button
+              type="button"
+              onClick={() => setFeedbackModalOpen(true)}
+              className="mt-4 flex items-center justify-center w-full bg-white text-black py-3 rounded-full font-semibold -mb-1 border border-black"
+            >
+              leave feedback
+            </button>
+            <button
+              type="button"
+              onClick={() => setTextingAssistantModalOpen(true)}
+              className="mt-4 flex items-center justify-center w-full bg-white text-brand-primary py-3 rounded-full font-semibold -mb-1 border border-brand-primary"
+            >
+              Tired of texting? <br />
+              Try our AI texting assistant
+            </button>
           </div>
         </div>
       ) : (

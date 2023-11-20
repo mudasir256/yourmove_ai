@@ -26,3 +26,9 @@ export interface HasUserPaidResponse {
   email: string;
   hasPaid: boolean;
 }
+
+export interface FeedbackRequest {
+  topic?: string;
+  email?: string;
+  details?: string;
+}

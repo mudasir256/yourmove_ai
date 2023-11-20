@@ -49,6 +49,7 @@ export const WizardStep = ({ wizardStep, goToNextStep }: Props) => {
                 placeholder={wizardStep.placeholder}
                 onChange={(e) => setStepResult(wizardStep.step, e.target.value)}
                 className="bg-transparent text-2xl w-full outline-none text-zinc-500"
+                rows={100}
               />
             </div>
           )}

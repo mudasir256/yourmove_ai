@@ -1,6 +1,7 @@
 import axios, { AxiosResponse } from "axios";
 import { ClientSecretResponse } from "./models/payment";
 import {
+  FeedbackRequest,
   HasUserPaidResponse,
   ProfileRequest,
   ProfileResponse,
@@ -48,4 +49,8 @@ export const hasUserPaid = (
   email: string
 ): Promise<AxiosResponse<HasUserPaidResponse>> => {
   return axios.get(`${BASE_URL}/user/has-paid?email=${email}`);
+};
+
+export const submitFeedback = (feedbackRequest: FeedbackRequest) => {
+  return axios.post(`${BASE_URL}/email/feedback`, feedbackRequest);
 };

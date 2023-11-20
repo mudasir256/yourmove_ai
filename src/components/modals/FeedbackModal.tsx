@@ -1,10 +1,15 @@
 import { useEffect, useRef, useState } from "react";
 import { Field, Formik } from "formik";
 import * as yup from "yup";
+import { submitFeedback } from "../../queries";
+import toast from "react-hot-toast";
 
-export const FeedbackModal = () => {
-  const [open, setOpen] = useState(false);
+interface Props {
+  open: boolean;
+  setOpen: (open: boolean) => void;
+}
 
+export const FeedbackModal = ({ open, setOpen }: Props) => {
   // Make modal show after X time
   // useEffect(() => {
   //   setTimeout(() => {
@@ -52,14 +57,15 @@ export const FeedbackModal = () => {
                 })}
                 onSubmit={(values, actions) => {
                   console.log("here");
-                  console.log(values);
+                  submitFeedback(values).then((res) => {
+                    toast.success("Feedback submitted! Thank you!");
+                  });
                   setOpen(false);
                 }}
                 enableReinitialize
               >
                 {({ handleSubmit, setFieldValue, errors }) => (
                   <form>
-                    <>{console.log(errors)}</>
                     <div className="mt-5 sm:mt-6">
                       <Field
                         name="topic"
@@ -96,7 +102,7 @@ export const FeedbackModal = () => {
                         } `}
                       />
                       {errors.details && (
-                        <div className="-mt-3 mb-3 text-xs text-red-500">
+                        <div className="-mt-3 mb-8 text-xs text-red-500">
                           {errors.details}
                         </div>
                       )}
