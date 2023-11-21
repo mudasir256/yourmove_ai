@@ -75,9 +75,9 @@ export const WizardStep = ({ wizardStep, goToNextStep }: Props) => {
                       key={choice}
                       className={`${
                         getStepValue() === choice
-                          ? "border-brand-primary border-2 pl-5 pr-3"
-                          : "border-zinc-600 px-10"
-                      } bg-white border py-2 mr-4 rounded-full mt-5 cursor-pointer flex hover:border-2`}
+                          ? "border-brand-primary border-2 pl-5 pr-3 hover:bg-brand-primary hover:text-white"
+                          : "border-zinc-600 px-10 hover:bg-black hover:text-white"
+                      } bg-white border py-2 mr-4 rounded-full mt-5 cursor-pointer flex stroke-brand-primary hover:stroke-white`}
                       onClick={() => {
                         setStepResult(wizardStep.step, choice);
                         goToNextStep();
@@ -91,8 +91,7 @@ export const WizardStep = ({ wizardStep, goToNextStep }: Props) => {
                           fill="none"
                           viewBox="0 0 24 24"
                           strokeWidth="2"
-                          stroke="currentColor"
-                          className="w-6 h-6 ml-2 stroke-brand-primary"
+                          className={`w-6 h-6 ml-2`}
                         >
                           <path
                             strokeLinecap="round"
@@ -116,9 +115,9 @@ export const WizardStep = ({ wizardStep, goToNextStep }: Props) => {
                       key={choice}
                       className={`${
                         getStepValue() === choice
-                          ? "bg-black text-white border-2 pl-5 pr-3 border-black"
+                          ? "bg-brand-primary text-white pl-5 pr-3"
                           : "border-zinc-600 px-5 bg-white"
-                      } border py-2 mr-4 rounded-md mt-5 cursor-pointer flex hover:border-2`}
+                      } border py-2 mr-4 rounded-md mt-5 cursor-pointer flex hover:bg-black hover:text-white`}
                       onClick={() => {
                         setStepResult(wizardStep.step, choice);
                         goToNextStep();

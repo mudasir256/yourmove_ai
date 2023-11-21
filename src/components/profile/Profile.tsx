@@ -8,9 +8,12 @@ import { Loading } from "../Loading";
 import { ProfileStep } from "../../constants/profile";
 import { useWizardStore } from "../../stores/wizard";
 import { TextingAssistantModal } from "../modals/TextingAssistantModal";
+import { WizardStepType } from "../../models/wizard";
 
 export const Profile = () => {
-  const { profile, setProfile, setStep, setPrompts } = useProfileStore();
+  const { profile, setProfile, setPrompts } = useProfileStore();
+  const { setWizardComplete } = useWizardStore();
+  const setWizardStep = useWizardStore((state) => state.setStep);
   const { stepResults } = useWizardStore();
   const [feedbackModalOpen, setFeedbackModalOpen] = useState(false);
   const [textingAssistantModalOpen, setTextingAssistantModalOpen] =
@@ -74,24 +77,29 @@ export const Profile = () => {
               />
             )}
           </div>
-          <div>
+          <div className="px-2 pt-1">
             <button
+              onClick={() => {
+                setProfile({});
+                setWizardComplete(false);
+                setWizardStep(WizardStepType.PROFILE_TYPE);
+              }}
               type="button"
-              className="mt-4 flex items-center justify-center w-full bg-white text-black py-3 rounded-full font-semibold -mb-1 border border-black"
+              className="mt-4 flex items-center justify-center w-full bg-white text-black py-3 rounded-full font-semibold -mb-1 border border-black hover:text-stone-600 hover:border-stone-500"
             >
               choose another app or style
             </button>
             <button
               type="button"
               onClick={() => setFeedbackModalOpen(true)}
-              className="mt-4 flex items-center justify-center w-full bg-white text-black py-3 rounded-full font-semibold -mb-1 border border-black"
+              className="mt-4 flex items-center justify-center w-full bg-white text-black py-3 rounded-full font-semibold -mb-1 border border-black hover:text-stone-600 hover:border-stone-500"
             >
               leave feedback
             </button>
             <button
               type="button"
               onClick={() => setTextingAssistantModalOpen(true)}
-              className="mt-4 flex items-center justify-center w-full bg-white text-brand-primary py-3 rounded-full font-semibold -mb-1 border border-brand-primary"
+              className="mt-4 flex items-center justify-center w-full bg-white text-brand-primary py-3 rounded-full font-semibold -mb-1 border border-brand-primary hover:text-stone-600 hover:border-stone-500"
             >
               Tired of texting? <br />
               Try our AI texting assistant
