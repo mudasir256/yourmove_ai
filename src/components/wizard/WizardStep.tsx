@@ -75,8 +75,8 @@ export const WizardStep = ({ wizardStep, goToNextStep }: Props) => {
                       key={choice}
                       className={`${
                         getStepValue() === choice
-                          ? "border-brand-primary border-2 pl-5 pr-3 hover:bg-brand-primary hover:text-white"
-                          : "border-zinc-600 px-10 hover:bg-black hover:text-white"
+                          ? "border-black border-2 pl-5 pr-3 hover:bg-brand-primary hover:text-white transition duration-300 ease-in-out"
+                          : "border-black px-10 hover:bg-black hover:text-white transition duration-300 ease-in-out"
                       } bg-white border py-2 mr-4 rounded-full mt-5 cursor-pointer flex stroke-brand-primary hover:stroke-white`}
                       onClick={() => {
                         setStepResult(wizardStep.step, choice);
@@ -116,7 +116,7 @@ export const WizardStep = ({ wizardStep, goToNextStep }: Props) => {
                       className={`${
                         getStepValue() === choice
                           ? "bg-brand-primary text-white pl-5 pr-3"
-                          : "border-zinc-600 px-5 bg-white"
+                          : "border-black border-2 px-5 bg-white transition duration-300 ease-in-out"
                       } border py-2 mr-4 rounded-md mt-5 cursor-pointer flex hover:bg-black hover:text-white`}
                       onClick={() => {
                         setStepResult(wizardStep.step, choice);

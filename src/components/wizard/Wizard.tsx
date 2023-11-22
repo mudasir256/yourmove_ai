@@ -56,13 +56,12 @@ export const Wizard = () => {
               <h1 className="text-5xl font-bold">Welcome to Profile Writer</h1>
               <div className="mt-8">
                 <p className="text-2xl">
-                  Time for you to glow up! Don't sell yourself short
+                  Answer a few questions. Get a free, ai-generated dating app profile. 
                 </p>
               </div>
               <div className="mt-6">
                 <p className="text-2xl">
-                  Let’s get to know you so people see you how your dog sees you
-                  ✨
+                  Tested and optimized for maximum success ✨
                 </p>
               </div>
             </div>
