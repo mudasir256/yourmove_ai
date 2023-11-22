@@ -9,6 +9,8 @@ interface ProfileStore {
   setProfile: (profile: any) => void;
   prompts: Array<Prompt>;
   setPrompts: (prompts: Array<Prompt>) => void;
+  error: string | null;
+  setError: (error: any) => void;
 }
 
 export const useProfileStore = create<ProfileStore>((set) => ({
@@ -18,4 +20,6 @@ export const useProfileStore = create<ProfileStore>((set) => ({
   setProfile: (profile) => set({ profile }),
   prompts: [],
   setPrompts: (prompts) => set({ prompts }),
+  error: null,
+  setError: (error) => set({ error }),
 }));

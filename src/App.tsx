@@ -9,6 +9,7 @@ import { ProfileStep } from "./constants/profile";
 import { useEffect, useState } from "react";
 import { Loading } from "./components/Loading";
 import * as Sentry from "@sentry/react";
+import { Error } from "./components/Error";
 
 const queryClient = new QueryClient();
 
@@ -36,7 +37,7 @@ if (import.meta.env.VITE_SENTRY_DSN) {
 
 function App() {
   const { wizardComplete, setWizardComplete } = useWizardStore();
-  const { step, setStep } = useProfileStore();
+  const { step, setStep, error, setError } = useProfileStore();
   const [paymentProcessing, setPaymentProcessing] = useState(false);
 
   useEffect(() => {
@@ -102,7 +103,10 @@ function App() {
               </svg>
             </div>
           </div>
-          {paymentProcessing ? (
+          <>
+          {error ? (
+            <Error error={error}/>
+          ) : (<>{paymentProcessing ? (
             <Loading title="Payment Processing" />
           ) : (
             <>
@@ -118,7 +122,7 @@ function App() {
                 <Wizard />
               )}
             </>
-          )}
+          )}</>) }</>
         </div>
       </div>
     </QueryClientProvider>

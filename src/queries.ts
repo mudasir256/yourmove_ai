@@ -7,11 +7,20 @@ import {
   ProfileResponse,
   Prompt,
 } from "./models/profile";
+import { useProfileStore } from "./stores/profile";
 
 const BASE_URL = import.meta.env.VITE_API_BASE_URL;
 
 // temporary for testing
 axios.defaults.headers.common["ngrok-skip-browser-warning"] = "something";
+
+axios.interceptors.response.use((response) => {
+  // Was successful - return the response
+  return response;
+}, (error) => {
+  // Was an error
+  useProfileStore.getState().setError("Our AI encountered an error. Please wait a few minutes and try again.");
+})
 
 export const getClientSecret = (
   email: string,
@@ -54,3 +63,11 @@ export const hasUserPaid = (
 export const submitFeedback = (feedbackRequest: FeedbackRequest) => {
   return axios.post(`${BASE_URL}/email/feedback`, feedbackRequest);
 };
+
+export const createCopy = (email: string, prompt: string, response: string) => {
+  return axios.post(`${BASE_URL}/profile/prompt/copy`, {
+    email,
+    prompt,
+    response,
+  });
+}

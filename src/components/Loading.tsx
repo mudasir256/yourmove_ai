@@ -13,7 +13,7 @@ export const Loading = ({ title }: Props) => {
           <Lottie animationData={loadingAnimation} loop={true} />
         </div>
         {title && (
-          <div className="mt-5 text-center">
+          <div className="text-center -mt-6">
             <h2 className="text-2xl font-semibold">{title}</h2>
           </div>
         )}

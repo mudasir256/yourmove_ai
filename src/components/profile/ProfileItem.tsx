@@ -3,8 +3,9 @@ import { ProfileResponse, Prompt } from "../../models/profile";
 import { PromptsListBox } from "../PromptListBox";
 import { useProfileStore } from "../../stores/profile";
 import { useState } from "react";
-import { generateSingleProfileResponse } from "../../queries";
+import { createCopy, generateSingleProfileResponse } from "../../queries";
 import { UnlockModal } from "../modals/UnlockModal";
+import { useWizardStore } from "../../stores/wizard";
 
 interface Props {
   lockItem: boolean;
@@ -15,6 +16,7 @@ interface Props {
 export const ProfileItem = ({ lockItem, profileResponse, index }: Props) => {
   // All prompts
   const { prompts, profile, setProfile } = useProfileStore();
+  const {stepResults} = useWizardStore();
   const [isProfileItemLoading, setIsProfileItemLoading] = useState(false);
   const [unlockModalIsOpen, setUnlockModalIsOpen] = useState(false);
 
@@ -99,6 +101,7 @@ export const ProfileItem = ({ lockItem, profileResponse, index }: Props) => {
               className="bg-brand-primary p-2 rounded-full"
               onClick={() => {
                 navigator.clipboard.writeText(profileResponse.response);
+                createCopy(stepResults.email, profileResponse.prompt, profileResponse.response);
                 toast.success("Answer copied to clipboard");
               }}
             >

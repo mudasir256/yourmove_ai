@@ -28,7 +28,11 @@ export const Wizard = () => {
         try {
           await wizardStep.validator.validate(stepValue);
           console.log("Validation successful");
-          setStep(nextStep);
+          console.log("here");
+          console.log(nextStep);
+          if (nextStep) {
+            setStep(nextStep);
+          }
           localStorage.setItem("step", step);
           localStorage.setItem("stepResults", JSON.stringify(stepResults));
           // If there is no more next step, we are at the end

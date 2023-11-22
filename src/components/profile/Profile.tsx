@@ -5,7 +5,6 @@ import { useEffect, useState } from "react";
 import { generateProfile, getPrompts } from "../../queries";
 import { useProfileStore } from "../../stores/profile";
 import { Loading } from "../Loading";
-import { ProfileStep } from "../../constants/profile";
 import { useWizardStore } from "../../stores/wizard";
 import { TextingAssistantModal } from "../modals/TextingAssistantModal";
 import { WizardStepType } from "../../models/wizard";
