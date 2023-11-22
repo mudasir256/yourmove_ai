@@ -74,31 +74,10 @@ export const PaymentPlans = ({ hideHeaders }: Props) => {
         open={learnMoreModalOpen}
         setOpen={setLearnMoreModalOpen}
       />
-      {!hideHeaders && <ProfileWizardProgress />}
-      <div className="mt-6">
-        {!hideHeaders && (
-          <svg
-            onClick={() => {
-              const setStep = useWizardStore.getState().setStep;
-              setWizardComplete(false);
-              setStep(WizardStepType.EMAIL);
-            }}
-            xmlns="http://www.w3.org/2000/svg"
-            fill="none"
-            viewBox="0 0 24 24"
-            strokeWidth="2.5"
-            className="w-12 h-12 stroke-zinc-400"
-          >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              d="M15.75 19.5L8.25 12l7.5-7.5"
-            />
-          </svg>
-        )}
-        <div className="mt-4 px-2">
-          <div className="mb-5">
-            <h1 className="text-4xl font-bold">3x Your Matches with Premium</h1>
+      <div className="mt-8">
+        <div className="-mt-14">
+          <div className="mb-3 w-3/4">
+            <h1 className="text-3xl font-bold ml-2">3x Your Matches with Premium</h1>
           </div>
 
           {chosenPlan ? (
@@ -118,7 +97,7 @@ export const PaymentPlans = ({ hideHeaders }: Props) => {
               {" "}
               {/* Premium AI Profile Plan */}
               <div className="mt-4">
-                <div className="bg-white p-5 border-2 border-black rounded-lg">
+                <div className="bg-white p-3 border-2 border-black rounded-lg">
                   <div className="border-b-2 border-black">
                     <h2 className="text-xl font-semibold">
                       Premium AI Profile
@@ -127,9 +106,9 @@ export const PaymentPlans = ({ hideHeaders }: Props) => {
                       <div>
                         <h1 className="text-4xl font-semibold">$10</h1>
                       </div>
-                      <div className="w-1/4 pl-3">
+                      <div className="pl-3">
                         <h1 className="text-zinc-500 leading-4">
-                          one-time payment
+                          one-time <br/> payment
                         </h1>
                       </div>
                     </div>
@@ -140,7 +119,10 @@ export const PaymentPlans = ({ hideHeaders }: Props) => {
                     <div className="mt-1">
                       {PLAN_FEATURES.map((feature: string) => {
                         return (
-                          <div className="flex" key={feature}>
+                          <div
+                            className="flex text-sm md:text-md"
+                            key={feature}
+                          >
                             <svg
                               xmlns="http://www.w3.org/2000/svg"
                               fill="none"
@@ -165,7 +147,7 @@ export const PaymentPlans = ({ hideHeaders }: Props) => {
                   <button
                     type="button"
                     onClick={() => setChosenPlan("premium_profile")}
-                    className="mt-4 flex items-center justify-center w-full bg-brand-primary text-white py-3 rounded-full font-semibold -mb-1"
+                    className="mt-2 flex items-center justify-center w-full bg-brand-primary text-white py-3 rounded-full font-semibold -mb-1"
                   >
                     Activate
                   </button>
@@ -173,7 +155,7 @@ export const PaymentPlans = ({ hideHeaders }: Props) => {
               </div>
               {/* Professional Profile Redesign */}
               <div className="mt-4">
-                <div className="bg-white p-5 border-2 border-black rounded-lg">
+                <div className="bg-white p-3 border-2 border-black rounded-lg">
                   <div className="border-b-2 border-black">
                     <h2 className="text-xl font-semibold">
                       Professional Profile Redesign
@@ -182,20 +164,20 @@ export const PaymentPlans = ({ hideHeaders }: Props) => {
                       <div>
                         <h1 className="text-4xl font-semibold">$60</h1>
                       </div>
-                      <div className="w-1/4 pl-3">
+                      <div className=" pl-3">
                         <h1 className="text-zinc-500 leading-4">
-                          one-time payment
+                          one-time <br/> payment
                         </h1>
                       </div>
                     </div>
                   </div>
 
                   <div className="mt-2">
-                    <h4 className="font-semibold">
+                    <h4 className="font-semibold text-sm md:text-md">
                       Everything in AI Profile +
                     </h4>
                     <div className="mt-1">
-                      <p className="leading-5">
+                      <p className="leading-5 text-sm md:text-md">
                         Work side by side with a dating coach to{" "}
                         <span className="font-bold">rebuild your profile</span>{" "}
                         from the ground up,{" "}

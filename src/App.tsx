@@ -10,6 +10,8 @@ import { useEffect, useState } from "react";
 import { Loading } from "./components/Loading";
 import * as Sentry from "@sentry/react";
 import { Error } from "./components/Error";
+import { WizardStepType } from "./models/wizard";
+import { ProfileWizardProgress } from "./components/wizard/WizardProgress";
 
 const queryClient = new QueryClient();
 
@@ -104,25 +106,57 @@ function App() {
             </div>
           </div>
           <>
-          {error ? (
-            <Error error={error}/>
-          ) : (<>{paymentProcessing ? (
-            <Loading title="Payment Processing" />
-          ) : (
-            <>
-              {wizardComplete ? (
-                <>
-                  {step === ProfileStep.PAYMENT_PLANS ? (
-                    <PaymentPlans />
-                  ) : (
-                    <Profile />
-                  )}
-                </>
-              ) : (
-                <Wizard />
-              )}
-            </>
-          )}</>) }</>
+            {error ? (
+              <Error error={error} />
+            ) : (
+              <>
+                {paymentProcessing ? (
+                  <Loading title="Payment Processing" />
+                ) : (
+                  <>
+                    {wizardComplete ? (
+                      <>
+                        {step === ProfileStep.PAYMENT_PLANS ? (
+                          <div className="">
+                            <ProfileWizardProgress />
+                            <div className="px-2">
+                              <div className="-ml-2">
+                                <svg
+                                  onClick={() => {
+                                    const setStep =
+                                      useWizardStore.getState().setStep;
+                                    setWizardComplete(false);
+                                    setStep(WizardStepType.EMAIL);
+                                  }}
+                                  xmlns="http://www.w3.org/2000/svg"
+                                  fill="none"
+                                  viewBox="0 0 24 24"
+                                  strokeWidth="2.5"
+                                  className="w-12 h-12 stroke-zinc-400"
+                                >
+                                  <path
+                                    strokeLinecap="round"
+                                    strokeLinejoin="round"
+                                    d="M15.75 19.5L8.25 12l7.5-7.5"
+                                  />
+                                </svg>
+                              </div>
+                              <div className="h-8 w-full"></div>
+                              <PaymentPlans />
+                            </div>
+                          </div>
+                        ) : (
+                          <Profile />
+                        )}
+                      </>
+                    ) : (
+                      <Wizard />
+                    )}
+                  </>
+                )}
+              </>
+            )}
+          </>
         </div>
       </div>
     </QueryClientProvider>
