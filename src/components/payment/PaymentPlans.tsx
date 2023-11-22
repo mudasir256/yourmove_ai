@@ -23,10 +23,10 @@ const stripePromise = loadStripe(
 );
 
 interface Props {
-  hideHeaders?: boolean;
+  noThanksHandler: () => void;
 }
 
-export const PaymentPlans = ({ hideHeaders }: Props) => {
+export const PaymentPlans = ({ noThanksHandler }: Props) => {
   const { setStep } = useProfileStore();
   const { stepResults, setWizardComplete } = useWizardStore();
   const [chosenPlan, setChosenPlan] = useState("");
@@ -77,7 +77,9 @@ export const PaymentPlans = ({ hideHeaders }: Props) => {
       <div className="mt-8">
         <div className="-mt-14">
           <div className="mb-3 w-3/4">
-            <h1 className="text-3xl font-bold ml-2">3x Your Matches with Premium</h1>
+            <h1 className="text-3xl font-bold ml-2">
+              3x Your Matches with Premium
+            </h1>
           </div>
 
           {chosenPlan ? (
@@ -108,7 +110,7 @@ export const PaymentPlans = ({ hideHeaders }: Props) => {
                       </div>
                       <div className="pl-3">
                         <h1 className="text-zinc-500 leading-4">
-                          one-time <br/> payment
+                          one-time <br /> payment
                         </h1>
                       </div>
                     </div>
@@ -166,7 +168,7 @@ export const PaymentPlans = ({ hideHeaders }: Props) => {
                       </div>
                       <div className=" pl-3">
                         <h1 className="text-zinc-500 leading-4">
-                          one-time <br/> payment
+                          one-time <br /> payment
                         </h1>
                       </div>
                     </div>
@@ -210,7 +212,7 @@ export const PaymentPlans = ({ hideHeaders }: Props) => {
               <div className="mt-4 flex items-center justify-center mb-6">
                 <h3
                   className="cursor-pointer text-lg text-zinc-500 hover:text-zinc-600 hover:underline"
-                  onClick={() => skipPlans()}
+                  onClick={() => noThanksHandler()}
                 >
                   no thanks
                 </h3>

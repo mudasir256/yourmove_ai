@@ -142,7 +142,11 @@ function App() {
                                 </svg>
                               </div>
                               <div className="h-8 w-full"></div>
-                              <PaymentPlans />
+                              <PaymentPlans
+                                noThanksHandler={() =>
+                                  setStep(ProfileStep.PROFILE)
+                                }
+                              />
                             </div>
                           </div>
                         ) : (

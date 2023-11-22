@@ -1,3 +1,4 @@
+
 import { PaymentPlans } from "../payment/PaymentPlans";
 
 interface Props {
@@ -33,7 +34,7 @@ export const UnlockModal = ({ open, setOpen }: Props) => {
                 </svg>
               </div>
               <div className="-mt-10">
-                <PaymentPlans hideHeaders={true} />
+                <PaymentPlans noThanksHandler={() => setOpen(false)} />
               </div>
             </div>
           </div>
