@@ -1,3 +1,6 @@
+import Lottie from "lottie-react";
+import loadingAnimation from "../assets/loadingAnimation.json";
+
 interface Props {
   title?: string;
 }
@@ -5,32 +8,13 @@ interface Props {
 export const Loading = ({ title }: Props) => {
   return (
     <div className="h-screen flex items-center justify-center">
-      <div className="-mt-32">
-        <div className="flex items-center justify-center">
-          <svg
-            className="animate-spin -ml-1 mr-3 h-10 w-10 text-black"
-            xmlns="http://www.w3.org/2000/svg"
-            fill="none"
-            viewBox="0 0 24 24"
-          >
-            <circle
-              className="opacity-25"
-              cx="12"
-              cy="12"
-              r="10"
-              stroke="currentColor"
-              strokeWidth="4"
-            ></circle>
-            <path
-              className="opacity-75"
-              fill="currentColor"
-              d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
-            ></path>
-          </svg>
+      <div className="-mt-64">
+        <div className="flex items-center justify-center h-44">
+          <Lottie animationData={loadingAnimation} loop={true} />
         </div>
         {title && (
-          <div className="mt-5">
-            <h2 className="text-xl font-semibold">{title}</h2>
+          <div className="mt-5 text-center">
+            <h2 className="text-2xl font-semibold">{title}</h2>
           </div>
         )}
       </div>
