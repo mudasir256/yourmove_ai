@@ -1,29 +1,22 @@
 import { Toaster } from "react-hot-toast";
-import { Wizard } from "./components/wizard/Wizard";
-import { useWizardStore } from "./stores/wizard";
-import { PaymentPlans } from "./components/payment/PaymentPlans";
-import { Profile } from "./components/profile/Profile";
 import { QueryClient, QueryClientProvider } from "react-query";
-import { useProfileStore } from "./stores/profile";
-import { ProfileStep } from "./constants/profile";
-import { useEffect, useState } from "react";
-import { Loading } from "./components/Loading";
 import * as Sentry from "@sentry/react";
-import { Error } from "./components/Error";
-import { WizardStepType } from "./models/wizard";
-import { ProfileWizardProgress } from "./components/wizard/WizardProgress";
 import { Route, Routes } from "react-router-dom";
 import { ProfileWriter } from "./pages/ProfileWriter";
 import { createBrowserHistory } from "history";
-import {
-  BrowserRouter,
-  unstable_HistoryRouter as HistoryRouter,
-} from "react-router-dom";
+import { unstable_HistoryRouter as HistoryRouter } from "react-router-dom";
 import { ChatAssistant } from "./pages/ChatAssistant";
-import { ProfileReview } from "./pages/ProfileReview";
-import { BottomNav } from "./components/nav/BottomNav";
-import { TopNav } from "./components/nav/TopNav";
+import { ProfileReviewer } from "./pages/ProfileReviewer";
 import { SideNav } from "./components/nav/SideNav";
+import { BottomNav } from "./components/nav/BottomNav";
+
+/* 
+
+Todo:
+- find out if I need to show the paywall for each Wizard regardless of the result. if so then it's wizard -> paywall -> generation. wizard and payroll remain somewhat generic whilst the only unique thing is the generation
+- create component that does the analysis of the images
+
+*/
 
 const queryClient = new QueryClient();
 
@@ -60,11 +53,11 @@ function App() {
           <SideNav />
 
           <div className="flex flex-col h-screen">
-            <div className="overflow-y-auto flex items-center justify-center">
+            <div className="overflow-y-auto">
               <Routes>
                 <Route path="/chat-assistant" element={<ChatAssistant />} />
                 <Route path="/profile-writer" element={<ProfileWriter />} />
-                <Route path="/profile-review" element={<ProfileReview />} />
+                <Route path="/profile-review" element={<ProfileReviewer />} />
               </Routes>
             </div>
 

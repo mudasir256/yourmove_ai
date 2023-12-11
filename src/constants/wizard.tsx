@@ -4,9 +4,29 @@ import {
   WizardStepType,
 } from "../models/wizard";
 import * as yup from "yup";
+import { useWizardStore } from "../stores/wizard";
 
 // Define a list of all of the Wizard Steps to be rendered dynamic
-export const WIZARD_STEPS: Array<WizardStep> = [
+export const PROFILE_WRITER_WIZARD_STEPS: Array<WizardStep> = [
+  {
+    step: WizardStepType.WELCOME,
+    type: WizardStepInputType.CONTENT,
+    content: (
+      <>
+        <h1 className="text-5xl font-bold">Welcome to Profile Writer</h1>
+        <div className="mt-8">
+          <p className="text-2xl">
+            Answer a few questions. Get a free, ai-generated dating app profile.
+          </p>
+        </div>
+        <div className="mt-6">
+          <p className="text-2xl">
+            Tested and optimized for maximum success ✨
+          </p>
+        </div>
+      </>
+    ),
+  },
   {
     step: WizardStepType.GENDER,
     type: WizardStepInputType.RADIO,
@@ -79,5 +99,50 @@ export const WIZARD_STEPS: Array<WizardStep> = [
       .string()
       .email("Please enter a valid email")
       .required("Email is required"),
+  },
+  {
+    step: WizardStepType.PAYWALL,
+    type: WizardStepInputType.CONTENT,
+  },
+];
+
+export const PROFILE_REVIEWER_WIZARD_STEPS: Array<WizardStep> = [
+  {
+    step: WizardStepType.WELCOME,
+    type: WizardStepInputType.CONTENT,
+    content: (
+      <>
+        <h1 className="text-5xl font-bold">AI Profile Reviews</h1>
+        <div className="mt-8">
+          <p className="text-2xl">
+            Upload your profile. Get an instant review of your photos and bio,
+            along with suggestions on how to improve.
+          </p>
+        </div>
+      </>
+    ),
+  },
+  {
+    step: WizardStepType.UPLOAD_PHOTO,
+    type: WizardStepInputType.FILE,
+    label: "Upload your profile ",
+    validator: yup.string(),
+    onFilesUploaded: (files: FileList | null) => {
+      useWizardStore.getState().setProfileReviewerFiles(files);
+    },
+  },
+  {
+    step: WizardStepType.EMAIL,
+    type: WizardStepInputType.EMAIL,
+    label: "What's your email?",
+    placeholder: "your.email@gmail.com",
+    validator: yup
+      .string()
+      .email("Please enter a valid email")
+      .required("Email is required"),
+  },
+  {
+    step: WizardStepType.PAYWALL,
+    type: WizardStepInputType.CONTENT,
   },
 ];

@@ -1,30 +1,42 @@
 import {
   WizardStep as WizardStepModel,
   WizardStepInputType,
+  WizardStepType,
 } from "../../models/wizard";
-import { useWizardStore } from "../../stores/wizard";
 import { getStep } from "../../utils";
+import { FileUploadStep } from "./FileUploadStep";
 
 interface Props {
+  name: string;
   wizardStep: WizardStepModel;
   goToNextStep: () => void;
+  steps: Array<WizardStepModel>;
+  step: WizardStepType;
+  setStep: (step: WizardStepType) => void;
+  stepResults: Record<string, string>;
+  setStepResult: (stepType: string, result: string) => void;
 }
-export const WizardStep = ({ wizardStep, goToNextStep }: Props) => {
-  const { step, setStep, stepResults, setStepResult } = useWizardStore(
-    (state) => state
-  );
-
+export const WizardStep = ({
+  name,
+  wizardStep,
+  goToNextStep,
+  steps,
+  step,
+  setStep,
+  stepResults,
+  setStepResult,
+}: Props) => {
   const getStepValue = () => {
     return stepResults[wizardStep.step];
   };
 
   return (
-    <div className="mt-10">
+    <div className="mt-6">
       <svg
         onClick={() => {
-          const previousStep = getStep(step, -1);
-          setStep(previousStep);
-          localStorage.setItem("step", previousStep);
+          const previousStep = getStep(step, -1, steps);
+          setStep(previousStep.step);
+          localStorage.setItem(`${name}:step`, previousStep.step);
         }}
         xmlns="http://www.w3.org/2000/svg"
         fill="none"
@@ -42,6 +54,10 @@ export const WizardStep = ({ wizardStep, goToNextStep }: Props) => {
         <h1 className="text-4xl font-bold">{wizardStep.label}</h1>
 
         <div className="">
+          {wizardStep.type === WizardStepInputType.CONTENT && (
+            <>{wizardStep.content}</>
+          )}
+
           {wizardStep.type === WizardStepInputType.TEXT && (
             <div className="mt-4">
               <textarea
@@ -147,6 +163,11 @@ export const WizardStep = ({ wizardStep, goToNextStep }: Props) => {
                   );
                 })}
               </div>
+            )}
+
+          {wizardStep.type === WizardStepInputType.FILE &&
+            wizardStep.onFilesUploaded && (
+              <FileUploadStep onFilesUploaded={wizardStep.onFilesUploaded} />
             )}
         </div>
       </div>

@@ -39,7 +39,7 @@ export const MessageStyleSelector = ({ wrap, hideSettings }: Props) => {
         <div
           key={index}
           onClick={() => setSelectedMessageStyle(messageStyle as MessageStyle)}
-          className={`border min-w-1/4 mr-3 py-1 mb-2 flex-none border px-2 rounded-full flex items-center ${
+          className={`border min-w-1/4 mr-3 py-1 mb-2 flex-none border px-2 rounded-full flex items-center cursor-pointer ${
             selectedMessageStyle == messageStyle
               ? "border-brand-primary bg-brand-primary/30 text-brand-primary font-semibold"
               : "border-black bg-white"

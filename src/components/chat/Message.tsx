@@ -23,10 +23,13 @@ export const Message = ({ message }: Props) => {
       <div
         className={`w-full px-4 py-3 rounded-md z-50 relative ${
           message.author === MessageAuthorType.User
-            ? "bg-brand-primary"
+            ? "bg-brand-primary text-white"
             : "bg-white"
         }`}
       >
+        {message.author === MessageAuthorType.User && (
+          <div className="font-bold text-sm">Your message</div>
+        )}
         {message.content}
       </div>
       {message.author == MessageAuthorType.Generated && (

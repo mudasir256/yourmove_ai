@@ -25,7 +25,7 @@ const NAV_ITEMS = [
   },
   {
     title: "Profile Reviewer",
-    link: "/profile-reviewer",
+    link: "/profile-review",
     icon: (
       <path
         fill-rule="evenodd"

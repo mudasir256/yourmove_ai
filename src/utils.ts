@@ -1,9 +1,17 @@
 import { useEffect } from "react";
-import { WizardStepType } from "./models/wizard";
-const steps = Object.values(WizardStepType);
+import { WizardStep, WizardStepType } from "./models/wizard";
 
-export const getStepIndex = (step: WizardStepType) => {
-  const currentIndex = steps.indexOf(step);
+export const getStepIndex = (
+  step: WizardStepType,
+  steps: Array<WizardStep>
+) => {
+  console.log("yo");
+  console.log(step);
+  console.log(steps);
+  const currentIndex = steps.findIndex(
+    (step_: WizardStep) => step_.step == step
+  );
+  console.log(currentIndex);
 
   if (currentIndex === -1 || currentIndex === steps.length - 1) {
     return steps.length - 1;
@@ -11,8 +19,14 @@ export const getStepIndex = (step: WizardStepType) => {
   return currentIndex;
 };
 
-export const getStep = (step: WizardStepType, stepIndex: number) => {
-  return steps[getStepIndex(step) + stepIndex];
+export const getStep = (
+  step: WizardStepType,
+  stepIndex: number,
+  steps: Array<WizardStep>
+) => {
+  console.log("in getSteps");
+  console.log(steps);
+  return steps[getStepIndex(step, steps) + stepIndex];
 };
 
 export function useOutsideAlerter(ref: any, callback: () => void) {

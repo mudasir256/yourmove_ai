@@ -30,6 +30,7 @@ import {
   ChevronDownIcon,
   MagnifyingGlassIcon,
 } from "@heroicons/react/20/solid";
+import { Link } from "react-router-dom";
 
 const navigation = [
   { name: "Dashboard", href: "#", icon: HomeIcon, current: true },
@@ -232,7 +233,7 @@ export const SideNav = () => {
               <span className="sr-only">Open sidebar</span>
               <Bars3Icon className="h-6 w-6" aria-hidden="true" />
             </button>
-            <div>
+            <Link to="/" className="cursor-pointer">
               <svg
                 width="110"
                 height="22"
@@ -249,7 +250,7 @@ export const SideNav = () => {
                   fill="black"
                 />
               </svg>
-            </div>
+            </Link>
             <div className="flex flex-row-reverse w-full">
               <span className="font-semibold text-brand-primary">
                 Download on iOS

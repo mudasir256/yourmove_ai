@@ -24,11 +24,11 @@ const stripePromise = loadStripe(
 
 interface Props {
   noThanksHandler: () => void;
+  stepResults: Record<string, string>;
 }
 
-export const PaymentPlans = ({ noThanksHandler }: Props) => {
+export const PaymentPlans = ({ noThanksHandler, stepResults }: Props) => {
   const { setStep } = useProfileStore();
-  const { stepResults, setWizardComplete } = useWizardStore();
   const [chosenPlan, setChosenPlan] = useState("");
   const [clientSecret, setClientSecret] = useState("");
   const [showPlans, setShowPlans] = useState(false);
