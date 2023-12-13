@@ -13,8 +13,9 @@ import { BottomNav } from "./components/nav/BottomNav";
 /* 
 
 Todo:
-- find out if I need to show the paywall for each Wizard regardless of the result. if so then it's wizard -> paywall -> generation. wizard and payroll remain somewhat generic whilst the only unique thing is the generation
-- create component that does the analysis of the images
+- add backend API endpoint that takes images and uploads them?
+- add backend API endpoint that takes image URL and chat and calls chat assistant API
+- add backend API endpoint that takes chat text only and calls chat assistant API
 
 */
 

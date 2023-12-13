@@ -13,7 +13,7 @@ export const SettingsModal = ({ open, setOpen }: Props) => {
   const { curiosityModeEnabled, setCuriosityModeEnabled } = useChatStore();
   return (
     <Modal open={open} setOpen={setOpen} backgroundColor="#ffffff">
-      <div className="w-full px-2">
+      <div className="w-full px-2 z-50">
         <div className="flex mb-6">
           <div className="w-1/3">
             <svg

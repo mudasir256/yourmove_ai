@@ -9,7 +9,7 @@ interface Props {
 export const Message = ({ message }: Props) => {
   return (
     <div
-      className={`mb-4 relative flex ${
+      className={`mb-4 relative flex z-10 ${
         message.author === MessageAuthorType.User ? "pr-4" : "pl-4"
       }`}
     >

@@ -6,7 +6,7 @@ import {
   MessageType,
   MessageAuthorType,
 } from "../constants/chat";
-import { Message } from "../models/chat";
+import { ChatResponse, Message } from "../models/chat";
 
 const tempMessages = [
   {
@@ -45,6 +45,15 @@ interface ChatStore {
   setCuriosityModeEnabled: (curiosityModeEnabled: boolean) => void;
   messages: Array<Message>;
   setMessages: (messages: Array<Message>) => void;
+  sendingMessage: boolean;
+  setSendingMessage: (sendingMessage: boolean) => void;
+  // Represents the message the user sent
+  message: string;
+  setMessage: (message: string) => void;
+  screenshotUploading: File | null;
+  setScreenshotUploading: (screenshotUploading: File | null) => void;
+  chatResponse: ChatResponse | null;
+  setChatResponse: (chatResponse: ChatResponse | null) => void;
 }
 
 export const useChatStore = create<ChatStore>((set) => ({
@@ -67,4 +76,13 @@ export const useChatStore = create<ChatStore>((set) => ({
     set({ curiosityModeEnabled }),
   messages: tempMessages,
   setMessages: (messages: Array<Message>) => set({ messages }),
+  sendingMessage: false,
+  setSendingMessage: (sendingMessage: boolean) => set({ sendingMessage }),
+  message: "",
+  setMessage: (message: string) => set({ message }),
+  screenshotUploading: null,
+  setScreenshotUploading: (screenshotUploading: File | null) =>
+    set({ screenshotUploading }),
+  chatResponse: null,
+  setChatResponse: (chatResponse: ChatResponse | null) => set({ chatResponse }),
 }));

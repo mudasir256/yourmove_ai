@@ -47,3 +47,11 @@ export function useOutsideAlerter(ref: any, callback: () => void) {
     };
   }, [ref]);
 }
+
+export const removeEmoji = (text: string): string => {
+  // Regular expression to match Unicode emojis
+  const emojiRegex = /\p{Emoji_Presentation}/gu;
+
+  // Remove emojis from the start of the string
+  return text.replace(emojiRegex, "").trim().toLowerCase();
+};
