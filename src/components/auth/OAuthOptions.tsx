@@ -1,7 +1,70 @@
+import {
+  signInWithPopup,
+  GoogleAuthProvider,
+  OAuthProvider,
+} from "firebase/auth";
+import { auth } from "../../firebase";
+
+const googleProvider = new GoogleAuthProvider();
+const appleProvider = new OAuthProvider("apple.com");
+
 export const OAuthOptions = () => {
+  const launchGoogleAuth = () => {
+    signInWithPopup(auth, googleProvider)
+      .then((result) => {
+        // This gives you a Google Access Token. You can use it to access the Google API.
+        const credential = GoogleAuthProvider.credentialFromResult(result);
+        const token = credential.accessToken;
+        // The signed-in user info.
+        const user = result.user;
+        // IdP data available using getAdditionalUserInfo(result)
+        // ...
+      })
+      .catch((error) => {
+        // Handle Errors here.
+        const errorCode = error.code;
+        const errorMessage = error.message;
+        // The email of the user's account used.
+        const email = error.customData.email;
+        // The AuthCredential type that was used.
+        const credential = GoogleAuthProvider.credentialFromError(error);
+        // ...
+      });
+  };
+
+  const launchAppleAuth = () => {
+    signInWithPopup(auth, appleProvider)
+      .then((result) => {
+        // The signed-in user info.
+        const user = result.user;
+
+        // Apple credential
+        const credential = OAuthProvider.credentialFromResult(result);
+        const accessToken = credential.accessToken;
+        const idToken = credential.idToken;
+
+        // IdP data available using getAdditionalUserInfo(result)
+        // ...
+      })
+      .catch((error) => {
+        console.log(error);
+        // Handle Errors here.
+        const errorCode = error.code;
+        const errorMessage = error.message;
+        // The email of the user's account used.
+        const email = error.customData.email;
+        // The credential that was used.
+        const credential = OAuthProvider.credentialFromError(error);
+
+        // ...
+      });
+  };
   return (
     <>
-      <button className="mb-2 border-2 border-black p-2 rounded-md bg-white w-full flex items-center justify-center">
+      <button
+        onClick={launchGoogleAuth}
+        className="mb-2 border-2 border-black p-2 rounded-md bg-white w-full flex items-center justify-center"
+      >
         <div className="w-1/5 flex items-center justify-center">
           <svg
             width="20"
@@ -31,7 +94,10 @@ export const OAuthOptions = () => {
         <div className="w-3/5 font-semibold">Continue with Google</div>
         <div className="w-1/5"></div>
       </button>
-      <button className="mb-2 border-2 border-black p-2 rounded-md bg-white w-full flex items-center justify-center">
+      <button
+        onClick={launchAppleAuth}
+        className="mb-2 border-2 border-black p-2 rounded-md bg-white w-full flex items-center justify-center"
+      >
         <div className="w-1/5 flex items-center justify-center">
           <svg
             width="18"

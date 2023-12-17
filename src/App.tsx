@@ -11,6 +11,7 @@ import { SideNav } from "./components/nav/SideNav";
 import { BottomNav } from "./components/nav/BottomNav";
 import { SignIn } from "./components/auth/SignIn";
 import { SignUp } from "./components/auth/SignUp";
+import { ForgotPassword } from "./components/auth/ForgotPassword";
 
 /* 
 
@@ -58,8 +59,9 @@ function App() {
           <div className="flex flex-col h-screen">
             <div className="overflow-y-auto">
               <div className="p-20">
-                <SignUp />
-                {/* <SignIn /> */}
+                <SignIn />
+                {/* <SignUp />
+                <ForgotPassword /> */}
               </div>
               <Routes>
                 <Route path="/chat-assistant" element={<ChatAssistant />} />
