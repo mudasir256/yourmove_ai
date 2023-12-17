@@ -130,3 +130,20 @@ export const sendChatImage = (
     },
   });
 };
+
+export const generateProfileReview = (screenshots: FileList) => {
+  const formData = new FormData();
+
+  Array.from(screenshots).forEach((file) => {
+    formData.append("screenshots", file);
+  });
+
+  console.log("form data is");
+  console.log(formData);
+
+  return axios.post(`${BASE_URL}/profile-reviewer`, formData, {
+    headers: {
+      "Content-Type": "multipart/form-data",
+    },
+  });
+};

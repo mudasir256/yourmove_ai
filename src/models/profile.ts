@@ -32,3 +32,8 @@ export interface FeedbackRequest {
   email?: string;
   details?: string;
 }
+
+export interface ReviewedProfile {
+  review: string;
+  screenshots: Array<string>;
+}

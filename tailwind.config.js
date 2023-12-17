@@ -5,6 +5,7 @@ export default {
     extend: {
       colors: {
         "brand-primary": "#E85E5C",
+        main: "#f1f1f1",
       },
     },
   },

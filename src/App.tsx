@@ -9,6 +9,8 @@ import { ChatAssistant } from "./pages/ChatAssistant";
 import { ProfileReviewer } from "./pages/ProfileReviewer";
 import { SideNav } from "./components/nav/SideNav";
 import { BottomNav } from "./components/nav/BottomNav";
+import { SignIn } from "./components/auth/SignIn";
+import { SignUp } from "./components/auth/SignUp";
 
 /* 
 
@@ -55,6 +57,10 @@ function App() {
 
           <div className="flex flex-col h-screen">
             <div className="overflow-y-auto">
+              <div className="p-20">
+                <SignUp />
+                {/* <SignIn /> */}
+              </div>
               <Routes>
                 <Route path="/chat-assistant" element={<ChatAssistant />} />
                 <Route path="/profile-writer" element={<ProfileWriter />} />

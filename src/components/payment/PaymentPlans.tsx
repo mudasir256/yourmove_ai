@@ -57,7 +57,7 @@ export const PaymentPlans = ({ noThanksHandler, stepResults }: Props) => {
   }, [chosenPlan]);
 
   const skipPlans = () => {
-    setStep(ProfileStep.PROFILE);
+    noThanksHandler();
   };
 
   const appearance = {

@@ -26,6 +26,7 @@ interface Props {
   setStep: (step: WizardStepType) => void;
   stepResults: Record<string, string>;
   setStepResult: (stepType: string, result: string) => void;
+  storeStep?: boolean;
 }
 
 export const Wizard = ({
@@ -38,6 +39,7 @@ export const Wizard = ({
   setStep,
   stepResults,
   setStepResult,
+  storeStep,
 }: Props) => {
   const goToNextStep = async () => {
     console.log("here go to");
@@ -63,11 +65,13 @@ export const Wizard = ({
           if (nextStep) {
             setStep(nextStep.step);
           }
-          localStorage.setItem(`${name}:step`, step);
-          localStorage.setItem(
-            `${name}:stepResults`,
-            JSON.stringify(stepResults)
-          );
+          if (storeStep) {
+            localStorage.setItem(`${name}:step`, step);
+            localStorage.setItem(
+              `${name}:stepResults`,
+              JSON.stringify(stepResults)
+            );
+          }
           // If there is no more next step, we are at the end
           if (!nextStep) {
             setWizardComplete(true);

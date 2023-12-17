@@ -1,6 +1,6 @@
 import { create } from "zustand";
 import { ProfileStep } from "../constants/profile";
-import { ProfileResponse, Prompt } from "../models/profile";
+import { ProfileResponse, Prompt, ReviewedProfile } from "../models/profile";
 
 interface ProfileStore {
   step: ProfileStep;
@@ -11,6 +11,8 @@ interface ProfileStore {
   setPrompts: (prompts: Array<Prompt>) => void;
   error: string | null;
   setError: (error: any) => void;
+  reviewedProfile: ReviewedProfile | null;
+  setReviewedProfile: (reviewedProfile: ReviewedProfile) => void;
 }
 
 export const useProfileStore = create<ProfileStore>((set) => ({
@@ -22,4 +24,6 @@ export const useProfileStore = create<ProfileStore>((set) => ({
   setPrompts: (prompts) => set({ prompts }),
   error: null,
   setError: (error) => set({ error }),
+  reviewedProfile: null,
+  setReviewedProfile: (reviewedProfile) => set({ reviewedProfile }),
 }));

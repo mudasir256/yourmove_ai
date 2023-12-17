@@ -57,6 +57,7 @@ export const ProfileWriter = () => {
         setStep={setProfileWriterStep}
         stepResults={profileWriterStepResults}
         setStepResult={setProfileWriterStepResult}
+        storeStep={true}
       >
         <>Profile Writer Wizard is Completed</>
       </Wizard>

@@ -1,7 +1,9 @@
 import { useState } from "react";
+import { useProfileStore } from "../../stores/profile";
 
 export const ProfileReview = () => {
   const [hasPaid, setHasPaid] = useState(false);
+  const { reviewedProfile, setReviewedProfile } = useProfileStore();
 
   const PHOTOS = [
     {
@@ -30,27 +32,7 @@ export const ProfileReview = () => {
         <h1 className="text-4xl font-bold">Your Review</h1>
       </div>
       <div className="bg-white p-4 border-2 border-black rounded-md shadow-lg">
-        <div className="mb-10">
-          <div className="font-bold">Rating:</div>
-          <div>
-            Overall, I would rate this profile a 7 out of 10. The profile
-            appears friendly and genuine but could benefit significantly from a
-            few tweaks. With the feedback provided below, I estimate you could
-            improve your profile to a solid 9 out of 10.
-          </div>
-        </div>
-
-        <div>
-          <div className="font-bold">Photo Analysis:</div>
-          {PHOTOS.map((photo, index: number) => (
-            <div className="mb-8">
-              <div className="font-bold">
-                Photo {index + 1} ({photo.name}):
-              </div>
-              {photo.description}
-            </div>
-          ))}
-        </div>
+        {reviewedProfile?.review}
       </div>
     </>
   );
