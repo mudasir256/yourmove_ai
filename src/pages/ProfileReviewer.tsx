@@ -39,7 +39,7 @@ export const ProfileReviewer = () => {
   }, [profileReviewerWizardComplete]);
 
   return (
-    <>
+    <div className="px-4">
       <Wizard
         name="profileReviewer"
         steps={PROFILE_REVIEWER_WIZARD_STEPS}
@@ -51,10 +51,8 @@ export const ProfileReviewer = () => {
         setStepResult={setProfileReviewerStepResult}
         storeStep={false}
       >
-        <>{console.log("reviewed profile is")}</>
-        <>{console.log(reviewedProfile)}</>
         {reviewedProfile ? <ProfileReview /> : <Loading />}
       </Wizard>
-    </>
+    </div>
   );
 };

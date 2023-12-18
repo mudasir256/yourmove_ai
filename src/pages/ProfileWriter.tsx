@@ -47,7 +47,7 @@ export const ProfileWriter = () => {
   }, [window.location]);
 
   return (
-    <>
+    <div className="px-4">
       <Wizard
         name="profileWriter"
         steps={PROFILE_WRITER_WIZARD_STEPS}
@@ -61,62 +61,6 @@ export const ProfileWriter = () => {
       >
         <>Profile Writer Wizard is Completed</>
       </Wizard>
-      {/* {error ? (
-        <Error error={error} />
-      ) : (
-        <>
-          {paymentProcessing ? (
-            <Loading title="Payment Processing" />
-          ) : (
-            <>
-              {profileWriterWizardComplete ? (
-                <>
-                  {step === ProfileStep.PAYMENT_PLANS ? (
-                    <div className="">
-                      <WizardProgress steps={PROFILE_WRITER_WIZARD_STEPS} />
-                      <div className="px-2">
-                        <div className="-ml-2">
-                          <svg
-                            onClick={() => {
-                              const setStep = useWizardStore.getState().setStep;
-                              setProfileWriterWizardComplete(false);
-                              setStep(WizardStepType.EMAIL);
-                            }}
-                            xmlns="http://www.w3.org/2000/svg"
-                            fill="none"
-                            viewBox="0 0 24 24"
-                            strokeWidth="2.5"
-                            className="w-12 h-12 stroke-zinc-400"
-                          >
-                            <path
-                              strokeLinecap="round"
-                              strokeLinejoin="round"
-                              d="M15.75 19.5L8.25 12l7.5-7.5"
-                            />
-                          </svg>
-                        </div>
-                        <div className="h-8 w-full"></div>
-                        <PaymentPlans
-                          noThanksHandler={() => setStep(ProfileStep.PROFILE)}
-                        />
-                      </div>
-                    </div>
-                  ) : (
-                    <Profile />
-                  )}
-                </>
-              ) : (
-                <Wizard
-                  name="profileWriter"
-                  steps={PROFILE_WRITER_WIZARD_STEPS}
-                  wizardComplete={profileWriterWizardComplete}
-                  setWizardComplete={setProfileWriterWizardComplete}
-                />
-              )}
-            </>
-          )}
-        </>
-      )} */}
-    </>
+    </div>
   );
 };

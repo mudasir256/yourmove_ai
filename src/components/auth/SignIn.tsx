@@ -8,13 +8,17 @@ import { AuthActionType } from "../../constants/auth";
 import { signInWithEmailAndPassword } from "firebase/auth";
 import { auth } from "../../firebase";
 import { ErrorAlert } from "../ErrorAlert";
-import toast from "react-hot-toast";
 import { successfulSignIn } from "../../utils";
 
 export const SignIn = () => {
   const [showOptions, setShowOptions] = useState(true);
   const [submitting, setSubmitting] = useState(false);
-  const { setAuthActionType, signInError, setSignInError } = useAuthStore();
+  const {
+    setAuthActionType,
+    signInError,
+    setSignInError,
+    setHasCheckedForSubscription,
+  } = useAuthStore();
 
   return (
     <>
@@ -60,6 +64,8 @@ export const SignIn = () => {
                 values.email,
                 values.password
               );
+              // Set hasCheckedForSubscription to false so we will check for subscription again
+              setHasCheckedForSubscription(false);
               successfulSignIn(values.email);
             } catch (error) {
               if (

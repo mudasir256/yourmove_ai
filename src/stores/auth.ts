@@ -8,6 +8,10 @@ interface AuthStore {
   setAuthActionType: (authActionType: AuthActionType) => void;
   signInError: string | null;
   setSignInError: (signInError: string | null) => void;
+  isSubscribed: boolean;
+  setIsSubscribed: (isSubscribed: boolean) => void;
+  hasCheckedForSubscription: boolean;
+  setHasCheckedForSubscription: (hasCheckedForSubscription: boolean) => void;
 }
 
 export const useAuthStore = create<AuthStore>((set) => ({
@@ -17,4 +21,9 @@ export const useAuthStore = create<AuthStore>((set) => ({
   setAuthActionType: (authActionType) => set({ authActionType }),
   signInError: null,
   setSignInError: (signInError) => set({ signInError }),
+  isSubscribed: false,
+  setIsSubscribed: (isSubscribed) => set({ isSubscribed }),
+  hasCheckedForSubscription: false,
+  setHasCheckedForSubscription: (hasCheckedForSubscription) =>
+    set({ hasCheckedForSubscription }),
 }));

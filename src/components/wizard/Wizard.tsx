@@ -92,7 +92,7 @@ export const Wizard = ({
           <>
             {step !== WizardStepType.PAYWALL ? (
               <>
-                <div className="mt-10">
+                <div className="mt-6">
                   <WizardProgress step={step} steps={steps} />
                   <div className="mt-6">
                     <>

@@ -1,5 +1,8 @@
 import axios, { AxiosResponse } from "axios";
-import { ClientSecretResponse } from "./models/payment";
+import {
+  ClientSecretResponse,
+  CreateSubscriptionRequest,
+} from "./models/payment";
 import {
   FeedbackRequest,
   HasUserPaidResponse,
@@ -144,6 +147,21 @@ export const generateProfileReview = (screenshots: FileList) => {
   return axios.post(`${BASE_URL}/profile-reviewer`, formData, {
     headers: {
       "Content-Type": "multipart/form-data",
+    },
+  });
+};
+
+export const createSubscription = (
+  createSubscriptionRequest: CreateSubscriptionRequest
+) => {
+  return axios.post(`${BASE_URL}/subscribe`, createSubscriptionRequest);
+};
+
+export const checkIfUserSubscribed = (idToken: string) => {
+  return axios.get(`${BASE_URL}/user/is-subscribed`, {
+    headers: {
+      Authorization: `Bearer ${idToken}`,
+      "Content-Type": "application/json",
     },
   });
 };

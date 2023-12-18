@@ -63,6 +63,7 @@ export const PaymentPlans = ({ noThanksHandler, stepResults }: Props) => {
   const appearance = {
     theme: "stripe",
   };
+
   const options = {
     clientSecret,
     appearance,

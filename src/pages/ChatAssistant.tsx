@@ -29,7 +29,7 @@ export const ChatAssistant = () => {
   };
 
   return (
-    <div className="h-screen w-full flex justify-center">
+    <div className="h-screen w-full flex justify-center px-4">
       <div className="max-w-xl">
         <SettingsModal
           open={settingsModalOpen}

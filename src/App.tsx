@@ -11,6 +11,12 @@ import { SideNav } from "./components/nav/SideNav";
 import { BottomNav } from "./components/nav/BottomNav";
 import { AuthModal } from "./components/modals/AuthModal";
 import { Premium } from "./pages/Premium";
+import { useEffect, useState } from "react";
+import { auth } from "./firebase";
+import { checkIfUserSubscribed } from "./queries";
+import { useAuthStore } from "./stores/auth";
+import firebase from "firebase/compat/app";
+import { Loading } from "./components/Loading";
 
 /* 
 
@@ -48,35 +54,82 @@ if (import.meta.env.VITE_SENTRY_DSN) {
 export const history = createBrowserHistory({ window });
 
 function App() {
+  const {
+    setIsSubscribed,
+    hasCheckedForSubscription,
+    setHasCheckedForSubscription,
+  } = useAuthStore();
+  const [isLoading, setIsLoading] = useState(true);
+
+  useEffect(() => {
+    setTimeout(() => setIsLoading(false), 2000);
+  }, []);
+
+  const checkForSubscription = () => {
+    if (auth.currentUser) {
+      auth.currentUser.getIdTokenResult().then((idTokenResult) => {
+        checkIfUserSubscribed(idTokenResult.token).then((response) => {
+          // this is purely for UI/UX. When calling into the APIs we will check if the user is subscribed
+          if (response.data.isSubscribed) {
+            setIsSubscribed(true);
+          }
+        });
+      });
+    }
+  };
+
+  // When the auth state changes, check if the user isSubscribed
+  useEffect(() => {
+    auth.onAuthStateChanged(function (user) {
+      console.log("hey");
+      // only check for the subscription if there is a user and we haven't checked before
+      // when we sign out, we can set the hasCheckedForSubscription to false so we will check on signIn again
+      // we can also set hasCheckedForSubscription to false when we buy a subscription
+      if (user && !hasCheckedForSubscription) {
+        checkForSubscription();
+        setHasCheckedForSubscription(true);
+      } else {
+        // User is not signed in. We default to this anyway, but good to be explicit/when the sign out
+        setIsSubscribed(false);
+      }
+    });
+  }, []);
+
   return (
     <QueryClientProvider client={queryClient}>
       <HistoryRouter history={history}>
-        <div className="mx-auto max-w-7xl pt-4">
-          <Toaster />
-          <SideNav />
+        {isLoading ? (
+          <Loading />
+        ) : (
+          <div className="mx-auto max-w-7xl pt-4">
+            <Toaster />
+            <SideNav />
 
-          {/* Auth Modals */}
-          <AuthModal />
+            {/* Auth Modals */}
+            <AuthModal />
 
-          <div className="flex flex-col h-screen">
-            <div className="overflow-y-auto">
-              <Routes>
-                <Route path="/premium" element={<Premium />} />
-                <Route path="/chat-assistant" element={<ChatAssistant />} />
-                <Route path="/profile-writer" element={<ProfileWriter />} />
-                <Route path="/profile-review" element={<ProfileReviewer />} />
-              </Routes>
-            </div>
+            <div className="flex flex-col h-screen">
+              <div className="overflow-y-auto">
+                <Routes>
+                  <Route path="/" element={<>nothing</>} />
+                  <Route path="/premium" element={<Premium />} />
+                  <Route path="/chat-assistant" element={<ChatAssistant />} />
+                  <Route path="/profile-writer" element={<ProfileWriter />} />
+                  <Route path="/profile-review" element={<ProfileReviewer />} />
+                  <Route path="*">Not found</Route>
+                </Routes>
+              </div>
 
-            {/* Bottom div with fixed size */}
-            <div
-              style={{ height: "4.5rem" }}
-              className="flex items-center bg-white absolute w-full bottom-0 left-0 border-t border-gray-200 bg-white shadow-sm"
-            >
-              <BottomNav />
+              {/* Bottom div with fixed size */}
+              <div
+                style={{ height: "4.5rem" }}
+                className="flex items-center bg-white absolute w-full bottom-0 left-0 border-t border-gray-200 bg-white shadow-sm"
+              >
+                <BottomNav />
+              </div>
             </div>
           </div>
-        </div>
+        )}
       </HistoryRouter>
     </QueryClientProvider>
   );
