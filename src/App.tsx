@@ -9,9 +9,8 @@ import { ChatAssistant } from "./pages/ChatAssistant";
 import { ProfileReviewer } from "./pages/ProfileReviewer";
 import { SideNav } from "./components/nav/SideNav";
 import { BottomNav } from "./components/nav/BottomNav";
-import { SignIn } from "./components/auth/SignIn";
-import { SignUp } from "./components/auth/SignUp";
-import { ForgotPassword } from "./components/auth/ForgotPassword";
+import { AuthModal } from "./components/modals/AuthModal";
+import { Premium } from "./pages/Premium";
 
 /* 
 
@@ -52,18 +51,17 @@ function App() {
   return (
     <QueryClientProvider client={queryClient}>
       <HistoryRouter history={history}>
-        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 lg:pt-10 pt-4">
+        <div className="mx-auto max-w-7xl pt-4">
           <Toaster />
           <SideNav />
 
+          {/* Auth Modals */}
+          <AuthModal />
+
           <div className="flex flex-col h-screen">
             <div className="overflow-y-auto">
-              <div className="p-20">
-                <SignIn />
-                {/* <SignUp />
-                <ForgotPassword /> */}
-              </div>
               <Routes>
+                <Route path="/premium" element={<Premium />} />
                 <Route path="/chat-assistant" element={<ChatAssistant />} />
                 <Route path="/profile-writer" element={<ProfileWriter />} />
                 <Route path="/profile-review" element={<ProfileReviewer />} />

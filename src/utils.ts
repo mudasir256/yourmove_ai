@@ -1,5 +1,7 @@
 import { useEffect } from "react";
 import { WizardStep, WizardStepType } from "./models/wizard";
+import { useAuthStore } from "./stores/auth";
+import toast from "react-hot-toast";
 
 export const getStepIndex = (
   step: WizardStepType,
@@ -54,4 +56,14 @@ export const removeEmoji = (text: string): string => {
 
   // Remove emojis from the start of the string
   return text.replace(emojiRegex, "").trim().toLowerCase();
+};
+
+export const successfulSignIn = (email: string) => {
+  useAuthStore.getState().setAuthModalIsOpen(false);
+  toast.success(`Hey there ${email} 👋, welcome!`);
+};
+
+export const successfulSignUp = () => {
+  toast.success("Successfully signed up, welcome!");
+  useAuthStore.getState().setAuthModalIsOpen(false);
 };

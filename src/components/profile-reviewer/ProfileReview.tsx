@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { useProfileStore } from "../../stores/profile";
+import Markdown from "react-markdown";
 
 export const ProfileReview = () => {
   const [hasPaid, setHasPaid] = useState(false);
@@ -32,7 +33,7 @@ export const ProfileReview = () => {
         <h1 className="text-4xl font-bold">Your Review</h1>
       </div>
       <div className="bg-white p-4 border-2 border-black rounded-md shadow-lg">
-        {reviewedProfile?.review}
+        <Markdown>{reviewedProfile?.review}</Markdown>
       </div>
     </>
   );

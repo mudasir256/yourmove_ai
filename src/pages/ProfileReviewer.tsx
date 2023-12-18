@@ -29,6 +29,7 @@ export const ProfileReviewer = () => {
       if (profileReviewerFiles && profileReviewerFiles.length > 0) {
         console.log("herrrr");
         generateProfileReview(profileReviewerFiles).then((response) => {
+          console.log(response);
           setReviewedProfile(response.data as ReviewedProfile);
         });
       } else {

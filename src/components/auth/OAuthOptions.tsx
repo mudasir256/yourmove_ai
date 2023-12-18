@@ -4,47 +4,30 @@ import {
   OAuthProvider,
 } from "firebase/auth";
 import { auth } from "../../firebase";
+import { successfulSignIn } from "../../utils";
+import { useAuthStore } from "../../stores/auth";
 
 const googleProvider = new GoogleAuthProvider();
 const appleProvider = new OAuthProvider("apple.com");
 
 export const OAuthOptions = () => {
+  const { setSignInError } = useAuthStore();
+
   const launchGoogleAuth = () => {
     signInWithPopup(auth, googleProvider)
       .then((result) => {
-        // This gives you a Google Access Token. You can use it to access the Google API.
-        const credential = GoogleAuthProvider.credentialFromResult(result);
-        const token = credential.accessToken;
-        // The signed-in user info.
-        const user = result.user;
-        // IdP data available using getAdditionalUserInfo(result)
-        // ...
+        successfulSignIn(result.user.email);
       })
       .catch((error) => {
-        // Handle Errors here.
-        const errorCode = error.code;
         const errorMessage = error.message;
-        // The email of the user's account used.
-        const email = error.customData.email;
-        // The AuthCredential type that was used.
-        const credential = GoogleAuthProvider.credentialFromError(error);
-        // ...
+        setSignInError(errorMessage);
       });
   };
 
   const launchAppleAuth = () => {
     signInWithPopup(auth, appleProvider)
       .then((result) => {
-        // The signed-in user info.
-        const user = result.user;
-
-        // Apple credential
-        const credential = OAuthProvider.credentialFromResult(result);
-        const accessToken = credential.accessToken;
-        const idToken = credential.idToken;
-
-        // IdP data available using getAdditionalUserInfo(result)
-        // ...
+        successfulSignIn(result.user.email);
       })
       .catch((error) => {
         console.log(error);
@@ -120,7 +103,7 @@ export const OAuthOptions = () => {
           <div className="w-full border-t border-gray-200" />
         </div>
         <div className="relative flex justify-center text-sm font-medium leading-6">
-          <span className="bg-main px-6 text-gray-900">or</span>
+          <span className="bg-white px-6 text-gray-900">or</span>
         </div>
       </div>
     </>
