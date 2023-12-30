@@ -6,6 +6,7 @@ import { Loading } from "../../Loading";
 import { getClientSecret, hasUserPaid } from "../../../queries";
 import { ClientSecretResponse } from "../../../models/payment";
 import { ProductType } from "../../../constants/payments";
+import { toHeaderCase } from "js-convert-case";
 
 interface Props {
   children: any;
@@ -27,6 +28,7 @@ export const Paywall = ({
 }: Props) => {
   const [clientSecret, setClientSecret] = useState("");
   const [showPlans, setShowPlans] = useState(false);
+  const [price, setPrice] = useState<string | null>(null);
 
   // Check to see if the user has paid already
   useEffect(() => {
@@ -57,6 +59,8 @@ export const Paywall = ({
       getClientSecret(email, chosenProduct).then((response) => {
         const clientSecretResponse = response.data as ClientSecretResponse;
         setClientSecret(clientSecretResponse.clientSecret);
+        // Divide by 100 as the price is in cents (because of Stripe)
+        setPrice((clientSecretResponse.price / 100).toFixed(2));
       });
     }
   }, [chosenProduct]);
@@ -79,10 +83,22 @@ export const Paywall = ({
       {chosenProduct ? (
         <>
           {clientSecret ? (
-            <div className="bg-white mt-8 p-6 rounded-md shadow-md">
-              <Elements options={options} stripe={stripePromise}>
-                <PaymentForm />
-              </Elements>
+            <div className="mx-4 bg-white rounded-lg border border-black p-4 mt-2">
+              <div className="flex mb-4">
+                <div className="w-1/3 font-semibold">
+                  {toHeaderCase(chosenProduct)}
+                </div>
+                <div className="w-2/3 flex justify-end items-center">
+                  ${price} once off
+                </div>
+              </div>
+              {clientSecret && (
+                <div className="mt-1">
+                  <Elements options={options} stripe={stripePromise}>
+                    <PaymentForm />
+                  </Elements>
+                </div>
+              )}
             </div>
           ) : (
             <Loading />

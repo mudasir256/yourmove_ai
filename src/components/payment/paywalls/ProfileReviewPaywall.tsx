@@ -71,7 +71,7 @@ export const ProfileReviewPaywall = () => {
 
                 <button
                   type="button"
-                  onClick={() => setChosenPlan("premium_profile")}
+                  onClick={() => setChosenProduct(ProductType.ProfileReview)}
                   className="mt-2 flex items-center justify-center w-full bg-brand-primary text-white py-3 rounded-full font-semibold -mb-1"
                 >
                   Activate

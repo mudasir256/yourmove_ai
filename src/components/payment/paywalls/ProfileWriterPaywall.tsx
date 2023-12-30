@@ -150,6 +150,7 @@ export const ProfileWriterPaywall = () => {
 
                 <button
                   type="button"
+                  onClick={() => setChosenProduct(ProductType.AIPhotos)}
                   className="mt-4 flex items-center justify-center w-full bg-black text-white py-3 rounded-full font-semibold -mb-1"
                 >
                   Activate
