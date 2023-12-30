@@ -1,3 +1,4 @@
+import { auth } from "../../firebase";
 import {
   WizardStep as WizardStepModel,
   WizardStepInputType,
@@ -74,7 +75,9 @@ export const WizardStep = ({
             <div className="mt-4">
               <input
                 type="email"
-                value={getStepValue()}
+                value={
+                  auth.currentUser ? auth.currentUser.email : getStepValue()
+                }
                 placeholder={wizardStep.placeholder}
                 onChange={(e) => setStepResult(wizardStep.step, e.target.value)}
                 className="bg-transparent text-2xl w-full outline-none text-zinc-500"

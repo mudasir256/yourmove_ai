@@ -8,6 +8,9 @@ import { WizardStep } from "./WizardStep";
 import { getStep } from "../../utils";
 import toast from "react-hot-toast";
 import { PaymentPlans } from "../payment/PaymentPlans";
+import { useEffect } from "react";
+import { useAuthStore } from "../../stores/auth";
+import { auth } from "../../firebase";
 
 /* Each Wizard has the following step:
 1. Welcome
@@ -41,6 +44,8 @@ export const Wizard = ({
   setStepResult,
   storeStep,
 }: Props) => {
+  const { isSubscribed } = useAuthStore();
+
   const goToNextStep = async () => {
     console.log("here go to");
     const nextStep = getStep(step, 1, steps);
@@ -82,6 +87,13 @@ export const Wizard = ({
       }
     }
   };
+
+  // Check if it's Paywall and if it is, skip it if the user is subscribed
+  useEffect(() => {
+    if (auth.currentUser && isSubscribed && step == WizardStepType.PAYWALL) {
+      goToNextStep();
+    }
+  }, [step]);
 
   return (
     <div className="relative h-screen">
@@ -161,13 +173,20 @@ export const Wizard = ({
                     </svg>
                   </div>
                   <div className="h-8 w-full"></div>
-                  <PaymentPlans
+                  <>
+                    {
+                      steps.find((wizardStep: WizardStepModel) => {
+                        return wizardStep.step === step;
+                      }).content
+                    }
+                  </>
+                  {/* <PaymentPlans
                     stepResults={stepResults}
                     noThanksHandler={() => {
                       // wizard is complete and next step
                       setWizardComplete(true);
                     }}
-                  />
+                  /> */}
                 </div>
               </div>
             )}

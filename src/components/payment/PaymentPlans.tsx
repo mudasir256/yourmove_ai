@@ -7,9 +7,6 @@ import PaymentForm from "./PaymentForm";
 import { Loading } from "../Loading";
 import { ProfileWizardProgress } from "../wizard/WizardProgress";
 import { useProfileStore } from "../../stores/profile";
-import { ProfileStep } from "../../constants/profile";
-import { useWizardStore } from "../../stores/wizard";
-import { WizardStepType } from "../../models/wizard";
 import { LearnMoreModal } from "../modals/LearnMoreModal";
 
 const PLAN_FEATURES = [

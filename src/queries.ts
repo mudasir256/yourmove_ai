@@ -11,6 +11,7 @@ import {
   Prompt,
 } from "./models/profile";
 import { useProfileStore } from "./stores/profile";
+import { ProductType } from "./constants/payments";
 
 const BASE_URL = import.meta.env.VITE_API_BASE_URL;
 
@@ -65,9 +66,10 @@ export const generateSingleProfileResponse = (
 };
 
 export const hasUserPaid = (
-  email: string
+  email: string,
+  products: Array<ProductType>
 ): Promise<AxiosResponse<HasUserPaidResponse>> => {
-  return axios.get(`${BASE_URL}/user/has-paid?email=${email}`);
+  return axios.post(`${BASE_URL}/user/has-paid`, { email, products });
 };
 
 export const submitFeedback = (feedbackRequest: FeedbackRequest) => {
@@ -86,14 +88,27 @@ export const sendChatText = (
   type: string,
   style: string,
   query: string,
-  curiosityMode: boolean
+  curiosityMode: boolean,
+  accessToken?: string
 ) => {
-  return axios.post(`${BASE_URL}/chat/text`, {
-    type,
-    style,
-    query,
-    curiosityMode,
-  });
+  const headers = {
+    "Content-Type": "application/json",
+  };
+  if (accessToken) {
+    headers["Authorization"] = `Bearer ${accessToken}`;
+  }
+  return axios.post(
+    `${BASE_URL}/chat/text`,
+    {
+      type,
+      style,
+      query,
+      curiosityMode,
+    },
+    {
+      headers,
+    }
+  );
 };
 
 export const sendChatImage = (
@@ -104,7 +119,8 @@ export const sendChatImage = (
   // pass the URL to the server so it will pass it back
   image: string | null,
   file: File | null,
-  recentQuery: string | null
+  recentQuery: string | null,
+  accessToken?: string
 ) => {
   const formData = new FormData();
 
@@ -127,10 +143,15 @@ export const sendChatImage = (
     formData.append("image", image);
   }
 
+  const headers = {
+    "Content-Type": "multipart/form-data",
+  };
+  if (accessToken) {
+    headers["Authorization"] = `Bearer ${accessToken}`;
+  }
+
   return axios.post(`${BASE_URL}/chat/image`, formData, {
-    headers: {
-      "Content-Type": "multipart/form-data",
-    },
+    headers,
   });
 };
 

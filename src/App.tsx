@@ -8,23 +8,22 @@ import { unstable_HistoryRouter as HistoryRouter } from "react-router-dom";
 import { ChatAssistant } from "./pages/ChatAssistant";
 import { ProfileReviewer } from "./pages/ProfileReviewer";
 import { SideNav } from "./components/nav/SideNav";
-import { BottomNav } from "./components/nav/BottomNav";
 import { AuthModal } from "./components/modals/AuthModal";
 import { Premium } from "./pages/Premium";
 import { useEffect, useState } from "react";
 import { auth } from "./firebase";
 import { checkIfUserSubscribed } from "./queries";
 import { useAuthStore } from "./stores/auth";
-import firebase from "firebase/compat/app";
 import { Loading } from "./components/Loading";
 
 /* 
 
-Todo:
-- add backend API endpoint that takes images and uploads them?
-- add backend API endpoint that takes image URL and chat and calls chat assistant API
-- add backend API endpoint that takes chat text only and calls chat assistant API
-
+We need to track products purchased in the background.
+Collection: purchasedProduct, fields: userId, product, purchasedAt.
+product:
+  - profile_writer
+  - profile_reviewer
+  - profile_reviewer_manual
 */
 
 const queryClient = new QueryClient();
@@ -121,12 +120,12 @@ function App() {
               </div>
 
               {/* Bottom div with fixed size */}
-              <div
+              {/* <div
                 style={{ height: "4.5rem" }}
                 className="flex items-center bg-white absolute w-full bottom-0 left-0 border-t border-gray-200 bg-white shadow-sm"
               >
                 <BottomNav />
-              </div>
+              </div> */}
             </div>
           </div>
         )}

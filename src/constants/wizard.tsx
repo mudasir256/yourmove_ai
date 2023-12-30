@@ -5,6 +5,8 @@ import {
 } from "../models/wizard";
 import * as yup from "yup";
 import { useWizardStore } from "../stores/wizard";
+import { ProfileWriterPaywall } from "../components/payment/paywalls/ProfileWriterPaywall";
+import { ProfileReviewPaywall } from "../components/payment/paywalls/ProfileReviewPaywall";
 
 // Define a list of all of the Wizard Steps to be rendered dynamic
 export const PROFILE_WRITER_WIZARD_STEPS: Array<WizardStep> = [
@@ -103,6 +105,7 @@ export const PROFILE_WRITER_WIZARD_STEPS: Array<WizardStep> = [
   {
     step: WizardStepType.PAYWALL,
     type: WizardStepInputType.CONTENT,
+    content: <ProfileWriterPaywall />,
   },
 ];
 
@@ -144,5 +147,6 @@ export const PROFILE_REVIEWER_WIZARD_STEPS: Array<WizardStep> = [
   {
     step: WizardStepType.PAYWALL,
     type: WizardStepInputType.CONTENT,
+    content: <ProfileReviewPaywall />,
   },
 ];

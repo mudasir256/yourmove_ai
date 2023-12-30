@@ -2,39 +2,91 @@ import { useState } from "react";
 import { useProfileStore } from "../../stores/profile";
 import Markdown from "react-markdown";
 
+const PLAN_FEATURES = [
+  "Detailed review of your profile",
+  "Action plan to improve your profile",
+  "Unlimited access. Buy once, use forever.",
+  "30 day money back guarantee",
+];
+
 export const ProfileReview = () => {
   const [hasPaid, setHasPaid] = useState(false);
   const { reviewedProfile, setReviewedProfile } = useProfileStore();
 
-  const PHOTOS = [
-    {
-      name: "Red Jacket",
-      rating: 8,
-      description:
-        "This photo displays a great balance of casual and put-together with the neat layering of clothing, and the background gives an urban feel. Your clear glasses add to a smart look, and again, your smile is engaging. Lighting and quality are on point.",
-    },
-    {
-      name: "Striped Hoodie",
-      rating: 6,
-      description:
-        "You have a relaxed and approachable demeanor in this photo. However, compared to the others, it's a little more casual and doesn't stand out as much. The setting is less interesting, and it might benefit from a bit more energy or variation in expression.",
-    },
-    {
-      name: "Jersey Over Blue Shirt",
-      rating: 7,
-      description:
-        "This photo with the sports jersey adds a dynamic of enjoying sports or outdoor activities. While the expression is joyful, a more candid posture could improve the overall feel.Photo Summary: Ideally, lead with the photo in the red jacket, followed by the pronounced name photo, then the jersey photo, and lastly the hoodie photo. I'd suggest mixing in a photo that captures you in a hobby or passion and maybe one more where you're more dressed up to show range.",
-    },
-  ];
-
   return (
-    <>
+    <div className="pb-40 mt-4">
       <div className="mb-5">
         <h1 className="text-4xl font-bold">Your Review</h1>
       </div>
-      <div className="bg-white p-4 border-2 border-black rounded-md shadow-lg">
-        <Markdown>{reviewedProfile?.review}</Markdown>
+      <div
+        className="bg-white border-2 border-black rounded-md shadow-lg relative"
+        style={{ height: "48rem" }}
+      >
+        {!hasPaid && (
+          <div className="absolute w-full h-full bg-gradient-to-t from-black via-black">
+            <div className="w-full h-full relative">
+              {/* Unlock */}
+              <div className="absolute w-full p-3 bottom-0">
+                <div className="bg-white h-full border-2 border-black rounded-lg p-5">
+                  <h1 className="text-2xl font-bold">
+                    Unlock your full review
+                  </h1>
+                  <div className="flex mt-2 mb-3 items-center border-b-2 border-black pb-3">
+                    <div>
+                      <h1 className="text-4xl font-semibold">$12</h1>
+                    </div>
+                    <div className="pl-3">
+                      <h1 className="text-zinc-500 leading-4">
+                        one-time <br /> payment
+                      </h1>
+                    </div>
+                  </div>
+                  <div className="mt-2">
+                    <h4 className="font-semibold">What's included:</h4>
+                    <div className="mt-1">
+                      {PLAN_FEATURES.map((feature: string) => {
+                        return (
+                          <div
+                            className="flex text-sm md:text-md"
+                            key={feature}
+                          >
+                            <svg
+                              xmlns="http://www.w3.org/2000/svg"
+                              fill="none"
+                              viewBox="0 0 24 24"
+                              strokeWidth="1.5"
+                              stroke="currentColor"
+                              className="w-4 h-6"
+                            >
+                              <path
+                                strokeLinecap="round"
+                                strokeLinejoin="round"
+                                d="M4.5 12.75l6 6 9-13.5"
+                              />
+                            </svg>
+                            <div className="ml-1.5">{feature}</div>
+                          </div>
+                        );
+                      })}
+                    </div>
+                  </div>
+
+                  <button
+                    type="button"
+                    onClick={() => {}}
+                    className="mt-2 flex items-center justify-center w-full bg-brand-primary text-white py-3 rounded-full font-semibold -mb-1"
+                  >
+                    Activate
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        )}
+        <div className="p-4 overflow-y-scroll" style={{ maxHeight: "47rem" }}>
+          <Markdown>{reviewedProfile?.review}</Markdown>
+        </div>
       </div>
-    </>
+    </div>
   );
 };

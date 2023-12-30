@@ -7,9 +7,12 @@ import * as yup from "yup";
 import { sendChatImage, sendChatText } from "../../queries";
 import { removeEmoji } from "../../utils";
 import { ChatResponse } from "../../models/chat";
+import { auth } from "../../firebase";
 
 // exported so other components can use it
 export const submitMessage = (message: string, file: File | null) => {
+  console.log("here");
+  console.log(auth.currentUser);
   const state = useChatStore.getState();
   const chatResponse = state.chatResponse;
   state.setMessage(message);
@@ -24,7 +27,8 @@ export const submitMessage = (message: string, file: File | null) => {
       state.curiosityModeEnabled,
       chatResponse?.image ? chatResponse?.image : null,
       file ? file : null,
-      chatResponse?.queryDecoded ? chatResponse.queryDecoded : null
+      chatResponse?.queryDecoded ? chatResponse.queryDecoded : null,
+      auth.currentUser ? auth.currentUser.accessToken : null
     )
       .then((response) => {
         state.setChatResponse(response.data as ChatResponse);
@@ -38,7 +42,8 @@ export const submitMessage = (message: string, file: File | null) => {
       state.selectedMessageType.toLowerCase(),
       removeEmoji(state.selectedMessageStyle),
       message,
-      state.curiosityModeEnabled
+      state.curiosityModeEnabled,
+      auth.currentUser ? auth.currentUser.accessToken : null
     )
       .then((response) => {
         state.setChatResponse(response.data as ChatResponse);
