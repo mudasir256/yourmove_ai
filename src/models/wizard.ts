@@ -43,6 +43,6 @@ export interface WizardStep {
   placeholder?: string;
   choices?: string[];
   validator?: yup.AnySchema;
-  // For when files are uploaded, need to store somewhere
-  onFilesUploaded?: (files: FileList | null) => void;
+  // For when files are uploaded, we upload to server, then store the URLs to those files
+  onFilesUploaded?: (files: Array<string>) => void;
 }

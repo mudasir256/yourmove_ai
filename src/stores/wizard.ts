@@ -30,8 +30,8 @@ interface WizardStore {
   profileReviewerWizardComplete: boolean;
   setProfileReviewerWizardComplete: (wizardComplete: boolean) => void;
 
-  profileReviewerFiles: FileList | null;
-  setProfileReviewerFiles: (files: FileList | null) => void;
+  profileReviewerFiles: Array<string>;
+  setProfileReviewerFiles: (files: Array<string>) => void;
 }
 
 export const useWizardStore = create<WizardStore>((set) => ({
@@ -74,7 +74,13 @@ export const useWizardStore = create<WizardStore>((set) => ({
   profileReviewerWizardComplete: false,
   setProfileReviewerWizardComplete: (wizardComplete: boolean) =>
     set({ profileReviewerWizardComplete: wizardComplete }),
-  profileReviewerFiles: null,
-  setProfileReviewerFiles: (files: FileList | null) =>
+  profileReviewerFiles: checkLocalStorageForInitialStepResults(
+    "profileReviewer"
+  )
+    ? JSON.parse(
+        checkLocalStorageForInitialStepResults("profileReviewer").uploadPhoto
+      )
+    : [],
+  setProfileReviewerFiles: (files: Array<string>) =>
     set({ profileReviewerFiles: files }),
 }));

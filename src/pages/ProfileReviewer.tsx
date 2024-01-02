@@ -26,6 +26,7 @@ export const ProfileReviewer = () => {
     console.log(profileReviewerWizardComplete);
     if (profileReviewerWizardComplete) {
       console.log("we here mang");
+      console.log(profileReviewerFiles);
       if (profileReviewerFiles && profileReviewerFiles.length > 0) {
         console.log("herrrr");
         generateProfileReview(profileReviewerFiles).then((response) => {
@@ -36,7 +37,7 @@ export const ProfileReviewer = () => {
         // throw error
       }
     }
-  }, [profileReviewerWizardComplete]);
+  }, [profileReviewerWizardComplete, profileReviewerFiles]);
 
   return (
     <div className="px-4">
@@ -49,7 +50,7 @@ export const ProfileReviewer = () => {
         setStep={setProfileReviewerStep}
         stepResults={profileReviewerStepResults}
         setStepResult={setProfileReviewerStepResult}
-        storeStep={false}
+        storeStep={true}
       >
         {reviewedProfile ? <ProfileReview /> : <Loading />}
       </Wizard>

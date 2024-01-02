@@ -1,12 +1,12 @@
 import { Elements } from "@stripe/react-stripe-js";
 import { useEffect, useState } from "react";
-import PaymentForm from "../PaymentForm";
 import { loadStripe } from "@stripe/stripe-js";
 import { Loading } from "../../Loading";
 import { getClientSecret, hasUserPaid } from "../../../queries";
 import { ClientSecretResponse } from "../../../models/payment";
 import { ProductType } from "../../../constants/payments";
-import { toHeaderCase } from "js-convert-case";
+import { toHeaderCase, toKebabCase } from "js-convert-case";
+import PaymentForm from "../PaymentForm";
 
 interface Props {
   children: any;
@@ -95,7 +95,7 @@ export const Paywall = ({
               {clientSecret && (
                 <div className="mt-1">
                   <Elements options={options} stripe={stripePromise}>
-                    <PaymentForm />
+                    <PaymentForm redirectSuffix={toKebabCase(chosenProduct)} />
                   </Elements>
                 </div>
               )}

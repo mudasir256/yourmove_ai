@@ -111,6 +111,20 @@ export const sendChatText = (
   );
 };
 
+export const uploadFiles = (files: FileList) => {
+  const formData = new FormData();
+
+  Array.from(files).forEach((file) => {
+    formData.append("files", file);
+  });
+
+  return axios.post(`${BASE_URL}/files/upload`, formData, {
+    headers: {
+      "Content-Type": "multipart/form-data",
+    },
+  });
+};
+
 export const sendChatImage = (
   type: string,
   style: string,
@@ -155,21 +169,10 @@ export const sendChatImage = (
   });
 };
 
-export const generateProfileReview = (screenshots: FileList) => {
-  const formData = new FormData();
-
-  Array.from(screenshots).forEach((file) => {
-    formData.append("screenshots", file);
-  });
-
-  console.log("form data is");
-  console.log(formData);
-
-  return axios.post(`${BASE_URL}/profile-reviewer`, formData, {
-    headers: {
-      "Content-Type": "multipart/form-data",
-    },
-  });
+export const generateProfileReview = (screenshots: Array<string>) => {
+  console.log("in client");
+  console.log(typeof screenshots);
+  return axios.post(`${BASE_URL}/profile-reviewer`, { screenshots });
 };
 
 export const createSubscription = (

@@ -15,15 +15,16 @@ import { auth } from "./firebase";
 import { checkIfUserSubscribed } from "./queries";
 import { useAuthStore } from "./stores/auth";
 import { Loading } from "./components/Loading";
+import { PaymentLoading } from "./pages/PaymentLoading";
 
 /* 
 
-We need to track products purchased in the background.
-Collection: purchasedProduct, fields: userId, product, purchasedAt.
-product:
-  - profile_writer
-  - profile_reviewer
-  - profile_reviewer_manual
+Everything is pretty much ready to rock and roll. The only outstanding pieces are:
+
+1. Recording Profile Writers. We used to increment `generatedProfiles` by one on the user model, but I think it should be done better than that because we can keep adding attributes to the user model. Can you get this from the profiles collection? i.e. do a length
+2. Ditto with the Reviews. I think it'd be better to just store generated reviews in a `reviews` collection and get the total number by a user there.
+
+The last thing stopping me from deploying is removing the upsell on the final review screen if they have paid whether it's through a sub or a purchased product.
 */
 
 const queryClient = new QueryClient();
@@ -110,7 +111,7 @@ function App() {
             <div className="flex flex-col h-screen">
               <div className="overflow-y-auto">
                 <Routes>
-                  <Route path="/" element={<>nothing</>} />
+                  <Route path="/" element={<PaymentLoading />} />
                   <Route path="/premium" element={<Premium />} />
                   <Route path="/chat-assistant" element={<ChatAssistant />} />
                   <Route path="/profile-writer" element={<ProfileWriter />} />

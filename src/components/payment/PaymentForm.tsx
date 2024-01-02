@@ -6,15 +6,16 @@ import {
 } from "@stripe/react-stripe-js";
 import { StripePaymentElementOptions } from "@stripe/stripe-js";
 import { useEffect, useState } from "react";
-import { useProfileStore } from "../../stores/profile";
-import { ProfileStep } from "../../constants/profile";
 
-export default function PaymentForm() {
-  const { setStep } = useProfileStore();
+interface Props {
+  redirectSuffix: string;
+}
+
+export default function PaymentForm({ redirectSuffix }: Props) {
   const stripe = useStripe();
   const elements = useElements();
 
-  const [message, setMessage] = useState(null);
+  const [message, setMessage] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
@@ -62,7 +63,7 @@ export default function PaymentForm() {
       elements,
       confirmParams: {
         // Make sure to change this to your payment completion page
-        return_url: import.meta.env.VITE_UI_BASE_URL,
+        return_url: `${import.meta.env.VITE_UI_BASE_URL}/${redirectSuffix}`,
       },
     });
 

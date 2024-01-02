@@ -170,7 +170,18 @@ export const WizardStep = ({
 
           {wizardStep.type === WizardStepInputType.FILE &&
             wizardStep.onFilesUploaded && (
-              <FileUploadStep onFilesUploaded={wizardStep.onFilesUploaded} />
+              <FileUploadStep
+                alreadySetFiles={
+                  getStepValue() ? JSON.parse(getStepValue()) : []
+                }
+                onFilesUploaded={(files: Array<string>) => {
+                  // Set the step result
+                  setStepResult(wizardStep.step, JSON.stringify(files));
+
+                  // Do the wizard step handler
+                  wizardStep.onFilesUploaded(files);
+                }}
+              />
             )}
         </div>
       </div>

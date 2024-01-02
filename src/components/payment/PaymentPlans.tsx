@@ -5,7 +5,6 @@ import { ClientSecretResponse } from "../../models/payment";
 import { Elements } from "@stripe/react-stripe-js";
 import PaymentForm from "./PaymentForm";
 import { Loading } from "../Loading";
-import { ProfileWizardProgress } from "../wizard/WizardProgress";
 import { useProfileStore } from "../../stores/profile";
 import { LearnMoreModal } from "../modals/LearnMoreModal";
 
