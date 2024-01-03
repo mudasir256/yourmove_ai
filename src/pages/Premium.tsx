@@ -8,6 +8,7 @@ import { useAuthStore } from "../stores/auth";
 import { PlanType } from "../constants/payments";
 import { SubscriptionForm } from "../components/premium/SubscriptionForm";
 import { Loading } from "../components/Loading";
+import { useUIStore } from "../stores/ui";
 
 export const Premium = () => {
   const [showScrollForMoreFeatures, setShowScrollForMoreFeatures] =
@@ -17,9 +18,13 @@ export const Premium = () => {
   );
   const [isLoading, setIsLoading] = useState(true);
   const { authModalIsOpen, setAuthModalIsOpen, isSubscribed } = useAuthStore();
+  const { setStopScroll } = useUIStore();
 
   useEffect(() => {
-    setTimeout(() => setIsLoading(false), 1000);
+    setTimeout(() => {
+      setIsLoading(false);
+      setStopScroll(true);
+    }, 1000);
   }, []);
 
   return isLoading ? (
@@ -38,7 +43,7 @@ export const Premium = () => {
         </div>
       ) : (
         <>
-          <div className="h-full flex flex-col">
+          <div className="h-full flex flex-col overflow-y-hidden">
             <div className="h-1/6 pt-3 px-4">
               <div>
                 <svg
@@ -89,9 +94,11 @@ export const Premium = () => {
 
                   <ExpertProfileIncluded />
 
-                  <AIProfileConsulting />
+                  <div className="mb-40">
+                    <AIProfileConsulting />
+                  </div>
                 </div>
-                <div className="h-1/5 text-center pt-4 border-t-2 border-black bg-white px-2 relative pb-10 -mb-6">
+                <div className="text-center pt-4 border-t-2 border-b-2 border-black bg-white px-2 absolute w-full bottom-0 mb-10">
                   {showScrollForMoreFeatures && (
                     <div className="flex flex-col items-center absolute top-0 left-0 right-0 -mt-24">
                       <div className="text-center bg-brand-secondary text-white items-center pt-2 px-4 border border-black rounded-lg opacity-90">

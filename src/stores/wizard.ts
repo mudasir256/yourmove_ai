@@ -32,6 +32,10 @@ interface WizardStore {
 
   profileReviewerFiles: Array<string>;
   setProfileReviewerFiles: (files: Array<string>) => void;
+
+  // Generic email field
+  email: string;
+  setEmail: (email: string) => void;
 }
 
 export const useWizardStore = create<WizardStore>((set) => ({
@@ -83,4 +87,6 @@ export const useWizardStore = create<WizardStore>((set) => ({
     : [],
   setProfileReviewerFiles: (files: Array<string>) =>
     set({ profileReviewerFiles: files }),
+  email: "",
+  setEmail: (email: string) => set({ email }),
 }));

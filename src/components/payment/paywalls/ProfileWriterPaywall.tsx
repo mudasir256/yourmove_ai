@@ -6,7 +6,8 @@ import { ProductType } from "../../../constants/payments";
 import { useWizardStore } from "../../../stores/wizard";
 
 export const ProfileWriterPaywall = () => {
-  const { setProfileWriterWizardComplete } = useWizardStore();
+  const { profileWriterStepResults, setProfileWriterWizardComplete } =
+    useWizardStore();
   const [chosenProduct, setChosenProduct] = useState<ProductType | null>(null);
   const [learnMoreModalOpen, setLearnMoreModalOpen] = useState(false);
 
@@ -19,6 +20,7 @@ export const ProfileWriterPaywall = () => {
       <div className="mt-8">
         <div className="-mt-14">
           <Paywall
+            email={profileWriterStepResults.email}
             requiredProductsToSkipPaywall={[
               ProductType.ProfileWriter,
               ProductType.AIPhotos,

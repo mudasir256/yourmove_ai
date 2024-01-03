@@ -169,10 +169,13 @@ export const sendChatImage = (
   });
 };
 
-export const generateProfileReview = (screenshots: Array<string>) => {
+export const generateProfileReview = (
+  email: string,
+  screenshots: Array<string>
+) => {
   console.log("in client");
   console.log(typeof screenshots);
-  return axios.post(`${BASE_URL}/profile-reviewer`, { screenshots });
+  return axios.post(`${BASE_URL}/profile-reviewer`, { email, screenshots });
 };
 
 export const createSubscription = (

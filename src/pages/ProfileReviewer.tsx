@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { ProfileReview } from "../components/profile-reviewer/ProfileReview";
 import { Wizard } from "../components/wizard/Wizard";
 import { PROFILE_REVIEWER_WIZARD_STEPS } from "../constants/wizard";
@@ -18,7 +18,9 @@ export const ProfileReviewer = () => {
     profileReviewerWizardComplete,
     setProfileReviewerWizardComplete,
   } = useWizardStore();
+  const { setError } = useProfileStore();
   const { reviewedProfile, setReviewedProfile } = useProfileStore();
+  const [hasPaid, setHasPaid] = useState(false);
 
   // On component load, send request
   useEffect(() => {
@@ -29,10 +31,19 @@ export const ProfileReviewer = () => {
       console.log(profileReviewerFiles);
       if (profileReviewerFiles && profileReviewerFiles.length > 0) {
         console.log("herrrr");
-        generateProfileReview(profileReviewerFiles).then((response) => {
-          console.log(response);
-          setReviewedProfile(response.data as ReviewedProfile);
-        });
+        generateProfileReview(
+          profileReviewerStepResults.email,
+          profileReviewerFiles
+        )
+          .then((response) => {
+            setReviewedProfile(response.data as ReviewedProfile);
+            setHasPaid(response.data.hasPaid);
+          })
+          .catch((error) => {
+            setError(
+              "There was an error reviewing your profile, please try again later."
+            );
+          });
       } else {
         // throw error
       }
@@ -52,7 +63,11 @@ export const ProfileReviewer = () => {
         setStepResult={setProfileReviewerStepResult}
         storeStep={true}
       >
-        {reviewedProfile ? <ProfileReview /> : <Loading />}
+        {reviewedProfile ? (
+          <ProfileReview hasPaid={hasPaid} setHasPaid={setHasPaid} />
+        ) : (
+          <Loading title="Reviewing your profile" />
+        )}
       </Wizard>
     </div>
   );

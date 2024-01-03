@@ -5,7 +5,8 @@ import { ProductType } from "../../../constants/payments";
 import { useWizardStore } from "../../../stores/wizard";
 
 export const ProfileReviewPaywall = () => {
-  const { setProfileReviewerWizardComplete } = useWizardStore();
+  const { profileReviewerStepResults, setProfileReviewerWizardComplete } =
+    useWizardStore();
   const [chosenProduct, setChosenProduct] = useState<ProductType | null>(null);
 
   return (
@@ -13,6 +14,7 @@ export const ProfileReviewPaywall = () => {
       <div className="mt-8">
         <div className="-mt-14">
           <Paywall
+            email={profileReviewerStepResults.email}
             requiredProductsToSkipPaywall={[ProductType.ProfileReview]}
             noThanksHandler={() => setProfileReviewerWizardComplete(true)}
             chosenProduct={chosenProduct}

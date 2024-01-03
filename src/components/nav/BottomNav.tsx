@@ -40,37 +40,41 @@ export const BottomNav = () => {
   const location = useLocation();
 
   return (
-    <div className="w-full flex max-w-3xl mx-auto">
-      {NAV_ITEMS.map((navItem) => {
-        return (
-          <Link to={navItem.link} className="w-1/3 cursor-pointer">
-            <div className="">
-              <div className="flex items-center justify-center">
-                <svg
-                  width="29"
-                  height="28"
-                  viewBox="0 0 29 28"
-                  fill={location.pathname == navItem.link ? "black" : "#999999"}
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  {navItem.icon}
-                </svg>
+    <div className="fixed inset-x-0 bottom-0 bg-white shadow-md">
+      <nav className="flex justify-around items-center h-16">
+        {NAV_ITEMS.map((navItem) => {
+          return (
+            <Link to={navItem.link} className="cursor-pointer">
+              <div className="">
+                <div className="flex items-center justify-center">
+                  <svg
+                    width="29"
+                    height="28"
+                    viewBox="0 0 29 28"
+                    fill={
+                      location.pathname == navItem.link ? "black" : "#999999"
+                    }
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    {navItem.icon}
+                  </svg>
+                </div>
+                <div className="flex items-center justify-center mt-0.5">
+                  <span
+                    className="text-sm"
+                    style={{
+                      color:
+                        location.pathname == navItem.link ? "black" : "#999999",
+                    }}
+                  >
+                    {navItem.title}
+                  </span>
+                </div>
               </div>
-              <div className="flex items-center justify-center mt-0.5">
-                <span
-                  className="text-sm"
-                  style={{
-                    color:
-                      location.pathname == navItem.link ? "black" : "#999999",
-                  }}
-                >
-                  {navItem.title}
-                </span>
-              </div>
-            </div>
-          </Link>
-        );
-      })}
+            </Link>
+          );
+        })}
+      </nav>
     </div>
   );
 };

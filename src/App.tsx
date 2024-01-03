@@ -1,10 +1,8 @@
 import { Toaster } from "react-hot-toast";
 import { QueryClient, QueryClientProvider } from "react-query";
 import * as Sentry from "@sentry/react";
-import { Route, Routes } from "react-router-dom";
+import { Route, Routes, useLocation } from "react-router-dom";
 import { ProfileWriter } from "./pages/ProfileWriter";
-import { createBrowserHistory } from "history";
-import { unstable_HistoryRouter as HistoryRouter } from "react-router-dom";
 import { ChatAssistant } from "./pages/ChatAssistant";
 import { ProfileReviewer } from "./pages/ProfileReviewer";
 import { SideNav } from "./components/nav/SideNav";
@@ -16,6 +14,8 @@ import { checkIfUserSubscribed } from "./queries";
 import { useAuthStore } from "./stores/auth";
 import { Loading } from "./components/Loading";
 import { PaymentLoading } from "./pages/PaymentLoading";
+import { BottomNav } from "./components/nav/BottomNav";
+import { useUIStore } from "./stores/ui";
 
 /* 
 
@@ -51,19 +51,25 @@ if (import.meta.env.VITE_SENTRY_DSN) {
   });
 }
 
-export const history = createBrowserHistory({ window });
-
 function App() {
   const {
     setIsSubscribed,
     hasCheckedForSubscription,
     setHasCheckedForSubscription,
   } = useAuthStore();
+  const { stopScroll, setStopScroll } = useUIStore();
   const [isLoading, setIsLoading] = useState(true);
+  const location = useLocation();
 
   useEffect(() => {
     setTimeout(() => setIsLoading(false), 2000);
   }, []);
+
+  // When the URL changes, set the default stopScroll back to false
+  useEffect(() => {
+    console.log("we here");
+    setStopScroll(false);
+  }, [location]);
 
   const checkForSubscription = () => {
     if (auth.currentUser) {
@@ -97,40 +103,39 @@ function App() {
 
   return (
     <QueryClientProvider client={queryClient}>
-      <HistoryRouter history={history}>
-        {isLoading ? (
-          <Loading />
-        ) : (
-          <div className="mx-auto max-w-7xl pt-4">
-            <Toaster />
+      {isLoading ? (
+        <Loading />
+      ) : (
+        <div className="flex flex-col h-screen">
+          {/* Top Section */}
+          <div className="flex-shrink-0 mt-4">
             <SideNav />
-
-            {/* Auth Modals */}
+            <Toaster />
             <AuthModal />
-
-            <div className="flex flex-col h-screen">
-              <div className="overflow-y-auto">
-                <Routes>
-                  <Route path="/" element={<PaymentLoading />} />
-                  <Route path="/premium" element={<Premium />} />
-                  <Route path="/chat-assistant" element={<ChatAssistant />} />
-                  <Route path="/profile-writer" element={<ProfileWriter />} />
-                  <Route path="/profile-review" element={<ProfileReviewer />} />
-                  <Route path="*">Not found</Route>
-                </Routes>
-              </div>
-
-              {/* Bottom div with fixed size */}
-              {/* <div
-                style={{ height: "4.5rem" }}
-                className="flex items-center bg-white absolute w-full bottom-0 left-0 border-t border-gray-200 bg-white shadow-sm"
-              >
-                <BottomNav />
-              </div> */}
-            </div>
           </div>
-        )}
-      </HistoryRouter>
+
+          {/* Middle Scrollable Section */}
+          <div
+            className={`flex-grow mb-20 ${
+              stopScroll ? "overflow-y-hidden" : "overflow-y-auto"
+            }`}
+          >
+            <Routes>
+              <Route path="/" element={<PaymentLoading />} />
+              <Route path="/premium" element={<Premium />} />
+              <Route path="/chat-assistant" element={<ChatAssistant />} />
+              <Route path="/profile-writer" element={<ProfileWriter />} />
+              <Route path="/profile-review" element={<ProfileReviewer />} />
+              <Route path="*">Not found</Route>
+            </Routes>
+          </div>
+
+          {/* Bottom NavBar Section */}
+          <div className="flex-shrink-0">
+            <BottomNav />
+          </div>
+        </div>
+      )}
     </QueryClientProvider>
   );
 }

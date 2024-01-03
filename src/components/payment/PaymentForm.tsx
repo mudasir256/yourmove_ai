@@ -9,9 +9,13 @@ import { useEffect, useState } from "react";
 
 interface Props {
   redirectSuffix: string;
+  redirectHandler?: () => void;
 }
 
-export default function PaymentForm({ redirectSuffix }: Props) {
+export default function PaymentForm({
+  redirectSuffix,
+  redirectHandler,
+}: Props) {
   const stripe = useStripe();
   const elements = useElements();
 
@@ -59,13 +63,22 @@ export default function PaymentForm({ redirectSuffix }: Props) {
       return;
     }
 
-    const { error } = await stripe.confirmPayment({
+    const { error, paymentIntent } = await stripe.confirmPayment({
       elements,
       confirmParams: {
         // Make sure to change this to your payment completion page
         return_url: `${import.meta.env.VITE_UI_BASE_URL}/${redirectSuffix}`,
       },
+      redirect: redirectHandler ? "if_required" : "always",
     });
+
+    // This point is reached if we have a payment intent
+    if (paymentIntent && paymentIntent.status === "succeeded") {
+      console.log("payment completed, call handler");
+      if (redirectHandler) {
+        redirectHandler();
+      }
+    }
 
     // This point will only be reached if there is an immediate error when
     // confirming the payment. Otherwise, your customer will be redirected to

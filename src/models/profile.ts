@@ -40,4 +40,5 @@ export interface FeedbackRequest {
 export interface ReviewedProfile {
   review: string;
   screenshots: Array<string>;
+  hasPaid: boolean;
 }

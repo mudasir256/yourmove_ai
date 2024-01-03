@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useProfileStore } from "../../stores/profile";
 import Markdown from "react-markdown";
+import { UnlockFullReviewModal } from "../modals/UnlockFullReviewModal";
 
 const PLAN_FEATURES = [
   "Detailed review of your profile",
@@ -9,12 +10,23 @@ const PLAN_FEATURES = [
   "30 day money back guarantee",
 ];
 
-export const ProfileReview = () => {
-  const [hasPaid, setHasPaid] = useState(false);
+interface Props {
+  hasPaid: boolean;
+  setHasPaid: (hasPaid: boolean) => void;
+}
+
+export const ProfileReview = ({ hasPaid, setHasPaid }: Props) => {
   const { reviewedProfile, setReviewedProfile } = useProfileStore();
+  const [unlockFullReviewModalOpen, setUnlockFullReviewModalOpen] =
+    useState(false);
 
   return (
     <div className="pb-40 mt-4">
+      <UnlockFullReviewModal
+        setHasPaid={setHasPaid}
+        open={unlockFullReviewModalOpen}
+        setOpen={setUnlockFullReviewModalOpen}
+      />
       <div className="mb-5">
         <h1 className="text-4xl font-bold">Your Review</h1>
       </div>
@@ -73,7 +85,7 @@ export const ProfileReview = () => {
 
                   <button
                     type="button"
-                    onClick={() => {}}
+                    onClick={() => setUnlockFullReviewModalOpen(true)}
                     className="mt-2 flex items-center justify-center w-full bg-brand-primary text-white py-3 rounded-full font-semibold -mb-1"
                   >
                     Activate

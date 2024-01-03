@@ -15,16 +15,17 @@ interface Props {
   // Which product they want to buy
   chosenProduct: ProductType | null;
   noThanksHandler: () => void;
+  email: string;
+  redirectHandler?: () => void;
 }
-
-// todo: change this to the email from the wizard
-const email = "mark@mail.com";
 
 export const Paywall = ({
   children,
   requiredProductsToSkipPaywall,
   chosenProduct,
   noThanksHandler,
+  email,
+  redirectHandler,
 }: Props) => {
   const [clientSecret, setClientSecret] = useState("");
   const [showPlans, setShowPlans] = useState(false);
@@ -95,7 +96,10 @@ export const Paywall = ({
               {clientSecret && (
                 <div className="mt-1">
                   <Elements options={options} stripe={stripePromise}>
-                    <PaymentForm redirectSuffix={toKebabCase(chosenProduct)} />
+                    <PaymentForm
+                      redirectSuffix={toKebabCase(chosenProduct)}
+                      redirectHandler={redirectHandler}
+                    />
                   </Elements>
                 </div>
               )}
