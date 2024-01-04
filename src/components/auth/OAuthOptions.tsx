@@ -21,7 +21,7 @@ export const OAuthOptions = () => {
       .catch((error) => {
         const errorMessage = error.message;
         setSignInError(errorMessage);
-        alert(error);
+        alert(`OAuth Error: ${errorMessage}`);
       });
   };
 
@@ -41,7 +41,7 @@ export const OAuthOptions = () => {
         const credential = OAuthProvider.credentialFromError(error);
 
         // ...
-        alert(error);
+        alert(`OAuth Error: ${errorMessage}`);
       });
   };
   return (

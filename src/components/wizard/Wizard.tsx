@@ -129,6 +129,30 @@ export const Wizard = ({
 
   return (
     <div className="relative h-screen">
+      <div className="absolute top-0 left-0 right-0 sm:h-3/4 h-2/3 lg:h-4/5">
+        <div className="relative h-full w-full">
+          <div
+            className="absolute bottom-0 right-0"
+            onClick={() => goToNextStep()}
+          >
+            <div className="mt-auto bg-brand-primary w-12 h-12 flex items-center justify-center rounded-full">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                strokeWidth="2.5"
+                className="w-8 h-8 stroke-white -mr-0.5"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  d="M8.25 4.5l7.5 7.5-7.5 7.5"
+                />
+              </svg>
+            </div>
+          </div>
+        </div>
+      </div>
       {paymentProcessing ? (
         <>
           <Loading title="Payment Processing..." />
@@ -161,26 +185,6 @@ export const Wizard = ({
                           ) : null;
                         })}
                       </>
-                    </div>
-                  </div>
-                  <div
-                    className="absolute bottom-0 mb-40 right-0"
-                    onClick={() => goToNextStep()}
-                  >
-                    <div className="mt-auto bg-brand-primary w-12 h-12 flex items-center justify-center rounded-full">
-                      <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        fill="none"
-                        viewBox="0 0 24 24"
-                        strokeWidth="2.5"
-                        className="w-8 h-8 stroke-white -mr-0.5"
-                      >
-                        <path
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                          d="M8.25 4.5l7.5 7.5-7.5 7.5"
-                        />
-                      </svg>
                     </div>
                   </div>
                 </>
