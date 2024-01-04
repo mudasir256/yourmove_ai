@@ -2,6 +2,7 @@ import {
   signInWithPopup,
   GoogleAuthProvider,
   OAuthProvider,
+  signInWithRedirect,
 } from "firebase/auth";
 import { auth } from "../../firebase";
 import { successfulSignIn } from "../../utils";
@@ -14,7 +15,7 @@ export const OAuthOptions = () => {
   const { setSignInError } = useAuthStore();
 
   const launchGoogleAuth = () => {
-    signInWithPopup(auth, googleProvider)
+    signInWithRedirect(auth, googleProvider)
       .then((result) => {
         successfulSignIn(result.user.email);
       })
@@ -25,7 +26,7 @@ export const OAuthOptions = () => {
   };
 
   const launchAppleAuth = () => {
-    signInWithPopup(auth, appleProvider)
+    signInWithRedirect(auth, appleProvider)
       .then((result) => {
         successfulSignIn(result.user.email);
       })
