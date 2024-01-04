@@ -83,6 +83,9 @@ export const useWizardStore = create<WizardStore>((set) => ({
   )
     ? JSON.parse(
         checkLocalStorageForInitialStepResults("profileReviewer").uploadPhoto
+          ? checkLocalStorageForInitialStepResults("profileReviewer")
+              .uploadPhoto
+          : "[]"
       )
     : [],
   setProfileReviewerFiles: (files: Array<string>) =>

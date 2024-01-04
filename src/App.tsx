@@ -1,7 +1,7 @@
 import { Toaster } from "react-hot-toast";
 import { QueryClient, QueryClientProvider } from "react-query";
 import * as Sentry from "@sentry/react";
-import { Route, Routes, useLocation } from "react-router-dom";
+import { Navigate, Route, Routes, useLocation } from "react-router-dom";
 import { ProfileWriter } from "./pages/ProfileWriter";
 import { ChatAssistant } from "./pages/ChatAssistant";
 import { ProfileReviewer } from "./pages/ProfileReviewer";
@@ -121,7 +121,7 @@ function App() {
             }`}
           >
             <Routes>
-              <Route path="/" element={<PaymentLoading />} />
+              <Route path="/" element={<Navigate to="/chat-assistant" />} />
               <Route path="/premium" element={<Premium />} />
               <Route path="/chat-assistant" element={<ChatAssistant />} />
               <Route path="/profile-writer" element={<ProfileWriter />} />
