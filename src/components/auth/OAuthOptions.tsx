@@ -2,7 +2,6 @@ import {
   signInWithPopup,
   GoogleAuthProvider,
   OAuthProvider,
-  signInWithRedirect,
 } from "firebase/auth";
 import { auth } from "../../firebase";
 import { successfulSignIn } from "../../utils";
@@ -15,18 +14,19 @@ export const OAuthOptions = () => {
   const { setSignInError } = useAuthStore();
 
   const launchGoogleAuth = () => {
-    signInWithRedirect(auth, googleProvider)
+    signInWithPopup(auth, googleProvider)
       .then((result) => {
         successfulSignIn(result.user.email);
       })
       .catch((error) => {
         const errorMessage = error.message;
         setSignInError(errorMessage);
+        alert(error);
       });
   };
 
   const launchAppleAuth = () => {
-    signInWithRedirect(auth, appleProvider)
+    signInWithPopup(auth, appleProvider)
       .then((result) => {
         successfulSignIn(result.user.email);
       })
@@ -41,6 +41,7 @@ export const OAuthOptions = () => {
         const credential = OAuthProvider.credentialFromError(error);
 
         // ...
+        alert(error);
       });
   };
   return (
