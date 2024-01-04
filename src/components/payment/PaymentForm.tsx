@@ -6,15 +6,20 @@ import {
 } from "@stripe/react-stripe-js";
 import { StripePaymentElementOptions } from "@stripe/stripe-js";
 import { useEffect, useState } from "react";
-import { useProfileStore } from "../../stores/profile";
-import { ProfileStep } from "../../constants/profile";
 
-export default function PaymentForm() {
-  const { setStep } = useProfileStore();
+interface Props {
+  redirectSuffix: string;
+  redirectHandler?: () => void;
+}
+
+export default function PaymentForm({
+  redirectSuffix,
+  redirectHandler,
+}: Props) {
   const stripe = useStripe();
   const elements = useElements();
 
-  const [message, setMessage] = useState(null);
+  const [message, setMessage] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
@@ -58,13 +63,22 @@ export default function PaymentForm() {
       return;
     }
 
-    const { error } = await stripe.confirmPayment({
+    const { error, paymentIntent } = await stripe.confirmPayment({
       elements,
       confirmParams: {
         // Make sure to change this to your payment completion page
-        return_url: import.meta.env.VITE_UI_BASE_URL,
+        return_url: `${import.meta.env.VITE_UI_BASE_URL}/${redirectSuffix}`,
       },
+      redirect: redirectHandler ? "if_required" : "always",
     });
+
+    // This point is reached if we have a payment intent
+    if (paymentIntent && paymentIntent.status === "succeeded") {
+      console.log("payment completed, call handler");
+      if (redirectHandler) {
+        redirectHandler();
+      }
+    }
 
     // This point will only be reached if there is an immediate error when
     // confirming the payment. Otherwise, your customer will be redirected to

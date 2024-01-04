@@ -27,12 +27,12 @@ export const LearnMoreModal = ({ open, setOpen }: Props) => {
           </svg>
         </div>
         <div className="flex items-center justify-center -mt-3">
-          <h1 className="text-2xl font-semibold">
-            Professional Profile Redesign
-          </h1>
+          <h1 className="text-2xl font-semibold">AI Enhanced Photos</h1>
         </div>
         <div className="flex items-center justify-center mt-2">
-          <p>Content here</p>
+          <p className="text-lg">
+            Professional-looking photos at a fraction of the cost.
+          </p>
         </div>
       </div>
     </Modal>

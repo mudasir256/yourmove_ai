@@ -1,3 +1,5 @@
+import { ProductType } from "../constants/payments";
+
 export interface ProfileResponse {
   prompt: string;
   response: string;
@@ -25,10 +27,18 @@ export interface Prompt {
 export interface HasUserPaidResponse {
   email: string;
   hasPaid: boolean;
+  products: Array<ProductType>;
+  purchasedProducts: Array<ProductType>;
 }
 
 export interface FeedbackRequest {
   topic?: string;
   email?: string;
   details?: string;
+}
+
+export interface ReviewedProfile {
+  review: string;
+  screenshots: Array<string>;
+  hasPaid: boolean;
 }

@@ -5,11 +5,7 @@ import { ClientSecretResponse } from "../../models/payment";
 import { Elements } from "@stripe/react-stripe-js";
 import PaymentForm from "./PaymentForm";
 import { Loading } from "../Loading";
-import { ProfileWizardProgress } from "../wizard/WizardProgress";
 import { useProfileStore } from "../../stores/profile";
-import { ProfileStep } from "../../constants/profile";
-import { useWizardStore } from "../../stores/wizard";
-import { WizardStepType } from "../../models/wizard";
 import { LearnMoreModal } from "../modals/LearnMoreModal";
 
 const PLAN_FEATURES = [
@@ -24,11 +20,11 @@ const stripePromise = loadStripe(
 
 interface Props {
   noThanksHandler: () => void;
+  stepResults: Record<string, string>;
 }
 
-export const PaymentPlans = ({ noThanksHandler }: Props) => {
+export const PaymentPlans = ({ noThanksHandler, stepResults }: Props) => {
   const { setStep } = useProfileStore();
-  const { stepResults, setWizardComplete } = useWizardStore();
   const [chosenPlan, setChosenPlan] = useState("");
   const [clientSecret, setClientSecret] = useState("");
   const [showPlans, setShowPlans] = useState(false);
@@ -57,12 +53,13 @@ export const PaymentPlans = ({ noThanksHandler }: Props) => {
   }, [chosenPlan]);
 
   const skipPlans = () => {
-    setStep(ProfileStep.PROFILE);
+    noThanksHandler();
   };
 
   const appearance = {
     theme: "stripe",
   };
+
   const options = {
     clientSecret,
     appearance,

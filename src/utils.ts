@@ -1,9 +1,19 @@
 import { useEffect } from "react";
-import { WizardStepType } from "./models/wizard";
-const steps = Object.values(WizardStepType);
+import { WizardStep, WizardStepType } from "./models/wizard";
+import { useAuthStore } from "./stores/auth";
+import toast from "react-hot-toast";
 
-export const getStepIndex = (step: WizardStepType) => {
-  const currentIndex = steps.indexOf(step);
+export const getStepIndex = (
+  step: WizardStepType,
+  steps: Array<WizardStep>
+) => {
+  console.log("yo");
+  console.log(step);
+  console.log(steps);
+  const currentIndex = steps.findIndex(
+    (step_: WizardStep) => step_.step == step
+  );
+  console.log(currentIndex);
 
   if (currentIndex === -1 || currentIndex === steps.length - 1) {
     return steps.length - 1;
@@ -11,8 +21,14 @@ export const getStepIndex = (step: WizardStepType) => {
   return currentIndex;
 };
 
-export const getStep = (step: WizardStepType, stepIndex: number) => {
-  return steps[getStepIndex(step) + stepIndex];
+export const getStep = (
+  step: WizardStepType,
+  stepIndex: number,
+  steps: Array<WizardStep>
+) => {
+  console.log("in getSteps");
+  console.log(steps);
+  return steps[getStepIndex(step, steps) + stepIndex];
 };
 
 export function useOutsideAlerter(ref: any, callback: () => void) {
@@ -33,3 +49,21 @@ export function useOutsideAlerter(ref: any, callback: () => void) {
     };
   }, [ref]);
 }
+
+export const removeEmoji = (text: string): string => {
+  // Regular expression to match Unicode emojis
+  const emojiRegex = /\p{Emoji_Presentation}/gu;
+
+  // Remove emojis from the start of the string
+  return text.replace(emojiRegex, "").trim().toLowerCase();
+};
+
+export const successfulSignIn = (email: string) => {
+  useAuthStore.getState().setAuthModalIsOpen(false);
+  toast.success(`Hey there ${email} 👋, welcome!`);
+};
+
+export const successfulSignUp = () => {
+  toast.success("Successfully signed up, welcome!");
+  useAuthStore.getState().setAuthModalIsOpen(false);
+};

@@ -11,7 +11,6 @@ interface Props {
 }
 
 export const FeedbackModal = ({ open, setOpen }: Props) => {
-
   // Make modal show after X time
   useEffect(() => {
     setTimeout(() => {
@@ -55,7 +54,6 @@ export const FeedbackModal = ({ open, setOpen }: Props) => {
                 details: yup.string().required("Required"),
               })}
               onSubmit={(values, actions) => {
-                console.log("here");
                 submitFeedback(values).then((res) => {
                   toast.success("Feedback submitted! Thank you!");
                 });

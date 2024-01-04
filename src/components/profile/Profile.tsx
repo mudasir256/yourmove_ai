@@ -7,13 +7,11 @@ import { useProfileStore } from "../../stores/profile";
 import { Loading } from "../Loading";
 import { useWizardStore } from "../../stores/wizard";
 import { TextingAssistantModal } from "../modals/TextingAssistantModal";
-import { WizardStepType } from "../../models/wizard";
 
 export const Profile = () => {
   const { profile, setProfile, setPrompts } = useProfileStore();
-  const { setWizardComplete } = useWizardStore();
-  const setWizardStep = useWizardStore((state) => state.setStep);
-  const { stepResults } = useWizardStore();
+  const { setProfileWriterWizardComplete, profileWriterStepResults } =
+    useWizardStore();
   const [feedbackModalOpen, setFeedbackModalOpen] = useState(false);
   const [textingAssistantModalOpen, setTextingAssistantModalOpen] =
     useState(false);
@@ -21,8 +19,8 @@ export const Profile = () => {
   // Get Prompts
   useEffect(() => {
     // Get profileType if its there if not default to bumble
-    const profileType = stepResults.profileType
-      ? stepResults.profileType.toLowerCase()
+    const profileType = profileWriterStepResults.profileType
+      ? profileWriterStepResults.profileType.toLowerCase()
       : "bumble";
     getPrompts(profileType).then((response) => {
       setPrompts(response.data);
@@ -31,7 +29,9 @@ export const Profile = () => {
 
   // Generate Profile
   useEffect(() => {
-    const stepResults = JSON.parse(localStorage.getItem("stepResults") || "{}");
+    const stepResults = JSON.parse(
+      localStorage.getItem("profileWriter:stepResults") || "{}"
+    );
     generateProfile(stepResults).then((response) => {
       setProfile(response.data);
     });
@@ -80,8 +80,7 @@ export const Profile = () => {
             <button
               onClick={() => {
                 setProfile({});
-                setWizardComplete(false);
-                setWizardStep(WizardStepType.PROFILE_TYPE);
+                setProfileWriterWizardComplete(false);
               }}
               type="button"
               className="mt-4 flex items-center justify-center w-full bg-white text-black py-3 rounded-full font-semibold -mb-1 border border-black hover:text-stone-600 hover:border-stone-500"
