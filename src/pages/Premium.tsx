@@ -9,6 +9,7 @@ import { PlanType } from "../constants/payments";
 import { SubscriptionForm } from "../components/premium/SubscriptionForm";
 import { Loading } from "../components/Loading";
 import { useUIStore } from "../stores/ui";
+import { useNavigate } from "react-router-dom";
 
 export const Premium = () => {
   const [showScrollForMoreFeatures, setShowScrollForMoreFeatures] =
@@ -19,6 +20,7 @@ export const Premium = () => {
   const [isLoading, setIsLoading] = useState(true);
   const { authModalIsOpen, setAuthModalIsOpen, isSubscribed } = useAuthStore();
   const { setStopScroll } = useUIStore();
+  const navigate = useNavigate();
 
   useEffect(() => {
     setTimeout(() => {
@@ -34,6 +36,22 @@ export const Premium = () => {
       className="h-screen overflow-y-hidden"
       style={{ paddingBottom: "8.5rem" }}
     >
+      <div className="ml-2 mt-3">
+        <svg
+          onClick={() => navigate(-1)}
+          xmlns="http://www.w3.org/2000/svg"
+          fill="none"
+          viewBox="0 0 24 24"
+          strokeWidth="2.5"
+          className="w-8 h-8 stroke-zinc-400"
+        >
+          <path
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            d="M15.75 19.5L8.25 12l7.5-7.5"
+          />
+        </svg>
+      </div>
       {isSubscribed ? (
         <div className="text-center mt-8">
           <div className="flex items-center justify-center mb-4">

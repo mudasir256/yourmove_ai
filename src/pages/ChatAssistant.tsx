@@ -74,6 +74,11 @@ export const ChatAssistant = () => {
                     <div
                       className="mr-4"
                       onClick={() => {
+                        // todo: the problem here is that when we click more ideas and the response is text
+                        // we have queryDecoded saved, so it thinks it's an image.
+                        // we need to save what kind of request, whether it has a screenshot or not
+                        // and use that as the flag to determine if we should call image or text.
+
                         // re-run with no file object. it will check if there is a recentQuery and use that instead
                         submitMessage(message, null);
                       }}

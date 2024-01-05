@@ -15,6 +15,8 @@ export const submitMessage = (message: string, file: File | null) => {
   console.log(auth.currentUser);
   const state = useChatStore.getState();
   const chatResponse = state.chatResponse;
+  console.log("chat response is");
+  console.log(chatResponse);
   state.setMessage(message);
   state.setSendingMessage(true);
 

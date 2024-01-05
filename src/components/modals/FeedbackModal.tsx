@@ -8,14 +8,17 @@ import { Modal } from "./Modal";
 interface Props {
   open: boolean;
   setOpen: (open: boolean) => void;
+  autoOpen?: boolean;
 }
 
-export const FeedbackModal = ({ open, setOpen }: Props) => {
+export const FeedbackModal = ({ open, setOpen, autoOpen }: Props) => {
   // Make modal show after X time
   useEffect(() => {
-    setTimeout(() => {
-      setOpen(true);
-    }, 15000);
+    if (autoOpen) {
+      setTimeout(() => {
+        setOpen(true);
+      }, 15000);
+    }
   }, []);
 
   return (

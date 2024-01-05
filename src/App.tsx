@@ -61,10 +61,6 @@ function App() {
   const [isLoading, setIsLoading] = useState(true);
   const location = useLocation();
 
-  useEffect(() => {
-    setTimeout(() => setIsLoading(false), 2000);
-  }, []);
-
   // When the URL changes, set the default stopScroll back to false
   useEffect(() => {
     console.log("we here");
@@ -103,39 +99,35 @@ function App() {
 
   return (
     <QueryClientProvider client={queryClient}>
-      {isLoading ? (
-        <Loading />
-      ) : (
-        <div className="flex flex-col h-screen">
-          {/* Top Section */}
-          <div className="flex-shrink-0 mt-4">
-            <SideNav />
-            <Toaster />
-            <AuthModal />
-          </div>
-
-          {/* Middle Scrollable Section */}
-          <div
-            className={`flex-grow mb-20 ${
-              stopScroll ? "overflow-y-hidden" : "overflow-y-auto"
-            }`}
-          >
-            <Routes>
-              <Route path="/" element={<Navigate to="/chat-assistant" />} />
-              <Route path="/premium" element={<Premium />} />
-              <Route path="/chat-assistant" element={<ChatAssistant />} />
-              <Route path="/profile-writer" element={<ProfileWriter />} />
-              <Route path="/profile-review" element={<ProfileReviewer />} />
-              <Route path="*">Not found</Route>
-            </Routes>
-          </div>
-
-          {/* Bottom NavBar Section */}
-          <div className="flex-shrink-0">
-            <BottomNav />
-          </div>
+      <div className="flex flex-col h-screen">
+        {/* Top Section */}
+        <div className="flex-shrink-0 mt-4">
+          <SideNav />
+          <Toaster />
+          <AuthModal />
         </div>
-      )}
+
+        {/* Middle Scrollable Section */}
+        <div
+          className={`flex-grow mb-20 ${
+            stopScroll ? "overflow-y-hidden" : "overflow-y-auto"
+          }`}
+        >
+          <Routes>
+            <Route path="/" element={<Navigate to="/chat-assistant" />} />
+            <Route path="/premium" element={<Premium />} />
+            <Route path="/chat-assistant" element={<ChatAssistant />} />
+            <Route path="/profile-writer" element={<ProfileWriter />} />
+            <Route path="/profile-review" element={<ProfileReviewer />} />
+            <Route path="*">Not found</Route>
+          </Routes>
+        </div>
+
+        {/* Bottom NavBar Section */}
+        <div className="flex-shrink-0">
+          <BottomNav />
+        </div>
+      </div>
     </QueryClientProvider>
   );
 }

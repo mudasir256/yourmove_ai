@@ -35,9 +35,6 @@ export const SettingsModal = ({ open, setOpen }: Props) => {
           <div className="w-1/3 flex items-center justify-center">
             <h1 className="text-xl font-bold">Settings</h1>
           </div>
-          <div className="w-1/3 flex items-center justify-end pr-2">
-            <h2 className="text-gray-500">Reset</h2>
-          </div>
         </div>
 
         <div className="mt-2">

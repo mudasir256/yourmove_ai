@@ -1,7 +1,7 @@
 import { Formik } from "formik";
 import { PlanType } from "../../constants/payments";
 import * as yup from "yup";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Field } from "../Field";
 import { auth } from "../../firebase";
 import { createSubscription } from "../../queries";
@@ -9,6 +9,7 @@ import toast from "react-hot-toast";
 import PaymentForm from "../payment/PaymentForm";
 import { Elements } from "@stripe/react-stripe-js";
 import { loadStripe } from "@stripe/stripe-js";
+import { Loading } from "../Loading";
 
 interface Props {
   planType: PlanType;
@@ -31,7 +32,30 @@ export const SubscriptionForm = ({ planType }: Props) => {
     appearance,
   };
 
-  return (
+  // Create the subscription with the users email and plan type
+  useEffect(() => {
+    // if we have an email
+    if (auth.currentUser && auth.currentUser.email) {
+      createSubscription({ email: auth.currentUser.email, term: planType })
+        .then((response) => {
+          console.log("Create sub");
+          console.log(response);
+          setClientSecret(response.data.clientSecret);
+          setSubmitting(false);
+        })
+        .catch((error) => {
+          console.log(error);
+          toast.error(
+            "There was an error creating your subscription, try again later."
+          );
+          setSubmitting(false);
+        });
+    } else {
+      // no email, do something else
+    }
+  }, []);
+
+  return clientSecret ? (
     <div className="mx-4 bg-white rounded-lg border border-black p-4 mt-2">
       <div className="flex">
         <div className="w-1/3">
@@ -63,95 +87,17 @@ export const SubscriptionForm = ({ planType }: Props) => {
           )}
         </div>
       </div>
-      <Formik
-        initialValues={{
-          email: auth.currentUser.email,
-        }}
-        validationSchema={yup.object({
-          email: yup
-            .string()
-            .email("Please enter a valid email")
-            .required("Required"),
-          firstName: yup.string().required("Required"),
-          lastName: yup.string().required("Required"),
-        })}
-        onSubmit={async (values: any) => {
-          setSubmitting(true);
-          createSubscription({ ...values, term: planType })
-            .then((response) => {
-              console.log("Create sub");
-              console.log(response);
-              setClientSecret(response.data.clientSecret);
-              setSubmitting(false);
-            })
-            .catch((error) => {
-              console.log(error);
-              toast.error(
-                "There was an error creating your subscription, try again later."
-              );
-              setSubmitting(false);
-            });
-        }}
-        enableReinitialize
-      >
-        {({ handleSubmit, setFieldValue, errors }) => (
-          <form className="mt-4">
-            <div className="flex">
-              <div className="w-1/2 mr-2">
-                <Field name="firstName" type="text" disabled={!!clientSecret} />
-              </div>
-              <div className="w-1/2 ml-2">
-                <Field name="lastName" type="text" disabled={!!clientSecret} />
-              </div>
-            </div>
-
-            <Field name="email" type="email" disabled />
-
-            {!!!clientSecret && (
-              <button
-                type="button"
-                onClick={() => handleSubmit()}
-                className="mt-2 flex items-center justify-center w-full bg-brand-primary text-white py-2 rounded-md font-semibold -mb-1"
-              >
-                {submitting ? (
-                  <>
-                    <svg
-                      className="animate-spin -ml-1 mr-2 h-5 w-5 text-white"
-                      xmlns="http://www.w3.org/2000/svg"
-                      fill="none"
-                      viewBox="0 0 24 24"
-                    >
-                      <circle
-                        className="opacity-25"
-                        cx="12"
-                        cy="12"
-                        r="10"
-                        stroke="currentColor"
-                        stroke-width="4"
-                      ></circle>
-                      <path
-                        className="opacity-75"
-                        fill="currentColor"
-                        d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
-                      ></path>
-                    </svg>
-                    Processing
-                  </>
-                ) : (
-                  "Next"
-                )}
-              </button>
-            )}
-          </form>
-        )}
-      </Formik>
-      {clientSecret && (
-        <div className="mt-1">
+      {clientSecret ? (
+        <div className="mt-4">
           <Elements options={options} stripe={stripePromise}>
-            <PaymentForm />
+            <PaymentForm redirectSuffix="/" />
           </Elements>
         </div>
+      ) : (
+        <Loading />
       )}
     </div>
+  ) : (
+    <Loading />
   );
 };

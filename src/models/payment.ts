@@ -6,8 +6,6 @@ export interface ClientSecretResponse {
 }
 
 export interface CreateSubscriptionRequest {
-  firstName: string;
-  lastName: string;
   email: string;
   term: PlanType;
 }

@@ -44,6 +44,7 @@ export const Profile = () => {
           <FeedbackModal
             open={feedbackModalOpen}
             setOpen={setFeedbackModalOpen}
+            autoOpen={true}
           />
           <TextingAssistantModal
             open={textingAssistantModalOpen}

@@ -25,11 +25,19 @@ import { AuthActionType } from "../../constants/auth";
 import { auth } from "../../firebase";
 import { signOut } from "firebase/auth";
 import toast from "react-hot-toast";
+import { FeedbackModal } from "../modals/FeedbackModal";
 
 const navigation = [
-  { name: "Contact Us", href: "#", current: true },
-  { name: "Download on iOS", href: "#", current: false },
+  { name: "Contact Us", href: "#", newTab: false, current: true },
+  {
+    name: "Download on iOS",
+    href: "https://apps.apple.com/us/app/yourmove-ai/id6444244023",
+    newTab: true,
+    current: false,
+  },
 ];
+
+const APP_STORE_URL = "https://apps.apple.com/us/app/yourmove-ai/id6444244023";
 
 function classNames(...classes: any) {
   return classes.filter(Boolean).join(" ");
@@ -41,16 +49,14 @@ export const SideNav = () => {
   const { setAuthModalIsOpen, setAuthActionType, isSubscribed } =
     useAuthStore();
   const user = auth.currentUser;
+  const [feedbackModalOpen, setFeedbackModalOpen] = useState(false);
 
   return (
     <>
+      <FeedbackModal open={feedbackModalOpen} setOpen={setFeedbackModalOpen} />
       <div>
         <Transition.Root show={sidebarOpen} as={Fragment}>
-          <Dialog
-            as="div"
-            className="relative z-50 lg:hidden"
-            onClose={setSidebarOpen}
-          >
+          <Dialog as="div" className="relative z-50" onClose={setSidebarOpen}>
             <Transition.Child
               as={Fragment}
               enter="transition-opacity ease-linear duration-300"
@@ -174,22 +180,41 @@ export const SideNav = () => {
                       <ul role="list" className="flex flex-1 flex-col gap-y-7">
                         <li>
                           <ul role="list" className="-mx-2 space-y-1">
-                            {navigation.map((item) => (
-                              <li key={item.name}>
-                                <a
-                                  href={item.href}
-                                  className={classNames(
-                                    "text-gray-700 hover:text-brand-primary hover:bg-gray-50",
-                                    "group flex gap-x-3 rounded-md p-2 text-sm leading-6 font-semibold "
-                                  )}
-                                >
-                                  <div className="w-5/6">{item.name}</div>
-                                  <div className="w-1/5 flex justify-end">
-                                    <ChevronRightIcon className="h-6 w-6 stroke-2 text-gray-400" />
-                                  </div>
-                                </a>
-                              </li>
-                            ))}
+                            <li key="">
+                              <a
+                                onClick={() => {
+                                  setSidebarOpen(false);
+                                  setTimeout(
+                                    () => setFeedbackModalOpen(true),
+                                    250
+                                  );
+                                }}
+                                className={classNames(
+                                  "text-gray-700 hover:text-brand-primary hover:bg-gray-50 cursor-pointer",
+                                  "group flex gap-x-3 rounded-md p-2 text-sm leading-6 font-semibold "
+                                )}
+                              >
+                                <div className="w-5/6">Contact Us</div>
+                                <div className="w-1/5 flex justify-end">
+                                  <ChevronRightIcon className="h-6 w-6 stroke-2 text-gray-400" />
+                                </div>
+                              </a>
+                            </li>
+                            <li key="">
+                              <a
+                                href={APP_STORE_URL}
+                                target="_blank"
+                                className={classNames(
+                                  "text-gray-700 hover:text-brand-primary hover:bg-gray-50",
+                                  "group flex gap-x-3 rounded-md p-2 text-sm leading-6 font-semibold "
+                                )}
+                              >
+                                <div className="w-5/6">Download iOS</div>
+                                <div className="w-1/5 flex justify-end">
+                                  <ChevronRightIcon className="h-6 w-6 stroke-2 text-gray-400" />
+                                </div>
+                              </a>
+                            </li>{" "}
                           </ul>
                         </li>
                         <li className="mt-auto">
@@ -228,11 +253,11 @@ export const SideNav = () => {
           </Dialog>
         </Transition.Root>
 
-        <div className="max-w-xl mx-auto px-4 pt-2">
-          <div className="sticky top-0 z-40 flex h-14 shrink-0 items-center gap-x-4 border-b border-gray-200 bg-white px-4 shadow-sm sm:gap-x-6 sm:px-6 lg:px-8 -mx-4 -mt-6">
+        <div className="px-4 pt-2 border-b border-gray-200 bg-white shadow-sm -mx-4 -mt-6">
+          <div className="mx-auto max-w-xl sticky top-0 z-40 flex h-14 shrink-0 items-center gap-x-4 px-4 sm:gap-x-6 lg:px-8">
             <button
               type="button"
-              className="-m-2.5 p-2.5 text-gray-700 lg:hidden"
+              className="-m-2.5 p-2.5 text-gray-700"
               onClick={() => setSidebarOpen(true)}
             >
               <span className="sr-only">Open sidebar</span>
@@ -262,9 +287,23 @@ export const SideNav = () => {
               )}
             </Link>
             <div className="flex flex-row-reverse w-full">
-              <span className="font-semibold text-brand-primary">
-                Download on iOS
-              </span>
+              {auth.currentUser ? (
+                <a
+                  target="_blank"
+                  href={APP_STORE_URL}
+                  className="font-semibold text-brand-primary"
+                >
+                  Download on iOS
+                </a>
+              ) : (
+                <button
+                  type="button"
+                  onClick={() => setAuthModalIsOpen(true)}
+                  className="font-semibold text-brand-primary"
+                >
+                  Sign in
+                </button>
+              )}
             </div>
           </div>
         </div>
