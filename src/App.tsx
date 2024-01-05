@@ -109,7 +109,7 @@ function App() {
 
         {/* Middle Scrollable Section */}
         <div
-          className={`flex-grow mb-20 ${
+          className={`flex-grow mb-20 mt-10 ${
             stopScroll ? "overflow-y-hidden" : "overflow-y-auto"
           }`}
         >

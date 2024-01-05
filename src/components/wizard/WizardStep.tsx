@@ -1,9 +1,11 @@
+import { useEffect } from "react";
 import { auth } from "../../firebase";
 import {
   WizardStep as WizardStepModel,
   WizardStepInputType,
   WizardStepType,
 } from "../../models/wizard";
+import { useUIStore } from "../../stores/ui";
 import { getStep } from "../../utils";
 import { FileUploadStep } from "./FileUploadStep";
 
@@ -30,9 +32,14 @@ export const WizardStep = ({
   const getStepValue = () => {
     return stepResults[wizardStep.step];
   };
+  const { stopScroll, setStopScroll } = useUIStore();
+
+  useEffect(() => {
+    setStopScroll(true);
+  }, []);
 
   return (
-    <div className="mt-6">
+    <div className="mt-6 mb-20">
       <svg
         onClick={() => {
           const previousStep = getStep(step, -1, steps);
