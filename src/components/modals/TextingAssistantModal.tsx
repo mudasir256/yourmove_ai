@@ -1,3 +1,4 @@
+import { useNavigate } from "react-router-dom";
 import { Modal } from "./Modal";
 
 interface Props {
@@ -6,6 +7,7 @@ interface Props {
 }
 
 export const TextingAssistantModal = ({ open, setOpen }: Props) => {
+  const navigate = useNavigate();
   return (
     <Modal open={open} setOpen={setOpen}>
       <div className="w-full">
@@ -38,14 +40,17 @@ export const TextingAssistantModal = ({ open, setOpen }: Props) => {
           </p>
         </div>
         <div className="flex w-full flex items-center justify-center">
-          <div className="mt-4 flex w-1/2">
+          <div className="mt-4 flex w-3/5">
             <div className="w-1/2">
               <img
                 src="https://firstpaloalto.com/wp-content/uploads/2020/02/apple-store-logo-png-1-transparent.png"
                 className="h-16"
               />
             </div>
-            <div className="w-1/2 flex border-2 border-black mt-1.5 mb-2 ml-3 items-center justify-center rounded-md">
+            <div
+              className="w-1/2 flex border-2 border-black mt-1.5 mb-2 ml-3 items-center justify-center rounded-md"
+              onClick={() => navigate("/chat-assistant")}
+            >
               <span className="font-semibold">Try it out</span>
               <svg
                 xmlns="http://www.w3.org/2000/svg"

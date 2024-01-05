@@ -7,14 +7,20 @@ import { useProfileStore } from "../../stores/profile";
 import { Loading } from "../Loading";
 import { useWizardStore } from "../../stores/wizard";
 import { TextingAssistantModal } from "../modals/TextingAssistantModal";
+import { useNavigate } from "react-router-dom";
+import { WizardStepType } from "../../models/wizard";
 
 export const Profile = () => {
   const { profile, setProfile, setPrompts } = useProfileStore();
-  const { setProfileWriterWizardComplete, profileWriterStepResults } =
-    useWizardStore();
+  const {
+    setProfileWriterWizardComplete,
+    profileWriterStepResults,
+    setProfileWriterStep,
+  } = useWizardStore();
   const [feedbackModalOpen, setFeedbackModalOpen] = useState(false);
   const [textingAssistantModalOpen, setTextingAssistantModalOpen] =
     useState(false);
+  const navigate = useNavigate();
 
   // Get Prompts
   useEffect(() => {
@@ -81,6 +87,7 @@ export const Profile = () => {
             <button
               onClick={() => {
                 setProfile({});
+                setProfileWriterStep(WizardStepType.PROFILE_TYPE);
                 setProfileWriterWizardComplete(false);
               }}
               type="button"
