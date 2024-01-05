@@ -20,12 +20,14 @@ export const ChatAssistant = () => {
     setScreenshotUploading,
     settingsModalOpen,
     setSettingsModalOpen,
+    setChatRequestType,
   } = useChatStore();
 
   // Start over, clear everything
   const startOver = () => {
     setChatResponse(null);
     setScreenshotUploading(null);
+    setChatRequestType(null);
   };
 
   return (

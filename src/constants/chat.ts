@@ -68,3 +68,9 @@ export enum MessageAuthorType {
   // Message was written by the user
   User = "User",
 }
+
+// whether it was an image or text
+export enum ChatRequestType {
+  Text = "Text",
+  Image = "Image",
+}

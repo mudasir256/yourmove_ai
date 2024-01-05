@@ -1,6 +1,9 @@
 import { PhotoIcon } from "@heroicons/react/24/outline";
 import { useChatStore } from "../../stores/chat";
-import { MessageInputConfigurations } from "../../constants/chat";
+import {
+  ChatRequestType,
+  MessageInputConfigurations,
+} from "../../constants/chat";
 import { ChangeEvent, useEffect, useRef, useState } from "react";
 import { Field, Formik } from "formik";
 import * as yup from "yup";
@@ -13,6 +16,8 @@ import { auth } from "../../firebase";
 export const submitMessage = (message: string, file: File | null) => {
   console.log("here");
   console.log(auth.currentUser);
+  console.log("chat request type is: ");
+  console.log(useChatStore.getState().chatRequestType);
   const state = useChatStore.getState();
   const chatResponse = state.chatResponse;
   console.log("chat response is");
@@ -21,7 +26,12 @@ export const submitMessage = (message: string, file: File | null) => {
   state.setSendingMessage(true);
 
   // If there is a file or we have the file already decoded
-  if (file || chatResponse?.queryDecoded) {
+  if (
+    (file || chatResponse?.queryDecoded) &&
+    useChatStore.getState().chatRequestType != ChatRequestType.Text
+  ) {
+    // Set that we are uploading an image
+    state.setChatRequestType(ChatRequestType.Image);
     state.setScreenshotUploading(file);
     sendChatImage(
       state.selectedMessageType.toLowerCase(),
@@ -40,6 +50,7 @@ export const submitMessage = (message: string, file: File | null) => {
         console.log("was an error");
       });
   } else {
+    state.setChatRequestType(ChatRequestType.Text);
     sendChatText(
       state.selectedMessageType.toLowerCase(),
       removeEmoji(state.selectedMessageStyle),
@@ -58,7 +69,12 @@ export const submitMessage = (message: string, file: File | null) => {
 };
 
 export const MessageInput = () => {
-  const { selectedMessageType, selectedMessageSubType } = useChatStore();
+  const {
+    selectedMessageType,
+    selectedMessageSubType,
+    chatRequestType,
+    setChatRequestType,
+  } = useChatStore();
   const [inputConfiguration, setInputConfiguration] = useState({} as any);
   const [file, setFile] = useState<File | null>(null);
 
@@ -139,10 +155,10 @@ export const MessageInput = () => {
                             className="group -my-2 -ml-2 inline-flex items-center rounded-full px-3 py-2 text-left text-gray-400"
                           >
                             <PhotoIcon
-                              className="-ml-1 mr-2 h-5 w-5 group-hover:text-gray-500"
+                              className="-ml-1 mr-2 h-5 w-5 group-hover:text-gray-500 text-brand-primary"
                               aria-hidden="true"
                             />
-                            <span className="text-sm italic text-gray-500 group-hover:text-gray-600">
+                            <span className="text-sm group-hover:text-gray-600 text-brand-primary font-bold">
                               {file ? file.name : inputConfiguration.screenshot}
                             </span>
                           </button>

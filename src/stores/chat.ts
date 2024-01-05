@@ -5,6 +5,7 @@ import {
   MessageSubType,
   MessageType,
   MessageAuthorType,
+  ChatRequestType,
 } from "../constants/chat";
 import { ChatResponse, Message } from "../models/chat";
 
@@ -47,6 +48,7 @@ interface ChatStore {
   setMessages: (messages: Array<Message>) => void;
   sendingMessage: boolean;
   setSendingMessage: (sendingMessage: boolean) => void;
+
   // Represents the message the user sent
   message: string;
   setMessage: (message: string) => void;
@@ -54,6 +56,10 @@ interface ChatStore {
   setScreenshotUploading: (screenshotUploading: File | null) => void;
   chatResponse: ChatResponse | null;
   setChatResponse: (chatResponse: ChatResponse | null) => void;
+
+  // So we know what type of Chat request was sent
+  chatRequestType: ChatRequestType | null;
+  setChatRequestType: (chatRequestType: ChatRequestType | null) => void;
 }
 
 export const useChatStore = create<ChatStore>((set) => ({
@@ -85,4 +91,7 @@ export const useChatStore = create<ChatStore>((set) => ({
     set({ screenshotUploading }),
   chatResponse: null,
   setChatResponse: (chatResponse: ChatResponse | null) => set({ chatResponse }),
+  chatRequestType: null,
+  setChatRequestType: (chatRequestType: ChatRequestType | null) =>
+    set({ chatRequestType }),
 }));
