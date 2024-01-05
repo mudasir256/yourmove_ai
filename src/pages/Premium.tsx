@@ -62,7 +62,7 @@ export const Premium = () => {
       ) : (
         <>
           <div className="h-full flex flex-col overflow-y-hidden">
-            <div className="h-1/6 pt-3 px-4">
+            <div className="pt-3 px-4">
               <div>
                 <svg
                   width="149"
@@ -116,71 +116,9 @@ export const Premium = () => {
                     <AIProfileConsulting />
                   </div>
                 </div>
-                <div className="text-center pt-4 border-t-2 border-b-2 border-black bg-white px-2 absolute w-full bottom-0 mb-10">
-                  {showScrollForMoreFeatures && (
-                    <div className="flex flex-col items-center absolute top-0 left-0 right-0 -mt-24">
-                      <div className="text-center bg-brand-secondary text-white items-center pt-2 px-4 border border-black rounded-lg opacity-90">
-                        <p className="text-lg">Scroll down for more features</p>
-                        <div className="animate-bounce flex justify-center">
-                          <ChevronDownIcon className="h-6 w-6 text-white" />
-                        </div>
-                      </div>
-                    </div>
-                  )}
 
-                  <h3 className="text-lg font-bold">Select your plan</h3>
-
-                  <div className="flex mt-3 -mt-10 pb-10">
-                    {/* Monthly */}
-                    <div
-                      className="w-1/2 border-2 border-brand-secondary rounded-lg mx-2 cursor-pointer"
-                      onClick={() => {
-                        setPlanBeingPurchased(PlanType.Monthly);
-                        // If the user isn't signed in, we need to sign them in or sign up
-                        if (!auth.currentUser) {
-                          setAuthModalIsOpen(true);
-                        }
-                      }}
-                    >
-                      <div className="bg-brand-secondary text-white py-1">
-                        <h4 className="text-white uppercase">Monthly Plan</h4>
-                      </div>
-                      <div className="py-2">
-                        <h3 className="text-2xl flex items-center justify-center">
-                          $7.00{" "}
-                          <span className="text-lg font-semithin pl-1 mt-0.5">
-                            / month
-                          </span>
-                        </h3>
-                      </div>
-                    </div>
-
-                    {/* Yearly */}
-                    <div
-                      className="w-1/2 border-2 border-brand-primary rounded-lg mx-2 cursor-pointer"
-                      onClick={() => {
-                        setPlanBeingPurchased(PlanType.Yearly);
-                        // If the user isn't signed in, we need to sign them in or sign up
-                        if (!auth.currentUser) {
-                          setAuthModalIsOpen(true);
-                        }
-                      }}
-                    >
-                      <div className="bg-brand-primary text-white py-1">
-                        <h4 className="text-white uppercase">
-                          Annual Plan - Save 60%
-                        </h4>
-                      </div>
-                      <div className="py-2">
-                        <h3 className="text-2xl flex items-center justify-center">
-                          $4.00{" "}
-                          <span className="text-lg font-semithin pl-1 mt-0.5">
-                            / month
-                          </span>
-                        </h3>
-                      </div>
-                    </div>
-                  </div>
+                <div className="-translate-y-14 h-32 w-full absolute bg-white w-full border-t-2 border-black fixed bottom-0 left-0 right-0">
+                  Plans here
                 </div>
               </>
             )}
