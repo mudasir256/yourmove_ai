@@ -20,7 +20,7 @@ export const Modal = ({ children, open, setOpen, backgroundColor }: Props) => {
         as={Fragment}
         show={open}
         enter="transform transition duration-[400ms]"
-        enterFrom="opacity-0 scale-50"
+        enterFrom="opacity-0gt scale-50"
         enterTo="opacity-100 rotate-0 scale-100"
         leave="transform duration-200 transition ease-in-out"
         leaveFrom="opacity-100 rotate-0 scale-100 "

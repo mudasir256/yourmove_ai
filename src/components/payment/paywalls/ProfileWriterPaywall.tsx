@@ -5,7 +5,11 @@ import { Paywall } from "./Paywall";
 import { ProductType } from "../../../constants/payments";
 import { useWizardStore } from "../../../stores/wizard";
 
-export const ProfileWriterPaywall = () => {
+interface Props {
+  hideNoThanks?: boolean;
+}
+
+export const ProfileWriterPaywall = ({ hideNoThanks }: Props) => {
   const { profileWriterStepResults, setProfileWriterWizardComplete } =
     useWizardStore();
   const [chosenProduct, setChosenProduct] = useState<ProductType | null>(null);
@@ -173,14 +177,16 @@ export const ProfileWriterPaywall = () => {
                   </div>
                 </div>
               </div>
-              <div className="mt-4 flex items-center justify-center mb-6">
-                <h3
-                  className="cursor-pointer text-lg text-zinc-500 hover:text-zinc-600 hover:underline"
-                  onClick={() => setProfileWriterWizardComplete(true)}
-                >
-                  no thanks
-                </h3>
-              </div>
+              {!hideNoThanks && (
+                <div className="mt-4 flex items-center justify-center mb-6">
+                  <h3
+                    className="cursor-pointer text-lg text-zinc-500 hover:text-zinc-600 hover:underline"
+                    onClick={() => setProfileWriterWizardComplete(true)}
+                  >
+                    no thanks
+                  </h3>
+                </div>
+              )}
             </div>
           </Paywall>
         </div>

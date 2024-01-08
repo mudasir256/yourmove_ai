@@ -7,7 +7,6 @@ import { useProfileStore } from "../../stores/profile";
 import { Loading } from "../Loading";
 import { useWizardStore } from "../../stores/wizard";
 import { TextingAssistantModal } from "../modals/TextingAssistantModal";
-import { useNavigate } from "react-router-dom";
 import { WizardStepType } from "../../models/wizard";
 
 export const Profile = () => {

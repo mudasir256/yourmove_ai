@@ -1,10 +1,10 @@
 import toast from "react-hot-toast";
-import { ProfileResponse, Prompt } from "../../models/profile";
+import { ProfileResponse } from "../../models/profile";
 import { PromptsListBox } from "../PromptListBox";
 import { useProfileStore } from "../../stores/profile";
 import { useState } from "react";
 import { createCopy, generateSingleProfileResponse } from "../../queries";
-import { UnlockModal } from "../modals/UnlockModal";
+import { UnlockProfileModal } from "../modals/UnlockProfileModal";
 import { useWizardStore } from "../../stores/wizard";
 
 interface Props {
@@ -16,7 +16,7 @@ interface Props {
 export const ProfileItem = ({ lockItem, profileResponse, index }: Props) => {
   // All prompts
   const { prompts, profile, setProfile } = useProfileStore();
-  const {stepResults} = useWizardStore();
+  const { stepResults } = useWizardStore();
   const [isProfileItemLoading, setIsProfileItemLoading] = useState(false);
   const [unlockModalIsOpen, setUnlockModalIsOpen] = useState(false);
 
@@ -34,7 +34,10 @@ export const ProfileItem = ({ lockItem, profileResponse, index }: Props) => {
 
   return (
     <div className="bg-white mb-4 shadow-md rounded-md p-4 relative">
-      <UnlockModal open={unlockModalIsOpen} setOpen={setUnlockModalIsOpen} />
+      <UnlockProfileModal
+        open={unlockModalIsOpen}
+        setOpen={setUnlockModalIsOpen}
+      />
       {isProfileItemLoading ? (
         <div className="flex items-center justify-center h-40">
           <svg
@@ -102,7 +105,11 @@ export const ProfileItem = ({ lockItem, profileResponse, index }: Props) => {
               className="bg-brand-primary p-2 rounded-full"
               onClick={() => {
                 navigator.clipboard.writeText(profileResponse.response);
-                createCopy(stepResults.email, profileResponse.prompt, profileResponse.response);
+                createCopy(
+                  stepResults.email,
+                  profileResponse.prompt,
+                  profileResponse.response
+                );
                 toast.success("Answer copied to clipboard");
               }}
             >
