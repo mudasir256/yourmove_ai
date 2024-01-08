@@ -1,5 +1,6 @@
-import { useRef } from "react";
+import { Fragment, useRef } from "react";
 import { useOutsideAlerter } from "../../utils";
+import { Transition } from "@headlessui/react";
 
 interface Props {
   children: React.ReactNode;
@@ -15,7 +16,16 @@ export const Modal = ({ children, open, setOpen, backgroundColor }: Props) => {
   });
   return (
     <>
-      {open ? (
+      <Transition
+        as={Fragment}
+        show={open}
+        enter="transform transition duration-[400ms]"
+        enterFrom="opacity-0 scale-50"
+        enterTo="opacity-100 rotate-0 scale-100"
+        leave="transform duration-200 transition ease-in-out"
+        leaveFrom="opacity-100 rotate-0 scale-100 "
+        leaveTo="opacity-0 scale-95 "
+      >
         <div className="h-screen w-full left-0 top-0 flex items-center justify-center z-50 backdrop-blur-sm fixed z-50">
           <div
             ref={modalRef}
@@ -27,9 +37,7 @@ export const Modal = ({ children, open, setOpen, backgroundColor }: Props) => {
             {children}
           </div>
         </div>
-      ) : (
-        <></>
-      )}
+      </Transition>
     </>
   );
 };
