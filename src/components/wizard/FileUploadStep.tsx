@@ -56,7 +56,7 @@ export const FileUploadStep = ({ alreadySetFiles, onFilesUploaded }: Props) => {
                     (alreadySetFiles && alreadySetFiles.length > 0) ? (
                       <div>
                         <div>
-                          {files ? files.length : ""}
+                          {files && !alreadySetFiles ? files.length : ""}
                           {alreadySetFiles ? alreadySetFiles.length : ""} files
                           selected
                         </div>

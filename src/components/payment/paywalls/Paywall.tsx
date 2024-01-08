@@ -7,6 +7,7 @@ import { ClientSecretResponse } from "../../../models/payment";
 import { ProductType } from "../../../constants/payments";
 import { toHeaderCase, toKebabCase } from "js-convert-case";
 import PaymentForm from "../PaymentForm";
+import { useUIStore } from "../../../stores/ui";
 
 interface Props {
   children: any;
@@ -30,6 +31,12 @@ export const Paywall = ({
   const [clientSecret, setClientSecret] = useState("");
   const [showPlans, setShowPlans] = useState(false);
   const [price, setPrice] = useState<string | null>(null);
+  const { setStopScroll } = useUIStore();
+
+  // Stop the scroll when the paywall is open
+  // useEffect(() => {
+  //   setStopScroll(true);
+  // }, []);
 
   // Check to see if the user has paid already
   useEffect(() => {
@@ -84,7 +91,7 @@ export const Paywall = ({
       {chosenProduct ? (
         <>
           {clientSecret ? (
-            <div className="mx-4 bg-white rounded-lg border border-black p-4 mt-2">
+            <div className="mx-4 bg-white rounded-lg border border-black p-4 mt-2 overflow-y-hidden">
               <div className="flex mb-4">
                 <div className="w-1/3 font-semibold">
                   {toHeaderCase(chosenProduct)}

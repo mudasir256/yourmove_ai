@@ -11,6 +11,14 @@ import { sendChatImage, sendChatText } from "../../queries";
 import { removeEmoji } from "../../utils";
 import { ChatResponse } from "../../models/chat";
 import { auth } from "../../firebase";
+import { history } from "../../main";
+import toast from "react-hot-toast";
+
+const handleNoChats = () => {
+  toast.error("You have ran out of Chats for today, upgrade for more.");
+  history.push("/premium");
+  useChatStore.getState().setSendingMessage(false);
+};
 
 // exported so other components can use it
 export const submitMessage = (message: string, file: File | null) => {
@@ -47,7 +55,7 @@ export const submitMessage = (message: string, file: File | null) => {
         state.setSendingMessage(false);
       })
       .catch((error) => {
-        console.log("was an error");
+        handleNoChats();
       });
   } else {
     state.setChatRequestType(ChatRequestType.Text);
@@ -63,7 +71,7 @@ export const submitMessage = (message: string, file: File | null) => {
         state.setSendingMessage(false);
       })
       .catch((error) => {
-        console.log("was an error");
+        handleNoChats();
       });
   }
 };

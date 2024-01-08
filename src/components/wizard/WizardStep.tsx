@@ -38,6 +38,13 @@ export const WizardStep = ({
     setStopScroll(true);
   }, []);
 
+  // If the step is and email and the user is logged in, set the email
+  useEffect(() => {
+    if (wizardStep.type === WizardStepInputType.EMAIL && auth.currentUser) {
+      setStepResult(wizardStep.step, auth.currentUser.email);
+    }
+  }, []);
+
   return (
     <div className="mt-6 mb-20">
       <svg
@@ -82,9 +89,7 @@ export const WizardStep = ({
             <div className="mt-4">
               <input
                 type="email"
-                value={
-                  auth.currentUser ? auth.currentUser.email : getStepValue()
-                }
+                value={getStepValue()}
                 placeholder={wizardStep.placeholder}
                 onChange={(e) => setStepResult(wizardStep.step, e.target.value)}
                 className="bg-transparent text-2xl w-full outline-none text-zinc-500"

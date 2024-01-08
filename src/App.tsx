@@ -57,9 +57,14 @@ function App() {
     hasCheckedForSubscription,
     setHasCheckedForSubscription,
   } = useAuthStore();
-  const { stopScroll, setStopScroll } = useUIStore();
-  const [isLoading, setIsLoading] = useState(true);
+  const { stopScroll, setStopScroll, hideBottomNav, setHideBottomNav } =
+    useUIStore();
   const location = useLocation();
+
+  // On App Load, reset bottom nav
+  useEffect(() => {
+    setHideBottomNav(location.pathname === "/premium");
+  }, [location]);
 
   // When the URL changes, set the default stopScroll back to false
   useEffect(() => {
@@ -123,10 +128,14 @@ function App() {
           </Routes>
         </div>
 
-        {/* Bottom NavBar Section */}
-        <div className="flex-shrink-0">
-          <BottomNav />
-        </div>
+        {!hideBottomNav && (
+          <>
+            {/* Bottom NavBar Section */}
+            <div className="flex-shrink-0">
+              <BottomNav />
+            </div>
+          </>
+        )}
       </div>
     </QueryClientProvider>
   );

@@ -253,8 +253,8 @@ export const SideNav = () => {
           </Dialog>
         </Transition.Root>
 
-        <div className="px-4 pt-2 border-b border-gray-200 bg-white shadow-sm -mt-6 fixed w-full z-50">
-          <div className="mx-auto max-w-xl sticky top-0 z-40 flex h-14 shrink-0 items-center gap-x-4 px-4 sm:gap-x-6 lg:px-8">
+        <div className="pt-2 border-b border-gray-200 bg-white shadow-sm -mt-6 fixed w-full z-50">
+          <div className="mx-auto max-w-xl sticky top-0 z-40 flex h-14 shrink-0 items-center gap-x-4 px-4 sm:gap-x-6">
             <button
               type="button"
               className="-m-2.5 p-2.5 text-gray-700"

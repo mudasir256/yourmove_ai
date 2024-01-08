@@ -20,7 +20,6 @@ export const Profile = () => {
   const [feedbackModalOpen, setFeedbackModalOpen] = useState(false);
   const [textingAssistantModalOpen, setTextingAssistantModalOpen] =
     useState(false);
-  const navigate = useNavigate();
 
   // Get Prompts
   useEffect(() => {

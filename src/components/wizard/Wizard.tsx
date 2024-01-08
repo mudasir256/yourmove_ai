@@ -129,26 +129,28 @@ export const Wizard = ({
 
   return (
     <div className="relative h-screen">
-      <div
-        className="absolute right-0 translate-y-[32rem]"
-        onClick={() => goToNextStep()}
-      >
-        <div className="mt-auto bg-brand-primary w-12 h-12 flex items-center justify-center rounded-full">
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            fill="none"
-            viewBox="0 0 24 24"
-            strokeWidth="2.5"
-            className="w-8 h-8 stroke-white -mr-0.5"
-          >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              d="M8.25 4.5l7.5 7.5-7.5 7.5"
-            />
-          </svg>
+      {step !== WizardStepType.PAYWALL && (
+        <div
+          className="absolute right-0 translate-y-[32rem]"
+          onClick={() => goToNextStep()}
+        >
+          <div className="mt-auto bg-brand-primary w-12 h-12 flex items-center justify-center rounded-full">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              strokeWidth="2.5"
+              className="w-8 h-8 stroke-white -mr-0.5"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                d="M8.25 4.5l7.5 7.5-7.5 7.5"
+              />
+            </svg>
+          </div>
         </div>
-      </div>
+      )}
       {paymentProcessing ? (
         <>
           <Loading title="Payment Processing..." />
@@ -185,7 +187,7 @@ export const Wizard = ({
                   </div>
                 </>
               ) : (
-                <div className="mt-10">
+                <div className="mt-6">
                   <WizardProgress step={step} steps={steps} />
                   <div className="px-2">
                     <div className="-ml-2 mt-6">
