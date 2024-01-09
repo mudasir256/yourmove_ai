@@ -5,3 +5,15 @@
 body {
   background-color: #f1f1f1;
 }
+/* 
+* {
+  outline: 1px solid red;
+} */
+
+/* explicitly disable all scrolling */
+html,
+body {
+  margin: 0;
+  height: 100%;
+  overflow: hidden;
+}

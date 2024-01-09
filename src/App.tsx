@@ -104,7 +104,7 @@ function App() {
 
   return (
     <QueryClientProvider client={queryClient}>
-      <div className="flex flex-col h-screen">
+      <div className="flex flex-col overflow-y-hidden">
         {/* Top Section */}
         <div className="flex-shrink-0 mt-4">
           <SideNav />
@@ -113,11 +113,7 @@ function App() {
         </div>
 
         {/* Middle Scrollable Section */}
-        <div
-          className={`flex-grow mb-20 mt-10 ${
-            stopScroll ? "overflow-y-hidden" : "overflow-y-auto"
-          }`}
-        >
+        <div className={`flex-grow overflow-y-auto`}>
           <Routes>
             <Route path="/" element={<Navigate to="/chat-assistant" />} />
             <Route path="/premium" element={<Premium />} />
@@ -131,7 +127,7 @@ function App() {
         {!hideBottomNav && (
           <>
             {/* Bottom NavBar Section */}
-            <div className="flex-shrink-0">
+            <div className="flex-shrink-0 mt-20">
               <BottomNav />
             </div>
           </>

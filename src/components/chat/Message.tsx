@@ -10,21 +10,14 @@ export const Message = ({ message }: Props) => {
   return (
     <div
       className={`mb-4 relative flex z-10 ${
-        message.author === MessageAuthorType.User ? "pr-4" : "pl-4"
+        message.author === MessageAuthorType.User ? "" : ""
       }`}
     >
       <div
-        className={`absolute ${
-          message.author === MessageAuthorType.Generated
-            ? "left-0 ml-2 bg-white"
-            : "right-0 mr-2 bg-brand-primary z-10"
-        } top-1/2 transform -translate-y-1/2 w-4 h-4 rotate-45`}
-      ></div>
-      <div
-        className={`w-full px-4 py-3 rounded-md z-50 relative ${
+        className={`w-full px-4 py-3 rounded-tr-lg z-50 relative ${
           message.author === MessageAuthorType.User
-            ? "bg-brand-primary text-white"
-            : "bg-white"
+            ? "bg-brand-dark text-white rounded-tl-lg rounded-br-lg"
+            : "bg-white rounded-l-lg"
         }`}
       >
         {message.author === MessageAuthorType.User && (
@@ -32,15 +25,29 @@ export const Message = ({ message }: Props) => {
         )}
         {message.content}
       </div>
+      <div className="absolute bottom-0 right-0 mr-[2.1rem]">
+        <svg
+          width="10"
+          height="16"
+          viewBox="0 0 10 16"
+          fill="none"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <path
+            d="M0 16V0C0 0 0.5 5.1811 3.87097 10.6667C5.9114 13.9871 10 16 10 16H0Z"
+            fill="white"
+          />
+        </svg>
+      </div>
       {message.author == MessageAuthorType.Generated && (
-        <div className="ml-3 flex items-center cursor-pointer">
+        <div className="ml-6 flex items-center cursor-pointer">
           <svg
             onClick={() => {
               navigator.clipboard.writeText(message.content);
               toast.success("Message copied to clipboard");
             }}
-            width="24"
-            height="24"
+            width="20"
+            height="20"
             viewBox="0 0 18 18"
             fill="none"
             xmlns="http://www.w3.org/2000/svg"

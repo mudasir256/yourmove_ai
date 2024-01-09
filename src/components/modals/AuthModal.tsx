@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 import { AuthActionType } from "../../constants/auth";
 import { useAuthStore } from "../../stores/auth";
 import { ForgotPassword } from "../auth/ForgotPassword";
@@ -6,8 +7,21 @@ import { SignUp } from "../auth/SignUp";
 import { Modal } from "./Modal";
 
 export const AuthModal = () => {
-  const { authModalIsOpen, setAuthModalIsOpen, authActionType } =
-    useAuthStore();
+  const {
+    authModalIsOpen,
+    setAuthModalIsOpen,
+    authActionType,
+    setShowOptions,
+    setAuthActionType,
+  } = useAuthStore();
+
+  useEffect(() => {
+    setTimeout(() => {
+      setAuthActionType(AuthActionType.SignIn);
+      setShowOptions(true);
+    }, 400);
+  }, [authModalIsOpen]);
+
   return (
     <>
       <Modal

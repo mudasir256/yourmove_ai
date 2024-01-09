@@ -64,6 +64,22 @@ export const Premium = () => {
         ) : (
           <>
             <div className="h-full flex flex-col overflow-y-hidden">
+              <div className="ml-2 mt-2">
+                <svg
+                  onClick={() => navigate(-1)}
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  strokeWidth="2.5"
+                  className="w-7 h-7 stroke-zinc-400"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    d="M15.75 19.5L8.25 12l7.5-7.5"
+                  />
+                </svg>
+              </div>
               <div className="pt-3 px-4">
                 <div>
                   <svg
@@ -101,7 +117,8 @@ export const Premium = () => {
               ) : (
                 <>
                   <div
-                    className="h-4/5 overflow-y-scroll px-4 mt-4"
+                    className="overflow-y-scroll px-4 mt-4 bg-blue-500"
+                    style={{ height: `${window.innerHeight - 405}px` }}
                     onScroll={() => setShowScrollForMoreFeatures(false)}
                   >
                     {/* Limitless Responses */}
@@ -116,7 +133,7 @@ export const Premium = () => {
 
                     <ExpertProfileIncluded />
 
-                    <div className="mb-[17rem]">
+                    <div className="premium-bottom-margin">
                       <AIProfileConsulting />
                     </div>
                   </div>

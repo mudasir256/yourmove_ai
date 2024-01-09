@@ -12,6 +12,10 @@ interface AuthStore {
   setIsSubscribed: (isSubscribed: boolean) => void;
   hasCheckedForSubscription: boolean;
   setHasCheckedForSubscription: (hasCheckedForSubscription: boolean) => void;
+
+  // For OAuth
+  showOptions: boolean;
+  setShowOptions: (showOptions: boolean) => void;
 }
 
 export const useAuthStore = create<AuthStore>((set) => ({
@@ -26,4 +30,6 @@ export const useAuthStore = create<AuthStore>((set) => ({
   hasCheckedForSubscription: false,
   setHasCheckedForSubscription: (hasCheckedForSubscription) =>
     set({ hasCheckedForSubscription }),
+  showOptions: false,
+  setShowOptions: (showOptions) => set({ showOptions }),
 }));

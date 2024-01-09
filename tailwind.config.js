@@ -6,6 +6,7 @@ export default {
       colors: {
         "brand-primary": "#E85E5C",
         "brand-secondary": "#410B13",
+        "brand-dark": "#270006",
         main: "#f1f1f1",
       },
     },

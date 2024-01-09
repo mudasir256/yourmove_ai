@@ -20,13 +20,25 @@ export const Modal = ({ children, open, setOpen, backgroundColor }: Props) => {
         as={Fragment}
         show={open}
         enter="transform transition duration-[400ms]"
+        enterFrom="opacity-0gt"
+        enterTo="opacity-100 rotate-0"
+        leave="transform duration-200 transition ease-in-out"
+        leaveFrom="opacity-100 rotate-0"
+        leaveTo="opacity-0 scale-95 "
+      >
+        <div className="h-screen z-40 fixed w-full top-0 left-0 backdrop-blur-sm"></div>
+      </Transition>
+      <Transition
+        as={Fragment}
+        show={open}
+        enter="transform transition duration-[400ms]"
         enterFrom="opacity-0gt scale-50"
         enterTo="opacity-100 rotate-0 scale-100"
         leave="transform duration-200 transition ease-in-out"
-        leaveFrom="opacity-100 rotate-0 scale-100 "
+        leaveFrom="opacity-100 rotate-0 scale-100"
         leaveTo="opacity-0 scale-95 "
       >
-        <div className="h-screen w-full left-0 top-0 flex items-center justify-center z-50 backdrop-blur-sm fixed z-50">
+        <div className="h-screen w-full left-0 top-0 flex items-center justify-center z-50 fixed z-50">
           <div
             ref={modalRef}
             style={{

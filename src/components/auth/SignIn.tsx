@@ -11,9 +11,10 @@ import { ErrorAlert } from "../ErrorAlert";
 import { successfulSignIn } from "../../utils";
 
 export const SignIn = () => {
-  const [showOptions, setShowOptions] = useState(true);
   const [submitting, setSubmitting] = useState(false);
   const {
+    showOptions,
+    setShowOptions,
     setAuthActionType,
     signInError,
     setSignInError,
@@ -21,7 +22,25 @@ export const SignIn = () => {
   } = useAuthStore();
 
   return (
-    <>
+    <div className="relative">
+      {!showOptions && (
+        <div className="absolute -mt-14">
+          <svg
+            onClick={() => setShowOptions(true)}
+            xmlns="http://www.w3.org/2000/svg"
+            fill="none"
+            viewBox="0 0 24 24"
+            strokeWidth="2.5"
+            className="w-10 h-10 stroke-zinc-400"
+          >
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              d="M15.75 19.5L8.25 12l7.5-7.5"
+            />
+          </svg>
+        </div>
+      )}
       {showOptions ? (
         <>
           <OAuthOptions />
@@ -134,6 +153,6 @@ export const SignIn = () => {
           )}
         </Formik>
       )}
-    </>
+    </div>
   );
 };

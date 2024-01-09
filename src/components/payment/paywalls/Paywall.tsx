@@ -91,7 +91,7 @@ export const Paywall = ({
       {chosenProduct ? (
         <>
           {clientSecret ? (
-            <div className="mx-4 bg-white rounded-lg border border-black p-4 mt-2 overflow-y-hidden">
+            <div className="mx-4 bg-white rounded-lg border border-black p-4 mt-2 overflow-y-scroll">
               <div className="flex mb-4">
                 <div className="w-1/3 font-semibold">
                   {toHeaderCase(chosenProduct)}
