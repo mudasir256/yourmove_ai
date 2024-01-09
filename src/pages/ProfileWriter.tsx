@@ -1,7 +1,4 @@
 import { useWizardStore } from "../stores/wizard";
-import { useProfileStore } from "../stores/profile";
-import { useEffect, useState } from "react";
-import { ProfileStep } from "../constants/profile";
 import { Wizard } from "../components/wizard/Wizard";
 import { PROFILE_WRITER_WIZARD_STEPS } from "../constants/wizard";
 import { Profile } from "../components/profile/Profile";

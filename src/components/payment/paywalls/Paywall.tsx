@@ -118,7 +118,10 @@ export const Paywall = ({
       ) : (
         <>
           {showPlans ? (
-            <div style={{ paddingBottom: `${window.innerHeight / 5}px` }}>
+            <div
+              className="overflow-y-scroll"
+              style={{ paddingBottom: `${window.innerHeight / 5}px` }}
+            >
               <div className="mb-3 w-3/4">
                 <h1 className="text-3xl font-bold ml-2">
                   Get more matches with premium

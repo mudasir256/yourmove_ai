@@ -51,7 +51,7 @@ export const ProfileReviewer = () => {
   }, [profileReviewerWizardComplete, profileReviewerFiles]);
 
   return (
-    <div className="px-4">
+    <div className="px-4 mt-16">
       <Wizard
         name="profileReviewer"
         steps={PROFILE_REVIEWER_WIZARD_STEPS}
