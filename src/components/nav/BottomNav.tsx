@@ -41,7 +41,7 @@ export const BottomNav = () => {
 
   return (
     <div className="fixed inset-x-0 bottom-0 bg-white shadow-md border-t">
-      <nav className="flex justify-around items-center h-16 max-w-xl mx-auto">
+      <nav className="flex sticky justify-around items-center h-16 max-w-xl mx-auto">
         {NAV_ITEMS.map((navItem) => {
           return (
             <Link to={navItem.link} className="cursor-pointer">

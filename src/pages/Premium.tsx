@@ -117,7 +117,7 @@ export const Premium = () => {
               ) : (
                 <>
                   <div
-                    className="overflow-y-scroll px-4 mt-4 bg-blue-500"
+                    className="overflow-y-scroll px-4 mt-4"
                     style={{ height: `${window.innerHeight - 405}px` }}
                     onScroll={() => setShowScrollForMoreFeatures(false)}
                   >
