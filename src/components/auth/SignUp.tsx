@@ -17,7 +17,7 @@ export const SignUp = () => {
 
   return (
     <div className="relative">
-      <div className="absolute -mt-16">
+      <div className="absolute -mt-16 cursor-pointer">
         <svg
           onClick={() => setAuthActionType(AuthActionType.SignIn)}
           xmlns="http://www.w3.org/2000/svg"

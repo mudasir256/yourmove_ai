@@ -121,20 +121,6 @@ export const ChatAssistant = () => {
             </>
           )}
         </div>
-        <div className="mt-4">
-          <div className="mb-2 mt-6">
-            <MessageStyleSelector />
-          </div>
-          <div>
-            <div
-              onClick={() => alert("do nothing")}
-              className="bg-brand-primary w-full py-2 font-bold text-white text-lg flex items-center justify-center rounded-lg"
-            >
-              Get ideas
-            </div>
-          </div>
-        </div>
-
         <div>
           <PremiumUpsellPrompt />
         </div>

@@ -16,6 +16,7 @@ import { Loading } from "./components/Loading";
 import { PaymentLoading } from "./pages/PaymentLoading";
 import { BottomNav } from "./components/nav/BottomNav";
 import { useUIStore } from "./stores/ui";
+import { Error } from "./components/Error";
 
 /* 
 
@@ -57,7 +58,7 @@ function App() {
     hasCheckedForSubscription,
     setHasCheckedForSubscription,
   } = useAuthStore();
-  const { stopScroll, setStopScroll, hideBottomNav, setHideBottomNav } =
+  const { error, setError, setStopScroll, hideBottomNav, setHideBottomNav } =
     useUIStore();
   const location = useLocation();
 
@@ -112,17 +113,25 @@ function App() {
           <AuthModal />
         </div>
 
-        {/* Middle Scrollable Section */}
-        <div className={`flex-grow overflow-y-auto`}>
-          <Routes>
-            <Route path="/" element={<Navigate to="/chat-assistant" />} />
-            <Route path="/premium" element={<Premium />} />
-            <Route path="/chat-assistant" element={<ChatAssistant />} />
-            <Route path="/profile-writer" element={<ProfileWriter />} />
-            <Route path="/profile-review" element={<ProfileReviewer />} />
-            <Route path="*">Not found</Route>
-          </Routes>
-        </div>
+        {error ? (
+          <div className="mt-20">
+            <Error error={error} />
+          </div>
+        ) : (
+          <>
+            {/* Middle Scrollable Section */}
+            <div className={`flex-grow overflow-y-auto`}>
+              <Routes>
+                <Route path="/" element={<Navigate to="/chat-assistant" />} />
+                <Route path="/premium" element={<Premium />} />
+                <Route path="/chat-assistant" element={<ChatAssistant />} />
+                <Route path="/profile-writer" element={<ProfileWriter />} />
+                <Route path="/profile-review" element={<ProfileReviewer />} />
+                <Route path="*">Not found</Route>
+              </Routes>
+            </div>
+          </>
+        )}
 
         {!hideBottomNav && (
           <>

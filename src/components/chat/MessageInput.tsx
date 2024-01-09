@@ -13,23 +13,12 @@ import { ChatResponse } from "../../models/chat";
 import { auth } from "../../firebase";
 import { history } from "../../main";
 import toast from "react-hot-toast";
-
-const handleNoChats = () => {
-  toast.error("You have ran out of Chats for today, upgrade for more.");
-  history.push("/premium");
-  useChatStore.getState().setSendingMessage(false);
-};
+import { MessageStyleSelector } from "./selectors/MessageStyleSelector";
 
 // exported so other components can use it
 export const submitMessage = (message: string, file: File | null) => {
-  console.log("here");
-  console.log(auth.currentUser);
-  console.log("chat request type is: ");
-  console.log(useChatStore.getState().chatRequestType);
   const state = useChatStore.getState();
   const chatResponse = state.chatResponse;
-  console.log("chat response is");
-  console.log(chatResponse);
   state.setMessage(message);
   state.setSendingMessage(true);
 
@@ -55,7 +44,7 @@ export const submitMessage = (message: string, file: File | null) => {
         state.setSendingMessage(false);
       })
       .catch((error) => {
-        handleNoChats();
+        // handleNoChats();
       });
   } else {
     state.setChatRequestType(ChatRequestType.Text);
@@ -71,7 +60,7 @@ export const submitMessage = (message: string, file: File | null) => {
         state.setSendingMessage(false);
       })
       .catch((error) => {
-        handleNoChats();
+        // handleNoChats();
       });
   }
 };
@@ -135,7 +124,7 @@ export const MessageInput = () => {
             {({ handleSubmit }) => (
               <form className="relative">
                 {inputConfiguration.screenshot ? (
-                  <>
+                  <div className="relative">
                     <div className="overflow-hidden rounded-lg border border-gray-300 shadow-sm focus-within:border-brand-primary focus-within:ring-1 focus-within:ring-brand-primary">
                       <Field
                         as="textarea"
@@ -150,7 +139,7 @@ export const MessageInput = () => {
 
                     <div className="absolute inset-x-px bottom-0">
                       <div className="flex items-center justify-between space-x-3 border-t border-gray-200 px-2 py-2 sm:px-3">
-                        <div className="flex">
+                        <div className="flex p-2">
                           <input
                             type="file"
                             ref={fileInputRef}
@@ -171,31 +160,9 @@ export const MessageInput = () => {
                             </span>
                           </button>
                         </div>
-                        <div className="flex-shrink-0">
-                          <button
-                            type="button"
-                            onClick={() => handleSubmit()}
-                            className="inline-flex items-center rounded-full bg-brand-primary p-2 text-sm font-semibold text-white shadow-sm cursor-pointer"
-                          >
-                            <svg
-                              width="20"
-                              height="20"
-                              viewBox="0 0 20 20"
-                              fill="none"
-                              xmlns="http://www.w3.org/2000/svg"
-                            >
-                              <path
-                                fill-rule="evenodd"
-                                clip-rule="evenodd"
-                                d="M4.33962 10.8312L13.6479 10.8312L9.58128 14.8979C9.25628 15.2229 9.25628 15.7562 9.58128 16.0812C9.90628 16.4062 10.4313 16.4062 10.7563 16.0812L16.2479 10.5895C16.5729 10.2645 16.5729 9.73953 16.2479 9.41454L10.7563 3.92287C10.4313 3.59787 9.90628 3.59787 9.58128 3.92287C9.25628 4.24787 9.25628 4.77287 9.58128 5.09787L13.6479 9.16454L4.33962 9.16454C3.88128 9.16454 3.50628 9.53954 3.50628 9.99787C3.50628 10.4562 3.88128 10.8312 4.33962 10.8312Z"
-                                fill="white"
-                              />
-                            </svg>
-                          </button>
-                        </div>
                       </div>
                     </div>
-                  </>
+                  </div>
                 ) : (
                   <Field
                     as="textarea"
@@ -207,6 +174,19 @@ export const MessageInput = () => {
                     defaultValue={""}
                   />
                 )}
+                <div className="mt-4">
+                  <div className="mb-2 mt-6">
+                    <MessageStyleSelector />
+                  </div>
+                  <div>
+                    <div
+                      onClick={() => handleSubmit()}
+                      className="cursor-pointer bg-brand-primary w-full py-2 font-bold text-white text-lg flex items-center justify-center rounded-lg"
+                    >
+                      Get ideas
+                    </div>
+                  </div>
+                </div>
               </form>
             )}
           </Formik>

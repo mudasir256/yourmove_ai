@@ -10,26 +10,65 @@ import {
   ProfileResponse,
   Prompt,
 } from "./models/profile";
-import { useProfileStore } from "./stores/profile";
 import { ProductType } from "./constants/payments";
+import { useUIStore } from "./stores/ui";
+import toast from "react-hot-toast";
+import { useAuthStore } from "./stores/auth";
+import { useChatStore } from "./stores/chat";
+import { auth } from "./firebase";
+import { history } from "./main";
 
 const BASE_URL = import.meta.env.VITE_API_BASE_URL;
 
 // temporary for testing
 axios.defaults.headers.common["ngrok-skip-browser-warning"] = "something";
 
+axios.defaults.timeout = 30000;
+
 axios.interceptors.response.use(
   (response) => {
+    console.log("was a success");
     // Was successful - return the response
     return response;
   },
   (error) => {
+    console.log("was an error");
+    console.log(error);
+
+    // If it timed out
+    if (error.code === "ECONNABORTED") {
+      useUIStore
+        .getState()
+        .setError(
+          "Our AI is taking longer than usual. Please wait a few minutes and try again."
+        );
+      // Handle the timeout error here
+    }
+    console.log(error.response.status === 429);
+    // If it was a 429 for the chat assistant
+    if (error.response.status === 429) {
+      // If they are signed in, redirect to premium
+      if (auth.currentUser) {
+        toast.error("You have ran out of Chats for today, upgrade for more.");
+        history.push("/premium");
+        useChatStore.getState().setSendingMessage(false);
+      }
+      // If they aren't signed in, show a toast and ask to sign in
+      else {
+        toast.error("You have ran out of Chats for today, sign in for more.");
+        useAuthStore.getState().setAuthModalIsOpen(true);
+
+        // Say we aren't submitting chats
+        useChatStore.getState().setSendingMessage(false);
+      }
+    }
+    return Promise.reject(error);
     // Was an error
-    useProfileStore
-      .getState()
-      .setError(
-        "Our AI encountered an error. Please wait a few minutes and try again."
-      );
+    // useProfileStore
+    //   .getState()
+    //   .setError(
+    //     "Our AI encountered an error. Please wait a few minutes and try again."
+    //   );
   }
 );
 

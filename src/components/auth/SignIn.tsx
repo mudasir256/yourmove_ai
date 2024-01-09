@@ -24,7 +24,7 @@ export const SignIn = () => {
   return (
     <div className="relative">
       {!showOptions && (
-        <div className="absolute -mt-14">
+        <div className="absolute -mt-14 cursor-pointer">
           <svg
             onClick={() => setShowOptions(true)}
             xmlns="http://www.w3.org/2000/svg"

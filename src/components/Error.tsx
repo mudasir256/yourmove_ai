@@ -1,19 +1,17 @@
 import { useState } from "react";
-import { useProfileStore } from "../stores/profile";
-import { useWizardStore } from "../stores/wizard";
 import { FeedbackModal } from "./modals/FeedbackModal";
+import { useUIStore } from "../stores/ui";
 
 interface Props {
   error: string;
 }
 
-export const Error = ({error}: Props) => {
-  const {setError} = useProfileStore();
-  const {setWizardComplete} = useWizardStore();
+export const Error = ({ error }: Props) => {
+  const { setError } = useUIStore();
   const [feedbackModalOpen, setFeedbackModalOpen] = useState(false);
 
   return (
-    <div className="relative h-screen">
+    <div className="relative h-screen p-6">
       <FeedbackModal open={feedbackModalOpen} setOpen={setFeedbackModalOpen} />
       <div>
         <div className="mt-6">
@@ -28,11 +26,11 @@ export const Error = ({error}: Props) => {
                 type="button"
                 onClick={() => {
                   setError(null);
-                  setWizardComplete(false);
+                  window.location.reload();
                 }}
                 className="mt-4 flex items-center justify-center w-full bg-brand-primary text-white py-3 rounded-full font-semibold -mb-1 border border-transparent"
               >
-                create my profile
+                home
               </button>
               <button
                 type="button"
