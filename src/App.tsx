@@ -127,7 +127,7 @@ function App() {
         {!hideBottomNav && (
           <>
             {/* Bottom NavBar Section */}
-            <div className="flex-shrink-0 mt-20">
+            <div className="flex-shrink-0 mt-20 z-50 relative">
               <BottomNav />
             </div>
           </>
