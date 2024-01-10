@@ -131,10 +131,10 @@ export const MessageInput = () => {
               <form className="relative">
                 {inputConfiguration.screenshot ? (
                   <div className="relative">
-                    <div className="overflow-hidden rounded-lg border border-gray-300 shadow-sm focus-within:border-brand-primary focus-within:ring-1 focus-within:ring-brand-primary">
+                    <div className="overflow-hidden rounded-tl-lg rounded-tr-lg border-t border-l border-r border-gray-300 shadow-sm">
                       <Field
                         as="textarea"
-                        rows={8}
+                        rows={5}
                         name="message"
                         id="message"
                         className="block w-full resize-none border-0 py-0 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6 px-4 py-3"
@@ -143,7 +143,7 @@ export const MessageInput = () => {
                       />
                     </div>
 
-                    <div className="absolute inset-x-px bottom-0">
+                    <div className="bg-white border-b border-l border-r rounded-bl-lg rounded-br-lg border-gray-300 inset-x-px bottom-0">
                       <div className="flex items-center justify-between space-x-3 border-t border-gray-200 px-2 py-2 sm:px-3">
                         <div className="flex p-2">
                           <input
