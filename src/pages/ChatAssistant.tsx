@@ -9,11 +9,13 @@ import { PremiumUpsellPrompt } from "../components/chat/PremiumUpsellPrompt";
 import { MessageAuthorType } from "../constants/chat";
 import { Screenshot } from "../components/chat/Screenshot";
 import { GeneratingRepliesLoader } from "../components/chat/GeneratingRepliesLoader";
+import { useEffect } from "react";
 
 export const ChatAssistant = () => {
   const {
     message,
     sendingMessage,
+    setSendingMessage,
     screenshotUploading,
     chatResponse,
     setChatResponse,
@@ -31,7 +33,7 @@ export const ChatAssistant = () => {
   };
 
   return (
-    <div className="h-screen px-3 sm:mx-0 sm:flex sm:justify-center sm:w-full mt-14">
+    <div className="h-screen mt-14 max-w-lg mx-auto">
       <div className="">
         <SettingsModal
           open={settingsModalOpen}
