@@ -1,8 +1,5 @@
-import { Formik } from "formik";
 import { PlanType } from "../../constants/payments";
-import * as yup from "yup";
 import { useEffect, useState } from "react";
-import { Field } from "../Field";
 import { auth } from "../../firebase";
 import { createSubscription } from "../../queries";
 import toast from "react-hot-toast";
@@ -10,6 +7,7 @@ import PaymentForm from "../payment/PaymentForm";
 import { Elements } from "@stripe/react-stripe-js";
 import { loadStripe } from "@stripe/stripe-js";
 import { Loading } from "../Loading";
+import { useNavigate } from "react-router-dom";
 
 interface Props {
   planType: PlanType;
@@ -22,6 +20,7 @@ const stripePromise = loadStripe(
 export const SubscriptionForm = ({ planType }: Props) => {
   const [submitting, setSubmitting] = useState(false);
   const [clientSecret, setClientSecret] = useState("");
+  const navigate = useNavigate();
 
   const appearance = {
     theme: "stripe",
@@ -56,7 +55,7 @@ export const SubscriptionForm = ({ planType }: Props) => {
   }, []);
 
   return clientSecret ? (
-    <div className="mx-4 bg-white rounded-lg border border-black p-4 mt-2">
+    <div className="mx-4 bg-white rounded-lg border border-black p-4 mt-4">
       <div className="flex">
         <div className="w-1/3">
           <svg
@@ -90,7 +89,17 @@ export const SubscriptionForm = ({ planType }: Props) => {
       {clientSecret ? (
         <div className="mt-4">
           <Elements options={options} stripe={stripePromise}>
-            <PaymentForm redirectSuffix="/" />
+            <PaymentForm
+              redirectSuffix="/"
+              redirectHandler={() => {
+                setTimeout(() => {
+                  toast.success(
+                    "Thank you for Subscribing to YourMove Premium!"
+                  );
+                  window.location.href = "/";
+                }, 2000);
+              }}
+            />
           </Elements>
         </div>
       ) : (

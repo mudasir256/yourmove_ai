@@ -34,8 +34,12 @@ export const Premium = () => {
     <Loading />
   ) : (
     <div
-      className="h-screen overflow-y-hidden flex justify-center"
-      style={{ paddingBottom: "8.5rem" }}
+      className={`h-screen overflow-y-hidden flex justify-center ${
+        auth.currentUser && planBeingPurchased ? "overflow-y-scroll" : ""
+      }`}
+      style={{
+        paddingBottom: auth.currentUser && planBeingPurchased ? "" : "8.5rem",
+      }}
     >
       <div className="max-w-xl">
         <div className="ml-2 mt-3">
@@ -113,7 +117,9 @@ export const Premium = () => {
                 </div>
               </div>
               {auth.currentUser && planBeingPurchased ? (
-                <SubscriptionForm planType={planBeingPurchased} />
+                <div className="overflow-y-scroll">
+                  <SubscriptionForm planType={planBeingPurchased} />
+                </div>
               ) : (
                 <>
                   <div
