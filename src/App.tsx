@@ -120,7 +120,7 @@ function App() {
         ) : (
           <>
             {/* Middle Scrollable Section */}
-            <div className={`flex-grow overflow-y-auto`}>
+            <div className={`flex-grow`}>
               <Routes>
                 <Route path="/" element={<Navigate to="/chat-assistant" />} />
                 <Route path="/premium" element={<Premium />} />

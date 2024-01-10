@@ -41,7 +41,7 @@ export const ChatAssistant = () => {
         <MessageSubTypeSelector />
         <div className="mt-4">
           {chatResponse ? (
-            <>
+            <div className="max-h-[30rem] overflow-y-scroll">
               {chatResponse.image ? (
                 <div className="mb-6 flex justify-end">
                   <div>
@@ -91,7 +91,7 @@ export const ChatAssistant = () => {
                   </div>
                 </>
               )}
-            </>
+            </div>
           ) : (
             <>
               {sendingMessage ? (
