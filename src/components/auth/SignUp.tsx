@@ -41,7 +41,10 @@ export const SignUp = () => {
               .string()
               .email("Please enter a valid email")
               .required("Required"),
-            password: yup.string().required("Required"),
+            password: yup
+              .string()
+              .min(6, "Password must be at least 6 characters")
+              .required("Required"),
             confirmPassword: yup
               .string()
               .required("Required")
