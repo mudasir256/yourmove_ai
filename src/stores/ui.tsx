@@ -9,6 +9,10 @@ interface UIStore {
   // For displaying an error
   error: string | null;
   setError: (error: string | null) => void;
+
+  // For hiding the Upsell briefly after they have signed in
+  hideUpsell: boolean;
+  setHideUpsell: (hideUpsell: boolean) => void;
 }
 
 export const useUIStore = create<UIStore>((set) => ({
@@ -18,4 +22,6 @@ export const useUIStore = create<UIStore>((set) => ({
   setHideBottomNav: (hideBottomNav) => set({ hideBottomNav }),
   error: null,
   setError: (error) => set({ error }),
+  hideUpsell: false,
+  setHideUpsell: (hideUpsell) => set({ hideUpsell }),
 }));

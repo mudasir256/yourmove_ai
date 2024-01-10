@@ -11,9 +11,9 @@ import { sendChatImage, sendChatText } from "../../queries";
 import { removeEmoji } from "../../utils";
 import { ChatResponse } from "../../models/chat";
 import { auth } from "../../firebase";
-import { history } from "../../main";
-import toast from "react-hot-toast";
+
 import { MessageStyleSelector } from "./selectors/MessageStyleSelector";
+import { useUIStore } from "../../stores/ui";
 
 // exported so other components can use it
 export const submitMessage = (message: string, file: File | null) => {
@@ -42,6 +42,9 @@ export const submitMessage = (message: string, file: File | null) => {
       .then((response) => {
         state.setChatResponse(response.data as ChatResponse);
         state.setSendingMessage(false);
+
+        // Unhide the upsell
+        useUIStore.getState().setHideUpsell(false);
       })
       .catch((error) => {
         // handleNoChats();
@@ -58,6 +61,9 @@ export const submitMessage = (message: string, file: File | null) => {
       .then((response) => {
         state.setChatResponse(response.data as ChatResponse);
         state.setSendingMessage(false);
+
+        // Unhide the upsell
+        useUIStore.getState().setHideUpsell(false);
       })
       .catch((error) => {
         // handleNoChats();

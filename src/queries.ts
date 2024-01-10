@@ -60,6 +60,9 @@ axios.interceptors.response.use(
 
         // Say we aren't submitting chats
         useChatStore.getState().setSendingMessage(false);
+
+        // Hide the Upsell as we only want to show that if we are signed in
+        useUIStore.getState().setHideUpsell(true);
       }
     }
     return Promise.reject(error);
