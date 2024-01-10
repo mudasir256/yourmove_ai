@@ -28,6 +28,7 @@ export enum MessageStyle {
 export enum Gender {
   Male = "🧔 Male",
   Female = "👩 Female",
+  Other = "Other",
 }
 
 export const MessageInputConfigurations = {
