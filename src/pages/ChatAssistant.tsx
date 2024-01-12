@@ -39,7 +39,7 @@ export const ChatAssistant = () => {
         />
         <MessageTypeSelector />
         <MessageSubTypeSelector />
-        <div className="mt-4 bg-red-500 relative overflow-y-scroll">
+        <div className="mt-4 relative overflow-y-scroll">
           {chatResponse ? (
             <div className="h-full">
               {chatResponse.image ? (

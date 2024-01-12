@@ -109,6 +109,7 @@ function App() {
     });
   }, []);
 
+  // For making the bottom nav responsive
   const [contentHeight, setContentHeight] = useState(window.innerHeight);
 
   const heightOfTopBar = 48; // Example height in pixels for the top bar
@@ -143,7 +144,7 @@ function App() {
           }}
           className={`${stopScroll ? "overflow-y-hidden" : "overflow-y-auto"}`}
         >
-          <div className="pt-12 bg-orange-400">
+          <div className="pt-12">
             {error ? (
               <div className="mt-20">
                 <Error error={error} />

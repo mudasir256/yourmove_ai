@@ -13,32 +13,37 @@ export const Message = ({ message }: Props) => {
         message.author === MessageAuthorType.User ? "" : ""
       }`}
     >
-      <div
-        className={`w-full px-4 py-3 rounded-tr-lg z-50 relative ${
-          message.author === MessageAuthorType.User
-            ? "bg-brand-dark text-white rounded-tl-lg rounded-br-lg"
-            : "bg-white rounded-l-lg"
-        }`}
-      >
-        {message.author === MessageAuthorType.User && (
-          <div className="font-bold text-sm">Your message</div>
-        )}
-        {message.content}
-      </div>
-      <div className="absolute bottom-0 right-0 mr-[2.1rem]">
-        <svg
-          width="10"
-          height="16"
-          viewBox="0 0 10 16"
-          fill="none"
-          xmlns="http://www.w3.org/2000/svg"
-        >
-          <path
-            d="M0 16V0C0 0 0.5 5.1811 3.87097 10.6667C5.9114 13.9871 10 16 10 16H0Z"
-            fill="white"
-          />
-        </svg>
-      </div>
+      {message.content && (
+        <>
+          <div
+            className={`w-full px-4 py-3 rounded-tr-lg z-50 relative ${
+              message.author === MessageAuthorType.User
+                ? "bg-brand-dark text-white rounded-tl-lg rounded-br-lg"
+                : "bg-white rounded-l-lg"
+            }`}
+          >
+            {message.author === MessageAuthorType.User && (
+              <div className="font-bold text-sm">Your message</div>
+            )}
+            {message.content}
+          </div>
+          <div className="absolute bottom-0 right-0 mr-[2.1rem]">
+            <svg
+              width="10"
+              height="16"
+              viewBox="0 0 10 16"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M0 16V0C0 0 0.5 5.1811 3.87097 10.6667C5.9114 13.9871 10 16 10 16H0Z"
+                fill="white"
+              />
+            </svg>
+          </div>
+        </>
+      )}
+
       {message.author == MessageAuthorType.Generated && (
         <div className="ml-6 flex items-center cursor-pointer">
           <svg

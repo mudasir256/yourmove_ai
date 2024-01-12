@@ -40,7 +40,7 @@ export const BottomNav = () => {
   const location = useLocation();
 
   return (
-    <div className="fixed bottom-0 left-0 w-full h-16 bg-green-500 z-10">
+    <div className="fixed bottom-0 left-0 w-full h-16 z-10 bg-white border-t shadow-md">
       <nav className="flex justify-around items-center h-16 max-w-xl mx-auto">
         {NAV_ITEMS.map((navItem) => {
           return (
