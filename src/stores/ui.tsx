@@ -13,6 +13,10 @@ interface UIStore {
   // For hiding the Upsell briefly after they have signed in
   hideUpsell: boolean;
   setHideUpsell: (hideUpsell: boolean) => void;
+
+  // For showing successful subscription
+  subscriptionSuccess: boolean;
+  setSubscriptionSuccess: (subscriptionSuccess: boolean) => void;
 }
 
 export const useUIStore = create<UIStore>((set) => ({
@@ -24,4 +28,6 @@ export const useUIStore = create<UIStore>((set) => ({
   setError: (error) => set({ error }),
   hideUpsell: false,
   setHideUpsell: (hideUpsell) => set({ hideUpsell }),
+  subscriptionSuccess: false,
+  setSubscriptionSuccess: (subscriptionSuccess) => set({ subscriptionSuccess }),
 }));

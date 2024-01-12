@@ -22,7 +22,7 @@ export const SubscriptionForm = ({ planType }: Props) => {
   const [submitting, setSubmitting] = useState(false);
   const [clientSecret, setClientSecret] = useState("");
   const navigate = useNavigate();
-  const { setStopScroll } = useUIStore();
+  const { setSubscriptionSuccess, setStopScroll } = useUIStore();
 
   // When the subscription form is showing, we want to re-enable scrolling
   useEffect(() => {
@@ -100,10 +100,7 @@ export const SubscriptionForm = ({ planType }: Props) => {
               redirectSuffix="/"
               redirectHandler={() => {
                 setTimeout(() => {
-                  toast.success(
-                    "Thank you for Subscribing to YourMove Premium!"
-                  );
-                  window.location.href = "/";
+                  setSubscriptionSuccess(true);
                 }, 2000);
               }}
             />
