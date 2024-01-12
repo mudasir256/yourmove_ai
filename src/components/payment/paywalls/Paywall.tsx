@@ -99,7 +99,7 @@ export const Paywall = ({
       {chosenProduct ? (
         <>
           {clientSecret ? (
-            <div className="mx-4 bg-white rounded-lg border border-black p-4 mt-2 overflow-y-scroll">
+            <div className="bg-white rounded-lg border border-black p-4 overflow-y-scroll mt-10">
               <div className="flex mb-4">
                 <div className="w-1/3 font-semibold">
                   {toHeaderCase(chosenProduct)}
@@ -114,6 +114,11 @@ export const Paywall = ({
                     <PaymentForm
                       redirectSuffix={toKebabCase(chosenProduct)}
                       redirectHandler={redirectHandler}
+                      returnUrl={
+                        chosenProduct === ProductType.AIPhotos
+                          ? "https://tally.so/r/nPz9DP"
+                          : null
+                      }
                     />
                   </Elements>
                 </div>

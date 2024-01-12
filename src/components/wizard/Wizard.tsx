@@ -129,28 +129,30 @@ export const Wizard = ({
 
   return (
     <div className="">
-      {step !== WizardStepType.PAYWALL && (
-        <div
-          className="absolute right-0 translate-y-[32rem] mr-4"
-          onClick={() => goToNextStep()}
-        >
-          <div className="mt-auto bg-brand-primary w-12 h-12 flex items-center justify-center rounded-full">
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              fill="none"
-              viewBox="0 0 24 24"
-              strokeWidth="2.5"
-              className="w-8 h-8 stroke-white -mr-0.5"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                d="M8.25 4.5l7.5 7.5-7.5 7.5"
-              />
-            </svg>
+      {step !== WizardStepType.PAYWALL &&
+        !paymentProcessing &&
+        !wizardComplete && (
+          <div
+            className="absolute right-0 translate-y-[32rem] mr-4"
+            onClick={() => goToNextStep()}
+          >
+            <div className="mt-auto bg-brand-primary w-12 h-12 flex items-center justify-center rounded-full">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                strokeWidth="2.5"
+                className="w-8 h-8 stroke-white -mr-0.5"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  d="M8.25 4.5l7.5 7.5-7.5 7.5"
+                />
+              </svg>
+            </div>
           </div>
-        </div>
-      )}
+        )}
       {paymentProcessing ? (
         <>
           <Loading title="Payment Processing..." />

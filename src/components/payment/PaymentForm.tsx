@@ -10,11 +10,14 @@ import { useEffect, useState } from "react";
 interface Props {
   redirectSuffix: string;
   redirectHandler?: () => void;
+  // Optional return URL to override. Good for when we need to redirect to https://tally.so/r/nPz9DP
+  returnUrl?: string | null;
 }
 
 export default function PaymentForm({
   redirectSuffix,
   redirectHandler,
+  returnUrl,
 }: Props) {
   const stripe = useStripe();
   const elements = useElements();
@@ -67,7 +70,9 @@ export default function PaymentForm({
       elements,
       confirmParams: {
         // Make sure to change this to your payment completion page
-        return_url: `${import.meta.env.VITE_UI_BASE_URL}/${redirectSuffix}`,
+        return_url: returnUrl
+          ? returnUrl
+          : `${import.meta.env.VITE_UI_BASE_URL}/${redirectSuffix}`,
       },
       redirect: redirectHandler ? "if_required" : "always",
     });

@@ -180,7 +180,7 @@ export const MessageInput = () => {
                     defaultValue={""}
                   />
                 )}
-                <div className="mt-4">
+                <div className="mt-3">
                   <div className="mb-2 mt-6">
                     <MessageStyleSelector />
                   </div>
