@@ -74,7 +74,7 @@ export const Wizard = ({
         // setStep(ProfileStep.PROFILE);
         setWizardComplete(true);
         setPaymentProcessing(false);
-      }, 10000);
+      }, 2000);
     }
   }, [window.location]);
 
