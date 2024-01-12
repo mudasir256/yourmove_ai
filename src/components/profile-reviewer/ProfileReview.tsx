@@ -92,7 +92,7 @@ export const ProfileReview = ({ hasPaid, setHasPaid }: Props) => {
             </div>
           </div>
         )}
-        <div className="p-4 overflow-y-hidden">
+        <div className="p-4">
           <Markdown>{reviewedProfile?.review}</Markdown>
         </div>
       </div>

@@ -8,6 +8,7 @@ import { ProductType } from "../../../constants/payments";
 import { toHeaderCase, toKebabCase } from "js-convert-case";
 import PaymentForm from "../PaymentForm";
 import { useUIStore } from "../../../stores/ui";
+import { useAuthStore } from "../../../stores/auth";
 
 interface Props {
   children: any;
@@ -31,12 +32,15 @@ export const Paywall = ({
   const [clientSecret, setClientSecret] = useState("");
   const [showPlans, setShowPlans] = useState(false);
   const [price, setPrice] = useState<string | null>(null);
-  const { setStopScroll } = useUIStore();
+  const { isSubscribed } = useAuthStore();
 
-  // Stop the scroll when the paywall is open
-  // useEffect(() => {
-  //   setStopScroll(true);
-  // }, []);
+  // If the user is subscribed, then we can skip the paywall
+  useEffect(() => {
+    if (isSubscribed) {
+      noThanksHandler();
+    } else {
+    }
+  }, [isSubscribed]);
 
   // Check to see if the user has paid already
   useEffect(() => {
@@ -45,21 +49,25 @@ export const Paywall = ({
     // check that the user has bought this product by calling the API.
     // we send a list of products that if one is bought, we can skip the paywall
     // it returns a list of products bought by that user
-    hasUserPaid(email, requiredProductsToSkipPaywall).then((response) => {
-      // if any products bought by the user are in the requiredProductsToSkipPaywall
-      if (
-        response.data.purchasedProducts.some((product: ProductType) =>
-          requiredProductsToSkipPaywall.includes(product)
-        )
-      ) {
-        // then we can skip the paywall
-        noThanksHandler();
-      } else {
-        // else, show plans as they haven't paid
-        setShowPlans(true);
-      }
-    });
-  }, []);
+
+    // Only check if the user has paid if they aren't subscribed
+    if (isSubscribed === false) {
+      hasUserPaid(email, requiredProductsToSkipPaywall).then((response) => {
+        // if any products bought by the user are in the requiredProductsToSkipPaywall
+        if (
+          response.data.purchasedProducts.some((product: ProductType) =>
+            requiredProductsToSkipPaywall.includes(product)
+          )
+        ) {
+          // then we can skip the paywall
+          noThanksHandler();
+        } else {
+          // else, show plans as they haven't paid
+          setShowPlans(true);
+        }
+      });
+    }
+  }, [isSubscribed]);
 
   // Get the client secret from the server when the component lodas
   useEffect(() => {

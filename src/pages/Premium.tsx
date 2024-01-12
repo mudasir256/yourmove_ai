@@ -11,22 +11,15 @@ import { Loading } from "../components/Loading";
 import { useUIStore } from "../stores/ui";
 import { useNavigate } from "react-router-dom";
 import { Success } from "../components/Success";
-import { sub } from "date-fns";
 
 export const Premium = () => {
-  const [showScrollForMoreFeatures, setShowScrollForMoreFeatures] =
-    useState(true);
+  const [setShowScrollForMoreFeatures] = useState(true);
   const [planBeingPurchased, setPlanBeingPurchased] = useState<PlanType | null>(
     null
   );
   const [isLoading, setIsLoading] = useState(true);
   const { setAuthModalIsOpen, isSubscribed } = useAuthStore();
-  const {
-    subscriptionSuccess,
-    setSubscriptionSuccess,
-    setStopScroll,
-    setHideBottomNav,
-  } = useUIStore();
+  const { subscriptionSuccess, setStopScroll, setHideBottomNav } = useUIStore();
   const navigate = useNavigate();
 
   useEffect(() => {
