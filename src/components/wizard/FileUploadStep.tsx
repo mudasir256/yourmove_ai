@@ -80,6 +80,7 @@ export const FileUploadStep = ({ alreadySetFiles, onFilesUploaded }: Props) => {
                           onChange={(event: ChangeEvent<HTMLInputElement>) => {
                             setFiles(event.target.files);
                           }}
+                          accept="image/png, image/gif, image/jpeg"
                         />
                       </>
                     )}

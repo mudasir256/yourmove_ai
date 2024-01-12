@@ -31,7 +31,7 @@ export const ChatAssistant = () => {
   };
 
   return (
-    <div className="h-screen mt-14 max-w-xl mx-auto px-4">
+    <div className=" max-w-xl mx-auto px-4">
       <div className="">
         <SettingsModal
           open={settingsModalOpen}
@@ -39,9 +39,9 @@ export const ChatAssistant = () => {
         />
         <MessageTypeSelector />
         <MessageSubTypeSelector />
-        <div className="mt-4">
+        <div className="mt-4 bg-red-500 relative overflow-y-scroll">
           {chatResponse ? (
-            <div className="max-h-[30rem] overflow-y-scroll no-scrollbar">
+            <div className="h-full">
               {chatResponse.image ? (
                 <div className="mb-6 flex justify-end">
                   <div>

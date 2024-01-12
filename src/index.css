@@ -28,3 +28,27 @@ body {
   -ms-overflow-style: none; /* IE and Edge */
   scrollbar-width: none; /* Firefox */
 }
+
+.appContainer {
+  display: flex;
+  flex-direction: column;
+  height: calc(var(--vh, 1vh) * 100); /* Use the custom property */
+}
+
+.topSection {
+  height: 60px; /* Example fixed height, adjust as needed */
+}
+
+.middleSection {
+  overflow-y: auto;
+  height: calc(
+    100vh - 60px - 70px
+  ); /* Adjust the calc() to subtract the top section and bottom nav heights */
+}
+
+.bottomNav {
+  position: fixed;
+  bottom: 0;
+  height: 50px; /* Example fixed height, adjust as needed */
+  width: 100%;
+}

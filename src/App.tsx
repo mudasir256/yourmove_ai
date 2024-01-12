@@ -103,24 +103,42 @@ function App() {
     });
   }, []);
 
+  const [contentHeight, setContentHeight] = useState(window.innerHeight);
+
+  const heightOfTopBar = 48; // Example height in pixels for the top bar
+  const heightOfBottomBar = 16; // Example height in pixels for the bottom bar
+
+  const updateContentHeight = () => {
+    // Calculate available height for content
+    const availableHeight =
+      window.innerHeight - (heightOfTopBar + heightOfBottomBar);
+    setContentHeight(availableHeight);
+  };
+
+  useEffect(() => {
+    window.addEventListener("resize", updateContentHeight);
+
+    // Set the initial content height
+    updateContentHeight();
+
+    // Remove event listener on cleanup
+    return () => window.removeEventListener("resize", updateContentHeight);
+  }, []);
+
   return (
     <QueryClientProvider client={queryClient}>
-      <div className="flex flex-col overflow-y-hidden">
-        {/* Top Section */}
-        <div className="flex-shrink-0 mt-4">
-          <SideNav />
-          <Toaster />
-          <AuthModal />
-        </div>
-
-        {error ? (
-          <div className="mt-20">
-            <Error error={error} />
-          </div>
-        ) : (
-          <>
-            {/* Middle Scrollable Section */}
-            <div className={`flex-grow overflow-y-auto`}>
+      <div className="flex flex-col h-screen">
+        <SideNav />
+        <div
+          style={{ maxHeight: `${contentHeight}px` }}
+          className="overflow-y-auto"
+        >
+          <div className="pt-12 overflow-y-auto bg-orange-400">
+            {error ? (
+              <div className="mt-20">
+                <Error error={error} />
+              </div>
+            ) : (
               <Routes>
                 <Route path="/" element={<Navigate to="/chat-assistant" />} />
                 <Route path="/premium" element={<Premium />} />
@@ -129,18 +147,10 @@ function App() {
                 <Route path="/profile-review" element={<ProfileReviewer />} />
                 <Route path="*">Not found</Route>
               </Routes>
-            </div>
-          </>
-        )}
-
-        {!hideBottomNav && (
-          <>
-            {/* Bottom NavBar Section */}
-            <div className="flex-shrink-0 mt-20 z-50 relative">
-              <BottomNav />
-            </div>
-          </>
-        )}
+            )}
+          </div>
+        </div>
+        <BottomNav />
       </div>
     </QueryClientProvider>
   );
