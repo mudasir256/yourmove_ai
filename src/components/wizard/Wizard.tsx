@@ -131,7 +131,7 @@ export const Wizard = ({
     <div className="">
       {step !== WizardStepType.PAYWALL && (
         <div
-          className="absolute right-0 translate-y-[32rem]"
+          className="absolute right-0 translate-y-[32rem] mr-4"
           onClick={() => goToNextStep()}
         >
           <div className="mt-auto bg-brand-primary w-12 h-12 flex items-center justify-center rounded-full">

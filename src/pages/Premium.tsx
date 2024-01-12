@@ -34,9 +34,7 @@ export const Premium = () => {
     <Loading />
   ) : (
     <div
-      className={`h-screen overflow-y-hidden flex justify-center ${
-        auth.currentUser && planBeingPurchased ? "overflow-y-scroll" : ""
-      }`}
+      className={` flex justify-center`}
       style={{
         paddingBottom: auth.currentUser && planBeingPurchased ? "" : "8.5rem",
       }}
@@ -68,22 +66,6 @@ export const Premium = () => {
         ) : (
           <>
             <div className="h-full flex flex-col overflow-y-hidden">
-              <div className="ml-2 mt-2">
-                <svg
-                  onClick={() => navigate(-1)}
-                  xmlns="http://www.w3.org/2000/svg"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  strokeWidth="2.5"
-                  className="w-7 h-7 stroke-zinc-400"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    d="M15.75 19.5L8.25 12l7.5-7.5"
-                  />
-                </svg>
-              </div>
               <div className="pt-3 px-4">
                 <div>
                   <svg
@@ -117,7 +99,7 @@ export const Premium = () => {
                 </div>
               </div>
               {auth.currentUser && planBeingPurchased ? (
-                <div className="overflow-y-scroll">
+                <div className="">
                   <SubscriptionForm planType={planBeingPurchased} />
                 </div>
               ) : (
@@ -153,7 +135,7 @@ export const Premium = () => {
                         <div className="flex mt-3 -mt-10 pb-10">
                           {/* Monthly */}
                           <div
-                            className="w-1/2 border-2 border-brand-secondary rounded-lg mx-2 cursor-pointer"
+                            className="w-1/2 border-2 border-brand-secondary rounded-lg mx-2 cursor-pointer z-50"
                             onClick={() => {
                               setPlanBeingPurchased(PlanType.Monthly);
                               // If the user isn't signed in, we need to sign them in or sign up

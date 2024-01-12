@@ -30,10 +30,7 @@ export const ProfileReview = ({ hasPaid, setHasPaid }: Props) => {
       <div className="mb-5">
         <h1 className="text-4xl font-bold">Your Review</h1>
       </div>
-      <div
-        className="bg-white border-2 border-black rounded-md shadow-lg relative"
-        style={{ height: hasPaid ? "100%" : "32rem" }}
-      >
+      <div className="bg-white border-2 border-black rounded-md shadow-lg relative">
         {!hasPaid && (
           <div className="absolute w-full h-full bg-gradient-to-t from-black via-black">
             <div className="w-full h-full relative">
@@ -95,10 +92,7 @@ export const ProfileReview = ({ hasPaid, setHasPaid }: Props) => {
             </div>
           </div>
         )}
-        <div
-          className="p-4 overflow-y-hidden"
-          style={{ maxHeight: hasPaid ? "100%" : "30rem" }}
-        >
+        <div className="p-4 overflow-y-hidden">
           <Markdown>{reviewedProfile?.review}</Markdown>
         </div>
       </div>

@@ -58,8 +58,14 @@ function App() {
     hasCheckedForSubscription,
     setHasCheckedForSubscription,
   } = useAuthStore();
-  const { error, setError, setStopScroll, hideBottomNav, setHideBottomNav } =
-    useUIStore();
+  const {
+    stopScroll,
+    error,
+    setError,
+    setStopScroll,
+    hideBottomNav,
+    setHideBottomNav,
+  } = useUIStore();
   const location = useLocation();
 
   // On App Load, reset bottom nav
@@ -128,12 +134,16 @@ function App() {
   return (
     <QueryClientProvider client={queryClient}>
       <div className="flex flex-col h-screen">
+        <Toaster />
+        <AuthModal />
         <SideNav />
         <div
-          style={{ maxHeight: `${contentHeight}px` }}
-          className="overflow-y-auto"
+          style={{
+            maxHeight: `${hideBottomNav ? "100%" : contentHeight + "px"}`,
+          }}
+          className={`${stopScroll ? "overflow-y-hidden" : "overflow-y-auto"}`}
         >
-          <div className="pt-12 overflow-y-auto bg-orange-400">
+          <div className="pt-12 bg-orange-400">
             {error ? (
               <div className="mt-20">
                 <Error error={error} />
@@ -150,7 +160,7 @@ function App() {
             )}
           </div>
         </div>
-        <BottomNav />
+        {!hideBottomNav && <BottomNav />}
       </div>
     </QueryClientProvider>
   );

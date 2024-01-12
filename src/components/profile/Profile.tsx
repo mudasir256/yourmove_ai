@@ -44,10 +44,7 @@ export const Profile = () => {
   return (
     <>
       {profile.length > 0 ? (
-        <div
-          className="mt-4"
-          style={{ paddingBottom: `${window.innerHeight / 2.8}px` }}
-        >
+        <div className="mt-4 pb-4">
           <FeedbackModal
             open={feedbackModalOpen}
             setOpen={setFeedbackModalOpen}

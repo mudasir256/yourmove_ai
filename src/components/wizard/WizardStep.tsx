@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { auth } from "../../firebase";
 import {
   WizardStep as WizardStepModel,
@@ -34,6 +34,12 @@ export const WizardStep = ({
   };
   const { stopScroll, setStopScroll } = useUIStore();
 
+  const [isFirstStep, setIsFirstStep] = useState(
+    !!!steps.findIndex(
+      (wizardStep: WizardStepModel) => wizardStep.step === step
+    )
+  );
+
   useEffect(() => {
     setStopScroll(true);
   }, []);
@@ -47,25 +53,27 @@ export const WizardStep = ({
 
   return (
     <div className="mt-6 mb-20">
-      <svg
-        onClick={() => {
-          const previousStep = getStep(step, -1, steps);
-          setStep(previousStep.step);
-          localStorage.setItem(`${name}:step`, previousStep.step);
-        }}
-        xmlns="http://www.w3.org/2000/svg"
-        fill="none"
-        viewBox="0 0 24 24"
-        strokeWidth="2.5"
-        className="w-12 h-12 stroke-zinc-400"
-      >
-        <path
-          strokeLinecap="round"
-          strokeLinejoin="round"
-          d="M15.75 19.5L8.25 12l7.5-7.5"
-        />
-      </svg>
-      <div className="mt-6 px-2">
+      {!isFirstStep && (
+        <svg
+          onClick={() => {
+            const previousStep = getStep(step, -1, steps);
+            setStep(previousStep.step);
+            localStorage.setItem(`${name}:step`, previousStep.step);
+          }}
+          xmlns="http://www.w3.org/2000/svg"
+          fill="none"
+          viewBox="0 0 24 24"
+          strokeWidth="2.5"
+          className="w-12 h-12 stroke-zinc-400"
+        >
+          <path
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            d="M15.75 19.5L8.25 12l7.5-7.5"
+          />
+        </svg>
+      )}
+      <div className={`px-2 ${isFirstStep ? "mt-10" : "mt-6"}`}>
         <h1 className="text-4xl font-bold">{wizardStep.label}</h1>
 
         <div className="">

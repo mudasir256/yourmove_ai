@@ -8,6 +8,7 @@ import { Elements } from "@stripe/react-stripe-js";
 import { loadStripe } from "@stripe/stripe-js";
 import { Loading } from "../Loading";
 import { useNavigate } from "react-router-dom";
+import { useUIStore } from "../../stores/ui";
 
 interface Props {
   planType: PlanType;
@@ -21,6 +22,12 @@ export const SubscriptionForm = ({ planType }: Props) => {
   const [submitting, setSubmitting] = useState(false);
   const [clientSecret, setClientSecret] = useState("");
   const navigate = useNavigate();
+  const { setStopScroll } = useUIStore();
+
+  // When the subscription form is showing, we want to re-enable scrolling
+  useEffect(() => {
+    setStopScroll(false);
+  }, []);
 
   const appearance = {
     theme: "stripe",
@@ -57,7 +64,7 @@ export const SubscriptionForm = ({ planType }: Props) => {
   return clientSecret ? (
     <div className="mx-4 bg-white rounded-lg border border-black p-4 mt-4">
       <div className="flex">
-        <div className="w-1/3">
+        <div className="w-1/2">
           <svg
             width="149"
             height="25"
@@ -76,7 +83,7 @@ export const SubscriptionForm = ({ planType }: Props) => {
             />
           </svg>
         </div>
-        <div className="w-2/3 flex justify-end items-center">
+        <div className="w-1/2 flex justify-end items-center text-right">
           {planType === PlanType.Monthly && <>$7.00 per month</>}
           {planType === PlanType.Yearly && (
             <div className="my-auto">
