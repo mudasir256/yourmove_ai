@@ -40,10 +40,6 @@ export const WizardStep = ({
     )
   );
 
-  useEffect(() => {
-    setStopScroll(true);
-  }, []);
-
   // If the step is and email and the user is logged in, set the email
   useEffect(() => {
     if (wizardStep.type === WizardStepInputType.EMAIL && auth.currentUser) {

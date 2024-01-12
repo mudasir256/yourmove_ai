@@ -86,14 +86,19 @@ function App() {
           // this is purely for UI/UX. When calling into the APIs we will check if the user is subscribed
           if (response.data.isSubscribed) {
             setIsSubscribed(true);
+          } else {
+            setIsSubscribed(false);
           }
         });
       });
     }
   };
 
-  // When the auth state changes, check if the user isSubscribed
+  // When the auth state c\hanges, check if the user isSubscribed
   useEffect(() => {
+    // Check for subscription once and then on auth state changed
+    checkForSubscription();
+
     auth.onAuthStateChanged(function (user) {
       console.log("hey");
       // only check for the subscription if there is a user and we haven't checked before
