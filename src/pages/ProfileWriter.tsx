@@ -14,7 +14,7 @@ export const ProfileWriter = () => {
   } = useWizardStore();
 
   return (
-    <div className="px-4 mt-16">
+    <div className="px-4">
       <Wizard
         name="profileWriter"
         steps={PROFILE_WRITER_WIZARD_STEPS}

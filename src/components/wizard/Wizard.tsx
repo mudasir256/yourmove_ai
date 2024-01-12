@@ -128,7 +128,7 @@ export const Wizard = ({
   }, [step]);
 
   return (
-    <div className="relative h-screen">
+    <div className="">
       {step !== WizardStepType.PAYWALL && (
         <div
           className="absolute right-0 translate-y-[32rem]"
