@@ -1,12 +1,11 @@
 interface Props {
   url: string;
   isLoading?: boolean;
-  subtitle?: string;
 }
 
-export const Screenshot = ({ url, isLoading, subtitle }: Props) => {
+export const Screenshot = ({ url, isLoading }: Props) => {
   return (
-    <div className="bg-transparent flex items-end justify-end">
+    <div className="bg-transparent flex items-end justify-start">
       <div className="relative">
         {isLoading && (
           <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
@@ -34,12 +33,6 @@ export const Screenshot = ({ url, isLoading, subtitle }: Props) => {
         )}
 
         <img src={url} className="h-64" />
-
-        {subtitle && (
-          <div className="bg-transparent flex justify-end mt-3 text-sm">
-            {subtitle}
-          </div>
-        )}
       </div>
     </div>
   );

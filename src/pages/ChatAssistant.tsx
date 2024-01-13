@@ -43,13 +43,9 @@ export const ChatAssistant = () => {
           {chatResponse ? (
             <div className="h-full">
               {chatResponse.image ? (
-                <div className="mb-6 flex justify-end">
+                <div className="mb-6 flex justify-start">
                   <div>
-                    <Screenshot
-                      url={chatResponse.image}
-                      isLoading={false}
-                      subtitle="Screenshot uploaded ✅"
-                    />
+                    <Screenshot url={chatResponse.image} isLoading={false} />
                   </div>
                 </div>
               ) : (
@@ -72,7 +68,7 @@ export const ChatAssistant = () => {
                       }}
                     />
                   ))}
-                  <div className="flex mt-6 font-semibold text-brand-primary cursor-pointer">
+                  <div className="flex mt-4 font-semibold text-brand-primary cursor-pointer">
                     <div
                       className="mr-4"
                       onClick={() => {
@@ -100,7 +96,6 @@ export const ChatAssistant = () => {
                     <Screenshot
                       url={URL.createObjectURL(screenshotUploading)}
                       isLoading={true}
-                      subtitle="Uploading screenshot..."
                     />
                   ) : (
                     <MessageComponent
@@ -113,13 +108,14 @@ export const ChatAssistant = () => {
                   <GeneratingRepliesLoader />
                 </>
               ) : (
-                <>
-                  {/* If we want to show the Message Input */}
-                  <MessageInput />
-                </>
+                <></>
               )}
             </>
           )}
+          <MessageInput
+            hideTextInput={!!chatResponse || sendingMessage}
+            hideInputSettings={!sendingMessage}
+          />
         </div>
         <div>
           <PremiumUpsellPrompt />

@@ -71,13 +71,13 @@ export const submitMessage = (message: string, file: File | null) => {
   }
 };
 
-export const MessageInput = () => {
-  const {
-    selectedMessageType,
-    selectedMessageSubType,
-    chatRequestType,
-    setChatRequestType,
-  } = useChatStore();
+interface Props {
+  hideTextInput?: boolean;
+  hideInputSettings?: boolean;
+}
+
+export const MessageInput = ({ hideTextInput, hideInputSettings }: Props) => {
+  const { selectedMessageType, selectedMessageSubType } = useChatStore();
   const [inputConfiguration, setInputConfiguration] = useState({} as any);
   const [file, setFile] = useState<File | null>(null);
 
@@ -94,6 +94,10 @@ export const MessageInput = () => {
   }, [selectedMessageType, selectedMessageSubType]);
 
   const fileInputRef = useRef<HTMLInputElement | null>(null);
+
+  useEffect(() => {
+    console.log(hideTextInput);
+  }, [hideTextInput]);
 
   const handleFileUpload = () => {
     if (fileInputRef.current) {
@@ -113,9 +117,11 @@ export const MessageInput = () => {
     <div className="">
       {inputConfiguration && (
         <div className="mt-4">
-          <h1 className="text-3xl font-bold  mb-4">
-            {inputConfiguration.headline}
-          </h1>
+          {!hideTextInput && (
+            <h1 className="text-3xl font-bold  mb-4">
+              {inputConfiguration.headline}
+            </h1>
+          )}
           <Formik
             initialValues={{}}
             validationSchema={yup.object({
@@ -129,70 +135,82 @@ export const MessageInput = () => {
           >
             {({ handleSubmit }) => (
               <form className="relative">
-                {inputConfiguration.screenshot ? (
-                  <div className="relative">
-                    <div className="overflow-hidden rounded-tl-lg rounded-tr-lg border-t border-l border-r border-gray-300 shadow-sm">
-                      <Field
-                        as="textarea"
-                        rows={5}
-                        name="message"
-                        id="message"
-                        className="block w-full resize-none border-0 py-0 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6 px-4 py-3"
-                        placeholder={inputConfiguration.placeholder}
-                        defaultValue={""}
-                      />
-                    </div>
-
-                    <div className="bg-white border-b border-l border-r rounded-bl-lg rounded-br-lg border-gray-300 inset-x-px bottom-0">
-                      <div className="flex items-center justify-between space-x-3 border-t border-gray-200 px-2 py-2 sm:px-3">
-                        <div className="flex p-2">
-                          <input
-                            type="file"
-                            ref={fileInputRef}
-                            className="hidden"
-                            onChange={handleFileChange}
-                          />
-                          <button
-                            type="button"
-                            onClick={handleFileUpload}
-                            className="group -my-2 -ml-2 inline-flex items-center rounded-full px-3 py-2 text-left text-gray-400"
-                          >
-                            <PhotoIcon
-                              className="-ml-1 mr-2 h-5 w-5 group-hover:text-gray-500 text-brand-primary"
-                              aria-hidden="true"
+                <>
+                  {!hideTextInput && (
+                    <>
+                      {inputConfiguration.screenshot ? (
+                        <div className="relative">
+                          <div className="overflow-hidden rounded-tl-lg rounded-tr-lg border-t border-l border-r border-gray-300 shadow-sm">
+                            <Field
+                              as="textarea"
+                              rows={5}
+                              name="message"
+                              id="message"
+                              className="block w-full resize-none border-0 py-0 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6 px-4 py-3"
+                              placeholder={inputConfiguration.placeholder}
+                              defaultValue={""}
                             />
-                            <span className="text-sm group-hover:text-gray-600 text-brand-primary font-bold">
-                              {file ? file.name : inputConfiguration.screenshot}
-                            </span>
-                          </button>
+                          </div>
+
+                          <div className="bg-white border-b border-l border-r rounded-bl-lg rounded-br-lg border-gray-300 inset-x-px bottom-0">
+                            <div className="flex items-center justify-between space-x-3 border-t border-gray-200 px-2 py-2 sm:px-3">
+                              <div className="flex p-2">
+                                <input
+                                  type="file"
+                                  ref={fileInputRef}
+                                  className="hidden"
+                                  onChange={handleFileChange}
+                                />
+                                <button
+                                  type="button"
+                                  onClick={handleFileUpload}
+                                  className="group -my-2 -ml-2 inline-flex items-center rounded-full px-3 py-2 text-left text-gray-400"
+                                >
+                                  <PhotoIcon
+                                    className="-ml-1 mr-2 h-5 w-5 group-hover:text-gray-500 text-brand-primary"
+                                    aria-hidden="true"
+                                  />
+                                  <span className="text-sm group-hover:text-gray-600 text-brand-primary font-bold">
+                                    {file
+                                      ? file.name
+                                      : inputConfiguration.screenshot}
+                                  </span>
+                                </button>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      ) : (
+                        <Field
+                          as="textarea"
+                          rows={8}
+                          name="message"
+                          id="message"
+                          className="block bg-transparent w-full resize-none border-0 py-0 text-gray-900 placeholder:text-gray-400 focus:outline-none sm:text-sm sm:leading-6 py-3 -mt-4"
+                          placeholder={"Need inspiration? Just hit 'Get ideas'"}
+                          defaultValue={""}
+                        />
+                      )}
+                    </>
+                  )}
+                </>
+                {hideInputSettings && (
+                  <>
+                    <div className="mt-3">
+                      <div className="mb-2 mt-6">
+                        <MessageStyleSelector />
+                      </div>
+                      <div>
+                        <div
+                          onClick={() => handleSubmit()}
+                          className="cursor-pointer bg-brand-primary w-full py-2 font-bold text-white text-lg flex items-center justify-center rounded-lg"
+                        >
+                          Get ideas
                         </div>
                       </div>
                     </div>
-                  </div>
-                ) : (
-                  <Field
-                    as="textarea"
-                    rows={8}
-                    name="message"
-                    id="message"
-                    className="block bg-transparent w-full resize-none border-0 py-0 text-gray-900 placeholder:text-gray-400 focus:outline-none sm:text-sm sm:leading-6 py-3 -mt-4"
-                    placeholder={"Need inspiration? Just hit 'Get ideas'"}
-                    defaultValue={""}
-                  />
+                  </>
                 )}
-                <div className="mt-3">
-                  <div className="mb-2 mt-6">
-                    <MessageStyleSelector />
-                  </div>
-                  <div>
-                    <div
-                      onClick={() => handleSubmit()}
-                      className="cursor-pointer bg-brand-primary w-full py-2 font-bold text-white text-lg flex items-center justify-center rounded-lg"
-                    >
-                      Get ideas
-                    </div>
-                  </div>
-                </div>
               </form>
             )}
           </Formik>

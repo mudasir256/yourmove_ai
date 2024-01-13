@@ -184,7 +184,7 @@ export const sendChatImage = (
   formData.append("style", style);
 
   if (recentQuery) {
-    formData.append("recentQuery", recentQuery);
+    formData.append("recentQuery", JSON.stringify(recentQuery));
   }
 
   formData.append("curiosityMode", curiosityMode.toString());
