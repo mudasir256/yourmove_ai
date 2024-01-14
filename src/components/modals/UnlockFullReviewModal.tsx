@@ -14,7 +14,7 @@ export const UnlockFullReviewModal = ({ open, setOpen, setHasPaid }: Props) => {
   const { profileReviewerStepResults } = useWizardStore();
   return (
     <Modal open={open} setOpen={setOpen}>
-      <div className="w-full">
+      <div className="w-full overflow-y-scroll">
         <div className="w-full flex justify-end">
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -32,10 +32,10 @@ export const UnlockFullReviewModal = ({ open, setOpen, setHasPaid }: Props) => {
             />
           </svg>
         </div>
-        <div className="flex items-center justify-center -mt-3 mb-8">
+        <div className="flex items-center justify-center -mt-7 -mb-7">
           <h1 className="text-2xl font-semibold">Unlock Full Review</h1>
         </div>
-        <div>
+        <div className="overflow-y-scroll h-[30rem]">
           <Paywall
             email={profileReviewerStepResults.email}
             requiredProductsToSkipPaywall={[]}

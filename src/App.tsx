@@ -17,6 +17,7 @@ import { PaymentLoading } from "./pages/PaymentLoading";
 import { BottomNav } from "./components/nav/BottomNav";
 import { useUIStore } from "./stores/ui";
 import { Error } from "./components/Error";
+import Page from "./pages/Page";
 
 /* 
 
@@ -157,10 +158,38 @@ function App() {
             ) : (
               <Routes>
                 <Route path="/" element={<Navigate to="/chat-assistant" />} />
-                <Route path="/premium" element={<Premium />} />
-                <Route path="/chat-assistant" element={<ChatAssistant />} />
-                <Route path="/profile-writer" element={<ProfileWriter />} />
-                <Route path="/profile-review" element={<ProfileReviewer />} />
+                <Route
+                  path="/premium"
+                  element={
+                    <Page title="Premium">
+                      <Premium />
+                    </Page>
+                  }
+                />
+                <Route
+                  path="/chat-assistant"
+                  element={
+                    <Page title="Chat Assistant">
+                      <ChatAssistant />
+                    </Page>
+                  }
+                />
+                <Route
+                  path="/profile-writer"
+                  element={
+                    <Page title="Profile Writer">
+                      <ProfileWriter />
+                    </Page>
+                  }
+                />
+                <Route
+                  path="/profile-review"
+                  element={
+                    <Page title="Profile Review">
+                      <ProfileReviewer />
+                    </Page>
+                  }
+                />
                 <Route path="*">Not found</Route>
               </Routes>
             )}
