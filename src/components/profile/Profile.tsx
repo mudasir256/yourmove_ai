@@ -100,14 +100,6 @@ export const Profile = () => {
             >
               leave feedback
             </button>
-            <button
-              type="button"
-              onClick={() => setTextingAssistantModalOpen(true)}
-              className="mt-4 flex items-center justify-center w-full bg-white text-brand-primary py-3 rounded-full font-semibold -mb-1 border border-brand-primary hover:text-stone-600 hover:border-stone-500"
-            >
-              Tired of texting? <br />
-              Try our AI texting assistant
-            </button>
           </div>
         </div>
       ) : (
