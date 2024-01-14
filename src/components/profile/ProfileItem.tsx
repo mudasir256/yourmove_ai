@@ -1,5 +1,5 @@
 import toast from "react-hot-toast";
-import { ProfileResponse } from "../../models/profile";
+import { ProfileRequest, ProfileResponse } from "../../models/profile";
 import { PromptsListBox } from "../PromptListBox";
 import { useProfileStore } from "../../stores/profile";
 import { useState } from "react";
@@ -16,14 +16,16 @@ interface Props {
 export const ProfileItem = ({ lockItem, profileResponse, index }: Props) => {
   // All prompts
   const { prompts, profile, setProfile } = useProfileStore();
-  const { stepResults } = useWizardStore();
+  const { profileWriterStepResults } = useWizardStore();
   const [isProfileItemLoading, setIsProfileItemLoading] = useState(false);
   const [unlockModalIsOpen, setUnlockModalIsOpen] = useState(false);
 
   const onPromptChange = (promptText: string) => {
     setIsProfileItemLoading(true);
-    const stepResults = JSON.parse(localStorage.getItem("stepResults") || "{}");
-    generateSingleProfileResponse(stepResults, promptText).then((response) => {
+    generateSingleProfileResponse(
+      profileWriterStepResults as ProfileRequest,
+      promptText
+    ).then((response) => {
       // we have the new prompt, so we need to swap out the old one and put in the new one
       const copyProfile = [...profile];
       copyProfile[index] = response.data;
@@ -106,7 +108,7 @@ export const ProfileItem = ({ lockItem, profileResponse, index }: Props) => {
               onClick={() => {
                 navigator.clipboard.writeText(profileResponse.response);
                 createCopy(
-                  stepResults.email,
+                  profileWriterStepResults.email,
                   profileResponse.prompt,
                   profileResponse.response
                 );

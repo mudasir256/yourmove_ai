@@ -2,12 +2,10 @@ import {
   WizardStep as WizardStepModel,
   WizardStepType,
 } from "../../models/wizard";
-import { useWizardStore } from "../../stores/wizard";
 import { WizardProgress } from "./WizardProgress";
 import { WizardStep } from "./WizardStep";
 import { getStep } from "../../utils";
 import toast from "react-hot-toast";
-import { PaymentPlans } from "../payment/PaymentPlans";
 import { useEffect, useState } from "react";
 import { useAuthStore } from "../../stores/auth";
 import { auth } from "../../firebase";
