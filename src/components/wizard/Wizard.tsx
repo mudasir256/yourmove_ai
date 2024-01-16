@@ -163,21 +163,23 @@ export const Wizard = ({
                     <div className="mt-6">
                       <>
                         {steps.map((wizardStep: WizardStepModel) => {
-                          <div key={wizardStep.step}>
-                            {wizardStep.step === step ? (
-                              <WizardStep
-                                name={name}
-                                key={wizardStep.label}
-                                wizardStep={wizardStep}
-                                goToNextStep={goToNextStep}
-                                steps={steps}
-                                step={step}
-                                setStep={setStep}
-                                stepResults={stepResults}
-                                setStepResult={setStepResult}
-                              />
-                            ) : null}
-                          </div>;
+                          return (
+                            <div key={wizardStep.step}>
+                              {wizardStep.step === step ? (
+                                <WizardStep
+                                  name={name}
+                                  key={wizardStep.label}
+                                  wizardStep={wizardStep}
+                                  goToNextStep={goToNextStep}
+                                  steps={steps}
+                                  step={step}
+                                  setStep={setStep}
+                                  stepResults={stepResults}
+                                  setStepResult={setStepResult}
+                                />
+                              ) : null}
+                            </div>
+                          );
                         })}
                       </>
                     </div>
