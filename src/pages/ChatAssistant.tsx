@@ -1,4 +1,3 @@
-import { MessageStyleSelector } from "../components/chat/selectors/MessageStyleSelector";
 import { MessageSubTypeSelector } from "../components/chat/selectors/MessageSubTypeSelector";
 import { MessageTypeSelector } from "../components/chat/selectors/MessageTypeSelector";
 import { SettingsModal } from "../components/chat/modals/SettingsModal";
@@ -61,12 +60,14 @@ export const ChatAssistant = () => {
               ) : (
                 <>
                   {chatResponse.responses.map((response: string) => (
-                    <MessageComponent
-                      message={{
-                        content: response,
-                        author: MessageAuthorType.Generated,
-                      }}
-                    />
+                    <div key={response}>
+                      <MessageComponent
+                        message={{
+                          content: response,
+                          author: MessageAuthorType.Generated,
+                        }}
+                      />
+                    </div>
                   ))}
                   <div className="flex mt-4 font-semibold text-brand-primary cursor-pointer">
                     <div

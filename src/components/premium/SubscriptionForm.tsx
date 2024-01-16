@@ -7,7 +7,6 @@ import PaymentForm from "../payment/PaymentForm";
 import { Elements } from "@stripe/react-stripe-js";
 import { loadStripe } from "@stripe/stripe-js";
 import { Loading } from "../Loading";
-import { useNavigate } from "react-router-dom";
 import { useUIStore } from "../../stores/ui";
 
 interface Props {
@@ -21,7 +20,6 @@ const stripePromise = loadStripe(
 export const SubscriptionForm = ({ planType }: Props) => {
   const [submitting, setSubmitting] = useState(false);
   const [clientSecret, setClientSecret] = useState("");
-  const navigate = useNavigate();
   const { setSubscriptionSuccess, setStopScroll } = useUIStore();
 
   // When the subscription form is showing, we want to re-enable scrolling
@@ -44,13 +42,10 @@ export const SubscriptionForm = ({ planType }: Props) => {
     if (auth.currentUser && auth.currentUser.email) {
       createSubscription({ email: auth.currentUser.email, term: planType })
         .then((response) => {
-          console.log("Create sub");
-          console.log(response);
           setClientSecret(response.data.clientSecret);
           setSubmitting(false);
         })
         .catch((error) => {
-          console.log(error);
           toast.error(
             "There was an error creating your subscription, try again later."
           );

@@ -7,7 +7,6 @@ import { ClientSecretResponse } from "../../../models/payment";
 import { ProductType } from "../../../constants/payments";
 import { toHeaderCase, toKebabCase } from "js-convert-case";
 import PaymentForm from "../PaymentForm";
-import { useUIStore } from "../../../stores/ui";
 import { useAuthStore } from "../../../stores/auth";
 
 interface Props {

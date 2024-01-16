@@ -10,11 +10,6 @@ export const PremiumUpsellPrompt = () => {
   const { isSubscribed } = useAuthStore();
   const { hideUpsell } = useUIStore();
 
-  useEffect(() => {
-    console.log("responses:");
-    console.log(chatResponse);
-  }, [chatResponse]);
-
   // only show if there are queries remaining, and they are less than 5 and the user is signed in
   return chatResponse?.queriesRemaining !== undefined &&
     chatResponse?.queriesRemaining < 5 &&

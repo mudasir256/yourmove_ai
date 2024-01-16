@@ -7,14 +7,9 @@ export const getStepIndex = (
   step: WizardStepType,
   steps: Array<WizardStep>
 ) => {
-  console.log("yo");
-  console.log(step);
-  console.log(steps);
   const currentIndex = steps.findIndex(
     (step_: WizardStep) => step_.step == step
   );
-  console.log(currentIndex);
-
   if (currentIndex === -1 || currentIndex === steps.length - 1) {
     return steps.length - 1;
   }
@@ -26,8 +21,6 @@ export const getStep = (
   stepIndex: number,
   steps: Array<WizardStep>
 ) => {
-  console.log("in getSteps");
-  console.log(steps);
   return steps[getStepIndex(step, steps) + stepIndex];
 };
 

@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import {
   MessageSubType,
   MessageTypeSubTypeMappings,
@@ -23,6 +23,7 @@ export const MessageSubTypeSelector = () => {
     <div className="flex mt-4">
       {MessageTypeSubTypeMappings[selectedMessageType].map((messageSubType) => (
         <div
+          key={messageSubType}
           onClick={() =>
             setSelectedMessageSubType(messageSubType as MessageSubType)
           }

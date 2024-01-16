@@ -1,4 +1,4 @@
-import { CheckCircleIcon, ChevronDownIcon } from "@heroicons/react/24/outline";
+import { CheckCircleIcon } from "@heroicons/react/24/outline";
 import { AIProfileConsulting } from "../components/premium/features/AIProfileConsulting";
 import { ExpertProfileIncluded } from "../components/premium/features/ExpertProfileIncluded";
 import { PremiumBrainpower } from "../components/premium/features/PremiumBrainpower";

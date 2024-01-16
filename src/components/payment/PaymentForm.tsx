@@ -79,7 +79,6 @@ export default function PaymentForm({
 
     // This point is reached if we have a payment intent
     if (paymentIntent && paymentIntent.status === "succeeded") {
-      console.log("payment completed, call handler");
       if (redirectHandler) {
         redirectHandler();
       }

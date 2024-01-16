@@ -95,10 +95,6 @@ export const MessageInput = ({ hideTextInput, hideInputSettings }: Props) => {
 
   const fileInputRef = useRef<HTMLInputElement | null>(null);
 
-  useEffect(() => {
-    console.log(hideTextInput);
-  }, [hideTextInput]);
-
   const handleFileUpload = () => {
     if (fileInputRef.current) {
       fileInputRef.current.click();

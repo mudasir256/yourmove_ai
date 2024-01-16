@@ -1,17 +1,3 @@
-/*
-  This example requires some changes to your config:
-  
-  ```
-  // tailwind.config.js
-  module.exports = {
-    // ...
-    plugins: [
-      // ...
-      require('@tailwindcss/forms'),
-    ],
-  }
-  ```
-*/
 import { Fragment, useState } from "react";
 import { Dialog, Transition } from "@headlessui/react";
 import {
@@ -26,16 +12,6 @@ import { auth } from "../../firebase";
 import { signOut } from "firebase/auth";
 import toast from "react-hot-toast";
 import { FeedbackModal } from "../modals/FeedbackModal";
-
-const navigation = [
-  { name: "Contact Us", href: "#", newTab: false, current: true },
-  {
-    name: "Download on iOS",
-    href: "https://apps.apple.com/us/app/yourmove-ai/id6444244023",
-    newTab: true,
-    current: false,
-  },
-];
 
 const APP_STORE_URL = "https://apps.apple.com/us/app/yourmove-ai/id6444244023";
 

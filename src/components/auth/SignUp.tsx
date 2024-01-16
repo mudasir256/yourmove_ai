@@ -5,7 +5,6 @@ import { Field } from "../Field";
 import { createUserWithEmailAndPassword } from "firebase/auth";
 import { auth } from "../../firebase";
 import { ErrorAlert } from "../ErrorAlert";
-import toast from "react-hot-toast";
 import { useAuthStore } from "../../stores/auth";
 import { successfulSignUp } from "../../utils";
 import { AuthActionType } from "../../constants/auth";
@@ -67,9 +66,7 @@ export const SignUp = () => {
               );
               successfulSignUp();
             } catch (error) {
-              console.log("error");
               if (error.code === "auth/email-already-in-use") {
-                console.log("email already in use");
                 setError("Email already in use");
               }
             }

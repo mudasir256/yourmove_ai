@@ -20,7 +20,7 @@ export const PremiumBrainpower = () => {
               "Hey, tell me 2 animals that match your vibe"
             </h4>
             {RESPONSES.map((response: string) => (
-              <div className="bg-white my-2 p-4 rounded-lg flex">
+              <div className="bg-white my-2 p-4 rounded-lg flex" key={response}>
                 <div>{response}</div>
                 <div className="flex items-center">
                   <svg

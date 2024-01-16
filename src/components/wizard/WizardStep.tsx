@@ -32,7 +32,6 @@ export const WizardStep = ({
   const getStepValue = () => {
     return stepResults[wizardStep.step];
   };
-  const { stopScroll, setStopScroll } = useUIStore();
 
   const [isFirstStep, setIsFirstStep] = useState(
     !!!steps.findIndex(

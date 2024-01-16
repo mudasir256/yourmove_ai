@@ -12,8 +12,6 @@ import { useEffect, useState } from "react";
 import { auth } from "./firebase";
 import { checkIfUserSubscribed } from "./queries";
 import { useAuthStore } from "./stores/auth";
-import { Loading } from "./components/Loading";
-import { PaymentLoading } from "./pages/PaymentLoading";
 import { BottomNav } from "./components/nav/BottomNav";
 import { useUIStore } from "./stores/ui";
 import { Error } from "./components/Error";
@@ -76,7 +74,6 @@ function App() {
 
   // When the URL changes, set the default stopScroll back to false
   useEffect(() => {
-    console.log("we here");
     setStopScroll(false);
   }, [location]);
 
@@ -101,7 +98,6 @@ function App() {
     checkForSubscription();
 
     auth.onAuthStateChanged(function (user) {
-      console.log("hey");
       // only check for the subscription if there is a user and we haven't checked before
       // when we sign out, we can set the hasCheckedForSubscription to false so we will check on signIn again
       // we can also set hasCheckedForSubscription to false when we buy a subscription

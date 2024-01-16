@@ -77,15 +77,10 @@ export const Wizard = ({
   }, [window.location]);
 
   const goToNextStep = async () => {
-    console.log("here go to");
     const nextStep = getStep(step, 1, steps);
-    console.log("did we get here????");
-    console.log(step);
     if (step === WizardStepType.WELCOME) {
       setStep(nextStep.step);
     } else {
-      console.log("heteeee");
-      console.log(stepResults);
       const stepValue = stepResults[step];
       const wizardStep = steps.find((wizardStep: WizardStepModel) => {
         return wizardStep.step === step;
@@ -168,19 +163,21 @@ export const Wizard = ({
                     <div className="mt-6">
                       <>
                         {steps.map((wizardStep: WizardStepModel) => {
-                          return wizardStep.step === step ? (
-                            <WizardStep
-                              name={name}
-                              key={wizardStep.label}
-                              wizardStep={wizardStep}
-                              goToNextStep={goToNextStep}
-                              steps={steps}
-                              step={step}
-                              setStep={setStep}
-                              stepResults={stepResults}
-                              setStepResult={setStepResult}
-                            />
-                          ) : null;
+                          <div key={wizardStep.step}>
+                            {wizardStep.step === step ? (
+                              <WizardStep
+                                name={name}
+                                key={wizardStep.label}
+                                wizardStep={wizardStep}
+                                goToNextStep={goToNextStep}
+                                steps={steps}
+                                step={step}
+                                setStep={setStep}
+                                stepResults={stepResults}
+                                setStepResult={setStepResult}
+                              />
+                            ) : null}
+                          </div>;
                         })}
                       </>
                     </div>

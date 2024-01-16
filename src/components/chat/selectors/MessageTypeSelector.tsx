@@ -9,6 +9,7 @@ export const MessageTypeSelector = () => {
       {Object.values(MessageType).map((messageType) => {
         return (
           <div
+            key={messageType}
             onClick={() => setSelectedMessageType(messageType as MessageType)}
             className={`flex-1 rounded-full cursor-pointer text-center py-1 font-semibold ${
               messageType == selectedMessageType

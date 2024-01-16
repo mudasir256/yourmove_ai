@@ -27,14 +27,10 @@ axios.defaults.timeout = 30000;
 
 axios.interceptors.response.use(
   (response) => {
-    console.log("was a success");
     // Was successful - return the response
     return response;
   },
   (error) => {
-    console.log("was an error");
-    console.log(error);
-
     // If it timed out
     if (error.code === "ECONNABORTED") {
       useUIStore
@@ -44,7 +40,6 @@ axios.interceptors.response.use(
         );
       // Handle the timeout error here
     }
-    console.log(error.response.status === 429);
     // If it was a 429 for the chat assistant
     if (error.response.status === 429) {
       // If they are signed in, redirect to premium
@@ -215,8 +210,6 @@ export const generateProfileReview = (
   email: string,
   screenshots: Array<string>
 ) => {
-  console.log("in client");
-  console.log(typeof screenshots);
   return axios.post(`${BASE_URL}/profile-reviewer`, { email, screenshots });
 };
 

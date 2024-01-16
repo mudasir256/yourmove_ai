@@ -1,4 +1,3 @@
-import { PaymentPlans } from "../payment/PaymentPlans";
 import { ProfileWriterPaywall } from "../payment/paywalls/ProfileWriterPaywall";
 import { Modal } from "./Modal";
 

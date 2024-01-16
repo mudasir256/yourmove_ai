@@ -24,13 +24,8 @@ export const ProfileReviewer = () => {
 
   // On component load, send request
   useEffect(() => {
-    console.log("in the use effect");
-    console.log(profileReviewerWizardComplete);
     if (profileReviewerWizardComplete) {
-      console.log("we here mang");
-      console.log(profileReviewerFiles);
       if (profileReviewerFiles && profileReviewerFiles.length > 0) {
-        console.log("herrrr");
         generateProfileReview(
           profileReviewerStepResults.email,
           profileReviewerFiles

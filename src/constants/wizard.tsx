@@ -138,8 +138,6 @@ export const PROFILE_REVIEWER_WIZARD_STEPS: Array<WizardStep> = [
     label: "Upload your profile ",
     validator: yup.string(),
     onFilesUploaded: (files: Array<string>) => {
-      console.log("here we are now");
-      console.log(files);
       useWizardStore.getState().setProfileReviewerFiles(files);
     },
   },
