@@ -37,6 +37,7 @@ export const PromptsListBox = ({
     console.log("in use effect and the prompts are");
     console.log(prompts);
     if (prompts) {
+      console.log("about to set prompts");
       setSelected(
         prompts.find(
           (prompt: Prompt) => prompt.text.toLowerCase() === promptSelected
@@ -47,6 +48,8 @@ export const PromptsListBox = ({
 
   return (
     <>
+      <>{selected ? "has selected" : "nope"}</>
+      <>{console.log(selected)}</>
       {selected && (
         <Listbox
           value={selected}

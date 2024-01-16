@@ -7,6 +7,7 @@ export enum WizardStepType {
   GENDER = "gender",
   LOOKING_FOR = "lookingFor",
   CHARACTERISTICS = "characteristics",
+  ACTIVITIES = "activities",
   UNUSUAL_SKILL = "unusualSkill",
   BUCKET_LIST = "bucketList",
   TALKING_ABOUT = "talkingAbout",

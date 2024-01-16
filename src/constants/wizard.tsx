@@ -44,6 +44,13 @@ export const PROFILE_WRITER_WIZARD_STEPS: Array<WizardStep> = [
     validator: yup.string(),
   },
   {
+    step: WizardStepType.ACTIVITIES,
+    type: WizardStepInputType.TEXT,
+    label: "What activities do you enjoy in your free time?",
+    placeholder: "Surfing and a good book",
+    validator: yup.string(),
+  },
+  {
     step: WizardStepType.CHARACTERISTICS,
     type: WizardStepInputType.TEXT,
     label: "What characteristics are you looking for in your partner?",

@@ -55,6 +55,26 @@ export const Profile = () => {
             setOpen={setTextingAssistantModalOpen}
           />
           <div className="mt-4 px-2">
+            <div className="mb-2 -ml-2">
+              <svg
+                onClick={() => {
+                  setProfile({});
+                  setProfileWriterStep(WizardStepType.PROFILE_TYPE);
+                  setProfileWriterWizardComplete(false);
+                }}
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                strokeWidth="2.5"
+                className="w-10 h-10 stroke-zinc-400"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  d="M15.75 19.5L8.25 12l7.5-7.5"
+                />
+              </svg>
+            </div>
             <div className="mb-5">
               <h1 className="text-4xl font-bold">Your profile</h1>
             </div>

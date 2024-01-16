@@ -91,6 +91,7 @@ export const ProfileItem = ({ lockItem, profileResponse, index }: Props) => {
             </div>
           )}
           <div className="mb-4">
+            {<>{console.log(prompts)}</>}
             {/* If the profile.length > 1 then we are a premium user, so only show the first 3 prompts, else all of them */}
             {prompts && (
               <PromptsListBox

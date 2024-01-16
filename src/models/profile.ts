@@ -9,6 +9,7 @@ export interface ProfileRequest {
   gender: string;
   lookingFor: string;
   characteristics: string;
+  activities: string;
   unusualSkill: string;
   bucketList: string;
   talkingAbout: string;

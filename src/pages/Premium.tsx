@@ -13,7 +13,7 @@ import { useNavigate } from "react-router-dom";
 import { Success } from "../components/Success";
 
 export const Premium = () => {
-  const [setShowScrollForMoreFeatures] = useState(true);
+  const [scrollForMoreFeatures, setShowScrollForMoreFeatures] = useState(true);
   const [planBeingPurchased, setPlanBeingPurchased] = useState<PlanType | null>(
     null
   );
@@ -121,7 +121,7 @@ export const Premium = () => {
                     </div>
                   </div>
                   {auth.currentUser && planBeingPurchased ? (
-                    <div className="">
+                    <div className="" style={{ marginBottom: "4rem" }}>
                       <SubscriptionForm planType={planBeingPurchased} />
                     </div>
                   ) : (
@@ -167,7 +167,7 @@ export const Premium = () => {
                                 }}
                               >
                                 <div className="bg-brand-secondary text-white py-1">
-                                  <h4 className="text-white uppercase text-sm">
+                                  <h4 className="text-white uppercase text-xs sm:text-sm">
                                     Monthly Plan
                                   </h4>
                                 </div>
@@ -193,7 +193,7 @@ export const Premium = () => {
                                 }}
                               >
                                 <div className="bg-brand-primary text-white py-1">
-                                  <h4 className="text-white uppercase text-sm">
+                                  <h4 className="text-white uppercase text-xs sm:text-sm">
                                     Annual Plan - Save 60%
                                   </h4>
                                 </div>
