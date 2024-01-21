@@ -13,6 +13,8 @@ interface ProfileStore {
   setError: (error: any) => void;
   reviewedProfile: ReviewedProfile | null;
   setReviewedProfile: (reviewedProfile: ReviewedProfile) => void;
+  hasPaidForProfileReview: boolean;
+  setHasPaidForProfileReview: (hasPaidForProfileReview: boolean) => void;
 }
 
 export const useProfileStore = create<ProfileStore>((set) => ({
@@ -26,4 +28,7 @@ export const useProfileStore = create<ProfileStore>((set) => ({
   setError: (error) => set({ error }),
   reviewedProfile: null,
   setReviewedProfile: (reviewedProfile) => set({ reviewedProfile }),
+  hasPaidForProfileReview: false,
+  setHasPaidForProfileReview: (hasPaidForProfileReview) =>
+    set({ hasPaidForProfileReview }),
 }));

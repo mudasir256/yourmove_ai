@@ -19,8 +19,12 @@ export const ProfileReviewer = () => {
     setProfileReviewerWizardComplete,
   } = useWizardStore();
   const { setError } = useProfileStore();
-  const { reviewedProfile, setReviewedProfile } = useProfileStore();
-  const [hasPaid, setHasPaid] = useState(false);
+  const {
+    reviewedProfile,
+    setReviewedProfile,
+    hasPaidForProfileReview,
+    setHasPaidForProfileReview,
+  } = useProfileStore();
 
   // On component load, send request
   useEffect(() => {
@@ -32,7 +36,7 @@ export const ProfileReviewer = () => {
         )
           .then((response) => {
             setReviewedProfile(response.data as ReviewedProfile);
-            setHasPaid(response.data.hasPaid);
+            setHasPaidForProfileReview(response.data.hasPaid);
           })
           .catch((error) => {
             setError(
@@ -59,7 +63,10 @@ export const ProfileReviewer = () => {
         storeStep={true}
       >
         {reviewedProfile ? (
-          <ProfileReview hasPaid={hasPaid} setHasPaid={setHasPaid} />
+          <ProfileReview
+            hasPaid={hasPaidForProfileReview}
+            setHasPaid={setHasPaidForProfileReview}
+          />
         ) : (
           <Loading title="Reviewing your profile" />
         )}
