@@ -14,10 +14,17 @@ interface Props {
 export const FeedbackModal = ({ open, setOpen, autoOpen }: Props) => {
   // Make modal show after X time
   useEffect(() => {
-    if (autoOpen) {
-      setTimeout(() => {
-        setOpen(true);
-      }, 15000);
+    const havePromptedForFeedback = localStorage.getItem(
+      "profileWriter:havePromptedForFeedback"
+    );
+    if (!havePromptedForFeedback) {
+      if (autoOpen) {
+        setTimeout(() => {
+          setOpen(true);
+          // Set in the localStorage that we have already prompted the user for feedback
+          localStorage.setItem("profileWriter:havePromptedForFeedback", "true");
+        }, 15000);
+      }
     }
   }, []);
 

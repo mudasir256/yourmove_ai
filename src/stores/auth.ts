@@ -16,6 +16,10 @@ interface AuthStore {
   // For OAuth
   showOptions: boolean;
   setShowOptions: (showOptions: boolean) => void;
+
+  // For Migration
+  emailToMigrate: string;
+  setEmailToMigrate: (emailToMigrate: string) => void;
 }
 
 export const useAuthStore = create<AuthStore>((set) => ({
@@ -32,4 +36,6 @@ export const useAuthStore = create<AuthStore>((set) => ({
     set({ hasCheckedForSubscription }),
   showOptions: false,
   setShowOptions: (showOptions) => set({ showOptions }),
+  emailToMigrate: "",
+  setEmailToMigrate: (emailToMigrate) => set({ emailToMigrate }),
 }));

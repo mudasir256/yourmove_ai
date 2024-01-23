@@ -227,3 +227,11 @@ export const checkIfUserSubscribed = (idToken: string) => {
     },
   });
 };
+
+export const checkIfUserRequiresMigration = (email: string) => {
+  return axios.get(`${BASE_URL}/user/requires-migration?email=${email}`);
+};
+
+export const migrateUser = (email: string, password: string) => {
+  return axios.post(`${BASE_URL}/user/migrate`, { email, password });
+};

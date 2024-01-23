@@ -16,6 +16,7 @@ import { BottomNav } from "./components/nav/BottomNav";
 import { useUIStore } from "./stores/ui";
 import { Error } from "./components/Error";
 import Page from "./pages/Page";
+import { Onboarding } from "./pages/Onboarding";
 
 /* 
 
@@ -60,16 +61,20 @@ function App() {
   const {
     stopScroll,
     error,
-    setError,
     setStopScroll,
     hideBottomNav,
     setHideBottomNav,
+    hideTopBar,
+    setHideTopBar,
   } = useUIStore();
   const location = useLocation();
 
-  // On App Load, reset bottom nav
+  // For hiding the bottom and side nav
+  const hiddenBottomNavPages = ["/premium", "/start"];
+  const hiddenTopNavPages = ["/start"];
   useEffect(() => {
-    setHideBottomNav(location.pathname === "/premium");
+    setHideBottomNav(hiddenBottomNavPages.includes(location.pathname));
+    setHideTopBar(hiddenTopNavPages.includes(location.pathname));
   }, [location]);
 
   // When the URL changes, set the default stopScroll back to false
@@ -139,7 +144,7 @@ function App() {
       <div className="flex flex-col h-screen">
         <Toaster />
         <AuthModal />
-        <SideNav />
+        {!hideTopBar && <SideNav />}
         <div
           style={{
             maxHeight: `${hideBottomNav ? "100%" : contentHeight + "px"}`,
@@ -183,6 +188,14 @@ function App() {
                   element={
                     <Page title="Profile Review">
                       <ProfileReviewer />
+                    </Page>
+                  }
+                />
+                <Route
+                  path="/start"
+                  element={
+                    <Page title="Start">
+                      <Onboarding />
                     </Page>
                   }
                 />

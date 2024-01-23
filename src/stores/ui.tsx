@@ -5,6 +5,8 @@ interface UIStore {
   setStopScroll: (stopScroll: boolean) => void;
   hideBottomNav: boolean;
   setHideBottomNav: (hideBottomNav: boolean) => void;
+  hideTopBar: boolean;
+  setHideTopBar: (hideTopBar: boolean) => void;
 
   // For displaying an error
   error: string | null;
@@ -24,6 +26,8 @@ export const useUIStore = create<UIStore>((set) => ({
   setStopScroll: (stopScroll) => set({ stopScroll }),
   hideBottomNav: false,
   setHideBottomNav: (hideBottomNav) => set({ hideBottomNav }),
+  hideTopBar: false,
+  setHideTopBar: (hideTopBar) => set({ hideTopBar }),
   error: null,
   setError: (error) => set({ error }),
   hideUpsell: false,

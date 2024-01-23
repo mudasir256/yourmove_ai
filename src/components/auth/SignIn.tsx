@@ -9,6 +9,7 @@ import { signInWithEmailAndPassword } from "firebase/auth";
 import { auth } from "../../firebase";
 import { ErrorAlert } from "../ErrorAlert";
 import { successfulSignIn } from "../../utils";
+import { checkIfUserRequiresMigration } from "../../queries";
 
 export const SignIn = () => {
   const [submitting, setSubmitting] = useState(false);
@@ -19,6 +20,7 @@ export const SignIn = () => {
     signInError,
     setSignInError,
     setHasCheckedForSubscription,
+    setEmailToMigrate,
   } = useAuthStore();
 
   return (
@@ -77,23 +79,37 @@ export const SignIn = () => {
           onSubmit={async (values: any) => {
             setSignInError(null);
             setSubmitting(true);
-            try {
-              await signInWithEmailAndPassword(
-                auth,
-                values.email,
-                values.password
-              );
-              // Set hasCheckedForSubscription to false so we will check for subscription again
-              setHasCheckedForSubscription(false);
-              successfulSignIn(values.email);
-            } catch (error) {
-              if (
-                error.code === "auth/wrong-password" ||
-                error.code === "auth/user-not-found"
-              ) {
-                setSignInError("Incorrect email or password");
+            // Check if the user requires a migration
+            checkIfUserRequiresMigration(values.email).then(
+              async (response) => {
+                // if it does require a migration, ask them to reset their password
+                if (response.data.requiresMigration) {
+                  setEmailToMigrate(values.email);
+                } else {
+                  try {
+                    // It doesn't require a migration, so let them login
+                    await signInWithEmailAndPassword(
+                      auth,
+                      values.email,
+                      values.password
+                    );
+                    // Set hasCheckedForSubscription to false so we will check for subscription again
+                    setHasCheckedForSubscription(false);
+                    successfulSignIn(values.email);
+                  } catch (error) {
+                    console.log("the error is");
+                    console.log(error);
+                    if (
+                      error.code === "auth/wrong-password" ||
+                      error.code === "auth/user-not-found"
+                    ) {
+                      setSignInError("Incorrect email or password");
+                    }
+                  }
+                }
               }
-            }
+            );
+
             setSubmitting(false);
           }}
           enableReinitialize

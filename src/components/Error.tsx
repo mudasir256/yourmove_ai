@@ -13,7 +13,7 @@ export const Error = ({ error }: Props) => {
   return (
     <div className="relative h-screen p-6">
       <FeedbackModal open={feedbackModalOpen} setOpen={setFeedbackModalOpen} />
-      <div>
+      <div className="max-w-lg mx-auto">
         <div className="mt-6">
           <div className="mt-10">
             <h1 className="text-5xl font-bold">Sorry</h1>

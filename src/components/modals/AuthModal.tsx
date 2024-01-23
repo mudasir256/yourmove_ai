@@ -5,6 +5,7 @@ import { ForgotPassword } from "../auth/ForgotPassword";
 import { SignIn } from "../auth/SignIn";
 import { SignUp } from "../auth/SignUp";
 import { Modal } from "./Modal";
+import { Migration } from "../auth/Migration";
 
 export const AuthModal = () => {
   const {
@@ -13,6 +14,7 @@ export const AuthModal = () => {
     authActionType,
     setShowOptions,
     setAuthActionType,
+    emailToMigrate,
   } = useAuthStore();
 
   useEffect(() => {
@@ -50,13 +52,21 @@ export const AuthModal = () => {
             </svg>
           </div>
           <div className="flex items-center justify-center -mt-6">
-            <h1 className="text-2xl font-semibold">{authActionType}</h1>
+            <h1 className="text-2xl font-semibold">
+              {emailToMigrate ? <>We've upgraded!</> : <>{authActionType}</>}
+            </h1>
           </div>
           <div className="mt-6">
-            {authActionType === AuthActionType.SignIn && <SignIn />}
-            {authActionType === AuthActionType.SignUp && <SignUp />}
-            {authActionType === AuthActionType.ForgotPassword && (
-              <ForgotPassword />
+            {emailToMigrate ? (
+              <Migration />
+            ) : (
+              <>
+                {authActionType === AuthActionType.SignIn && <SignIn />}
+                {authActionType === AuthActionType.SignUp && <SignUp />}
+                {authActionType === AuthActionType.ForgotPassword && (
+                  <ForgotPassword />
+                )}
+              </>
             )}
           </div>
         </div>
