@@ -21,8 +21,8 @@ export const Product = ({
       className="border border-2 border-black rounded-lg mb-4"
       onClick={() => navigate(url)}
     >
-      <div className="flex justify-center items-center overflow-hidden bg-brand-primary">
-        <div className="h-[10rem] w-[18rem] -translate-y-[4rem]">
+      <div className="flex justify-center items-center overflow-hidden bg-brand-primary rounded-t-md">
+        <div className="h-[17rem]">
           <img src={image} />
         </div>
       </div>
