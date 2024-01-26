@@ -28,7 +28,7 @@ export const Onboarding = () => {
   };
 
   return (
-    <div className="-mt-8 max-w-lg mx-auto">
+    <div className="-mt-8 max-w-lg mx-auto mt-6">
       <div>
         <div className="flex items-center justify-center">
           <Logo />
@@ -65,7 +65,7 @@ export const Onboarding = () => {
         {selectedOption && (
           <>
             <div
-              className="mx-4 mt-3 overflow-y-scroll"
+              className="overflow-y-scroll p-4"
               style={{
                 height: window.innerHeight - 328,
               }}

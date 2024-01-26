@@ -19,6 +19,9 @@ interface UIStore {
   // For showing successful subscription
   subscriptionSuccess: boolean;
   setSubscriptionSuccess: (subscriptionSuccess: boolean) => void;
+
+  hasCheckedForOnboarding: boolean;
+  setHasCheckedForOnboarding: (hasCheckedForOnboarding: boolean) => void;
 }
 
 export const useUIStore = create<UIStore>((set) => ({
@@ -34,4 +37,7 @@ export const useUIStore = create<UIStore>((set) => ({
   setHideUpsell: (hideUpsell) => set({ hideUpsell }),
   subscriptionSuccess: false,
   setSubscriptionSuccess: (subscriptionSuccess) => set({ subscriptionSuccess }),
+  hasCheckedForOnboarding: false,
+  setHasCheckedForOnboarding: (hasCheckedForOnboarding) =>
+    set({ hasCheckedForOnboarding }),
 }));

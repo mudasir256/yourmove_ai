@@ -1,4 +1,5 @@
 import { useNavigate } from "react-router-dom";
+import { useUIStore } from "../../stores/ui";
 
 interface Props {
   isRecommended?: boolean;
@@ -15,14 +16,19 @@ export const Product = ({
   image,
   url,
 }: Props) => {
+  const { setHasCheckedForOnboarding } = useUIStore();
   const navigate = useNavigate();
   return (
     <div
-      className="border border-2 border-black rounded-lg mb-4"
-      onClick={() => navigate(url)}
+      className="border border-2 border-black rounded-lg mb-4 cursor-pointer transition-transform duration-300 hover:scale-105"
+      onClick={() => {
+        navigate(url);
+        setHasCheckedForOnboarding(true);
+        localStorage.setItem("hasOnboarded", "true");
+      }}
     >
       <div className="flex justify-center items-center overflow-hidden bg-brand-primary rounded-t-md">
-        <div className="h-[17rem]">
+        <div className="h-[10rem]">
           <img src={image} />
         </div>
       </div>

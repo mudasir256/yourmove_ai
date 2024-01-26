@@ -1,7 +1,13 @@
 import { Toaster } from "react-hot-toast";
 import { QueryClient, QueryClientProvider } from "react-query";
 import * as Sentry from "@sentry/react";
-import { Navigate, Route, Routes, useLocation } from "react-router-dom";
+import {
+  Navigate,
+  Route,
+  Routes,
+  useLocation,
+  useNavigate,
+} from "react-router-dom";
 import { ProfileWriter } from "./pages/ProfileWriter";
 import { ChatAssistant } from "./pages/ChatAssistant";
 import { ProfileReviewer } from "./pages/ProfileReviewer";
@@ -17,6 +23,7 @@ import { useUIStore } from "./stores/ui";
 import { Error } from "./components/Error";
 import Page from "./pages/Page";
 import { Onboarding } from "./pages/Onboarding";
+import { set } from "date-fns";
 
 /* 
 
@@ -53,6 +60,7 @@ if (import.meta.env.VITE_SENTRY_DSN) {
 }
 
 function App() {
+  const navigate = useNavigate();
   const {
     setIsSubscribed,
     hasCheckedForSubscription,
@@ -66,6 +74,8 @@ function App() {
     setHideBottomNav,
     hideTopBar,
     setHideTopBar,
+    hasCheckedForOnboarding,
+    setHasCheckedForOnboarding,
   } = useUIStore();
   const location = useLocation();
 
@@ -139,73 +149,88 @@ function App() {
     return () => window.removeEventListener("resize", updateContentHeight);
   }, []);
 
+  // Check if the user has onboarded, if they have then redirect to chat assistant by default
+  useEffect(() => {
+    const hasOnboarded = localStorage.getItem("hasOnboarded");
+    if (hasOnboarded) {
+      setHasCheckedForOnboarding(true);
+      navigate("/chat-assistant");
+    }
+  }, []);
+
   return (
     <QueryClientProvider client={queryClient}>
-      <div className="flex flex-col h-screen">
-        <Toaster />
-        <AuthModal />
-        {!hideTopBar && <SideNav />}
-        <div
-          style={{
-            maxHeight: `${hideBottomNav ? "100%" : contentHeight + "px"}`,
-          }}
-          className={`${stopScroll ? "overflow-y-hidden" : "overflow-y-auto"}`}
-        >
-          <div className="pt-12">
-            {error ? (
-              <div className="mt-20">
-                <Error error={error} />
-              </div>
-            ) : (
-              <Routes>
-                <Route path="/" element={<Navigate to="/chat-assistant" />} />
-                <Route
-                  path="/premium"
-                  element={
-                    <Page title="Premium">
-                      <Premium />
-                    </Page>
-                  }
-                />
-                <Route
-                  path="/chat-assistant"
-                  element={
-                    <Page title="Chat Assistant">
-                      <ChatAssistant />
-                    </Page>
-                  }
-                />
-                <Route
-                  path="/profile-writer"
-                  element={
-                    <Page title="Profile Writer">
-                      <ProfileWriter />
-                    </Page>
-                  }
-                />
-                <Route
-                  path="/profile-review"
-                  element={
-                    <Page title="Profile Review">
-                      <ProfileReviewer />
-                    </Page>
-                  }
-                />
-                <Route
-                  path="/start"
-                  element={
-                    <Page title="Start">
-                      <Onboarding />
-                    </Page>
-                  }
-                />
-                <Route path="*">Not found</Route>
-              </Routes>
-            )}
+      {hasCheckedForOnboarding ? (
+        <div className="flex flex-col h-screen">
+          <Toaster />
+          <AuthModal />
+          {!hideTopBar && <SideNav />}
+          <div
+            style={{
+              maxHeight: `${hideBottomNav ? "100%" : contentHeight + "px"}`,
+            }}
+            className={`${
+              stopScroll ? "overflow-y-hidden" : "overflow-y-auto"
+            }`}
+          >
+            <div className="pt-12">
+              {error ? (
+                <div className="mt-20">
+                  <Error error={error} />
+                </div>
+              ) : (
+                <Routes>
+                  <Route path="/" element={<Navigate to="/chat-assistant" />} />
+                  <Route
+                    path="/premium"
+                    element={
+                      <Page title="Premium">
+                        <Premium />
+                      </Page>
+                    }
+                  />
+                  <Route
+                    path="/chat-assistant"
+                    element={
+                      <Page title="Chat Assistant">
+                        <ChatAssistant />
+                      </Page>
+                    }
+                  />
+                  <Route
+                    path="/profile-writer"
+                    element={
+                      <Page title="Profile Writer">
+                        <ProfileWriter />
+                      </Page>
+                    }
+                  />
+                  <Route
+                    path="/profile-review"
+                    element={
+                      <Page title="Profile Review">
+                        <ProfileReviewer />
+                      </Page>
+                    }
+                  />
+                  <Route
+                    path="/start"
+                    element={
+                      <Page title="Start">
+                        <Onboarding />
+                      </Page>
+                    }
+                  />
+                  <Route path="*">Not found</Route>
+                </Routes>
+              )}
+            </div>
           </div>
+          {!hideBottomNav && <BottomNav />}
         </div>
-        {!hideBottomNav && <BottomNav />}
-      </div>
+      ) : (
+        <Onboarding />
+      )}
     </QueryClientProvider>
   );
 }
