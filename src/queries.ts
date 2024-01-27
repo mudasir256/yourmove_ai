@@ -31,17 +31,31 @@ axios.interceptors.response.use(
     return response;
   },
   (error) => {
-    // If it timed out
-    if (error.code === "ECONNABORTED") {
-      useUIStore
-        .getState()
-        .setError(
-          "Our AI is taking longer than usual. Please wait a few minutes and try again."
-        );
-      // Handle the timeout error here
+    // If it's a chat error
+    if (error.config.url.includes("chat")) {
+      useChatStore.getState().setSendingMessage(false);
+      toast.error(
+        "There was an issue with our AI. Please wait a few minutes and try again."
+      );
+    } else {
+      // If it timed out
+      if (error.code === "ECONNABORTED") {
+        useUIStore
+          .getState()
+          .setError(
+            "Our AI is taking longer than usual. Please wait a few minutes and try again."
+          );
+        // Handle the timeout error here
+      } else {
+        useUIStore
+          .getState()
+          .setError(
+            "There was an issue with our AI. Please wait a few minutes and try again."
+          );
+      }
     }
     // If it was a 429 for the chat assistant
-    if (error.response.status === 429) {
+    if (error?.response?.status === 429) {
       // If they are signed in, redirect to premium
       if (auth.currentUser) {
         toast.error("You have ran out of Chats for today, upgrade for more.");
@@ -61,12 +75,6 @@ axios.interceptors.response.use(
       }
     }
     return Promise.reject(error);
-    // Was an error
-    // useProfileStore
-    //   .getState()
-    //   .setError(
-    //     "Our AI encountered an error. Please wait a few minutes and try again."
-    //   );
   }
 );
 
