@@ -20,6 +20,7 @@ export const ProfileWriterPaywall = ({ hideNoThanks }: Props) => {
       <LearnMoreModal
         open={learnMoreModalOpen}
         setOpen={setLearnMoreModalOpen}
+        setChosenProduct={setChosenProduct}
       />
       <div className="mt-8">
         <div className="-mt-14">

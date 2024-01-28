@@ -38,7 +38,7 @@ export const Modal = ({ children, open, setOpen, backgroundColor }: Props) => {
         leaveFrom="opacity-100 rotate-0 scale-100"
         leaveTo="opacity-0 scale-95 "
       >
-        <div className="h-screen w-full left-0 top-0 flex items-center justify-center z-50 fixed z-50">
+        <div className="h-screen w-full left-0 top-0 flex items-center justify-center z-50 fixed z-50 -mt-6">
           <div
             ref={modalRef}
             style={{

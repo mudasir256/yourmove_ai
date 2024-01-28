@@ -215,7 +215,7 @@ export const SideNav = () => {
           </Dialog>
         </Transition.Root>
 
-        <div className="fixed top-0 left-0 w-full h-12 bg-white z-50">
+        <div className="fixed top-0 left-0 w-full h-12 bg-white z-30">
           {/* Top Nav Content */}
           <div className="mx-auto max-w-xl sticky top-0 z-40 flex h-12 shrink-0 items-center gap-x-4 px-4 sm:gap-x-6 flex">
             <button
