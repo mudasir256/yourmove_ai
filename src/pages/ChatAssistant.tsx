@@ -8,6 +8,7 @@ import { PremiumUpsellPrompt } from "../components/chat/PremiumUpsellPrompt";
 import { MessageAuthorType } from "../constants/chat";
 import { Screenshot } from "../components/chat/Screenshot";
 import { GeneratingRepliesLoader } from "../components/chat/GeneratingRepliesLoader";
+import { useState } from "react";
 
 export const ChatAssistant = () => {
   const {
@@ -21,9 +22,11 @@ export const ChatAssistant = () => {
     setSettingsModalOpen,
     setChatRequestType,
   } = useChatStore();
+  const [file, setFile] = useState<File | null>(null);
 
   // Start over, clear everything
   const startOver = () => {
+    setFile(null);
     setChatResponse(null);
     setScreenshotUploading(null);
     setChatRequestType(null);
@@ -114,6 +117,8 @@ export const ChatAssistant = () => {
             </>
           )}
           <MessageInput
+            file={file}
+            setFile={setFile}
             hideTextInput={!!chatResponse || sendingMessage}
             hideInputSettings={!sendingMessage}
           />

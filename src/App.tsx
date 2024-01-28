@@ -60,21 +60,15 @@ if (import.meta.env.VITE_SENTRY_DSN) {
 }
 
 function App() {
-  const navigate = useNavigate();
   const {
     setIsSubscribed,
     hasCheckedForSubscription,
     setHasCheckedForSubscription,
   } = useAuthStore();
   const {
-    stopScroll,
-    error,
     setStopScroll,
-    hideBottomNav,
     setHideBottomNav,
-    hideTopBar,
     setHideTopBar,
-    hasCheckedForOnboarding,
     setHasCheckedForOnboarding,
   } = useUIStore();
   const location = useLocation();
@@ -126,111 +120,54 @@ function App() {
     });
   }, []);
 
-  // For making the bottom nav responsive
-  const [contentHeight, setContentHeight] = useState(window.innerHeight);
-
-  const heightOfTopBar = 48; // Example height in pixels for the top bar
-  const heightOfBottomBar = 16; // Example height in pixels for the bottom bar
-
-  const updateContentHeight = () => {
-    // Calculate available height for content
-    const availableHeight =
-      window.innerHeight - (heightOfTopBar + heightOfBottomBar);
-    setContentHeight(availableHeight);
-  };
-
-  useEffect(() => {
-    window.addEventListener("resize", updateContentHeight);
-
-    // Set the initial content height
-    updateContentHeight();
-
-    // Remove event listener on cleanup
-    return () => window.removeEventListener("resize", updateContentHeight);
-  }, []);
-
-  // Check if the user has onboarded, if they have then redirect to chat assistant by default
-  useEffect(() => {
-    const hasOnboarded = localStorage.getItem("hasOnboarded");
-    if (hasOnboarded) {
-      setHasCheckedForOnboarding(true);
-      // navigate("/chat-assistant");
-    }
-  }, []);
-
   return (
     <QueryClientProvider client={queryClient}>
-      {hasCheckedForOnboarding ? (
-        <div className="flex flex-col h-screen">
-          <Toaster />
-          <AuthModal />
-          {!hideTopBar && <SideNav />}
-          <div
-            style={{
-              maxHeight: `${hideBottomNav ? "100%" : contentHeight + "px"}`,
-            }}
-            className={`${
-              stopScroll ? "overflow-y-hidden" : "overflow-y-auto"
-            }`}
-          >
-            <div className="pt-12">
-              {error ? (
-                <div className="mt-20">
-                  <Error error={error} />
-                </div>
-              ) : (
-                <Routes>
-                  <Route path="/" element={<Navigate to="/chat-assistant" />} />
-                  <Route
-                    path="/premium"
-                    element={
-                      <Page title="Premium">
-                        <Premium />
-                      </Page>
-                    }
-                  />
-                  <Route
-                    path="/chat-assistant"
-                    element={
-                      <Page title="Chat Assistant">
-                        <ChatAssistant />
-                      </Page>
-                    }
-                  />
-                  <Route
-                    path="/profile-writer"
-                    element={
-                      <Page title="Profile Writer">
-                        <ProfileWriter />
-                      </Page>
-                    }
-                  />
-                  <Route
-                    path="/profile-review"
-                    element={
-                      <Page title="Profile Review">
-                        <ProfileReviewer />
-                      </Page>
-                    }
-                  />
-                  <Route
-                    path="/start"
-                    element={
-                      <Page title="Start">
-                        <Onboarding />
-                      </Page>
-                    }
-                  />
-                  <Route path="*">Not found</Route>
-                </Routes>
-              )}
-            </div>
-          </div>
-          {!hideBottomNav && <BottomNav />}
-        </div>
-      ) : (
-        <Onboarding />
-      )}
+      <Routes>
+        <Route
+          path="/"
+          element={
+            localStorage.getItem("hasOnboarded") ? (
+              <Navigate to="/chat-assistant" />
+            ) : (
+              <Navigate to="/start" />
+            )
+          }
+        />
+        <Route path="/start" element={<Onboarding />} />
+        <Route
+          path="/premium"
+          element={
+            <Page title="Premium">
+              <Premium />
+            </Page>
+          }
+        />
+        <Route
+          path="/chat-assistant"
+          element={
+            <Page title="Chat Assistant">
+              <ChatAssistant />
+            </Page>
+          }
+        />
+        <Route
+          path="/profile-writer"
+          element={
+            <Page title="Profile Writer">
+              <ProfileWriter />
+            </Page>
+          }
+        />
+        <Route
+          path="/profile-review"
+          element={
+            <Page title="Profile Review">
+              <ProfileReviewer />
+            </Page>
+          }
+        />
+        <Route path="*">Not found</Route>
+      </Routes>
     </QueryClientProvider>
   );
 }

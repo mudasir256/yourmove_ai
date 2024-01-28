@@ -74,12 +74,18 @@ export const submitMessage = (message: string, file: File | null) => {
 interface Props {
   hideTextInput?: boolean;
   hideInputSettings?: boolean;
+  file: File | null;
+  setFile: (file: File | null) => void;
 }
 
-export const MessageInput = ({ hideTextInput, hideInputSettings }: Props) => {
+export const MessageInput = ({
+  hideTextInput,
+  hideInputSettings,
+  file,
+  setFile,
+}: Props) => {
   const { selectedMessageType, selectedMessageSubType } = useChatStore();
   const [inputConfiguration, setInputConfiguration] = useState({} as any);
-  const [file, setFile] = useState<File | null>(null);
 
   useEffect(() => {
     const typeInputConfiguration =
