@@ -29,6 +29,8 @@ interface WizardStore {
   setProfileReviewerStepResult: (stepType: string, result: string) => void;
   profileReviewerWizardComplete: boolean;
   setProfileReviewerWizardComplete: (wizardComplete: boolean) => void;
+  filesUploading: boolean;
+  setFilesUploading: (filesUploading: boolean) => void;
 
   profileReviewerFiles: Array<string>;
   setProfileReviewerFiles: (files: Array<string>) => void;
@@ -92,4 +94,7 @@ export const useWizardStore = create<WizardStore>((set) => ({
     set({ profileReviewerFiles: files }),
   email: "",
   setEmail: (email: string) => set({ email }),
+  filesUploading: false,
+  setFilesUploading: (filesUploading: boolean) =>
+    set({ filesUploading: filesUploading }),
 }));

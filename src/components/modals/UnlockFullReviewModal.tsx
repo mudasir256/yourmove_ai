@@ -38,7 +38,7 @@ export const UnlockFullReviewModal = ({ open, setOpen, setHasPaid }: Props) => {
         <div className="overflow-y-scroll h-[30rem]">
           <Paywall
             email={profileReviewerStepResults.email}
-            requiredProductsToSkipPaywall={[]}
+            requiredProductsToSkipPaywall={[ProductType.ProfileReview]}
             noThanksHandler={() => setOpen(false)}
             chosenProduct={ProductType.ProfileReview}
             redirectHandler={() => {

@@ -2,6 +2,8 @@ import { useState } from "react";
 import { useProfileStore } from "../../stores/profile";
 import Markdown from "react-markdown";
 import { UnlockFullReviewModal } from "../modals/UnlockFullReviewModal";
+import { useWizardStore } from "../../stores/wizard";
+import { WizardStepType } from "../../models/wizard";
 
 const PLAN_FEATURES = [
   "Detailed review of your profile",
@@ -19,6 +21,8 @@ export const ProfileReview = ({ hasPaid, setHasPaid }: Props) => {
   const { reviewedProfile, setReviewedProfile } = useProfileStore();
   const [unlockFullReviewModalOpen, setUnlockFullReviewModalOpen] =
     useState(false);
+  const { setProfileReviewerWizardComplete, setProfileReviewerStep } =
+    useWizardStore();
 
   return (
     <div className="pb-40 mt-4">
@@ -27,6 +31,23 @@ export const ProfileReview = ({ hasPaid, setHasPaid }: Props) => {
         open={unlockFullReviewModalOpen}
         setOpen={setUnlockFullReviewModalOpen}
       />
+      <svg
+        onClick={() => {
+          setProfileReviewerWizardComplete(false);
+          setProfileReviewerStep(WizardStepType.UPLOAD_PHOTO);
+        }}
+        xmlns="http://www.w3.org/2000/svg"
+        fill="none"
+        viewBox="0 0 24 24"
+        strokeWidth="2.5"
+        className="w-10 h-10 stroke-zinc-400 mb-2 -ml-1"
+      >
+        <path
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          d="M15.75 19.5L8.25 12l7.5-7.5"
+        />
+      </svg>
       <div className="mb-5">
         <h1 className="text-4xl font-bold">Your Review</h1>
       </div>

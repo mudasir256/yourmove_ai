@@ -154,7 +154,7 @@ function App() {
     const hasOnboarded = localStorage.getItem("hasOnboarded");
     if (hasOnboarded) {
       setHasCheckedForOnboarding(true);
-      navigate("/chat-assistant");
+      // navigate("/chat-assistant");
     }
   }, []);
 

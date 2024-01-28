@@ -239,7 +239,7 @@ export const SideNav = () => {
                 <a
                   target="_blank"
                   href={APP_STORE_URL}
-                  className="font-semibold text-brand-primary"
+                  className="font-semibold text-brand-primary hidden sm:block"
                 >
                   Download on iOS
                 </a>

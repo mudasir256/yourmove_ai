@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { uploadFiles } from "../../queries";
+import { useWizardStore } from "../../stores/wizard";
 
 interface Props {
   // An optional array of strings to defines the already set files
@@ -8,7 +9,7 @@ interface Props {
 }
 
 export const FileUploadStep = ({ alreadySetFiles, onFilesUploaded }: Props) => {
-  const [filesUploading, setFilesUploading] = useState(false);
+  const { filesUploading, setFilesUploading } = useWizardStore();
 
   const [selectedFiles, setSelectedFiles] = useState<FileList | null>(null);
 

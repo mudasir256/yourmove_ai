@@ -10,6 +10,7 @@ import { useEffect, useState } from "react";
 import { useAuthStore } from "../../stores/auth";
 import { auth } from "../../firebase";
 import { Loading } from "../Loading";
+import { useWizardStore } from "../../stores/wizard";
 
 /* Each Wizard has the following step:
 1. Welcome
@@ -45,6 +46,17 @@ export const Wizard = ({
 }: Props) => {
   const { isSubscribed } = useAuthStore();
   const [paymentProcessing, setPaymentProcessing] = useState(false);
+  const { filesUploading } = useWizardStore();
+  const [nextButtonTranslateY, setNextButtonTranslateY] = useState("32rem");
+
+  useEffect(() => {
+    // Calculate translateY based on the viewport height
+    // You might need to adjust the calculation to fit your design
+    const viewportHeight = window.innerHeight;
+    const dynamicTranslateY = `${viewportHeight * 0.63}px`; // for example, 80% of the viewport height
+
+    setNextButtonTranslateY(dynamicTranslateY);
+  }, []); // Empty dependency array ensures this runs on mount
 
   // Checking if a payment has been made, if so we need to show some processing
   useEffect(() => {
@@ -124,9 +136,11 @@ export const Wizard = ({
     <div className="">
       {step !== WizardStepType.PAYWALL &&
         !paymentProcessing &&
-        !wizardComplete && (
+        !wizardComplete &&
+        !filesUploading && (
           <div
-            className="absolute right-0 translate-y-[32rem] mr-4"
+            className="absolute right-0 mr-4"
+            style={{ transform: `translateY(${nextButtonTranslateY})` }}
             onClick={() => goToNextStep()}
           >
             <div className="mt-auto bg-brand-primary w-12 h-12 flex items-center justify-center rounded-full">
