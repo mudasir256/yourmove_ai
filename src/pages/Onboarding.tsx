@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Logo } from "../components/Logo";
 import { Product } from "../components/onboarding/Product";
 import ProfileReview from "../assets/images/onboarding/profile-review.png";
@@ -26,6 +26,12 @@ export const Onboarding = () => {
   const isOptionSelected = (option: string) => {
     return selectedOption === option;
   };
+
+  // Once we show the onboarding once, we don't want to show it again,
+  // so we set a flag in local storage to indicate that the user has onboarded
+  useEffect(() => {
+    localStorage.setItem("hasOnboarded", "true");
+  }, []);
 
   return (
     <div className="-mt-8 max-w-lg mx-auto mt-6">

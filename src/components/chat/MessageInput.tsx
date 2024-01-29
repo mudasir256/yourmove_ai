@@ -2,6 +2,7 @@ import { PhotoIcon } from "@heroicons/react/24/outline";
 import { useChatStore } from "../../stores/chat";
 import {
   ChatRequestType,
+  ChatType,
   MessageInputConfigurations,
 } from "../../constants/chat";
 import { ChangeEvent, useEffect, useRef, useState } from "react";
@@ -31,7 +32,7 @@ export const submitMessage = (message: string, file: File | null) => {
     state.setChatRequestType(ChatRequestType.Image);
     state.setScreenshotUploading(file);
     sendChatImage(
-      state.selectedMessageType.toLowerCase(),
+      state.chatType ? state.chatType : ChatType.Opener,
       removeEmoji(state.selectedMessageStyle),
       state.curiosityModeEnabled,
       chatResponse?.image ? chatResponse?.image : null,
@@ -52,7 +53,7 @@ export const submitMessage = (message: string, file: File | null) => {
   } else {
     state.setChatRequestType(ChatRequestType.Text);
     sendChatText(
-      state.selectedMessageType.toLowerCase(),
+      state.chatType ? state.chatType : ChatType.Opener,
       removeEmoji(state.selectedMessageStyle),
       message,
       state.curiosityModeEnabled,

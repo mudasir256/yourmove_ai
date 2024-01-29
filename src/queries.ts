@@ -33,10 +33,31 @@ axios.interceptors.response.use(
   (error) => {
     // If it's a chat error
     if (error.config.url.includes("chat")) {
-      useChatStore.getState().setSendingMessage(false);
-      toast.error(
-        "There was an issue with our AI. Please wait a few minutes and try again."
-      );
+      // If it was a 429 for the chat assistant
+      if (error?.response?.status === 429) {
+        // If they are signed in, redirect to premium
+        if (auth.currentUser) {
+          toast.error("You have ran out of Chats for today, upgrade for more.");
+          history.push("/premium");
+          useChatStore.getState().setSendingMessage(false);
+        }
+        // If they aren't signed in, show a toast and ask to sign in
+        else {
+          toast.error("You have ran out of Chats for today, sign in for more.");
+          useAuthStore.getState().setAuthModalIsOpen(true);
+
+          // Say we aren't submitting chats
+          useChatStore.getState().setSendingMessage(false);
+
+          // Hide the Upsell as we only want to show that if we are signed in
+          useUIStore.getState().setHideUpsell(true);
+        }
+      } else {
+        useChatStore.getState().setSendingMessage(false);
+        toast.error(
+          "There was an issue with our AI. Please wait a few minutes and try again."
+        );
+      }
     } else {
       // If it timed out
       if (error.code === "ECONNABORTED") {
@@ -52,26 +73,6 @@ axios.interceptors.response.use(
           .setError(
             "There was an issue with our AI. Please wait a few minutes and try again."
           );
-      }
-    }
-    // If it was a 429 for the chat assistant
-    if (error?.response?.status === 429) {
-      // If they are signed in, redirect to premium
-      if (auth.currentUser) {
-        toast.error("You have ran out of Chats for today, upgrade for more.");
-        history.push("/premium");
-        useChatStore.getState().setSendingMessage(false);
-      }
-      // If they aren't signed in, show a toast and ask to sign in
-      else {
-        toast.error("You have ran out of Chats for today, sign in for more.");
-        useAuthStore.getState().setAuthModalIsOpen(true);
-
-        // Say we aren't submitting chats
-        useChatStore.getState().setSendingMessage(false);
-
-        // Hide the Upsell as we only want to show that if we are signed in
-        useUIStore.getState().setHideUpsell(true);
       }
     }
     return Promise.reject(error);

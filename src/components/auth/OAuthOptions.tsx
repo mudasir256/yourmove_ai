@@ -6,12 +6,19 @@ import {
 import { auth } from "../../firebase";
 import { successfulSignIn } from "../../utils";
 import { useAuthStore } from "../../stores/auth";
+import toast from "react-hot-toast";
 
 const googleProvider = new GoogleAuthProvider();
 const appleProvider = new OAuthProvider("apple.com");
 
 export const OAuthOptions = () => {
   const { setSignInError } = useAuthStore();
+
+  const handleOAuthError = (errorCode: string) => {
+    if (errorCode == "auth/cancelled-popup-request") {
+      toast.error("You closed the Sign In Pop Up. Try again");
+    }
+  };
 
   const launchGoogleAuth = () => {
     signInWithPopup(auth, googleProvider)
@@ -21,7 +28,7 @@ export const OAuthOptions = () => {
       .catch((error) => {
         const errorMessage = error.message;
         setSignInError(errorMessage);
-        alert(`OAuth Error: ${errorMessage}`);
+        handleOAuthError(error.code);
       });
   };
 
@@ -31,16 +38,9 @@ export const OAuthOptions = () => {
         successfulSignIn(result.user.email);
       })
       .catch((error) => {
-        // Handle Errors here.
-        const errorCode = error.code;
         const errorMessage = error.message;
-        // The email of the user's account used.
-        const email = error.customData.email;
-        // The credential that was used.
-        const credential = OAuthProvider.credentialFromError(error);
-
-        // ...
-        alert(`OAuth Error: ${errorMessage}`);
+        setSignInError(errorMessage);
+        handleOAuthError(error.code);
       });
   };
   return (

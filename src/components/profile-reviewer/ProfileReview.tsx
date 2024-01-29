@@ -120,7 +120,9 @@ export const ProfileReview = ({ hasPaid, setHasPaid }: Props) => {
           className="p-4 overflow-y-hidden"
           style={{ maxHeight: hasPaid ? "100%" : "30rem" }}
         >
-          <Markdown>{reviewedProfile?.review}</Markdown>
+          <div className="prose lg:prose-xl">
+            <Markdown>{reviewedProfile?.review}</Markdown>
+          </div>
         </div>
       </div>
     </div>

@@ -6,6 +6,7 @@ import {
   MessageType,
   MessageAuthorType,
   ChatRequestType,
+  ChatType,
 } from "../constants/chat";
 import { ChatResponse, Message } from "../models/chat";
 
@@ -60,6 +61,10 @@ interface ChatStore {
   // So we know what type of Chat request was sent
   chatRequestType: ChatRequestType | null;
   setChatRequestType: (chatRequestType: ChatRequestType | null) => void;
+
+  // For sending chat type
+  chatType: ChatType | null;
+  setChatType: (chatType: ChatType | null) => void;
 }
 
 export const useChatStore = create<ChatStore>((set) => ({
@@ -94,4 +99,6 @@ export const useChatStore = create<ChatStore>((set) => ({
   chatRequestType: null,
   setChatRequestType: (chatRequestType: ChatRequestType | null) =>
     set({ chatRequestType }),
+  chatType: ChatType.Opener,
+  setChatType: (chatType: ChatType | null) => set({ chatType }),
 }));

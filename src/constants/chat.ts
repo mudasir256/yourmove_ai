@@ -11,6 +11,21 @@ export enum MessageSubType {
   Reject = "Reject",
 }
 
+export enum ChatType {
+  Reply = "reply",
+  Opener = "opener",
+  ReEngage = "reengage",
+  Closer = "closer",
+  Reject = "reject",
+}
+
+export const subTypeToChatType = {
+  [MessageSubType.Starter]: ChatType.Opener,
+  [MessageSubType.ReEngage]: ChatType.ReEngage,
+  [MessageSubType.AskOut]: ChatType.Closer,
+  [MessageSubType.Reject]: ChatType.Reject,
+};
+
 export const MessageTypeSubTypeMappings = {
   Open: [MessageSubType.Starter, MessageSubType.ReEngage],
   Reply: [],

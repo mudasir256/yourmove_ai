@@ -1,4 +1,3 @@
-import { MessageSubTypeSelector } from "../components/chat/selectors/MessageSubTypeSelector";
 import { MessageTypeSelector } from "../components/chat/selectors/MessageTypeSelector";
 import { SettingsModal } from "../components/chat/modals/SettingsModal";
 import { useChatStore } from "../stores/chat";
@@ -40,7 +39,6 @@ export const ChatAssistant = () => {
           setOpen={setSettingsModalOpen}
         />
         <MessageTypeSelector />
-        <MessageSubTypeSelector />
         <div className="mt-4 relative overflow-y-scroll">
           {chatResponse ? (
             <div className="h-full">
