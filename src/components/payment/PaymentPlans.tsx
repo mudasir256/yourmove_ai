@@ -14,9 +14,7 @@ const PLAN_FEATURES = [
   "7 day money back guarantee",
 ];
 
-const stripePromise = loadStripe(
-  "pk_test_51Lm3WZDEUIiuNNmxpeslz6iwYRn1XcrQ4qahHfuAzZ7Iffeso3dlKKBGRsqclvzSF1Vgj1q1aX0RuIWdiqJy6W4l00lnH5rauz"
-);
+const stripePromise = loadStripe(import.meta.env.VITE_STRIPE_PUBLISHABLE_KEY);
 
 interface Props {
   noThanksHandler: () => void;
