@@ -68,7 +68,7 @@ interface ChatStore {
 }
 
 export const useChatStore = create<ChatStore>((set) => ({
-  selectedMessageType: MessageType.Open,
+  selectedMessageType: MessageType.Reply,
   setSelectedMessageType: (messageType: MessageType) =>
     set({ selectedMessageType: messageType }),
   selectedMessageSubType: MessageSubType.Starter,

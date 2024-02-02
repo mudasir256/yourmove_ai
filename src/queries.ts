@@ -241,6 +241,10 @@ export const checkIfUserRequiresMigration = (email: string) => {
   return axios.get(`${BASE_URL}/user/requires-migration?email=${email}`);
 };
 
-export const migrateUser = (email: string, password: string) => {
-  return axios.post(`${BASE_URL}/user/migrate`, { email, password });
+export const migrateUser = (email: string, password?: string) => {
+  const body: any = { email };
+  if (password) {
+    body["password"] = password;
+  }
+  return axios.post(`${BASE_URL}/user/migrate`, body);
 };

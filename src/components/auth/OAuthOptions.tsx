@@ -7,6 +7,7 @@ import { auth } from "../../firebase";
 import { successfulSignIn } from "../../utils";
 import { useAuthStore } from "../../stores/auth";
 import toast from "react-hot-toast";
+import { migrateUser } from "../../queries";
 
 const googleProvider = new GoogleAuthProvider();
 const appleProvider = new OAuthProvider("apple.com");
@@ -23,7 +24,11 @@ export const OAuthOptions = () => {
   const launchGoogleAuth = () => {
     signInWithPopup(auth, googleProvider)
       .then((result) => {
-        successfulSignIn(result.user.email);
+        if (result.user.email) {
+          successfulSignIn(result.user.email);
+          // Migrate just the user
+          migrateUser(result.user.email);
+        }
       })
       .catch((error) => {
         const errorMessage = error.message;
@@ -35,7 +40,11 @@ export const OAuthOptions = () => {
   const launchAppleAuth = () => {
     signInWithPopup(auth, appleProvider)
       .then((result) => {
-        successfulSignIn(result.user.email);
+        if (result.user.email) {
+          successfulSignIn(result.user.email);
+          // Migrate just the user
+          migrateUser(result.user.email);
+        }
       })
       .catch((error) => {
         const errorMessage = error.message;
