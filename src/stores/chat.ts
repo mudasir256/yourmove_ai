@@ -99,6 +99,6 @@ export const useChatStore = create<ChatStore>((set) => ({
   chatRequestType: null,
   setChatRequestType: (chatRequestType: ChatRequestType | null) =>
     set({ chatRequestType }),
-  chatType: ChatType.Opener,
+  chatType: ChatType.Reply,
   setChatType: (chatType: ChatType | null) => set({ chatType }),
 }));

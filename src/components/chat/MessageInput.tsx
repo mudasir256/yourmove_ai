@@ -32,7 +32,7 @@ export const submitMessage = (message: string, file: File | null) => {
     state.setChatRequestType(ChatRequestType.Image);
     state.setScreenshotUploading(file);
     sendChatImage(
-      state.chatType ? state.chatType : ChatType.Opener,
+      state.chatType ? state.chatType : ChatType.Reply,
       removeEmoji(state.selectedMessageStyle),
       state.curiosityModeEnabled,
       chatResponse?.image ? chatResponse?.image : null,
@@ -53,7 +53,7 @@ export const submitMessage = (message: string, file: File | null) => {
   } else {
     state.setChatRequestType(ChatRequestType.Text);
     sendChatText(
-      state.chatType ? state.chatType : ChatType.Opener,
+      state.chatType ? state.chatType : ChatType.Reply,
       removeEmoji(state.selectedMessageStyle),
       message,
       state.curiosityModeEnabled,
