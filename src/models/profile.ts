@@ -23,6 +23,7 @@ export interface Prompt {
   app: string;
   number: number;
   text: string;
+  question: string;
 }
 
 export interface HasUserPaidResponse {
