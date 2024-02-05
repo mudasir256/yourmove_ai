@@ -53,12 +53,12 @@ export const ProfileReview = ({ hasPaid, setHasPaid }: Props) => {
       </div>
       <div
         className="bg-white border-2 border-black rounded-md shadow-lg relative"
-        style={{ height: hasPaid ? "100%" : "62rem" }}
+        style={{ height: hasPaid ? "100%" : "77rem" }}
       >
         {!hasPaid && (
           <div className="absolute w-full h-full"
           // bg-gradient-to-t from-black via-black
-            style={{ backgroundImage: 'linear-gradient(to top, rgba(0, 0, 0, 1) 40%, rgba(0, 0, 0, 0))'}}
+            style={{ backgroundImage: 'linear-gradient(to top, rgba(0, 0, 0, 1) 30%, rgba(0, 0, 0, 0))'}}
             >
             <div className="w-full h-full relative">
               {/* Unlock */}
@@ -121,9 +121,9 @@ export const ProfileReview = ({ hasPaid, setHasPaid }: Props) => {
         )}
         <div
           className="p-4 overflow-y-hidden"
-          style={{ maxHeight: hasPaid ? "100%" : "60rem" }}
+          style={{ maxHeight: hasPaid ? "100%" : "75rem" }}
         >
-          <div className="prose lg:prose-xl">
+          <div className="prose lg:prose-base">
             <Markdown>{reviewedProfile?.review}</Markdown>
           </div>
         </div>
