@@ -219,7 +219,7 @@ export const generateProfileReview = (
   email: string,
   screenshots: Array<string>
 ) => {
-  return axios.post(`${BASE_URL}/profile-reviewer`, { email, screenshots });
+  return axios.post(`${BASE_URL}/profile-reviewer`, { email, screenshots }, { timeout: 60000 });
 };
 
 export const createSubscription = (
