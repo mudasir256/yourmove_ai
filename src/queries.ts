@@ -23,7 +23,7 @@ const BASE_URL = import.meta.env.VITE_API_BASE_URL;
 // temporary for testing
 axios.defaults.headers.common["ngrok-skip-browser-warning"] = "something";
 
-axios.defaults.timeout = 30000;
+axios.defaults.timeout = 50000;
 
 axios.interceptors.response.use(
   (response) => {
