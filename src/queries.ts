@@ -17,6 +17,7 @@ import { useAuthStore } from "./stores/auth";
 import { useChatStore } from "./stores/chat";
 import { auth } from "./firebase";
 import { history } from "./main";
+import * as Sentry from "@sentry/react";
 
 const BASE_URL = import.meta.env.VITE_API_BASE_URL;
 
@@ -31,6 +32,21 @@ axios.interceptors.response.use(
     return response;
   },
   (error) => {
+    // Log error details to Sentry or console
+    const errorDetails = {
+      url: error.config.url,
+      method: error.config.method,
+      statusCode: error?.response?.status,
+      statusText: error?.response?.statusText,
+      headers: error.config.headers,
+      data: error.config.data,
+      errorMessage: error.message,
+    };
+
+    console.error("Axios request failed:", errorDetails);
+    Sentry.captureException(new Error("Axios request failed"), {
+      extra: errorDetails,
+    });
     // If it's a chat error
     if (error.config.url.includes("chat")) {
       // If it was a 429 for the chat assistant
@@ -123,11 +139,15 @@ export const submitFeedback = (feedbackRequest: FeedbackRequest) => {
 };
 
 export const createCopy = (email: string, prompt: string, response: string) => {
-  return axios.post(`${BASE_URL}/profile/prompt/copy`, {
-    email,
-    prompt,
-    response,
-  });
+  return axios.post(
+    `${BASE_URL}/profile/prompt/copy`,
+    {
+      email,
+      prompt,
+      response,
+    },
+    { timeout: 600000 }
+  );
 };
 
 export const sendChatText = (
