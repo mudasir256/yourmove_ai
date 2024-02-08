@@ -36,7 +36,12 @@ axios.interceptors.response.use(
   },
   (error) => {
     const config = error.config;
-    if (error.response && error.response.status === 500) {
+
+    const shouldRetry =
+      (error.response && error.response.status === 500) ||
+      error.message === "Network Error";
+
+    if (shouldRetry) {
       // Check if we've already tried to retry this request
       if (!config.__retryCount) {
         config.__retryCount = 0;
