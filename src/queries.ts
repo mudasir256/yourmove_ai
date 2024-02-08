@@ -26,27 +26,41 @@ axios.defaults.headers.common["ngrok-skip-browser-warning"] = "something";
 
 axios.defaults.timeout = 50000;
 
+const retryCount = 3;
+const retryDelay = 2000; // Delay between retries in milliseconds
+
 axios.interceptors.response.use(
   (response) => {
     // Was successful - return the response
     return response;
   },
   (error) => {
-    // Log error details to Sentry or console
-    const errorDetails = {
-      url: error.config.url,
-      method: error.config.method,
-      statusCode: error?.response?.status,
-      statusText: error?.response?.statusText,
-      headers: error.config.headers,
-      data: error.config.data,
-      errorMessage: error.message,
-    };
+    const config = error.config;
+    if (error.response && error.response.status === 500) {
+      // Check if we've already tried to retry this request
+      if (!config.__retryCount) {
+        config.__retryCount = 0;
+      }
 
-    console.error("Axios request failed:", errorDetails);
-    Sentry.captureException(new Error("Axios request failed"), {
-      extra: errorDetails,
-    });
+      // Check if we've reached the max retry count
+      if (config.__retryCount < retryCount) {
+        // Increase the retry count
+        config.__retryCount += 1;
+
+        // Create new promise to handle exponential backoff
+        const backoff = new Promise((resolve) => {
+          setTimeout(() => {
+            resolve(null);
+          }, retryDelay || 1);
+        });
+
+        // Return the promise in which recalls axios to retry the request
+        return backoff.then(() => {
+          return axios(config);
+        });
+      }
+    }
+
     // If it's a chat error
     if (error.config.url.includes("chat")) {
       // If it was a 429 for the chat assistant
@@ -90,6 +104,21 @@ axios.interceptors.response.use(
             "There was an issue with our AI. Please wait a few minutes and try again."
           );
       }
+      // Log error details to Sentry or console
+      const errorDetails = {
+        url: error.config.url,
+        method: error.config.method,
+        statusCode: error?.response?.status,
+        statusText: error?.response?.statusText,
+        headers: error.config.headers,
+        data: error.config.data,
+        errorMessage: error.message,
+      };
+
+      console.error("Axios request failed:", errorDetails);
+      Sentry.captureException(new Error("Axios request failed"), {
+        extra: errorDetails,
+      });
     }
     return Promise.reject(error);
   }
@@ -239,7 +268,11 @@ export const generateProfileReview = (
   email: string,
   screenshots: Array<string>
 ) => {
-  return axios.post(`${BASE_URL}/profile-reviewer`, { email, screenshots }, { timeout: 60000 });
+  return axios.post(
+    `${BASE_URL}/profile-reviewer`,
+    { email, screenshots },
+    { timeout: 60000 }
+  );
 };
 
 export const createSubscription = (
