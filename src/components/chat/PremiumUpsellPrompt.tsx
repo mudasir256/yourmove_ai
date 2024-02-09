@@ -12,16 +12,16 @@ export const PremiumUpsellPrompt = () => {
 
   // only show if there are queries remaining, and they are less than 5 and the user is signed in
   return chatResponse?.queriesRemaining !== undefined &&
-    chatResponse?.queriesRemaining < 5 &&
+    chatResponse?.queriesRemaining < 7 &&
     auth.currentUser &&
     !hideUpsell ? (
     <div className="w-full text-center mt-4">
       You have {chatResponse.queriesRemaining} / {chatResponse.queriesAvailable}{" "}
-      queries remaining for today.{" "}
+      free messages remaining for today.{" "}
       {/* Only show option to upgrade if they are not subscribed */}
       {!isSubscribed && (
         <Link to="/premium" className="font-bold text-brand-primary">
-          Upgrade for more
+          Upgrade for unlimited messages, profiles, reviews, and more.
         </Link>
       )}
     </div>

@@ -37,13 +37,13 @@ axios.interceptors.response.use(
       if (error?.response?.status === 429) {
         // If they are signed in, redirect to premium
         if (auth.currentUser) {
-          toast.error("You have ran out of Chats for today, upgrade for more.");
+          toast.info("You have ran out of free messages for today. Upgrade for unlimited messages, profiles,reviews, and more");
           history.push("/premium");
           useChatStore.getState().setSendingMessage(false);
         }
         // If they aren't signed in, show a toast and ask to sign in
         else {
-          toast.error("You have ran out of Chats for today, sign in for more.");
+          toast.error("Please sign in to continue");
           useAuthStore.getState().setAuthModalIsOpen(true);
 
           // Say we aren't submitting chats
