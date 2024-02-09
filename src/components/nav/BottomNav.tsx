@@ -24,7 +24,7 @@ const NAV_ITEMS = [
     ),
   },
   {
-    title: "Profile Reviewer",
+    title: "Profile Review",
     link: "/profile-review",
     icon: (
       <path
