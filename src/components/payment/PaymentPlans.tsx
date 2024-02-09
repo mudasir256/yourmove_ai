@@ -207,7 +207,11 @@ export const PaymentPlans = ({ noThanksHandler, stepResults }: Props) => {
               <div className="mt-4 flex items-center justify-center mb-6">
                 <h3
                   className="cursor-pointer text-lg text-zinc-500 hover:text-zinc-600 hover:underline"
-                  onClick={() => noThanksHandler()}
+                  onClick={() => {
+                    noThanksHandler()
+                    console.log("Test - 1");
+                  }
+                }
                 >
                   no thanks
                 </h3>

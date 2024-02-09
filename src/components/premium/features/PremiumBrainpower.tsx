@@ -10,7 +10,7 @@ export const PremiumBrainpower = () => {
       <div className="border-2 border-black rounded-lg bg-white mb-4">
         <div className="p-4">
           <h2 className="text-2xl font-semibold text-brand-primary">
-            Premium Brainpower
+            Access to our best models
           </h2>
           <p>Fine-tuned on human conversations.</p>
         </div>

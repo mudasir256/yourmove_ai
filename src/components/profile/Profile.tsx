@@ -1,7 +1,7 @@
 import { ProfileResponse } from "../../models/profile";
 import { FeedbackModal } from "../modals/FeedbackModal";
 import { ProfileItem } from "./ProfileItem";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import { generateProfile, getPrompts } from "../../queries";
 import { useProfileStore } from "../../stores/profile";
 import { Loading } from "../Loading";
@@ -19,6 +19,14 @@ export const Profile = () => {
   const [feedbackModalOpen, setFeedbackModalOpen] = useState(false);
   const [textingAssistantModalOpen, setTextingAssistantModalOpen] =
     useState(false);
+  const profileHeadingRef = useRef(null);
+
+  // Scroll to the "Your profile" heading after the component mounts or updates
+  useEffect(() => {
+    if (profileHeadingRef.current) {
+      profileHeadingRef.current.scrollIntoView({ behavior: "smooth" });
+    }
+  }, [profile]); // Depend on profile state if you only want to scroll when profile updates
 
   // Get Prompts
   useEffect(() => {
@@ -54,7 +62,7 @@ export const Profile = () => {
             open={textingAssistantModalOpen}
             setOpen={setTextingAssistantModalOpen}
           />
-          <div className="mt-4 px-2">
+          <div ref={profileHeadingRef} className="mt-4 px-2">
             <div className="mb-2 -ml-2">
               <svg
                 onClick={() => {

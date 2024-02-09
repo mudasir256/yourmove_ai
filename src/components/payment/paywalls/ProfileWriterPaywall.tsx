@@ -182,7 +182,12 @@ export const ProfileWriterPaywall = ({ hideNoThanks }: Props) => {
                 <div className="mt-4 flex items-center justify-center mb-6">
                   <h3
                     className="cursor-pointer text-lg text-zinc-500 hover:text-zinc-600 hover:underline"
-                    onClick={() => setProfileWriterWizardComplete(true)}
+                    onClick={() => {
+                      console.log('test - 123');
+                      window.scrollTo(0, 0);
+                      setProfileWriterWizardComplete(true);
+                    }
+                    }
                   >
                     no thanks
                   </h3>
