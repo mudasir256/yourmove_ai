@@ -110,15 +110,14 @@ export const Premium = () => {
                     </div>
                     <div className="mt-2">
                       <h1 className="text-1xl font-bold">
-                        Turn matches into dates
+                        Elevate your dating game
                       </h1>
                     </div>
-                    {/* <div className="mt-2">
+                    <div className="mt-2">
                       <p className="">
-                        "This AI is my secret weapon. Chats go from dull to
-                        steamy fast!" - Tyler, 32
+                        "This AI is my secret weapon. Went from getting ghosted to going on dates" - Kevin V, 32
                       </p>
-                    </div> */}
+                    </div>
                   </div>
                   {auth.currentUser && planBeingPurchased ? (
                     <div className="" style={{ marginBottom: "4rem" }}>
