@@ -109,16 +109,16 @@ export const Premium = () => {
                       </svg>
                     </div>
                     <div className="mt-2">
-                      <h1 className="text-3xl font-bold">
-                        Elevate your dating game
+                      <h1 className="text-1xl font-bold">
+                        Turn matches into dates
                       </h1>
                     </div>
-                    <div className="mt-2">
+                    {/* <div className="mt-2">
                       <p className="">
                         "This AI is my secret weapon. Chats go from dull to
                         steamy fast!" - Tyler, 32
                       </p>
-                    </div>
+                    </div> */}
                   </div>
                   {auth.currentUser && planBeingPurchased ? (
                     <div className="" style={{ marginBottom: "4rem" }}>
@@ -139,7 +139,7 @@ export const Premium = () => {
                           <p>Endless flirty banter on demand.</p>
                         </div>
 
-                        <PremiumBrainpower />
+                        {/* <PremiumBrainpower /> */}
 
                         <ExpertProfileIncluded />
 
