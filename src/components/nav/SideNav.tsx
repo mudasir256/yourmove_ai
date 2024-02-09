@@ -226,7 +226,7 @@ export const SideNav = () => {
               <span className="sr-only">Open sidebar</span>
               <Bars3Icon className="h-6 w-6" aria-hidden="true" />
             </button>
-            <Link to="/" className="cursor-pointer flex">
+            <Link to="/start" className="cursor-pointer flex">
               <Logo />
               {isSubscribed && (
                 <div className="bg-brand-primary text-white text-sm px-1.5 py-0.5 ml-2 rounded-md">

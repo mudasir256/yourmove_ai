@@ -80,17 +80,17 @@ export const Onboarding = () => {
                 <>
                   <Product
                     isRecommended={true}
+                    title="Try Profile Writer"
+                    description="Elevate your dating profile with AI-powered suggestions to showcase your unique self."
+                    image={ProfileWriter}
+                    url="/profile-writer"
+                  />
+                  <Product
+                    isRecommended={false}
                     title="Try Profile Reviewer"
                     description="Let our AI review your dating app profile and do a makeover for maximum swipe potential."
                     image={ProfileReview}
                     url="/profile-review"
-                  />
-                  <Product
-                    isRecommended={false}
-                    title="Try Profile Creator"
-                    description="Elevate your dating profile with AI-powered suggestions to showcase your unique self."
-                    image={ProfileWriter}
-                    url="/profile-writer"
                   />
                 </>
               )}
@@ -99,7 +99,7 @@ export const Onboarding = () => {
                   <Product
                     isRecommended={true}
                     title="Try Chat Assistant"
-                    description="Access winning icebreakers and conversation sparks to ignite connections."
+                    description="Access winning icebreakers and reply suggestions to ignite connections and turn matches into dates."
                     image={ChatAssistant}
                     url="/chat-assistant"
                   />
