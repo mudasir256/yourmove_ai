@@ -12,12 +12,12 @@ import {
 } from "./models/profile";
 import { ProductType } from "./constants/payments";
 import { useUIStore } from "./stores/ui";
-import toast from "react-hot-toast";
 import { useAuthStore } from "./stores/auth";
 import { useChatStore } from "./stores/chat";
 import { auth } from "./firebase";
 import { history } from "./main";
 import * as Sentry from "@sentry/react";
+import toast from "react-hot-toast";
 
 const BASE_URL = import.meta.env.VITE_API_BASE_URL;
 
@@ -72,7 +72,10 @@ axios.interceptors.response.use(
       if (error?.response?.status === 429) {
         // If they are signed in, redirect to premium
         if (auth.currentUser) {
-          toast.info("You have ran out of free messages for today. Upgrade for unlimited messages, profiles,reviews, and more");
+          console.log("is a current user");
+          toast.error(
+            "You have ran out of free messages for today. Upgrade for unlimited messages, profiles,reviews, and more"
+          );
           history.push("/premium");
           useChatStore.getState().setSendingMessage(false);
         }
