@@ -215,6 +215,9 @@ export const sendChatText = (
 };
 
 export const uploadFiles = (files: FileList) => {
+  // Define the validation criteria
+  const validFileTypes = ['image/png', 'image/jpeg', 'image/jpg', 'image/webp', 'image/gif'];
+  const maxFileSize = 20 * 1024 * 1024; // 20MB in bytes
   const formData = new FormData();
 
   Array.from(files).forEach((file) => {

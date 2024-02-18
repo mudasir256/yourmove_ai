@@ -1,6 +1,8 @@
 import { useState } from "react";
 import { uploadFiles } from "../../queries";
 import { useWizardStore } from "../../stores/wizard";
+import toast from "react-hot-toast";
+
 
 interface Props {
   // An optional array of strings to defines the already set files
@@ -10,14 +12,46 @@ interface Props {
 
 export const FileUploadStep = ({ alreadySetFiles, onFilesUploaded }: Props) => {
   const { filesUploading, setFilesUploading } = useWizardStore();
-
   const [selectedFiles, setSelectedFiles] = useState<FileList | null>(null);
+  const [inputKey, setInputKey] = useState(Date.now()); // Used to reset the file input
+
 
   const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     if (event.target.files) {
-      setSelectedFiles(event.target.files);
+      // setSelectedFiles(event.target.files);
+      const filesArray = Array.from(event.target.files);
+
+      if (filesArray.length > 8) {
+        // Inform the user they can only upload up to 8 images
+        toast.error("Please upload up to 8 screenshots");
+        return; // Prevent further execution
+      }
+
+      const isValidFileType = (file) => {
+        const validExtensions = ['image/png', 'image/jpeg', 'image/jpg', 'image/webp', 'image/gif'];
+        // alert('valid file type');
+        return validExtensions.includes(file.type);
+      };
+
+      const isValidFileSize = (file) => {
+        const maxSize = 20 * 1024 * 1024; // 20MB in bytes
+        return file.size <= maxSize;
+      };
+
+
+      if (!filesArray.every(isValidFileType)) {
+        toast.error("Unsupported file type. Screenshots must be png, jpg, webp or gif");
+        setInputKey(Date.now()); // Reset the input
+        return; // Stop further execution
+      }
+      if (!filesArray.every(isValidFileSize)) {
+        toast.error("Screenshots must be 20mb or smaller");
+        setInputKey(Date.now()); // Reset the input
+        return; // Stop further execution
+      }
       // Call additional handler functions here if needed
       // e.g., uploadFiles(filesArray);
+      setSelectedFiles(event.target.files);
       setFilesUploading(true);
       uploadFiles(event.target.files).then((response) => {
         // we have the URLs for the files, call onFilesUploaded
@@ -81,7 +115,7 @@ export const FileUploadStep = ({ alreadySetFiles, onFilesUploaded }: Props) => {
         className="hidden"
         onChange={handleFileChange}
         multiple
-        accept="image/*"
+        accept=".png, .jpeg, .jpg, .webp, .gif" // Specify accepted file types in the accept attribute
       />
     </div>
   );

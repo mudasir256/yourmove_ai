@@ -18,7 +18,7 @@ interface Props {
 }
 
 export const ProfileReview = ({ hasPaid, setHasPaid }: Props) => {
-  const { reviewedProfile, setReviewedProfile } = useProfileStore();
+  const {reviewedProfile, setReviewedProfile } = useProfileStore();
   const [unlockFullReviewModalOpen, setUnlockFullReviewModalOpen] =
     useState(false);
   const { setProfileReviewerWizardComplete, setProfileReviewerStep } =
