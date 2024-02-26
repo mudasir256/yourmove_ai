@@ -113,7 +113,7 @@ export const Paywall = ({
                       redirectHandler={redirectHandler}
                       returnUrl={
                         chosenProduct === ProductType.AIPhotos
-                          ? "https://tally.so/r/nPz9DP"
+                          ? "https://ai-photo.streamlit.app"
                           : null
                       }
                     />
