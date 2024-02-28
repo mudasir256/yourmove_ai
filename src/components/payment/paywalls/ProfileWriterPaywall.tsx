@@ -94,7 +94,7 @@ export const ProfileWriterPaywall = ({ hideNoThanks }: Props) => {
                   </button>
                 </div>
               </div>
-              {/* Professional Profile Redesign */}
+              {/* AI enhanced photos */}
               <div className="mt-4">
                 <div className="bg-white p-3 border-2 border-black rounded-lg">
                   <div className="border-b-2 border-black">
@@ -103,7 +103,7 @@ export const ProfileWriterPaywall = ({ hideNoThanks }: Props) => {
                     </h2>
                     <div className="flex mt-2 mb-3 items-center">
                       <div>
-                        <h1 className="text-4xl font-semibold">$42</h1>
+                        <h1 className="text-4xl font-semibold">$37</h1>
                       </div>
                       <div className=" pl-3">
                         <h1 className="text-zinc-500 leading-4">
