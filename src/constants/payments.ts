@@ -3,10 +3,8 @@ export enum PlanType {
   Yearly = "yearly",
 }
 
-
 export enum ProductType {
   ProfileWriter = "profile_writer",
   ProfileReview = "profile_review",
   AIPhotos = "ai_photos",
-  // AIPhotosWriter = "AIPhotosWriter"
 }
