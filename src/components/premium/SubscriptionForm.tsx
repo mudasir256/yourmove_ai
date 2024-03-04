@@ -77,7 +77,7 @@ export const SubscriptionForm = ({ planType }: Props) => {
           </svg>
         </div>
         <div className="w-1/2 flex justify-end items-center text-right">
-          {planType === PlanType.Monthly && <>$7.00 per month</>}
+          {planType === PlanType.Monthly && <>$9.00 per month</>}
           {planType === PlanType.Yearly && (
             <div className="my-auto">
               <span className="mr-1">$4.00 per month</span>
