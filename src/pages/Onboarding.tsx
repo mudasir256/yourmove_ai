@@ -81,14 +81,14 @@ export const Onboarding = () => {
                   <Product
                     isRecommended={true}
                     title="Try Profile Reviewer"
-                    description="Let our AI review your dating app profile and do a makeover for maximum swipe potential."
+                    description="Detailed review of your profile photos + bio with actionable tips to improve your matches."
                     image={ProfileReview}
                     url="/profile-review"
                   />
                   <Product
                     isRecommended={false}
                     title="Try Profile Writer"
-                    description="Elevate your dating profile with AI-powered suggestions to showcase your unique self."
+                    description="Tell us about yourself. Get an instant bio. Tested and optimized for conversion. Works with Hinge, Tinder, Bumble, and more."
                     image={ProfileWriter}
                     url="/profile-writer"
                   />
