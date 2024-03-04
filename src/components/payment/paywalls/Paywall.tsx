@@ -162,7 +162,7 @@ export const Paywall = ({
                 <div className="">
                   <div className="mb-3 w-3/4">
                     <h1 className="text-3xl font-bold ml-2">
-                      Get more matches with premium
+                      3x your success in online dating in 30 minutes or less
                     </h1>
                   </div>
                   {children}

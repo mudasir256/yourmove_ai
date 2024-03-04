@@ -67,13 +67,15 @@ export const ProfileWriterPaywall = ({ hideNoThanks }: Props) => {
                     </div>
                   </div>
                   <div className="mt-2">
-                    <h4 className="font-semibold">What's included:</h4>
+                    <h4 className="font-semibold"><b>Unlimited </b>access to:</h4>
                     <div className="mt-1">
                       {[
-                          "Profile Writer",
-                          "Unlimited Replies and Openers for more matches",
-                          "AI Profile Review",
-                          "50% Discount on AI Profile Photos",
+                          "Write bios that show catch attention and highlight your best self",
+                          "Review of you profile and photos + action plan",
+                          "Personalized conversation starters for 2.4x more conversion",
+                          "AI texting assistant",
+                          "Works with Hinge, Tinder, Bumble, and more",
+                          "50% off AI-enhanced photos",
                       ].map((feature: string) => (
                         <PlanFeature
                           icon={
@@ -102,7 +104,7 @@ export const ProfileWriterPaywall = ({ hideNoThanks }: Props) => {
                     type="button"
                     // onClick={() => { setPlanBeingPurchased(PlanType.Monthly);}}
                     onClick={() => {
-                      setPlanBeingPurchased(PlanType.Yearly);
+                      setPlanBeingPurchased(PlanType.Monthly);
                       // If the user isn't signed in, we need to sign them in or sign up
                       if (!auth.currentUser) {
                         setAuthModalIsOpen(true);
@@ -137,7 +139,7 @@ export const ProfileWriterPaywall = ({ hideNoThanks }: Props) => {
                     <div className="mt-1">
                       {[
                         "Profiles for Hinge, Tinder, Bumble, and more",
-                        "Up to 5 profiles",
+                        "Up to 10 profiles",
                         "30 day money back guarantee",
                       ].map((feature: string) => (
                         <PlanFeature
