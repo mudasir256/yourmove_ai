@@ -21,7 +21,6 @@ export default function PaymentForm({
 }: Props) {
   const stripe = useStripe();
   const elements = useElements();
-
   const [message, setMessage] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState(false);
 

@@ -4,10 +4,13 @@ import { loadStripe } from "@stripe/stripe-js";
 import { Loading } from "../../Loading";
 import { getClientSecret, hasUserPaid } from "../../../queries";
 import { ClientSecretResponse } from "../../../models/payment";
-import { ProductType } from "../../../constants/payments";
+import { PlanType, ProductType } from "../../../constants/payments";
 import { toHeaderCase, toKebabCase } from "js-convert-case";
 import PaymentForm from "../PaymentForm";
 import { useAuthStore } from "../../../stores/auth";
+import { SubscriptionForm } from "../../premium/SubscriptionForm";
+import { auth } from "../../../firebase";
+
 
 interface Props {
   children: any;
@@ -15,6 +18,7 @@ interface Props {
   requiredProductsToSkipPaywall: Array<ProductType>;
   // Which product they want to buy
   chosenProduct: ProductType | null;
+  planBeingPurchased: PlanType | null;
   noThanksHandler: () => void;
   email: string;
   redirectHandler?: () => void;
@@ -24,6 +28,7 @@ export const Paywall = ({
   children,
   requiredProductsToSkipPaywall,
   chosenProduct,
+  planBeingPurchased,
   noThanksHandler,
   email,
   redirectHandler,
@@ -31,8 +36,7 @@ export const Paywall = ({
   const [clientSecret, setClientSecret] = useState("");
   const [showPlans, setShowPlans] = useState(false);
   const [price, setPrice] = useState<string | null>(null);
-  const { isSubscribed } = useAuthStore();
-
+  const {isSubscribed } = useAuthStore();
   // If the user is subscribed, then we can skip the paywall
   useEffect(() => {
     if (isSubscribed) {
@@ -68,7 +72,7 @@ export const Paywall = ({
     }
   }, [isSubscribed]);
 
-  // Get the client secret from the server when the component lodas
+  // Get the client secret from the server when the component loads
   useEffect(() => {
     if (chosenProduct) {
       getClientSecret(email, chosenProduct).then((response) => {
@@ -90,6 +94,19 @@ export const Paywall = ({
   };
 
   const stripePromise = loadStripe(import.meta.env.VITE_STRIPE_PUBLISHABLE_KEY);
+
+
+// {planBeingPurchased ? (
+//   <div className="">
+//     <div className="mb-3 w-3/4">
+//       <h1 className="text-3xl font-bold ml-2">
+//         Placeholder placeholder placeholder
+//       </h1>
+//     </div>
+//   </div>
+// ) : (
+//   <Loading />
+// )}
 
   return (
     <>
@@ -127,20 +144,38 @@ export const Paywall = ({
         </>
       ) : (
         <>
-          {showPlans ? (
-            <div className="">
-              <div className="mb-3 w-3/4">
-                <h1 className="text-3xl font-bold ml-2">
-                  Get more matches with premium
-                </h1>
+          { auth.currentUser && planBeingPurchased ? (
+              <div className="" style={{ marginBottom: "4rem" }}>
+                <SubscriptionForm planType={planBeingPurchased} />
               </div>
-              {children}
-            </div>
+          // planBeingPurchased ? (
+          //   <div className="">
+          //     <div className="mb-3 w-3/4">
+          //       <h1 className="text-3xl font-bold ml-2">
+          //         Placeholder placeholder placeholder
+          //       </h1>
+          //     </div>
+          //   </div>
           ) : (
-            <Loading />
+            <>
+              {showPlans ? (
+                <div className="">
+                  <div className="mb-3 w-3/4">
+                    <h1 className="text-3xl font-bold ml-2">
+                      3x your success in online dating in 30 minutes or less
+                    </h1>
+                  </div>
+                  {children}
+                </div>
+              ) : (
+                <Loading />
+              )}
+            </>
           )}
-        </>
+         </>
       )}
     </>
-  );
+  )
 };
+
+
