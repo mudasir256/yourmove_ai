@@ -172,7 +172,7 @@ export const Premium = () => {
                                 </div>
                                 <div className="py-1.5">
                                   <h3 className="text-lg flex items-center justify-center">
-                                    $7.00{" "}
+                                    $9.00{" "}
                                     <span className="text-lg font-semithin pl-1 mt-0.5">
                                       / month
                                     </span>
