@@ -9,6 +9,7 @@ import {
   useNavigate,
 } from "react-router-dom";
 import { ProfileWriter } from "./pages/ProfileWriter";
+import { EnhancedPhotos } from "./pages/EhancedPhotos";
 import { ChatAssistant } from "./pages/ChatAssistant";
 import { ProfileReviewer } from "./pages/ProfileReviewer";
 import { SideNav } from "./components/nav/SideNav";
@@ -163,6 +164,14 @@ function App() {
           element={
             <Page title="Profile Review">
               <ProfileReviewer />
+            </Page>
+          }
+        />
+        <Route
+          path="/ai-photo"
+          element={
+            <Page title="AI Enhanced Photos">
+              <EnhancedPhotos />
             </Page>
           }
         />
