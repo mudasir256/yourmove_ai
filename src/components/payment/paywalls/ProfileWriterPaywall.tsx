@@ -116,7 +116,7 @@ export const ProfileWriterPaywall = ({ hideNoThanks }: Props) => {
                   </button>
                 </div>
               </div>
-              {/* AI enhanced photos */}
+              {/* AI profile */}
               <div className="mt-4">
                 <div className="bg-white p-3 border-2 border-black rounded-lg">
                   <div className="border-b-2 border-black">
