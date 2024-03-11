@@ -39,15 +39,6 @@ const NAV_ITEMS = [
     link: "/ai-photo",
     // plsfix - this is a placeholder icon. needs to change dynamically if selected. can be found in figma.
     icon: (
-        // <svg width="29" height="28" viewBox="0 0 29 28" fill="none" xmlns="http://www.w3.org/2000/svg">
-        //   <path d="M14.125 24C19.6478 24 24.125 19.5228 24.125 14C24.125 8.47715 19.6478 4 14.125 4C8.60215 4 4.125 8.47715 4.125 14C4.125 19.5228 8.60215 24 14.125 24Z" stroke-linecap="round" stroke-linejoin="round"/>
-        //   <path d="M16.4346 10L22.1746 19.94"  stroke-linecap="round" stroke-linejoin="round"/>
-        //   <path d="M11.8154 10H23.2954"  stroke-linecap="round" stroke-linejoin="round"/>
-        //   <path d="M9.50488 13.9996L15.2449 4.05957"  stroke-linecap="round" stroke-linejoin="round"/>
-        //   <path d="M11.8152 17.9996L6.0752 8.05957"  stroke-linecap="round" stroke-linejoin="round"/>
-        //   <path d="M16.4351 18H4.95508" stroke-linecap="round" stroke-linejoin="round"/>
-        //   <path d="M18.7449 14L13.0049 23.94"  stroke-linecap="round" stroke-linejoin="round"/>
-        // </svg>
       <path 
         fillRule="evenodd"
         clipRule="evenodd"
