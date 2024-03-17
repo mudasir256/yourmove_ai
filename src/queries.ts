@@ -24,7 +24,7 @@ const BASE_URL = import.meta.env.VITE_API_BASE_URL;
 // temporary for testing
 axios.defaults.headers.common["ngrok-skip-browser-warning"] = "something";
 
-axios.defaults.timeout = 50000;
+axios.defaults.timeout = 240000;
 
 const retryCount = 3;
 const retryDelay = 2000; // Delay between retries in milliseconds
