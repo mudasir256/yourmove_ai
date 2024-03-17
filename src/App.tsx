@@ -43,11 +43,14 @@ if (import.meta.env.VITE_SENTRY_DSN) {
   Sentry.init({
     dsn: import.meta.env.VITE_SENTRY_DSN,
     integrations: [
+      new Sentry.BrowserProfilingIntegration(),
       new Sentry.BrowserTracing({
         // Set 'tracePropagationTargets' to control for which URLs distributed tracing should be enabled
         tracePropagationTargets: [
           "localhost",
           /^https:\/\/yourmove-api-production\.up\.railway\.app/,
+          /^https:\/\/web\.yourmove\.ai\/api/,
+          /^https:\/\/yourmove-production-jg7rg\.ondigitalocean\.app\/api/,
         ],
       }),
       new Sentry.Replay(),
