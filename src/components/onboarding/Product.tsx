@@ -20,7 +20,7 @@ export const Product = ({
   const navigate = useNavigate();
   return (
     <div
-      className="border border-2 border-black rounded-lg mb-4 cursor-pointer transition-transform duration-300 hover:scale-105"
+      className="border border-2 border-black rounded-lg mb-2 cursor-pointer transition-transform duration-300 hover:scale-105"
       onClick={() => {
         navigate(url);
         setHasCheckedForOnboarding(true);
@@ -56,7 +56,7 @@ export const Product = ({
         </div>
       )}
       <div className="bg-white px-4 pt-2.5 pb-3 rounded-b-lg">
-        <h1 className="text-lg font-semibold text-brand-primary">{title}</h1>
+        <h1 className="text-m font-semibold text-brand-primary">{title}</h1>
         <div>
           <p>{description}</p>
         </div>

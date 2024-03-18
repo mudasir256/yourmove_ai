@@ -34,13 +34,13 @@ export const Onboarding = () => {
   }, []);
 
   return (
-    <div className="-mt-8 max-w-lg mx-auto mt-6">
+    <div className="-mt-8 max-w-lg mx-auto mt-3">
       <div>
         <div className="flex items-center justify-center">
           <Logo />
         </div>
         <div className="mt-4 px-4">
-          <h1 className="text-3xl font-semibold">What's your next move?</h1>
+          <h1 className="text-2xl font-semibold">What's your next move?</h1>
         </div>
 
         <div className="ml-4 mt-3 overflow-x-scroll flex no-scrollbar">
@@ -73,7 +73,7 @@ export const Onboarding = () => {
             <div
               className="overflow-y-scroll p-4"
               style={{
-                height: window.innerHeight - 328,
+                height: window.innerHeight - 310,
               }}
             >
               {selectedOption === "Get more matches" && (
