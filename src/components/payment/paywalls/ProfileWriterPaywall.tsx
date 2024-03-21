@@ -18,7 +18,9 @@ export const ProfileWriterPaywall = ({ hideNoThanks }: Props) => {
   const { profileWriterStepResults, setProfileWriterWizardComplete } =
     useWizardStore();
   const [chosenProduct, setChosenProduct] = useState<ProductType | null>(null);
-  const [planBeingPurchased, setPlanBeingPurchased] = useState<PlanType | null>(null);
+  const [planBeingPurchased, setPlanBeingPurchased] = useState<PlanType | null>(
+    null
+  );
   const [learnMoreModalOpen, setLearnMoreModalOpen] = useState(false);
   const { setAuthModalIsOpen } = useAuthStore();
 
@@ -48,9 +50,7 @@ export const ProfileWriterPaywall = ({ hideNoThanks }: Props) => {
                 <div className="bg-white p-3 border-2 border-black rounded-lg">
                   <div className="border-b-2 border-black">
                     <div className="flex">
-                      <h2 className="text-xl font-semibold mr-2">
-                        All Access
-                      </h2>
+                      <h2 className="text-xl font-semibold mr-2">All Access</h2>
                       <span className="text-sm font-semibold text-red-400 bg-red-100 py-1 px-2 rounded">
                         popular
                       </span>
@@ -67,15 +67,17 @@ export const ProfileWriterPaywall = ({ hideNoThanks }: Props) => {
                     </div>
                   </div>
                   <div className="mt-2">
-                    <h4 className="font-semibold"><b>Unlimited </b>access to:</h4>
+                    <h4 className="font-semibold">
+                      <b>Unlimited </b>access to:
+                    </h4>
                     <div className="mt-1">
                       {[
-                          "Write bios that show catch attention and highlight your best self",
-                          "Review of you profile and photos + action plan",
-                          "Personalized conversation starters for 2.4x more conversion",
-                          "AI texting assistant",
-                          "Works with Hinge, Tinder, Bumble, and more",
-                          "50% off AI-enhanced photos",
+                        "Write bios that show catch attention and highlight your best self",
+                        "Review of you profile and photos + action plan",
+                        "Personalized conversation starters for 2.4x more conversion",
+                        "AI texting assistant",
+                        "Works with Hinge, Tinder, Bumble, and more",
+                        "50% off AI-enhanced photos",
                       ].map((feature: string) => (
                         <PlanFeature
                           icon={
@@ -178,11 +180,10 @@ export const ProfileWriterPaywall = ({ hideNoThanks }: Props) => {
                   <h3
                     className="cursor-pointer text-lg text-zinc-500 hover:text-zinc-600 hover:underline"
                     onClick={() => {
-                      console.log('test - 123');
+                      console.log("test - 123");
                       window.scrollTo(0, 0);
                       setProfileWriterWizardComplete(true);
-                    }
-                    }
+                    }}
                   >
                     no thanks
                   </h3>
