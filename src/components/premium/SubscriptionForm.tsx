@@ -11,11 +11,12 @@ import { useUIStore } from "../../stores/ui";
 
 interface Props {
   planType: PlanType;
+  redirectHandler?: () => void;
 }
 
 const stripePromise = loadStripe(import.meta.env.VITE_STRIPE_PUBLISHABLE_KEY);
 
-export const SubscriptionForm = ({ planType }: Props) => {
+export const SubscriptionForm = ({ planType, redirectHandler }: Props) => {
   const [submitting, setSubmitting] = useState(false);
   const [clientSecret, setClientSecret] = useState("");
   const { setSubscriptionSuccess, setStopScroll } = useUIStore();
@@ -92,9 +93,13 @@ export const SubscriptionForm = ({ planType }: Props) => {
             <PaymentForm
               redirectSuffix="/"
               redirectHandler={() => {
-                setTimeout(() => {
-                  setSubscriptionSuccess(true);
-                }, 2000);
+                if (redirectHandler) {
+                  redirectHandler();
+                } else {
+                  setTimeout(() => {
+                    setSubscriptionSuccess(true);
+                  }, 2000);
+                }
               }}
             />
           </Elements>

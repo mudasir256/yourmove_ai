@@ -60,3 +60,7 @@ export const successfulSignUp = () => {
   toast.success("Successfully signed up, welcome!");
   useAuthStore.getState().setAuthModalIsOpen(false);
 };
+
+export const sleep = (time: number) => {
+  return new Promise((resolve) => setTimeout(resolve, time));
+};

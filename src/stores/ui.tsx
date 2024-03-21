@@ -22,6 +22,9 @@ interface UIStore {
 
   hasCheckedForOnboarding: boolean;
   setHasCheckedForOnboarding: (hasCheckedForOnboarding: boolean) => void;
+
+  paymentIsLoading: boolean;
+  setPaymentIsLoading: (paymentIsLoading: boolean) => void;
 }
 
 export const useUIStore = create<UIStore>((set) => ({
@@ -40,4 +43,6 @@ export const useUIStore = create<UIStore>((set) => ({
   hasCheckedForOnboarding: false,
   setHasCheckedForOnboarding: (hasCheckedForOnboarding) =>
     set({ hasCheckedForOnboarding }),
+  paymentIsLoading: false,
+  setPaymentIsLoading: (paymentIsLoading) => set({ paymentIsLoading }),
 }));

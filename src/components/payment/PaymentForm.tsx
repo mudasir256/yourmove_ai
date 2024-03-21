@@ -6,6 +6,7 @@ import {
 } from "@stripe/react-stripe-js";
 import { StripePaymentElementOptions } from "@stripe/stripe-js";
 import { useEffect, useState } from "react";
+import { useUIStore } from "../../stores/ui";
 
 interface Props {
   redirectSuffix: string;
@@ -22,7 +23,7 @@ export default function PaymentForm({
   const stripe = useStripe();
   const elements = useElements();
   const [message, setMessage] = useState<string | null>(null);
-  const [isLoading, setIsLoading] = useState(false);
+  const { paymentIsLoading, setPaymentIsLoading } = useUIStore();
 
   useEffect(() => {
     if (!stripe) {
@@ -56,7 +57,7 @@ export default function PaymentForm({
   }, [stripe]);
 
   const handleSubmit = async (e) => {
-    setIsLoading(true);
+    setPaymentIsLoading(true);
     e.preventDefault();
 
     if (!stripe || !elements) {
@@ -88,16 +89,16 @@ export default function PaymentForm({
     // your `return_url`. For some payment methods like iDEAL, your customer will
     // be redirected to an intermediate site first to authorize the payment, then
     // redirected to the `return_url`.
-    if (
-      error &&
-      (error.type === "card_error" || error.type === "validation_error")
-    ) {
-      setMessage(error.message);
-    } else {
-      setMessage("An unexpected error occurred.");
-    }
+    console.log(error);
 
-    setIsLoading(false);
+    if (error) {
+      if (error.type === "card_error" || error.type === "validation_error") {
+        setMessage(error.message);
+      } else {
+        setMessage("An unexpected error occurred.");
+      }
+      setPaymentIsLoading(false);
+    }
   };
 
   const paymentElementOptions: StripePaymentElementOptions = {
@@ -115,7 +116,7 @@ export default function PaymentForm({
         className="mt-4 flex items-center justify-center w-full bg-brand-primary text-white py-3 rounded-full font-semibold -mb-1"
       >
         <span id="button-text">
-          {isLoading ? (
+          {paymentIsLoading ? (
             <div className="flex items-center justify-center">
               Processing
               <svg

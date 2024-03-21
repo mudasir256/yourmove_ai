@@ -2,7 +2,11 @@ import { Elements } from "@stripe/react-stripe-js";
 import { useEffect, useState } from "react";
 import { loadStripe } from "@stripe/stripe-js";
 import { Loading } from "../../Loading";
-import { getClientSecret, hasUserPaid } from "../../../queries";
+import {
+  checkIfUserSubscribed,
+  getClientSecret,
+  hasUserPaid,
+} from "../../../queries";
 import { ClientSecretResponse } from "../../../models/payment";
 import { PlanType, ProductType } from "../../../constants/payments";
 import { toHeaderCase, toKebabCase } from "js-convert-case";
@@ -10,7 +14,9 @@ import PaymentForm from "../PaymentForm";
 import { useAuthStore } from "../../../stores/auth";
 import { SubscriptionForm } from "../../premium/SubscriptionForm";
 import { auth } from "../../../firebase";
-
+import { sleep } from "../../../utils";
+import { useUIStore } from "../../../stores/ui";
+import toast from "react-hot-toast";
 
 interface Props {
   children: any;
@@ -36,7 +42,9 @@ export const Paywall = ({
   const [clientSecret, setClientSecret] = useState("");
   const [showPlans, setShowPlans] = useState(false);
   const [price, setPrice] = useState<string | null>(null);
-  const {isSubscribed } = useAuthStore();
+  const { isSubscribed, setIsSubscribed } = useAuthStore();
+  const { setPaymentIsLoading } = useUIStore();
+
   // If the user is subscribed, then we can skip the paywall
   useEffect(() => {
     if (isSubscribed) {
@@ -95,18 +103,17 @@ export const Paywall = ({
 
   const stripePromise = loadStripe(import.meta.env.VITE_STRIPE_PUBLISHABLE_KEY);
 
-
-// {planBeingPurchased ? (
-//   <div className="">
-//     <div className="mb-3 w-3/4">
-//       <h1 className="text-3xl font-bold ml-2">
-//         Placeholder placeholder placeholder
-//       </h1>
-//     </div>
-//   </div>
-// ) : (
-//   <Loading />
-// )}
+  // {planBeingPurchased ? (
+  //   <div className="">
+  //     <div className="mb-3 w-3/4">
+  //       <h1 className="text-3xl font-bold ml-2">
+  //         Placeholder placeholder placeholder
+  //       </h1>
+  //     </div>
+  //   </div>
+  // ) : (
+  //   <Loading />
+  // )}
 
   return (
     <>
@@ -144,19 +151,52 @@ export const Paywall = ({
         </>
       ) : (
         <>
-          { auth.currentUser && planBeingPurchased ? (
-              <div className="" style={{ marginBottom: "4rem" }}>
-                <SubscriptionForm planType={planBeingPurchased} />
-              </div>
-          // planBeingPurchased ? (
-          //   <div className="">
-          //     <div className="mb-3 w-3/4">
-          //       <h1 className="text-3xl font-bold ml-2">
-          //         Placeholder placeholder placeholder
-          //       </h1>
-          //     </div>
-          //   </div>
+          {auth.currentUser && planBeingPurchased ? (
+            <div className="" style={{ marginBottom: "4rem" }}>
+              <SubscriptionForm
+                planType={planBeingPurchased}
+                redirectHandler={async () => {
+                  let iterations = 0;
+                  if (auth.currentUser) {
+                    const idTokenResult =
+                      await auth.currentUser.getIdTokenResult();
+                    let isSubscribed = false;
+                    while (isSubscribed === false && iterations < 10) {
+                      const isSubscribedResponse = await checkIfUserSubscribed(
+                        idTokenResult.token
+                      );
+                      sleep(1000);
+                      iterations++;
+                      if (isSubscribedResponse.data.isSubscribed) {
+                        isSubscribed = true;
+                        setIsSubscribed(true);
+                        noThanksHandler();
+                        setPaymentIsLoading(false);
+                      }
+                    }
+
+                    if (!isSubscribed) {
+                      toast.error(
+                        "You Subscribed but there was an error getting your subscription. Automatically refreshing page"
+                      );
+                      setTimeout(() => {
+                        window.location.reload();
+                      }, 3000);
+                      setPaymentIsLoading(false);
+                    }
+                  }
+                }}
+              />
+            </div>
           ) : (
+            // planBeingPurchased ? (
+            //   <div className="">
+            //     <div className="mb-3 w-3/4">
+            //       <h1 className="text-3xl font-bold ml-2">
+            //         Placeholder placeholder placeholder
+            //       </h1>
+            //     </div>
+            //   </div>
             <>
               {showPlans ? (
                 <div className="">
@@ -172,10 +212,8 @@ export const Paywall = ({
               )}
             </>
           )}
-         </>
+        </>
       )}
     </>
-  )
+  );
 };
-
-
