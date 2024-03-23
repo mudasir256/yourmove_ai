@@ -27,14 +27,14 @@ export const FileUploadStep = ({ alreadySetFiles, onFilesUploaded }: Props) => {
         return; // Prevent further execution
       }
 
-      const isValidFileType = (file) => {
+      const isValidFileType = (file: File) => {
         const validExtensions = ['image/png', 'image/jpeg', 'image/jpg', 'image/webp', 'image/gif'];
         // alert('valid file type');
         return validExtensions.includes(file.type);
       };
 
-      const isValidFileSize = (file) => {
-        const maxSize = 20 * 1024 * 1024; // 20MB in bytes
+      const isValidFileSize = (file: File) => {
+        const maxSize = 10 * 1024 * 1024; // 10MB in bytes
         return file.size <= maxSize;
       };
 
@@ -45,7 +45,7 @@ export const FileUploadStep = ({ alreadySetFiles, onFilesUploaded }: Props) => {
         return; // Stop further execution
       }
       if (!filesArray.every(isValidFileSize)) {
-        toast.error("Screenshots must be 20mb or smaller");
+        toast.error("Screenshots must be 10mb or smaller");
         setInputKey(Date.now()); // Reset the input
         return; // Stop further execution
       }
