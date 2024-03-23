@@ -120,7 +120,7 @@ export const ProfileReviewPaywall = () => {
                   </h2>
                   <div className="flex mt-2 mb-3 items-center">
                     <div>
-                      <h1 className="text-4xl font-semibold">2</h1>
+                      <h1 className="text-4xl font-semibold">$12</h1>
                     </div>
                     <div className="pl-3">
                       <h1 className="text-zinc-500 leading-4">
