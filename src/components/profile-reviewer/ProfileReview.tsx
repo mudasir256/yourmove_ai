@@ -69,7 +69,7 @@ export const ProfileReview = ({ hasPaid, setHasPaid }: Props) => {
                   </h1>
                   <div className="flex mt-2 mb-3 items-center border-b-2 border-black pb-3">
                     <div>
-                      <h1 className="text-4xl font-semibold">$10</h1>
+                      <h1 className="text-4xl font-semibold">$12</h1>
                     </div>
                     <div className="pl-3">
                       <h1 className="text-zinc-500 leading-4">
