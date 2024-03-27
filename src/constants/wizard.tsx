@@ -28,6 +28,7 @@ export const PROFILE_WRITER_WIZARD_STEPS: Array<WizardStep> = [
         </div>
       </>
     ),
+    
   },
   {
     step: WizardStepType.GENDER,

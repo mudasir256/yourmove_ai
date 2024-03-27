@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useProfileStore } from "../../stores/profile";
 import Markdown from "react-markdown";
 import { UnlockFullReviewModal } from "../modals/UnlockFullReviewModal";
@@ -23,6 +23,11 @@ export const ProfileReview = ({ hasPaid, setHasPaid }: Props) => {
     useState(false);
   const { setProfileReviewerWizardComplete, setProfileReviewerStep } =
     useWizardStore();
+  
+
+  useEffect(() => {if ((window as any).gtag) {
+      (window as any).gtag('event', 'review_results', {event_category: 'funnel',product: 'profile_review',
+      });}}, []);
 
   return (
     <div className="pb-40 mt-4">
@@ -109,7 +114,10 @@ export const ProfileReview = ({ hasPaid, setHasPaid }: Props) => {
 
                   <button
                     type="button"
-                    onClick={() => setUnlockFullReviewModalOpen(true)}
+                    onClick={() => {
+                      setUnlockFullReviewModalOpen(true)
+                      if ((window as any).gtag) {(window as any).gtag('event', 'review_results_unlock', {event_category: 'funnel',product: 'profile_review',});}
+                    }}
                     className="mt-2 flex items-center justify-center w-full bg-brand-primary text-white py-3 rounded-full font-semibold -mb-1"
                   >
                     Activate

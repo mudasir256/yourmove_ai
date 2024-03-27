@@ -1,3 +1,4 @@
+import { useEffect } from 'react';
 import { useWizardStore } from "../stores/wizard";
 import { Wizard } from "../components/wizard/Wizard";
 import { PROFILE_WRITER_WIZARD_STEPS } from "../constants/wizard";
@@ -13,6 +14,10 @@ export const ProfileWriter = () => {
     setProfileWriterStepResult,
   } = useWizardStore();
 
+  useEffect(() => {if ((window as any).gtag) {
+      (window as any).gtag('event', 'writer_start', {event_category: 'funnel',product: 'profile_writer',
+      });}}, []);
+      
   return (
     <div className="px-4">
       <Wizard

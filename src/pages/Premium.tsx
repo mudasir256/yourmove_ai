@@ -159,6 +159,10 @@ export const Premium = () => {
                                 className="w-1/2 border-2 border-brand-secondary rounded-lg mx-2 cursor-pointer z-50"
                                 onClick={() => {
                                   setPlanBeingPurchased(PlanType.Monthly);
+                                  (window as any).gtag('event', 'subscribe_monthly_click', {
+                                      event_category: 'payment_click',
+                                      product: 'chat_assistant',
+                                    });
                                   // If the user isn't signed in, we need to sign them in or sign up
                                   if (!auth.currentUser) {
                                     setAuthModalIsOpen(true);
@@ -185,6 +189,10 @@ export const Premium = () => {
                                 className="w-1/2 border-2 border-brand-primary rounded-lg mx-2 cursor-pointer"
                                 onClick={() => {
                                   setPlanBeingPurchased(PlanType.Yearly);
+                                  (window as any).gtag('event', 'subscribe_annual_click', {
+                                    event_category: 'payment_click',
+                                    product: 'chat_assistant',
+                                  });
                                   // If the user isn't signed in, we need to sign them in or sign up
                                   if (!auth.currentUser) {
                                     setAuthModalIsOpen(true);

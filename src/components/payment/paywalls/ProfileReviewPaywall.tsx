@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { PlanFeature } from "./PlanFeature";
 import { Paywall } from "./Paywall";
 import { LearnMoreModal } from "../../modals/LearnMoreModal";
@@ -17,6 +17,9 @@ export const ProfileReviewPaywall = () => {
   const [learnMoreModalOpen, setLearnMoreModalOpen] = useState(false);
   const { setAuthModalIsOpen } = useAuthStore();
 
+  useEffect(() => {if ((window as any).gtag) {
+    (window as any).gtag('event', 'review_paywall', {event_category: 'funnel',product: 'profile_review',
+    });}}, []);
 
   return (
     <>
@@ -101,6 +104,7 @@ export const ProfileReviewPaywall = () => {
                     // onClick={() => { setPlanBeingPurchased(PlanType.Monthly);}}
                     onClick={() => {
                       setPlanBeingPurchased(PlanType.Monthly);
+                      if ((window as any).gtag) {(window as any).gtag('event', 'review_purchase_monthly', {event_category: 'funnel',product: 'profile_review',})}
                       // If the user isn't signed in, we need to sign them in or sign up
                       if (!auth.currentUser) {
                         setAuthModalIsOpen(true);
@@ -224,7 +228,10 @@ export const ProfileReviewPaywall = () => {
                   </div>
                   <button
                     type="button"
-                    onClick={() => setChosenProduct(ProductType.ProfileReview)}
+                    onClick={() => {
+                      setChosenProduct(ProductType.ProfileReview)
+                      if ((window as any).gtag) {(window as any).gtag('event', 'review_purchase_oneoff', {event_category: 'funnel',product: 'profile_review',})}
+                    }}
                     className="mt-4 flex items-center justify-center w-full bg-black text-white py-3 rounded-full font-semibold -mb-1"
                   >
                     Activate
@@ -234,7 +241,11 @@ export const ProfileReviewPaywall = () => {
               <div className="mt-4 flex items-center justify-center mb-6">
                 <h3
                   className="cursor-pointer text-lg text-zinc-500 hover:text-zinc-600 hover:underline"
-                  onClick={() => setProfileReviewerWizardComplete(true)}
+                  onClick={() => {
+                    setProfileReviewerWizardComplete(true)
+                    if ((window as any).gtag) {(window as any).gtag('event', 'no_thanks', {event_category: 'funnel',product: 'profile_review',})}
+                  }
+                  }
                 >
                   no thanks
                 </h3>
