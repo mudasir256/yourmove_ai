@@ -135,7 +135,11 @@ function App() {
             )
           }
         />
-        <Route path="/start" element={<Onboarding />} />
+        <Route path="/start" element={
+          <Page title="Start">
+            <Onboarding />
+          </Page>
+          } />
         <Route
           path="/premium"
           element={
