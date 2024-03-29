@@ -312,3 +312,8 @@ export const migrateUser = (email: string, password?: string) => {
   }
   return axios.post(`${BASE_URL}/user/migrate`, body);
 };
+
+export const createOrGetAuthUser = (uid: string, email: string) => {
+  const body: any = { uid, email };
+  return axios.post(`${BASE_URL}/user/createAuthUser`, body);
+};
