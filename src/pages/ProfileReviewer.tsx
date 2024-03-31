@@ -72,7 +72,7 @@ export const ProfileReviewer = () => {
             setHasPaid={setHasPaidForProfileReview}
           />
         ) : (
-          <Loading title="Reviewing your profile (3-4 minutes)" />
+          <Loading title="Reviewing your profile. Hold tight - reviews can take up to 2 minutes" />
         )}
       </Wizard>
     </div>
