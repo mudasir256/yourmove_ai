@@ -17,6 +17,15 @@ interface Props {
   setHasPaid: (hasPaid: boolean) => void;
 }
 
+<style jsx>{`
+  .prose ul li {
+    margin-bottom: 0.25rem !important; /* Adjust the spacing as needed */
+  }
+  .prose p {
+    margin-bottom: 0.1rem !important; /* Adjust the spacing as needed */
+  }
+`}</style>
+
 export const ProfileReview = ({ hasPaid, setHasPaid }: Props) => {
   const {reviewedProfile, setReviewedProfile } = useProfileStore();
   const [unlockFullReviewModalOpen, setUnlockFullReviewModalOpen] =
@@ -58,7 +67,7 @@ export const ProfileReview = ({ hasPaid, setHasPaid }: Props) => {
       </div>
       <div
         className="bg-white border-2 border-black rounded-md shadow-lg relative"
-        style={{ height: hasPaid ? "100%" : "102rem" }}
+        style={{ height: hasPaid ? "100%" : "82rem" }}
       >
         {!hasPaid && (
           <div className="absolute w-full h-full"
@@ -129,9 +138,9 @@ export const ProfileReview = ({ hasPaid, setHasPaid }: Props) => {
         )}
         <div
           className="p-4 overflow-y-hidden"
-          style={{ maxHeight: hasPaid ? "100%" : "100rem" }}
+          style={{ maxHeight: hasPaid ? "100%" : "80rem" }}
         >
-          <div className="prose lg:prose-base">
+          <div className="prose prose-base leading-tight">
             <Markdown>{reviewedProfile?.review}</Markdown>
           </div>
         </div>
