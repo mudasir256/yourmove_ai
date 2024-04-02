@@ -1,4 +1,4 @@
-import toast, { Toaster } from "react-hot-toast";
+import { Toaster } from "react-hot-toast";
 import { QueryClient, QueryClientProvider } from "react-query";
 import * as Sentry from "@sentry/react";
 import {
@@ -17,7 +17,7 @@ import { AuthModal } from "./components/modals/AuthModal";
 import { Premium } from "./pages/Premium";
 import { useEffect, useState } from "react";
 import { auth } from "./firebase";
-import { checkIfUserSubscribed, createOrGetAuthUser } from "./queries";
+import { checkIfUserSubscribed } from "./queries";
 import { useAuthStore } from "./stores/auth";
 import { BottomNav } from "./components/nav/BottomNav";
 import { useUIStore } from "./stores/ui";
@@ -25,7 +25,6 @@ import { Error } from "./components/Error";
 import Page from "./pages/Page";
 import { Onboarding } from "./pages/Onboarding";
 import { set } from "date-fns";
-import { User, signOut } from "firebase/auth";
 
 /* 
 
@@ -109,37 +108,18 @@ function App() {
     // Check for subscription once and then on auth state changed
     checkForSubscription();
 
-    const createUserAndCheckSubscription = async (user: User ) => {
-      const { uid, email = "" } = user || {};
-      try {
-        // create an account here using the id returned from the auth so we can map email to id.
-        // fix for apple id issue
-        await createOrGetAuthUser(uid, email as string);
-        if (!hasCheckedForSubscription) {
-          checkForSubscription();
-          setHasCheckedForSubscription(true);
-        }
-      } catch (error) {
-        console.error("Error creating or retrieving user:", error);
-        // Handle the error as needed, e.g., show a notification or log the error
-        const errorMessage = "An error occured while try to fetch the user. Please try signing in again. If the problem persists, please contact support@yourmove.ai for assistance.";
-        toast.error(errorMessage);
-        signOut(auth);
-      }
-    };
-
-    const unsubscribe = auth.onAuthStateChanged(function (user) {
+    auth.onAuthStateChanged(function (user) {
       // only check for the subscription if there is a user and we haven't checked before
       // when we sign out, we can set the hasCheckedForSubscription to false so we will check on signIn again
       // we can also set hasCheckedForSubscription to false when we buy a subscription
-      if (user) {
-        createUserAndCheckSubscription(user) 
+      if (user && !hasCheckedForSubscription) {
+        checkForSubscription();
+        setHasCheckedForSubscription(true);
       } else {
-        setIsSubscribed(false)
+        // User is not signed in. We default to this anyway, but good to be explicit/when the sign out
+        setIsSubscribed(false);
       }
     });
-
-    return () => unsubscribe()
   }, []);
 
   return (
