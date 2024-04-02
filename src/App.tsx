@@ -112,19 +112,25 @@ function App() {
     const createUserAndCheckSubscription = async (user: User ) => {
       const { uid, email = "" } = user || {};
       try {
-        // create an account here using the id returned from the auth so we can map email to id.
-        // fix for apple id issue
-        await createOrGetAuthUser(uid, email as string);
-        if (!hasCheckedForSubscription) {
-          checkForSubscription();
-          setHasCheckedForSubscription(true);
-        }
+        const data = await createOrGetAuthUser(uid, email as string);
+        console.log("PROD USER:: ", data.data.user)
       } catch (error) {
         console.error("Error creating or retrieving user:", error);
         // Handle the error as needed, e.g., show a notification or log the error
-        const errorMessage = "An error occured while try to fetch the user. Please try signing in again. If the problem persists, please contact support@yourmove.ai for assistance.";
-        toast.error(errorMessage);
-        signOut(auth);
+        let errorMessage: string;
+        if (typeof error === 'object' && error !== null && 'message' in error) {
+          errorMessage = (error as { message: string }).message;
+        } else {
+          errorMessage = 'An unknown error occurred';
+        }
+        toast.error(errorMessage)
+        signOut(auth)
+        return;
+      }
+
+      if (!hasCheckedForSubscription) {
+        checkForSubscription();
+        setHasCheckedForSubscription(true);
       }
     };
 
@@ -133,8 +139,10 @@ function App() {
       // when we sign out, we can set the hasCheckedForSubscription to false so we will check on signIn again
       // we can also set hasCheckedForSubscription to false when we buy a subscription
       if (user) {
+        console.log("CREATE USER AND CHECK SUBSCRIPTION:: ", JSON.stringify(user))
         createUserAndCheckSubscription(user) 
       } else {
+        console.log("NO USER!!")
         setIsSubscribed(false)
       }
     });
