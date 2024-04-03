@@ -52,4 +52,4 @@ npm run dev
 
 I think that just about does it! If at any point you run into any issues with setup, or you have any queries or questions, please do not hesitate to contact me. Your satisfaction is my number one priority!
 
-Thank you again for choosing me to work on your project, I hope we get to work to again together in the future!
+Thank you again for choosing me to work on your project, I hope we get to work to again together in the future!!
