@@ -65,6 +65,10 @@ interface ChatStore {
   // For sending chat type
   chatType: ChatType | null;
   setChatType: (chatType: ChatType | null) => void;
+
+  // For sending needReset
+  needReset: boolean;
+  setNeedReset: (needReset: boolean) => void;
 }
 
 export const useChatStore = create<ChatStore>((set) => ({
@@ -101,4 +105,6 @@ export const useChatStore = create<ChatStore>((set) => ({
     set({ chatRequestType }),
   chatType: ChatType.Reply,
   setChatType: (chatType: ChatType | null) => set({ chatType }),
+  needReset: false,
+  setNeedReset: (needReset: boolean) => set({ needReset }),
 }));

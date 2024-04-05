@@ -163,6 +163,7 @@ export const MessageInput = ({
                                   ref={fileInputRef}
                                   className="hidden"
                                   onChange={handleFileChange}
+                                  accept=".jpeg, .jpg, .png, .pdf, .tiff, .tif"
                                 />
                                 <button
                                   type="button"

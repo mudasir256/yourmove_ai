@@ -49,6 +49,10 @@ export const ProfileReviewer = () => {
     }
   }, [profileReviewerWizardComplete, profileReviewerFiles]);
 
+  useEffect(() => {if ((window as any).gtag) {
+    (window as any).gtag('event', 'review_start', {event_category: 'funnel',product: 'profile_review',
+    });}}, []);
+
   return (
     <div className="px-4">
       <Wizard
@@ -68,7 +72,7 @@ export const ProfileReviewer = () => {
             setHasPaid={setHasPaidForProfileReview}
           />
         ) : (
-          <Loading title="Reviewing your profile" />
+          <Loading title="Reviewing your profile. Hold tight - reviews can take up to 2 minutes" />
         )}
       </Wizard>
     </div>

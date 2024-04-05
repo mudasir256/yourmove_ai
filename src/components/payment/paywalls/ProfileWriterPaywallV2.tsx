@@ -43,7 +43,7 @@ export const ProfileWriterPaywall = ({ hideNoThanks }: Props) => {
                 </h2>
                 <div className="flex justify-between mt-2 mb-3 items-center">
                   <div>
-                    <h1 className="text-4xl font-semibold">$10</h1>
+                    <h1 className="text-4xl font-semibold">$12</h1>
                     <p className="text-zinc-500">/month</p>
                   </div>
                 </div>
@@ -89,7 +89,7 @@ export const ProfileWriterPaywall = ({ hideNoThanks }: Props) => {
                 </h2>
                 <div className="flex justify-between mt-2 mb-3 items-center">
                   <div>
-                    <h1 className="text-4xl font-semibold">$10</h1>
+                    <h1 className="text-4xl font-semibold">$12</h1>
                     <p className="text-zinc-500">/month</p>
                   </div>
                 </div>

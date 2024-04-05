@@ -1,6 +1,7 @@
 import { toHeaderCase } from "js-convert-case";
 import {
   ChatType,
+  ChatRequestType,
   MessageSubType,
   MessageType,
   MessageTypeSubTypeMappings,
@@ -28,14 +29,23 @@ export const MessageTypeSelector = () => {
                 setSelectedMessageType(messageType as MessageType);
                 if (messageType === MessageType.Reply) {
                   setChatType(ChatType.Reply);
+                  if (useChatStore.getState().chatRequestType === ChatRequestType.Image) {
+                    useChatStore.getState().setNeedReset(true);
+                  }
                 }
                 if (messageType === MessageType.Close) {
                   setSelectedMessageSubType(MessageSubType.AskOut);
                   setChatType(ChatType.Closer);
+                  if (useChatStore.getState().chatRequestType === ChatRequestType.Image) {
+                    useChatStore.getState().setNeedReset(true);
+                  }
                 }
                 if (messageType === MessageType.Open) {
                   setSelectedMessageSubType(MessageSubType.Starter);
                   setChatType(ChatType.Opener);
+                  if (useChatStore.getState().chatRequestType === ChatRequestType.Image) {
+                    useChatStore.getState().setNeedReset(true);
+                  }
                 }
               }}
               className={`flex-1 rounded-full cursor-pointer text-center py-1 font-semibold ${

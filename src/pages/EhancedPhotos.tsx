@@ -26,6 +26,11 @@ export const EnhancedPhotos = () => {
           slidesToShow: 1,
           slidesToScroll: 1,
         };
+
+    useEffect(() => {if ((window as any).gtag) {
+    (window as any).gtag('event', 'photos_start', {event_category: 'funnel',product: 'photos',
+    });}}, []);
+
     return (
       <div className="-mt-8 max-w-lg mx-auto mt-6">
         <div className="w-full mt-2">
@@ -87,11 +92,12 @@ export const EnhancedPhotos = () => {
                 <button
                     type="button"
                     onClick={() => {
-                        window.open('https://buy.stripe.com/3cscNJdlUfGV6vmeVe', '_blank');
+                        window.open('https://buy.stripe.com/8wMbJFchQ66l4neeVl', '_blank');
+                        if ((window as any).gtag) {(window as any).gtag('event', 'photos_unlock', {event_category: 'funnel',product: 'photos',});}
                     }}
                     className="mt-2 flex items-center justify-center w-full bg-brand-primary text-white py-3 rounded-full font-semibold"
                 >
-                    Enhance my photos - $34 
+                    Enhance my photos - $24.99 
                 </button>
             </div>
         </div>

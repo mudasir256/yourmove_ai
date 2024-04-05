@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useProfileStore } from "../../stores/profile";
 import Markdown from "react-markdown";
 import { UnlockFullReviewModal } from "../modals/UnlockFullReviewModal";
@@ -18,12 +18,26 @@ interface Props {
   setHasPaid: (hasPaid: boolean) => void;
 }
 
+<style jsx>{`
+  .prose ul li {
+    margin-bottom: 0.25rem !important; /* Adjust the spacing as needed */
+  }
+  .prose p {
+    margin-bottom: 0.1rem !important; /* Adjust the spacing as needed */
+  }
+`}</style>
+
 export const ProfileReview = ({ hasPaid, setHasPaid }: Props) => {
   const { reviewedProfile, setReviewedProfile } = useProfileStore();
   const [unlockFullReviewModalOpen, setUnlockFullReviewModalOpen] =
     useState(false);
   const { setProfileReviewerWizardComplete, setProfileReviewerStep } =
     useWizardStore();
+  
+
+  useEffect(() => {if ((window as any).gtag) {
+      (window as any).gtag('event', 'review_results', {event_category: 'funnel',product: 'profile_review',
+      });}}, []);
 
   return (
     <div className="pb-40 mt-4">
@@ -54,7 +68,7 @@ export const ProfileReview = ({ hasPaid, setHasPaid }: Props) => {
       </div>
       <div
         className="bg-white border-2 border-black rounded-md shadow-lg relative"
-        style={{ height: hasPaid ? "100%" : "102rem" }}
+        style={{ height: hasPaid ? "100%" : "82rem" }}
       >
         {!hasPaid && (
           <div
@@ -74,7 +88,7 @@ export const ProfileReview = ({ hasPaid, setHasPaid }: Props) => {
                   </h1>
                   <div className="flex mt-2 mb-3 items-center border-b-2 border-black pb-3">
                     <div>
-                      <h1 className="text-4xl font-semibold">$10</h1>
+                      <h1 className="text-4xl font-semibold">$12</h1>
                     </div>
                     <div className="pl-3">
                       <h1 className="text-zinc-500 leading-4">
@@ -114,7 +128,10 @@ export const ProfileReview = ({ hasPaid, setHasPaid }: Props) => {
 
                   <button
                     type="button"
-                    onClick={() => setUnlockFullReviewModalOpen(true)}
+                    onClick={() => {
+                      setUnlockFullReviewModalOpen(true)
+                      if ((window as any).gtag) {(window as any).gtag('event', 'review_results_unlock', {event_category: 'funnel',product: 'profile_review',});}
+                    }}
                     className="mt-2 flex items-center justify-center w-full bg-brand-primary text-white py-3 rounded-full font-semibold -mb-1"
                   >
                     Activate
@@ -126,9 +143,9 @@ export const ProfileReview = ({ hasPaid, setHasPaid }: Props) => {
         )}
         <div
           className="p-4 overflow-y-hidden"
-          style={{ maxHeight: hasPaid ? "100%" : "100rem" }}
+          style={{ maxHeight: hasPaid ? "100%" : "80rem" }}
         >
-          <div className="prose lg:prose-base">
+          <div className="prose prose-base leading-tight">
             <Markdown>{reviewedProfile?.review}</Markdown>
           </div>
         </div>

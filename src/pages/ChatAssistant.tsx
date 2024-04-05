@@ -7,7 +7,7 @@ import { PremiumUpsellPrompt } from "../components/chat/PremiumUpsellPrompt";
 import { MessageAuthorType } from "../constants/chat";
 import { Screenshot } from "../components/chat/Screenshot";
 import { GeneratingRepliesLoader } from "../components/chat/GeneratingRepliesLoader";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { AIPhotosModal } from "../components/ai-photos/AIPhotosModal";
 
 export const ChatAssistant = () => {
@@ -21,6 +21,7 @@ export const ChatAssistant = () => {
     settingsModalOpen,
     setSettingsModalOpen,
     setChatRequestType,
+    needReset,
   } = useChatStore();
   const [file, setFile] = useState<File | null>(null);
 
@@ -31,6 +32,14 @@ export const ChatAssistant = () => {
     setScreenshotUploading(null);
     setChatRequestType(null);
   };
+
+  // Apply a soft reset whenever a user who has a screenshot switches
+  useEffect(() => {
+    if (needReset) {
+      startOver();
+      useChatStore.getState().setNeedReset(false); // Reset the flag
+    }
+  }, [needReset]);
 
   return (
     <div className=" max-w-xl mx-auto px-4">

@@ -165,6 +165,12 @@ export const SideNav = () => {
                             <li key="">
                               <a
                                 href={APP_STORE_URL}
+                                onClick={() => {
+                                  (window as any).gtag('event', 'ios_download_click', {
+                                    event_category: 'click',
+                                    event_label: 'iOS download',
+                                  });
+                                }}                            
                                 target="_blank"
                                 className={classNames(
                                   "text-gray-700 hover:text-brand-primary hover:bg-gray-50",

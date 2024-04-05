@@ -29,6 +29,7 @@ export const Profile = () => {
     }
   }, [profile]); // Depend on profile state if you only want to scroll when profile updates
 
+
   // Get Prompts
   useEffect(() => {
     // Get profileType if its there if not default to bumble
@@ -49,6 +50,10 @@ export const Profile = () => {
       setProfile(response.data);
     });
   }, []);
+
+  useEffect(() => {if ((window as any).gtag) {
+    (window as any).gtag('event', 'writer_results', {event_category: 'funnel',product: 'profile_writer',
+    });}}, []);
 
   return (
     <>
