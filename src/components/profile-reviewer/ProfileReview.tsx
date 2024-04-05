@@ -4,6 +4,7 @@ import Markdown from "react-markdown";
 import { UnlockFullReviewModal } from "../modals/UnlockFullReviewModal";
 import { useWizardStore } from "../../stores/wizard";
 import { WizardStepType } from "../../models/wizard";
+import { AIPhotosModal } from "../ai-photos/AIPhotosModal";
 
 const PLAN_FEATURES = [
   "Detailed review of your profile",
@@ -18,7 +19,7 @@ interface Props {
 }
 
 export const ProfileReview = ({ hasPaid, setHasPaid }: Props) => {
-  const {reviewedProfile, setReviewedProfile } = useProfileStore();
+  const { reviewedProfile, setReviewedProfile } = useProfileStore();
   const [unlockFullReviewModalOpen, setUnlockFullReviewModalOpen] =
     useState(false);
   const { setProfileReviewerWizardComplete, setProfileReviewerStep } =
@@ -56,10 +57,14 @@ export const ProfileReview = ({ hasPaid, setHasPaid }: Props) => {
         style={{ height: hasPaid ? "100%" : "102rem" }}
       >
         {!hasPaid && (
-          <div className="absolute w-full h-full"
-          // bg-gradient-to-t from-black via-black
-            style={{ backgroundImage: 'linear-gradient(to top, rgba(0, 0, 0, 1) 30%, rgba(0, 0, 0, 0))'}}
-            >
+          <div
+            className="absolute w-full h-full"
+            // bg-gradient-to-t from-black via-black
+            style={{
+              backgroundImage:
+                "linear-gradient(to top, rgba(0, 0, 0, 1) 30%, rgba(0, 0, 0, 0))",
+            }}
+          >
             <div className="w-full h-full relative">
               {/* Unlock */}
               <div className="absolute w-full p-3 bottom-0">
@@ -127,6 +132,9 @@ export const ProfileReview = ({ hasPaid, setHasPaid }: Props) => {
             <Markdown>{reviewedProfile?.review}</Markdown>
           </div>
         </div>
+      </div>
+      <div className="mt-8 mb-10">
+        <AIPhotosModal />
       </div>
     </div>
   );

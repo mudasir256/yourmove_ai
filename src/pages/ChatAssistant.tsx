@@ -8,6 +8,7 @@ import { MessageAuthorType } from "../constants/chat";
 import { Screenshot } from "../components/chat/Screenshot";
 import { GeneratingRepliesLoader } from "../components/chat/GeneratingRepliesLoader";
 import { useState } from "react";
+import { AIPhotosModal } from "../components/ai-photos/AIPhotosModal";
 
 export const ChatAssistant = () => {
   const {

@@ -8,6 +8,7 @@ import { Loading } from "../Loading";
 import { useWizardStore } from "../../stores/wizard";
 import { TextingAssistantModal } from "../modals/TextingAssistantModal";
 import { WizardStepType } from "../../models/wizard";
+import { AIPhotosModal } from "../ai-photos/AIPhotosModal";
 
 export const Profile = () => {
   const { profile, setProfile, setPrompts } = useProfileStore();
@@ -128,6 +129,9 @@ export const Profile = () => {
             >
               leave feedback
             </button>
+          </div>
+          <div className="mt-8 mb-10">
+            <AIPhotosModal />
           </div>
         </div>
       ) : (

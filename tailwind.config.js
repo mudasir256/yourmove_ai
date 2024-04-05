@@ -7,6 +7,7 @@ export default {
         "brand-primary": "#E85E5C",
         "brand-secondary": "#410B13",
         "brand-dark": "#270006",
+        "brand-alt": "#E85E5C",
         main: "#f1f1f1",
       },
     },
