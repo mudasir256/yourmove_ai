@@ -9,7 +9,7 @@ import {
   useNavigate,
 } from "react-router-dom";
 import { ProfileWriter } from "./pages/ProfileWriter";
-import { EnhancedPhotos } from "./pages/EhancedPhotos";
+import { AIPhotos } from "./pages/AIPhotos";
 import { ChatAssistant } from "./pages/ChatAssistant";
 import { ProfileReviewer } from "./pages/ProfileReviewer";
 import { SideNav } from "./components/nav/SideNav";
@@ -109,7 +109,7 @@ function App() {
     // Check for subscription once and then on auth state changed
     checkForSubscription();
 
-    const createUserAndCheckSubscription = async (user: User ) => {
+    const createUserAndCheckSubscription = async (user: User) => {
       const { uid, email = "" } = user || {};
       try {
         // create an account here using the id returned from the auth so we can map email to id.
@@ -122,7 +122,8 @@ function App() {
       } catch (error) {
         console.error("Error creating or retrieving user:", error);
         // Handle the error as needed, e.g., show a notification or log the error
-        const errorMessage = "An error occured while try to fetch the user. Please try signing in again. If the problem persists, please contact support@yourmove.ai for assistance.";
+        const errorMessage =
+          "An error occured while try to fetch the user. Please try signing in again. If the problem persists, please contact support@yourmove.ai for assistance.";
         toast.error(errorMessage);
         signOut(auth);
       }
@@ -133,13 +134,13 @@ function App() {
       // when we sign out, we can set the hasCheckedForSubscription to false so we will check on signIn again
       // we can also set hasCheckedForSubscription to false when we buy a subscription
       if (user) {
-        createUserAndCheckSubscription(user) 
+        createUserAndCheckSubscription(user);
       } else {
-        setIsSubscribed(false)
+        setIsSubscribed(false);
       }
     });
 
-    return () => unsubscribe()
+    return () => unsubscribe();
   }, []);
 
   return (
@@ -155,11 +156,14 @@ function App() {
             )
           }
         />
-        <Route path="/start" element={
-          <Page title="Start">
-            <Onboarding />
-          </Page>
-          } />
+        <Route
+          path="/start"
+          element={
+            <Page title="Start">
+              <Onboarding />
+            </Page>
+          }
+        />
         <Route
           path="/premium"
           element={
@@ -196,7 +200,7 @@ function App() {
           path="/ai-photo"
           element={
             <Page title="AI Enhanced Photos">
-              <EnhancedPhotos />
+              <AIPhotos />
             </Page>
           }
         />
