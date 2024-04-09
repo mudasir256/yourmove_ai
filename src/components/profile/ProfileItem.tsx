@@ -34,9 +34,14 @@ export const ProfileItem = ({ lockItem, profileResponse, index }: Props) => {
     });
   };
 
-  useEffect(() => {if ((window as any).gtag) {
-    (window as any).gtag('event', 'writer_results', {event_category: 'funnel',product: 'profile_writer',
-    });}}, []);
+  useEffect(() => {
+    if ((window as any).gtag) {
+      (window as any).gtag("event", "writer_results", {
+        event_category: "funnel",
+        product: "profile_writer",
+      });
+    }
+  }, []);
 
   return (
     <div className="bg-white mb-4 shadow-md rounded-md p-4 relative">
@@ -70,12 +75,17 @@ export const ProfileItem = ({ lockItem, profileResponse, index }: Props) => {
       ) : (
         <>
           {lockItem && (
-            <div className="-m-4 absolute h-full w-full z-40 flex flex items-center justify-center backdrop-blur-md rounded-md">
+            <div className="-m-4 absolute h-full w-full z-10 flex flex items-center justify-center backdrop-blur-md rounded-md">
               <button
                 type="button"
                 onClick={() => {
-                  setUnlockModalIsOpen(true)
-                  if ((window as any).gtag) {(window as any).gtag('event', 'writer_results_unlock', {event_category: 'funnel',product: 'profile_writer',});}
+                  setUnlockModalIsOpen(true);
+                  if ((window as any).gtag) {
+                    (window as any).gtag("event", "writer_results_unlock", {
+                      event_category: "funnel",
+                      product: "profile_writer",
+                    });
+                  }
                 }}
                 className="cursor-pointer border border-black bg-white mx-10 py-2 text-lg font-semibold w-full flex items-center justify-center shadow-lg rounded-md"
               >

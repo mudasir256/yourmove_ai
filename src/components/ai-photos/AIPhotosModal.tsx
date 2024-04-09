@@ -8,9 +8,12 @@ const IMAGES = [Image1, Image2, Image3];
 export const AIPhotosModal = () => {
   const navigate = useNavigate();
   return (
-    <div className="border-2 border-black rounded-lg relative overflow-hidden">
-      <div className="top-0 right-0 left-0 bg-brand-alt h-[70rem] w-[70rem] absolute rounded-full opacity-20 -translate-x-1/4 -translate-y-3/4 z-0">
-        d
+    <div className="border-2 border-black rounded-lg relative overflow-hidden mx-2">
+      <div
+        className="bg-brand-alt opacity-20 absolute z-50 rounded-full absolute -top-1/2 left-1/2 transform -translate-x-1/2"
+        style={{ width: "160%", height: "110%" }}
+      >
+        d &nbsp;
       </div>
       <div className="relative z-50">
         <div className="flex items-center justify-center">
@@ -91,7 +94,7 @@ export const AIPhotosModal = () => {
                     AI Photo Generator
                   </h1>
                 </div>
-                <p className="text-xl text-brand-dark mt-2 mx-14 text-center">
+                <p className="lg:text-xl text-brand-dark mt-2 lg:mx-14 text-center">
                   Boost your right swipes by showing your charming side
                 </p>
               </div>
