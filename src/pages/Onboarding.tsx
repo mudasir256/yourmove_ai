@@ -34,12 +34,12 @@ export const Onboarding = () => {
   }, []);
 
   return (
-    <div className="-mt-8 max-w-lg mx-auto mt-3">
+    <div className="max-w-lg mx-auto mt-0">
       <div>
-        <div className="flex items-center justify-center">
+        {/* <div className="flex items-center justify-center">
           <Logo />
-        </div>
-        <div className="mt-4 px-4">
+        </div> */}
+        <div className="px-4 -mt-4">
           <h1 className="text-2xl font-semibold">What's your next move?</h1>
         </div>
 

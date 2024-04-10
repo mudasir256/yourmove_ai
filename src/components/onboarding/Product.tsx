@@ -56,9 +56,9 @@ export const Product = ({
         </div>
       )}
       <div className="bg-white px-4 pt-2.5 pb-3 rounded-b-lg">
-        <h1 className="text-m font-semibold text-brand-primary">{title}</h1>
+        <h1 className="text-base font-semibold text-brand-primary">{title}</h1>
         <div>
-          <p>{description}</p>
+          <p className="text-sm">{description}</p>
         </div>
       </div>
     </div>
