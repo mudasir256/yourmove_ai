@@ -76,6 +76,10 @@ export const WizardStep = ({
             <>{wizardStep.content}</>
           )}
 
+          {wizardStep.type === WizardStepInputType.SPACER && (
+              <>{wizardStep.content}</>
+          )}  
+
           {wizardStep.type === WizardStepInputType.TEXT && (
             <div className="mt-4">
               <textarea

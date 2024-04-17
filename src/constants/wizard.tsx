@@ -123,11 +123,49 @@ export const PROFILE_REVIEWER_WIZARD_STEPS: Array<WizardStep> = [
     type: WizardStepInputType.CONTENT,
     content: (
       <>
-        <h1 className="text-5xl font-bold">AI Profile Reviews</h1>
+        <h1 className="text-5xl font-bold">Profile Reviews</h1>
         <div className="mt-8">
           <p className="text-2xl">
-            Upload your profile. Get an instant review of your photos and bio,
-            along with suggestions on how to improve.
+            Your dating profile is your resume. Optimize it and get more matches.
+            Trained by dating coaches, powered by AI.
+          </p>
+        </div>
+      </>
+    ),
+  },
+  {
+    step: WizardStepType.GENDER,
+    type: WizardStepInputType.RADIO,
+    label: "You are a ",
+    choices: ["Man", "Woman", "Other"],
+    validator: yup.string(),
+  },
+  {
+    step: WizardStepType.GENDER_OTHER,
+    type: WizardStepInputType.RADIO,
+    label: "Interested in ...",
+    choices: ["Women", "Men", "Both"],
+    validator: yup.string(),
+  },
+  {
+    step: WizardStepType.LOOKING_FOR,
+    type: WizardStepInputType.RADIO,
+    label: "Looking for",
+    choices: ["something casual", "long term partner", "not sure yet"],
+    validator: yup.string(),
+  },
+  {
+    step: WizardStepType.SPACER,
+    type: WizardStepInputType.SPACER,
+    content: (
+      <>
+        <h1 className="text-4xl font-bold">Almost there</h1>
+        <div className="mt-8">
+          <p className="text-2xl">
+            Open your app of choice and take screenshots of your dating profile.
+          </p>
+          <p className="text-2xl pt-4">
+            YourMove works with all dating apps.
           </p>
         </div>
       </>

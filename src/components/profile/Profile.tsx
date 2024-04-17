@@ -1,3 +1,4 @@
+// profile.tsx
 import { ProfileResponse } from "../../models/profile";
 import { FeedbackModal } from "../modals/FeedbackModal";
 import { ProfileItem } from "./ProfileItem";
@@ -21,6 +22,20 @@ export const Profile = () => {
   const [textingAssistantModalOpen, setTextingAssistantModalOpen] =
     useState(false);
   const profileHeadingRef = useRef(null);
+
+// Updated list of titles for the loading component
+  const loadingTitles = [
+    "Analyzing your responses…",
+    "Choosing the best prompts for you…",
+    "Optimizing for response rates…",
+    "Personalizing results…",
+    "Highlighting the best version of you…",
+    "Evaluating successful profiles for proven strategies…",
+    "Polishing your profile for maximum appeal…",
+    "Innovating with the latest trends in dating…",
+    "Preparing your profile for the spotlight…"
+  ];
+
 
   // Scroll to the "Your profile" heading after the component mounts or updates
   useEffect(() => {
@@ -140,8 +155,8 @@ export const Profile = () => {
           </div>
         </div>
       ) : (
-        <Loading title="writing your profile" />
-      )}
+        <Loading titles={loadingTitles} updateInterval={1500}/>
+        )}
     </>
   );
 };

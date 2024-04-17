@@ -26,6 +26,19 @@ export const ProfileReviewer = () => {
     setHasPaidForProfileReview,
   } = useProfileStore();
 
+  const loadingTitles = [
+    "Analyzing your profile's first impressions...",
+    "Diving deep into your photos...",
+    "Evaluating photo quality and lighting...",
+    "Scouting for social proof in pictures...",
+    "Rearranging your photo lineup for maximum impact...",
+    "Reviewing your bio",
+    "Generating custom style suggestions…",
+    "Summarizing our findings…",
+    "Crafting your profile upgrade plan…",
+    "Preparing to unveil the potential of your profile…"
+  ];
+
   // On component load, send request
   useEffect(() => {
     if (profileReviewerWizardComplete) {
@@ -71,9 +84,10 @@ export const ProfileReviewer = () => {
             hasPaid={hasPaidForProfileReview}
             setHasPaid={setHasPaidForProfileReview}
           />
-        ) : (
-          <Loading title="Reviewing your profile. Hold tight - reviews can take up to 2 minutes" />
-        )}
+        ) : (<>
+            <Loading titles={loadingTitles} updateInterval={3750}/>
+          </>          
+          )}
       </Wizard>
     </div>
   );
