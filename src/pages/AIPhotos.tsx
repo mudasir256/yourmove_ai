@@ -14,6 +14,8 @@ import Image3 from "../assets/images/ai-3.png";
 import Image4 from "../assets/images/ai-4.png";
 import { useAuthStore } from "../stores/auth";
 import { Loading } from "../components/Loading";
+import { Helmet } from 'react-helmet-async';
+
 
 // import { ProductType } from "../../constants/payments";
 
@@ -43,6 +45,9 @@ export const AIPhotos = () => {
 
   return (
     <div className="-mt-8 max-w-lg mx-auto mt-6">
+      <Helmet>
+            <meta name="description" content="AI Enhanced Photos. Double your swipes with more charming you" />
+      </Helmet>
       <div className="w-full mt-2">
         {/* <div className="flex items-center justify-center mt-3">
                 <span className="text-sm font-semibold text-red-400 bg-red-100 py-2 px-4 rounded-full">
@@ -89,7 +94,7 @@ export const AIPhotos = () => {
               ✓ 90 photos in 15 different backgrounds & styles
             </h5>
             <h5 className="flex text-sm md:text-md">
-              ✓ Up to 44% more matches on average
+              ✓ Up to 74% more matches on average
             </h5>
           </ul>
           <h4 className="font-semibold text-sm md:text-md mt-4 mb-2">

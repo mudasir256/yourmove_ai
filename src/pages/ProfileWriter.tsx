@@ -3,6 +3,7 @@ import { useWizardStore } from "../stores/wizard";
 import { Wizard } from "../components/wizard/Wizard";
 import { PROFILE_WRITER_WIZARD_STEPS } from "../constants/wizard";
 import { Profile } from "../components/profile/Profile";
+import { Helmet } from 'react-helmet-async';
 
 export const ProfileWriter = () => {
   const {
@@ -19,7 +20,11 @@ export const ProfileWriter = () => {
       });}}, []);
       
   return (
+    
     <div className="px-4">
+      <Helmet>
+        <meta name="description" content="Bio and prompt writer for dating apps. Personalized to you. Tested and optimized for maximum matches." />
+      </Helmet>
       <Wizard
         name="profileWriter"
         steps={PROFILE_WRITER_WIZARD_STEPS}

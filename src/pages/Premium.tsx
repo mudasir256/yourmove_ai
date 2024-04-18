@@ -11,6 +11,8 @@ import { Loading } from "../components/Loading";
 import { useUIStore } from "../stores/ui";
 import { useNavigate } from "react-router-dom";
 import { Success } from "../components/Success";
+import { Helmet } from 'react-helmet-async';
+
 
 export const Premium = () => {
   const [scrollForMoreFeatures, setShowScrollForMoreFeatures] = useState(true);
@@ -43,18 +45,23 @@ export const Premium = () => {
     <div className="text-center mt-8">
       <Success title="You have successfully subscribed to Premium." />
     </div>
+    
   ) : (
     <>
       {isLoading ? (
         <Loading />
       ) : (
         <div
+        
           className={` flex justify-center`}
           style={{
             paddingBottom:
               auth.currentUser && planBeingPurchased ? "" : "8.5rem",
           }}
         >
+          <Helmet>
+            <meta name="description" content="Unlimited access to YourMove AI suite of tools for online dating" />
+          </Helmet>
           <div className="max-w-xl">
             <div className="ml-2 mt-3">
               <svg

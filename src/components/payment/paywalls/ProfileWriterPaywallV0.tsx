@@ -121,7 +121,7 @@ export const ProfileWriterPaywall = ({ hideNoThanks }: Props) => {
                       {[
                         "Touch up your photos to show your best self",
                         "Declutter your background",
-                        "44% more matches on average",
+                        "74% more matches on average",
                       ].map((feature: string) => (
                         <PlanFeature
                           icon={

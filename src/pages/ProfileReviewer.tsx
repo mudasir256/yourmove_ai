@@ -7,6 +7,8 @@ import { generateProfileReview } from "../queries";
 import { useProfileStore } from "../stores/profile";
 import { Loading } from "../components/Loading";
 import { ReviewedProfile } from "../models/profile";
+import { Helmet } from 'react-helmet-async';
+
 
 export const ProfileReviewer = () => {
   const {
@@ -68,6 +70,9 @@ export const ProfileReviewer = () => {
 
   return (
     <div className="px-4">
+      <Helmet>
+        <meta name="description" content="Get an instant feedback for your dating profile. Trained by top matchmakers, powered by AI" />
+      </Helmet>
       <Wizard
         name="profileReviewer"
         steps={PROFILE_REVIEWER_WIZARD_STEPS}

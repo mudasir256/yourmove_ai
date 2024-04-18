@@ -9,6 +9,8 @@ import { Screenshot } from "../components/chat/Screenshot";
 import { GeneratingRepliesLoader } from "../components/chat/GeneratingRepliesLoader";
 import { useState, useEffect } from "react";
 import { AIPhotosModal } from "../components/ai-photos/AIPhotosModal";
+import { Helmet } from 'react-helmet-async';
+
 
 export const ChatAssistant = () => {
   const {
@@ -43,6 +45,9 @@ export const ChatAssistant = () => {
 
   return (
     <div className=" max-w-xl mx-auto px-4">
+      <Helmet>
+            <meta name="description" content="AI flirting assistant. Create personalized openers for any profile. Generate flirty (or thoughtful) replies to any conversations." />
+      </Helmet>
       <div className="">
         <SettingsModal
           open={settingsModalOpen}
