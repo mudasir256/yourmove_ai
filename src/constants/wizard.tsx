@@ -190,9 +190,9 @@ export const PROFILE_REVIEWER_WIZARD_STEPS: Array<WizardStep> = [
       .email("Please enter a valid email")
       .required("Email is required"),
   },
-  {
-    step: WizardStepType.PAYWALL,
-    type: WizardStepInputType.CONTENT,
-    content: <ProfileReviewPaywall />,
-  },
+  // {
+  //   step: WizardStepType.PAYWALL,
+  //   type: WizardStepInputType.CONTENT,
+  //   content: <ProfileReviewPaywall />,
+  // },
 ];
