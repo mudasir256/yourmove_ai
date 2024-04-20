@@ -10,6 +10,7 @@ import { GeneratingRepliesLoader } from "../components/chat/GeneratingRepliesLoa
 import { useState, useEffect } from "react";
 import { AIPhotosModal } from "../components/ai-photos/AIPhotosModal";
 import { Helmet } from 'react-helmet-async';
+import { BlaineNudge } from "../components/nudges/BlaineNudge";
 
 
 export const ChatAssistant = () => {
@@ -138,6 +139,9 @@ export const ChatAssistant = () => {
         </div>
         <div>
           <PremiumUpsellPrompt />
+        </div>
+        <div className="mt-8 mb-2">
+            <BlaineNudge />
         </div>
       </div>
     </div>

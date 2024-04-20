@@ -15,6 +15,8 @@ import Image4 from "../assets/images/ai-4.png";
 import { useAuthStore } from "../stores/auth";
 import { Loading } from "../components/Loading";
 import { Helmet } from 'react-helmet-async';
+import blaine from "../assets/images/blaine_ad.png";
+
 
 
 // import { ProductType } from "../../constants/payments";
@@ -189,6 +191,7 @@ export const AIPhotos = () => {
               </>
             </button>
           )}
+
         </div>
       </div>
     </div>
