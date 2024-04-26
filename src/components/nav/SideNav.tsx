@@ -13,6 +13,7 @@ import { signOut } from "firebase/auth";
 import toast from "react-hot-toast";
 import { FeedbackModal } from "../modals/FeedbackModal";
 import { Logo } from "../Logo";
+import { SideNavListItem } from "./SideNavListItem"
 
 const APP_STORE_URL = "https://apps.apple.com/us/app/yourmove-ai/id6444244023";
 
@@ -139,53 +140,61 @@ export const SideNav = () => {
                           </h2>
                         </div>
                       )}
-                      <ul role="list" className="flex flex-1 flex-col gap-y-7">
+                      <ul role="list" className="flex flex-1 flex-col">
                         <li>
-                          <ul role="list" className="-mx-2 space-y-1">
-                            <li key="">
-                              <a
-                                onClick={() => {
-                                  setSidebarOpen(false);
-                                  setTimeout(
-                                    () => setFeedbackModalOpen(true),
-                                    250
-                                  );
-                                }}
-                                className={classNames(
-                                  "text-gray-700 hover:text-brand-primary hover:bg-gray-50 cursor-pointer",
-                                  "group flex gap-x-3 rounded-md p-2 text-sm leading-6 font-semibold "
-                                )}
-                              >
-                                <div className="w-5/6">Contact Us</div>
-                                <div className="w-1/5 flex justify-end">
-                                  <ChevronRightIcon className="h-6 w-6 stroke-2 text-gray-400" />
-                                </div>
-                              </a>
-                            </li>
-                            <li key="">
-                              <a
-                                href={APP_STORE_URL}
-                                onClick={() => {
-                                  (window as any).gtag('event', 'ios_download_click', {
-                                    event_category: 'click',
-                                    event_label: 'iOS download',
-                                  });
-                                }}                            
-                                target="_blank"
-                                className={classNames(
-                                  "text-gray-700 hover:text-brand-primary hover:bg-gray-50",
-                                  "group flex gap-x-3 rounded-md p-2 text-sm leading-6 font-semibold "
-                                )}
-                              >
-                                <div className="w-5/6">Download iOS</div>
-                                <div className="w-1/5 flex justify-end">
-                                  <ChevronRightIcon className="h-6 w-6 stroke-2 text-gray-400" />
-                                </div>
-                              </a>
-                            </li>{" "}
+                          <ul role="list" className="-mx-2 space-y-4">
+                            <SideNavListItem key="0" title="Chat Assistant" onNavItemClick={() => {
+                              setSidebarOpen(false);
+                              setTimeout(
+                                () => navigate("/chat-assistant"),
+                                250
+                              );
+                            }} />
+                            <SideNavListItem key="0" title="Profile Writer" onNavItemClick={() => {
+                              setSidebarOpen(false);
+                              setTimeout(
+                                () => navigate("/profile-writer"),
+                                250
+                              );
+                            }} />
+                            <SideNavListItem key="2" title="Profile Review" onNavItemClick={() => {
+                              setSidebarOpen(false);
+                              setTimeout(
+                                () => navigate("/profile-review"),
+                                250
+                              );
+                            }} />
+                            <SideNavListItem key="3" title="AI Photos" onNavItemClick={() => {
+                              setSidebarOpen(false);
+                              setTimeout(
+                                () => navigate("/ai-photo"),
+                                250
+                              );
+                            }} />
                           </ul>
                         </li>
-                        <li className="mt-auto">
+                        <SideNavListItem key="4" containerStyle="mt-auto -mx-2 mb-4" title="Contact Us" onNavItemClick={() => {
+                          setSidebarOpen(false);
+                          setTimeout(
+                            () => setFeedbackModalOpen(true),
+                            250
+                          );
+                        }} />
+                        <SideNavListItem
+                          key="5"
+                          containerStyle="-mx-2"
+                          title="Download iOS"
+                          titleStyle="text-brand-primary"
+                          target="_blank" href={APP_STORE_URL}
+                          onNavItemClick={() => {
+                            setSidebarOpen(false);
+                            (window as any).gtag('event', 'ios_download_click', {
+                              event_category: 'click',
+                              event_label: 'iOS download',
+                            });
+                          }}
+                        />
+                        <li >
                           {user ? (
                             <button
                               type="button"
@@ -194,7 +203,7 @@ export const SideNav = () => {
                                 setSidebarOpen(false);
                                 toast.success("You have been signed out.");
                               }}
-                              className="mt-2 flex items-center justify-center w-full bg-stone-200 text-black py-2 rounded-md font-semibold -mb-1"
+                              className="mt-4 flex items-center justify-center w-full bg-stone-200 text-black py-2 rounded-md font-semibold mb-2 -mx-2"
                             >
                               Sign out
                             </button>
@@ -206,7 +215,7 @@ export const SideNav = () => {
                                 setAuthActionType(AuthActionType.SignIn);
                                 setAuthModalIsOpen(true);
                               }}
-                              className="mt-2 flex items-center justify-center w-full bg-brand-primary text-white py-2 rounded-md font-semibold -mb-1"
+                              className="mt-4 flex items-center justify-center w-full bg-brand-primary text-white py-2 rounded-md font-semibold mb-2 -mx-2"
                             >
                               Sign in
                             </button>
@@ -218,8 +227,8 @@ export const SideNav = () => {
                 </Dialog.Panel>
               </Transition.Child>
             </div>
-          </Dialog>
-        </Transition.Root>
+          </Dialog >
+        </Transition.Root >
 
         <div className="fixed top-0 left-0 w-full h-12 bg-white z-30">
           {/* Top Nav Content */}
@@ -261,7 +270,7 @@ export const SideNav = () => {
             </div>
           </div>
         </div>
-      </div>
+      </div >
     </>
   );
 };
