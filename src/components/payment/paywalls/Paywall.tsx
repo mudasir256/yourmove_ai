@@ -17,6 +17,7 @@ import { auth } from "../../../firebase";
 import { sleep } from "../../../utils";
 import { useUIStore } from "../../../stores/ui";
 import toast from "react-hot-toast";
+import { AuthActionType } from "../../../constants/auth";
 
 interface Props {
   children: any;
@@ -44,25 +45,26 @@ export const Paywall = ({
   const [price, setPrice] = useState<string | null>(null);
   const { isSubscribed, setIsSubscribed } = useAuthStore();
   const { setPaymentIsLoading } = useUIStore();
+  const { setAuthModalIsOpen, setShouldAuthenticateForSubscription, shouldAuthenticateForSubscription, authModalIsOpen, setShowAuthSubscriptionDisclaimer } = useAuthStore();
 
-  // If the user is subscribed, then we can skip the paywall
   useEffect(() => {
+    if (!authModalIsOpen && !auth.currentUser && shouldAuthenticateForSubscription ) {
+      // authModal closed without login / signup in
+      noThanksHandler();
+      setPaymentIsLoading(false);
+    }
+  }, [shouldAuthenticateForSubscription, authModalIsOpen])
+
+  useEffect(() => {
+    // If the user is subscribed, then we can skip the paywall
     if (isSubscribed) {
       noThanksHandler();
-    } else {
-    }
-  }, [isSubscribed]);
-
-  // Check to see if the user has paid already
-  useEffect(() => {
-    // get email from the account, if it's not there, then get it somewhere else, stored in the state
-
-    // check that the user has bought this product by calling the API.
+    } else if (isSubscribed === false) {
+      // check that the user has bought this product by calling the API.
     // we send a list of products that if one is bought, we can skip the paywall
     // it returns a list of products bought by that user
 
     // Only check if the user has paid if they aren't subscribed
-    if (isSubscribed === false) {
       hasUserPaid(email, requiredProductsToSkipPaywall).then((response) => {
         // if any products bought by the user are in the requiredProductsToSkipPaywall
         if (
@@ -103,18 +105,6 @@ export const Paywall = ({
 
   const stripePromise = loadStripe(import.meta.env.VITE_STRIPE_PUBLISHABLE_KEY);
 
-  // {planBeingPurchased ? (
-  //   <div className="">
-  //     <div className="mb-3 w-3/4">
-  //       <h1 className="text-3xl font-bold ml-2">
-  //         Placeholder placeholder placeholder
-  //       </h1>
-  //     </div>
-  //   </div>
-  // ) : (
-  //   <Loading />
-  // )}
-
   return (
     <>
       {chosenProduct ? (
@@ -151,13 +141,15 @@ export const Paywall = ({
         </>
       ) : (
         <>
-          {auth.currentUser && planBeingPurchased ? (
+          {/*auth.currentUser &&*/ planBeingPurchased ? (
             <div className="" style={{ marginBottom: "4rem" }}>
               <SubscriptionForm
                 planType={planBeingPurchased}
+                email={auth.currentUser?.email ?? email}
                 redirectHandler={async () => {
-                  let iterations = 0;
+                  
                   if (auth.currentUser) {
+                    let iterations = 0;
                     const idTokenResult =
                       await auth.currentUser.getIdTokenResult();
                     let isSubscribed = false;
@@ -184,19 +176,16 @@ export const Paywall = ({
                       }, 3000);
                       setPaymentIsLoading(false);
                     }
+                  } else {
+                    // open login
+                    setShowAuthSubscriptionDisclaimer(true)
+                    setAuthModalIsOpen(true)
+                    setShouldAuthenticateForSubscription(true)
                   }
                 }}
               />
             </div>
           ) : (
-            // planBeingPurchased ? (
-            //   <div className="">
-            //     <div className="mb-3 w-3/4">
-            //       <h1 className="text-3xl font-bold ml-2">
-            //         Placeholder placeholder placeholder
-            //       </h1>
-            //     </div>
-            //   </div>
             <>
               {showPlans ? (
                 <div className="">

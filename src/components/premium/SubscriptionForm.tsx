@@ -1,61 +1,42 @@
 import { PlanType } from "../../constants/payments";
 import { useEffect, useState } from "react";
 import { auth } from "../../firebase";
-import { createSubscription } from "../../queries";
-import toast from "react-hot-toast";
-import PaymentForm from "../payment/PaymentForm";
+import SubscriptionPaymentForm from "../payment/SubscriptionPaymentForm";
 import { Elements } from "@stripe/react-stripe-js";
-import { loadStripe } from "@stripe/stripe-js";
-import { Loading } from "../Loading";
+import { Appearance,  StripeElementsOptionsMode, loadStripe } from "@stripe/stripe-js";
 import { useUIStore } from "../../stores/ui";
 
 interface Props {
   planType: PlanType;
   redirectHandler?: () => void;
+  email?: string
 }
 
 const stripePromise = loadStripe(import.meta.env.VITE_STRIPE_PUBLISHABLE_KEY);
 
-export const SubscriptionForm = ({ planType, redirectHandler }: Props) => {
-  const [submitting, setSubmitting] = useState(false);
-  const [clientSecret, setClientSecret] = useState("");
+export const SubscriptionForm = ({ planType, redirectHandler, email = undefined }: Props) => {
   const { setSubscriptionSuccess, setStopScroll } = useUIStore();
+
+  const [userEmail, setUserEmail] = useState(email)
+
 
   // When the subscription form is showing, we want to re-enable scrolling
   useEffect(() => {
     setStopScroll(false);
   }, []);
 
-  const appearance = {
+  const appearance: Appearance = {
     theme: "stripe",
   };
 
-  const options = {
-    clientSecret,
+  const options: StripeElementsOptionsMode = {
+    mode: 'subscription',
+    amount: planType === PlanType.Monthly ? 900 : 4800,
+    currency: 'usd',
     appearance,
   };
 
-  // Create the subscription with the users email and plan type
-  useEffect(() => {
-    // if we have an email
-    if (auth.currentUser && auth.currentUser.email) {
-      createSubscription({ email: auth.currentUser.email, term: planType })
-        .then((response) => {
-          setClientSecret(response.data.clientSecret);
-          setSubmitting(false);
-        })
-        .catch((error) => {
-          toast.error(
-            "There was an error creating your subscription, try again later."
-          );
-          setSubmitting(false);
-        });
-    } else {
-      // no email, do something else
-    }
-  }, []);
-
-  return clientSecret ? (
+  return (
     <div className="mx-4 bg-white rounded-lg border border-black p-4 mt-4">
       <div className="flex">
         <div className="w-1/2">
@@ -87,28 +68,38 @@ export const SubscriptionForm = ({ planType, redirectHandler }: Props) => {
           )}
         </div>
       </div>
-      {clientSecret ? (
-        <div className="mt-4">
-          <Elements options={options} stripe={stripePromise}>
-            <PaymentForm
-              redirectSuffix="/"
-              redirectHandler={() => {
-                if (redirectHandler) {
-                  redirectHandler();
-                } else {
-                  setTimeout(() => {
-                    setSubscriptionSuccess(true);
-                  }, 2000);
-                }
-              }}
-            />
-          </Elements>
-        </div>
-      ) : (
-        <Loading />
+      <div className="mt-4">
+      {!auth.currentUser && (
+        <>
+          <label className="block mb-2 text-zinc-700">Email</label>
+          <input
+            className="p-2 w-full border-solid border-[1px] border-neutral-200 rounded"
+            type="text"
+            value={userEmail}
+            placeholder="Enter email"
+            onChange={e => setUserEmail(e.target.value)}
+          />
+        </>
       )}
     </div>
-  ) : (
-    <Loading />
-  );
+      <div className="mt-4">
+      <Elements stripe={stripePromise} options={options}>
+          <SubscriptionPaymentForm
+            email={userEmail}
+            planType={planType}
+            redirectSuffix="/"
+            redirectHandler={() => {
+              if (redirectHandler) {
+                redirectHandler();
+              } else {
+                setTimeout(() => {
+                  setSubscriptionSuccess(true);
+                }, 2000);
+              }
+            }}
+          />
+        </Elements>
+      </div>
+    </div>
+    )
 };

@@ -151,6 +151,9 @@ export const getPrompts = (
 export const generateProfile = (
   profileRequest: ProfileRequest
 ): Promise<AxiosResponse<any>> => {
+  if (auth.currentUser && auth.currentUser.email) {
+    profileRequest.email = auth.currentUser.email
+  }
   return axios.post(`${BASE_URL}/profile`, profileRequest);
 };
 
@@ -317,3 +320,9 @@ export const createOrGetAuthUser = (uid: string, email: string) => {
   const body: any = { uid, email };
   return axios.post(`${BASE_URL}/user/createAuthUser`, body);
 };
+
+export const setUserSubscription = (email: string, subscriptionId: string) => {
+  const body = { email, subscription_id: subscriptionId };
+  return axios.post(`${BASE_URL}/set-subscription`, body);
+
+}
