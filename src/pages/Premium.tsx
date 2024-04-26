@@ -1,7 +1,6 @@
 import { CheckCircleIcon } from "@heroicons/react/24/outline";
 import { AIProfileConsulting } from "../components/premium/features/AIProfileConsulting";
 import { ExpertProfileIncluded } from "../components/premium/features/ExpertProfileIncluded";
-import { PremiumBrainpower } from "../components/premium/features/PremiumBrainpower";
 import { useEffect, useState } from "react";
 import { auth } from "../firebase";
 import { useAuthStore } from "../stores/auth";
@@ -20,8 +19,8 @@ export const Premium = () => {
     null
   );
   const [isLoading, setIsLoading] = useState(true);
-  const { setAuthModalIsOpen, isSubscribed } = useAuthStore();
-  const { subscriptionSuccess, setStopScroll, setHideBottomNav } = useUIStore();
+  const { authModalIsOpen, setAuthModalIsOpen, isSubscribed, shouldAuthenticateForSubscription, setShouldAuthenticateForSubscription, setShowAuthSubscriptionDisclaimer } = useAuthStore();
+  const { subscriptionSuccess, setSubscriptionSuccess, setStopScroll, setHideBottomNav } = useUIStore();
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -36,10 +35,17 @@ export const Premium = () => {
   useEffect(() => {
     if (subscriptionSuccess) {
       setTimeout(() => {
-        window.location.href = "/";
+        navigate("/")
       }, 2750);
     }
   }, [subscriptionSuccess]);
+
+  useEffect(() => {
+    if (!authModalIsOpen && !auth.currentUser && shouldAuthenticateForSubscription ) {
+      // authModal closed without loggin / signup in
+      navigate("/")
+    }
+  }, [shouldAuthenticateForSubscription, authModalIsOpen])
 
   return subscriptionSuccess ? (
     <div className="text-center mt-8">
@@ -126,9 +132,23 @@ export const Premium = () => {
                       </p>
                     </div>
                   </div>
-                  {auth.currentUser && planBeingPurchased ? (
+                  {/*auth.currentUser &&*/ planBeingPurchased ? (
                     <div className="" style={{ marginBottom: "4rem" }}>
-                      <SubscriptionForm planType={planBeingPurchased} />
+                      <SubscriptionForm 
+                        planType={planBeingPurchased} 
+                        email={auth.currentUser?.email ?? undefined}
+                        redirectHandler={() => {
+                          if (!auth.currentUser) {
+                            setShowAuthSubscriptionDisclaimer(true)
+                            setAuthModalIsOpen(true)
+                            setShouldAuthenticateForSubscription(true)
+                          } else {
+                            setTimeout(() => {
+                              setSubscriptionSuccess(true);
+                            }, 2000);
+                          }
+                        }}
+                      />
                     </div>
                   ) : (
                     <>
@@ -171,9 +191,9 @@ export const Premium = () => {
                                       product: 'chat_assistant',
                                     });
                                   // If the user isn't signed in, we need to sign them in or sign up
-                                  if (!auth.currentUser) {
-                                    setAuthModalIsOpen(true);
-                                  }
+                                  // if (!auth.currentUser) {
+                                  //   setAuthModalIsOpen(true);
+                                  // }
                                 }}
                               >
                                 <div className="bg-brand-secondary text-white py-1">
@@ -201,9 +221,9 @@ export const Premium = () => {
                                     product: 'chat_assistant',
                                   });
                                   // If the user isn't signed in, we need to sign them in or sign up
-                                  if (!auth.currentUser) {
-                                    setAuthModalIsOpen(true);
-                                  }
+                                  // if (!auth.currentUser) {
+                                  //   setAuthModalIsOpen(true);
+                                  // }
                                 }}
                               >
                                 <div className="bg-brand-primary text-white py-1">

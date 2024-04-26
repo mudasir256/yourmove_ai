@@ -19,6 +19,7 @@ export const Migration = () => {
     setEmailToMigrate,
     setHasCheckedForSubscription,
     setAuthModalIsOpen,
+    setShowAuthSubscriptionDisclaimer
   } = useAuthStore();
   const { setError } = useUIStore();
 
@@ -72,6 +73,7 @@ export const Migration = () => {
                 values.password
               );
               setAuthModalIsOpen(false);
+              setShowAuthSubscriptionDisclaimer(false);
               // Set hasCheckedForSubscription to false so we will check for subscription again
               setHasCheckedForSubscription(false);
               setSubmitting(false);

@@ -21,6 +21,7 @@ export const SignIn = () => {
     setSignInError,
     setHasCheckedForSubscription,
     setEmailToMigrate,
+    showAuthSubscriptionDisclaimer
   } = useAuthStore();
 
   return (
@@ -65,6 +66,13 @@ export const SignIn = () => {
               Sign up
             </button>
           </div>
+          {showAuthSubscriptionDisclaimer && 
+            (
+              <p className="text-brand-primary">
+                Please sign up / in to activate your subscription. Contact support@yourmove.ai in case of any issues.
+              </p>
+            )
+          }
         </>
       ) : (
         <Formik

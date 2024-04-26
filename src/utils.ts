@@ -53,12 +53,14 @@ export const removeEmoji = (text: string): string => {
 
 export const successfulSignIn = (email: string) => {
   useAuthStore.getState().setAuthModalIsOpen(false);
+  useAuthStore.getState().setShowAuthSubscriptionDisclaimer(false);
   toast.success(`Hey there ${email} 👋, welcome!`);
 };
 
 export const successfulSignUp = () => {
   toast.success("Successfully signed up, welcome!");
   useAuthStore.getState().setAuthModalIsOpen(false);
+  useAuthStore.getState().setShowAuthSubscriptionDisclaimer(false);
 };
 
 export const sleep = (time: number) => {

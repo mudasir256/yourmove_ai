@@ -7,6 +7,7 @@ import { generateProfileReview } from "../queries";
 import { useProfileStore } from "../stores/profile";
 import { Loading } from "../components/Loading";
 import { ReviewedProfile } from "../models/profile";
+import { auth } from "../firebase";
 import { Helmet } from 'react-helmet-async';
 
 
@@ -46,7 +47,7 @@ export const ProfileReviewer = () => {
     if (profileReviewerWizardComplete) {
       if (profileReviewerFiles && profileReviewerFiles.length > 0) {
         generateProfileReview(
-          profileReviewerStepResults.email,
+          auth.currentUser && auth.currentUser.email ? auth.currentUser.email : profileReviewerStepResults.email,
           profileReviewerFiles
         )
           .then((response) => {
