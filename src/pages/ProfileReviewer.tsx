@@ -7,12 +7,9 @@ import { generateProfileReview } from "../queries";
 import { useProfileStore } from "../stores/profile";
 import { Loading } from "../components/Loading";
 import { ReviewedProfile } from "../models/profile";
-<<<<<<< HEAD
 import { auth } from "../firebase";
-=======
 import { Helmet } from 'react-helmet-async';
 
->>>>>>> 0583ee04ecdae2d9120733b986f158e622f80995
 
 export const ProfileReviewer = () => {
   const {
