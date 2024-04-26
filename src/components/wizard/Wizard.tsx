@@ -139,7 +139,8 @@ export const Wizard = ({
         !wizardComplete &&
         !filesUploading && (
           <div
-            className="absolute right-0 mr-4 top-1/2 transform -translate-y-1/2"
+            className="absolute right-0 mr-4"
+            style={{ transform: `translateY(${nextButtonTranslateY})` }}
             onClick={() => goToNextStep()}
           >
             <div className="mt-auto bg-brand-primary w-12 h-12 flex items-center justify-center rounded-full">
