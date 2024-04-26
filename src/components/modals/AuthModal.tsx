@@ -15,6 +15,7 @@ export const AuthModal = () => {
     setShowOptions,
     setAuthActionType,
     emailToMigrate,
+    setShowAuthSubscriptionDisclaimer
   } = useAuthStore();
 
   useEffect(() => {
@@ -30,6 +31,7 @@ export const AuthModal = () => {
         open={authModalIsOpen}
         setOpen={setAuthModalIsOpen}
         backgroundColor="white"
+        onClose={() => setShowAuthSubscriptionDisclaimer(false)}
       >
         <div className="w-full">
           <div className="w-full flex justify-end">
@@ -41,6 +43,7 @@ export const AuthModal = () => {
               stroke="currentColor"
               onClick={() => {
                 setAuthModalIsOpen(false);
+                setShowAuthSubscriptionDisclaimer(false);
               }}
               className="w-6 h-6 text-zinc-400 cursor-pointer"
             >

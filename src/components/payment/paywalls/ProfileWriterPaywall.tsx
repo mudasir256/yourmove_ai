@@ -108,16 +108,15 @@ export const ProfileWriterPaywall = ({ hideNoThanks }: Props) => {
 
                   <button
                     type="button"
-                    // onClick={() => { setPlanBeingPurchased(PlanType.Monthly);}}
                     onClick={() => {
                       setPlanBeingPurchased(PlanType.Monthly);
                       if ((window as any).gtag) {
                         (window as any).gtag('event', 'writer_purchase_monthly', {event_category: 'funnel',product: 'profile_writer',
                         })}
                       // If the user isn't signed in, we need to sign them in or sign up
-                      if (!auth.currentUser) {
-                        setAuthModalIsOpen(true);
-                      }
+                      // if (!auth.currentUser) {
+                      //   setAuthModalIsOpen(true);
+                      // }
                     }}
                     className="mt-2 flex items-center justify-center w-full bg-brand-primary text-white py-3 rounded-full font-semibold -mb-1"
                   >

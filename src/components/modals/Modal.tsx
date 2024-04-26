@@ -7,11 +7,13 @@ interface Props {
   open: boolean;
   setOpen: (open: boolean) => void;
   backgroundColor?: string;
+  onClose?: VoidFunction
 }
 
-export const Modal = ({ children, open, setOpen, backgroundColor }: Props) => {
+export const Modal = ({ children, open, setOpen, backgroundColor, onClose }: Props) => {
   const modalRef = useRef(null);
   useOutsideAlerter(modalRef, () => {
+    onClose?.()
     setOpen(false);
   });
   return (
