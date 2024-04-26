@@ -7,7 +7,12 @@ import { generateProfileReview } from "../queries";
 import { useProfileStore } from "../stores/profile";
 import { Loading } from "../components/Loading";
 import { ReviewedProfile } from "../models/profile";
+<<<<<<< HEAD
 import { auth } from "../firebase";
+=======
+import { Helmet } from 'react-helmet-async';
+
+>>>>>>> 0583ee04ecdae2d9120733b986f158e622f80995
 
 export const ProfileReviewer = () => {
   const {
@@ -26,6 +31,19 @@ export const ProfileReviewer = () => {
     hasPaidForProfileReview,
     setHasPaidForProfileReview,
   } = useProfileStore();
+
+  const loadingTitles = [
+    "Analyzing your profile's first impressions...",
+    "Diving deep into your photos...",
+    "Evaluating photo quality and lighting...",
+    "Scouting for social proof in pictures...",
+    "Rearranging your photo lineup for maximum impact...",
+    "Reviewing your bio",
+    "Generating custom style suggestions…",
+    "Summarizing our findings…",
+    "Crafting your profile upgrade plan…",
+    "Preparing to unveil the potential of your profile…"
+  ];
 
   // On component load, send request
   useEffect(() => {
@@ -56,6 +74,9 @@ export const ProfileReviewer = () => {
 
   return (
     <div className="px-4">
+      <Helmet>
+        <meta name="description" content="Get an instant feedback for your dating profile. Trained by top matchmakers, powered by AI" />
+      </Helmet>
       <Wizard
         name="profileReviewer"
         steps={PROFILE_REVIEWER_WIZARD_STEPS}
@@ -72,9 +93,10 @@ export const ProfileReviewer = () => {
             hasPaid={hasPaidForProfileReview}
             setHasPaid={setHasPaidForProfileReview}
           />
-        ) : (
-          <Loading title="Reviewing your profile. Hold tight - reviews can take up to 2 minutes" />
-        )}
+        ) : (<>
+            <Loading titles={loadingTitles} updateInterval={3750}/>
+          </>          
+          )}
       </Wizard>
     </div>
   );

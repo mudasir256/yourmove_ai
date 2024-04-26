@@ -2,6 +2,7 @@ import { ReactNode } from "react";
 import * as yup from "yup";
 
 // Define the different step types (might not need this. we will)
+
 export enum WizardStepType {
   WELCOME = "welcome",
   GENDER = "gender",
@@ -17,9 +18,12 @@ export enum WizardStepType {
   EMAIL = "email",
   UPLOAD_PHOTO = "uploadPhoto",
   PAYWALL = "paywall",
+  GENDER_OTHER = "GENDER_OTHER",
+  SPACER = "SPACER"
 }
 
 // Wizard steps can either be text fields or selects
+
 export enum WizardStepInputType {
   // For steps that just show content
   CONTENT,
@@ -33,6 +37,8 @@ export enum WizardStepInputType {
   SELECT,
   // For file uploads
   FILE,
+  // For a spacer between steps
+  SPACER,
 }
 
 // The actual step type to define what is in it

@@ -1,3 +1,4 @@
+// profile.tsx
 import { ProfileResponse } from "../../models/profile";
 import { FeedbackModal } from "../modals/FeedbackModal";
 import { ProfileItem } from "./ProfileItem";
@@ -9,6 +10,8 @@ import { useWizardStore } from "../../stores/wizard";
 import { TextingAssistantModal } from "../modals/TextingAssistantModal";
 import { WizardStepType } from "../../models/wizard";
 import { AIPhotosModal } from "../ai-photos/AIPhotosModal";
+import { BlaineNudgeAlways } from "../nudges/BlaineNudge";
+
 
 export const Profile = () => {
   const { profile, setProfile, setPrompts } = useProfileStore();
@@ -21,6 +24,20 @@ export const Profile = () => {
   const [textingAssistantModalOpen, setTextingAssistantModalOpen] =
     useState(false);
   const profileHeadingRef = useRef(null);
+
+// Updated list of titles for the loading component
+  const loadingTitles = [
+    "Analyzing your responses…",
+    "Choosing the best prompts for you…",
+    "Optimizing for response rates…",
+    "Personalizing results…",
+    "Highlighting the best version of you…",
+    "Evaluating successful profiles for proven strategies…",
+    "Polishing your profile for maximum appeal…",
+    "Innovating with the latest trends in dating…",
+    "Preparing your profile for the spotlight…"
+  ];
+
 
   // Scroll to the "Your profile" heading after the component mounts or updates
   useEffect(() => {
@@ -135,13 +152,16 @@ export const Profile = () => {
               leave feedback
             </button>
           </div>
-          <div className="mt-8 mb-10">
+          <div className="mt-8 mb-2">
+            <BlaineNudgeAlways />
+          </div>
+          <div className="mt-2 mb-10">
             <AIPhotosModal />
           </div>
         </div>
       ) : (
-        <Loading title="writing your profile" />
-      )}
+        <Loading titles={loadingTitles} updateInterval={1500}/>
+        )}
     </>
   );
 };

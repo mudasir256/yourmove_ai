@@ -8,7 +8,7 @@ const IMAGES = [Image1, Image2, Image3];
 export const AIPhotosModal = () => {
   const navigate = useNavigate();
   return (
-    <div className="border-2 border-black rounded-lg relative overflow-hidden mx-2">
+    <div className="border-2 border-black rounded-lg relative overflow-hidden mx-2 bg-white">
       <div
         className="bg-brand-alt opacity-20 absolute z-50 rounded-full absolute -top-1/2 left-1/2 transform -translate-x-1/2"
         style={{ width: "160%", height: "110%" }}
@@ -17,8 +17,8 @@ export const AIPhotosModal = () => {
       </div>
       <div className="relative z-50">
         <div className="flex items-center justify-center">
-          <div className="bg-white rounded-xl mt-8 mb-5 px-3 py-2">
-            <h3 className="font-semibold text-brand-primary">
+          <div className="bg-white rounded-xl mt-4 mb-5 px-3 py-2">
+            <h3 className="text-brand-primary text-sm font-semibold">
               Complete your profile
             </h3>
           </div>
@@ -91,16 +91,16 @@ export const AIPhotosModal = () => {
                     className="text-2xl font-semibold"
                     style={{ color: "#BA1F33" }}
                   >
-                    AI Photo Generator
+                    AI-Enhanced Photos
                   </h1>
                 </div>
-                <p className="lg:text-xl text-brand-dark mt-2 lg:mx-14 text-center">
+                <p className="lg:text-l text-brand-dark mt-2 lg:mx-14 text-center">
                   Boost your right swipes by showing your charming side
                 </p>
               </div>
             </div>
           </div>
-          <div className="w-full flex items-center justify-center my-4 px-4">
+          <div className="w-full flex items-center justify-center my-4 px-6">
             {IMAGES.map((image) => {
               return <img alt="..." src={image} className="w-1/3 mx-1.5" />;
             })}
@@ -110,7 +110,7 @@ export const AIPhotosModal = () => {
               onClick={() => navigate("/ai-photo")}
               className="bg-brand-primary w-full py-3 text-white font-semibold rounded-lg"
             >
-              Learn More
+              Glow up my photos
             </button>
           </div>
         </div>

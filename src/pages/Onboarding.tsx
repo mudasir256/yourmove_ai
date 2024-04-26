@@ -5,6 +5,8 @@ import ProfileReview from "../assets/images/onboarding/profile-review.png";
 import ProfileWriter from "../assets/images/onboarding/profile-writer.png";
 import ChatAssistant from "../assets/images/onboarding/chat-assistant.png";
 import { useNavigate } from "react-router-dom";
+import { Helmet } from 'react-helmet-async';
+
 
 const OPTIONS = [
   {
@@ -35,6 +37,9 @@ export const Onboarding = () => {
 
   return (
     <div className="max-w-lg mx-auto mt-0">
+      <Helmet>
+            <meta name="description" content="What's your next move? Get more matches with online dating, or turn your existing matches into dates." />
+      </Helmet>
       <div>
         {/* <div className="flex items-center justify-center">
           <Logo />

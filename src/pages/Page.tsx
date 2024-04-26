@@ -11,7 +11,6 @@ const Page = (props: any) => {
 
   // For making the bottom nav responsive
   const [contentHeight, setContentHeight] = useState(window.innerHeight);
-
   const heightOfTopBar = 48; // Example height in pixels for the top bar
   const heightOfBottomBar = 16; // Example height in pixels for the bottom bar
 
