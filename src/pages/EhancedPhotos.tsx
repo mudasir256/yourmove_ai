@@ -12,7 +12,6 @@
 // import Image2 from "../assets/images/ai-2.png";
 // import Image3 from "../assets/images/ai-3.png";
 // import Image4 from "../assets/images/ai-4.png";
-// import blaine from "../assets/images/blaine_ad.png";
 
 
 // // import { ProductType } from "../../constants/payments";

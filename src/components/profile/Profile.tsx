@@ -152,9 +152,6 @@ export const Profile = () => {
               leave feedback
             </button>
           </div>
-          <div className="mt-8 mb-2">
-            <BlaineNudgeAlways />
-          </div>
           <div className="mt-2 mb-10">
             <AIPhotosModal />
           </div>
