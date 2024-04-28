@@ -10,7 +10,6 @@ import { GeneratingRepliesLoader } from "../components/chat/GeneratingRepliesLoa
 import { useState, useEffect } from "react";
 import { AIPhotosModal } from "../components/ai-photos/AIPhotosModal";
 import { Helmet } from 'react-helmet-async';
-import { BlaineNudge, BlaineNudgeAlways } from "../components/nudges/BlaineNudge";
 
 
 export const ChatAssistant = () => {
