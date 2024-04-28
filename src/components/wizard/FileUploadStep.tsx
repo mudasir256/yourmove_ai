@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { uploadFiles } from "../../queries";
 import { useWizardStore } from "../../stores/wizard";
 import toast from "react-hot-toast";
@@ -14,6 +14,16 @@ export const FileUploadStep = ({ alreadySetFiles, onFilesUploaded }: Props) => {
   const { filesUploading, setFilesUploading } = useWizardStore();
   const [selectedFiles, setSelectedFiles] = useState<FileList | null>(null);
   const [inputKey, setInputKey] = useState(Date.now()); // Used to reset the file input
+
+  useEffect(() => {
+    // Check if the gtag function is available in the window object
+    if ((window as any).gtag) {
+      (window as any).gtag("event", "review_upload", {
+        event_category: "funnel",
+        product: "review",
+      });
+    }
+  }, []); // Empty dependency array to ensure this runs only once when the component mounts
 
 
   const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -58,6 +68,11 @@ export const FileUploadStep = ({ alreadySetFiles, onFilesUploaded }: Props) => {
         onFilesUploaded(response.data.urls);
         // set that we are no longer uploading
         setFilesUploading(false);
+        // After upload check the number of files uploaded and show toast if needed
+        if (response.data.urls.length === 1) {
+          toast.error("Upload more screenshots showing your entire profile for best results");
+          // toast("Consider uploading more photos to better showcase your profile.");
+        }
       });
     }
   };

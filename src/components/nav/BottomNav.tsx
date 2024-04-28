@@ -35,7 +35,7 @@ const NAV_ITEMS = [
     ),
   },
   {
-    title: "AI Photos",
+    title: "Photos",
     link: "/ai-photo",
     // plsfix - this is a placeholder icon. needs to change dynamically if selected. can be found in figma.
     icon: (
