@@ -1,4 +1,4 @@
-import toast, { Toaster } from "react-hot-toast";
+import toast from "react-hot-toast";
 import { QueryClient, QueryClientProvider } from "react-query";
 import * as Sentry from "@sentry/react";
 import {
@@ -6,26 +6,21 @@ import {
   Route,
   Routes,
   useLocation,
-  useNavigate,
 } from "react-router-dom";
 import { ProfileWriter } from "./pages/ProfileWriter";
 import { AIPhotos } from "./pages/AIPhotos";
 import { ChatAssistant } from "./pages/ChatAssistant";
 import { ProfileReviewer } from "./pages/ProfileReviewer";
-import { SideNav } from "./components/nav/SideNav";
-import { AuthModal } from "./components/modals/AuthModal";
 import { Premium } from "./pages/Premium";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { auth } from "./firebase";
 import { checkIfUserSubscribed, createOrGetAuthUser, setUserSubscription } from "./queries";
 import { useAuthStore } from "./stores/auth";
-import { BottomNav } from "./components/nav/BottomNav";
 import { useUIStore } from "./stores/ui";
-import { Error } from "./components/Error";
 import Page from "./pages/Page";
 import { Onboarding } from "./pages/Onboarding";
-import { set } from "date-fns";
 import { User, signOut } from "firebase/auth";
+import { AuthState } from "./constants/auth";
 
 /* 
 
@@ -73,6 +68,7 @@ function App() {
     setSubscriptionId,
     shouldAuthenticateForSubscription,
     setShouldAuthenticateForSubscription,
+    setAuthState
   } = useAuthStore();
   const {
     setStopScroll,
@@ -153,8 +149,10 @@ function App() {
       // we can also set hasCheckedForSubscription to false when we buy a subscription
       if (user) {
         createUserAndCheckSubscription(user);
+        setAuthState(AuthState.Authenticated)
       } else {
         setIsSubscribed(false);
+        setAuthState(AuthState.NotAuthenticated)
       }
     });
 

@@ -10,12 +10,12 @@ export const AIPhotosModal = () => {
   return (
     <div className="border-2 border-black rounded-lg relative overflow-hidden mx-2 bg-white">
       <div
-        className="bg-brand-alt opacity-20 absolute z-50 rounded-full absolute -top-1/2 left-1/2 transform -translate-x-1/2"
+        className="bg-brand-alt opacity-20 absolute rounded-full absolute -top-1/2 left-1/2 transform -translate-x-1/2"
         style={{ width: "160%", height: "110%" }}
       >
         d &nbsp;
       </div>
-      <div className="relative z-50">
+      <div className="relative">
         <div className="flex items-center justify-center">
           <div className="bg-white rounded-xl mt-4 mb-5 px-3 py-2">
             <h3 className="text-brand-primary text-sm font-semibold">

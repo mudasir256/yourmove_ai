@@ -1,5 +1,5 @@
 import { create } from "zustand";
-import { AuthActionType } from "../constants/auth";
+import { AuthActionType, AuthState } from "../constants/auth";
 import { PaymentIntent } from "@stripe/stripe-js";
 
 interface AuthStore {
@@ -36,6 +36,9 @@ interface AuthStore {
 
   showAuthSubscriptionDisclaimer: boolean;
   setShowAuthSubscriptionDisclaimer: (showAuthSubscriptionDisclaimer: boolean) => void;
+
+  authState: AuthState;
+  setAuthState: (authState: AuthState) => void
 }
 
 export const useAuthStore = create<AuthStore>((set) => ({
@@ -59,8 +62,10 @@ export const useAuthStore = create<AuthStore>((set) => ({
   subscriptionId: "",
   setSubscriptionId: (subscriptionId: string) => set({ subscriptionId }),
   shouldAuthenticateForSubscription: false,
-  setShouldAuthenticateForSubscription: (shouldAuthenticateForSubscription) => 
+  setShouldAuthenticateForSubscription: (shouldAuthenticateForSubscription) =>
     set({ shouldAuthenticateForSubscription }),
   showAuthSubscriptionDisclaimer: false,
-  setShowAuthSubscriptionDisclaimer: (showAuthSubscriptionDisclaimer) => set({showAuthSubscriptionDisclaimer})
+  setShowAuthSubscriptionDisclaimer: (showAuthSubscriptionDisclaimer) => set({ showAuthSubscriptionDisclaimer }),
+  authState: AuthState.Authenticating,
+  setAuthState: (authState: AuthState) => set({ authState })
 }));

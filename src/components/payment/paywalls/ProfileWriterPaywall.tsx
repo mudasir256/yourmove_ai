@@ -24,9 +24,13 @@ export const ProfileWriterPaywall = ({ hideNoThanks }: Props) => {
   const [learnMoreModalOpen, setLearnMoreModalOpen] = useState(false);
   const { setAuthModalIsOpen } = useAuthStore();
 
-  useEffect(() => {if ((window as any).gtag) {
-    (window as any).gtag('event', 'writer_paywall', {event_category: 'funnel',product: 'profile_writer',
-    });}}, []);
+  useEffect(() => {
+    if ((window as any).gtag) {
+      (window as any).gtag('event', 'writer_paywall', {
+        event_category: 'funnel', product: 'profile_writer',
+      });
+    }
+  }, []);
 
   return (
     <>
@@ -111,8 +115,10 @@ export const ProfileWriterPaywall = ({ hideNoThanks }: Props) => {
                     onClick={() => {
                       setPlanBeingPurchased(PlanType.Monthly);
                       if ((window as any).gtag) {
-                        (window as any).gtag('event', 'writer_purchase_monthly', {event_category: 'funnel',product: 'profile_writer',
-                        })}
+                        (window as any).gtag('event', 'writer_purchase_monthly', {
+                          event_category: 'funnel', product: 'profile_writer',
+                        })
+                      }
                       // If the user isn't signed in, we need to sign them in or sign up
                       // if (!auth.currentUser) {
                       //   setAuthModalIsOpen(true);
@@ -176,8 +182,8 @@ export const ProfileWriterPaywall = ({ hideNoThanks }: Props) => {
                     type="button"
                     onClick={() => {
                       setChosenProduct(ProductType.ProfileWriter)
-                      if ((window as any).gtag) {(window as any).gtag('event', 'writer_purchase_oneoff', {event_category: 'funnel',product: 'profile_writer',})}
-                      }
+                      if ((window as any).gtag) { (window as any).gtag('event', 'writer_purchase_oneoff', { event_category: 'funnel', product: 'profile_writer', }) }
+                    }
                     }
                     className="mt-4 flex items-center justify-center w-full bg-black text-white py-3 rounded-full font-semibold -mb-1"
                   >
@@ -190,8 +196,7 @@ export const ProfileWriterPaywall = ({ hideNoThanks }: Props) => {
                   <h3
                     className="cursor-pointer text-lg text-zinc-500 hover:text-zinc-600 hover:underline"
                     onClick={() => {
-                      if ((window as any).gtag) {(window as any).gtag('event', 'no_thanks', {event_category: 'funnel',product: 'profile_writer',})}
-                      console.log("test - 123");
+                      if ((window as any).gtag) { (window as any).gtag('event', 'no_thanks', { event_category: 'funnel', product: 'profile_writer', }) }
                       window.scrollTo(0, 0);
                       setProfileWriterWizardComplete(true);
                     }}

@@ -209,9 +209,8 @@ export const PaymentPlans = ({ noThanksHandler, stepResults }: Props) => {
                   className="cursor-pointer text-lg text-zinc-500 hover:text-zinc-600 hover:underline"
                   onClick={() => {
                     noThanksHandler()
-                    console.log("Test - 1");
                   }
-                }
+                  }
                 >
                   no thanks
                 </h3>

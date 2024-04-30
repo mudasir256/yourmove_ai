@@ -69,19 +69,19 @@ export const SubscriptionForm = ({ planType, redirectHandler, email = undefined 
         </div>
       </div>
       <div className="mt-4">
-      {!auth.currentUser && (
-        <>
-          <label className="block mb-2 text-zinc-700">Email</label>
-          <input
-            className="p-2 w-full border-solid border-[1px] border-neutral-200 rounded"
-            type="text"
-            value={userEmail}
-            placeholder="Enter email"
-            onChange={e => setUserEmail(e.target.value)}
-          />
-        </>
-      )}
-    </div>
+        {!auth.currentUser && (
+          <>
+            <label className="block mb-2 text-zinc-700">Email</label>
+            <input
+              className="p-2 w-full border-solid border-[1px] border-neutral-200 rounded"
+              type="text"
+              value={userEmail}
+              placeholder="Enter email"
+              onChange={e => setUserEmail(e.target.value)}
+            />
+          </>
+        )}
+      </div>
       <div className="mt-4">
       <Elements stripe={stripePromise} options={options}>
           <SubscriptionPaymentForm

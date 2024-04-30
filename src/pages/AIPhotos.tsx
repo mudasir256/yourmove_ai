@@ -1,11 +1,4 @@
-// import { useEffect, useState } from "react";
-// import { Logo } from "../components/Logo";
-// import { Product } from "../components/onboarding/Product";
-// import ProfileReview from "../assets/images/onboarding/profile-review.png";
-// import ProfileWriter from "../assets/images/onboarding/profile-writer.png";
-// import ChatAssistant from "../assets/images/onboarding/chat-assistant.png";
-// import { useNavigate } from "react-router-dom";
-import { useRef, useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 
 import Slider from "react-slick";
 import Image1 from "../assets/images/ai-1.png";
@@ -13,16 +6,18 @@ import Image2 from "../assets/images/ai-2.png";
 import Image3 from "../assets/images/ai-3.png";
 import Image4 from "../assets/images/ai-4.png";
 import { useAuthStore } from "../stores/auth";
-import { Loading } from "../components/Loading";
 import { Helmet } from 'react-helmet-async';
-import blaine from "../assets/images/blaine_ad.png";
+import { UnlockAIPhotosModal } from "./../components/modals/UnlockAIPhotosModal"
+import { ProductType } from "../constants/payments";
+import { auth } from "../firebase";
+import { hasUserPaid } from "../queries";
+import toast from "react-hot-toast";
 
-
-
-// import { ProductType } from "../../constants/payments";
+const AI_PHOTOS_URL = import.meta.env.VITE_AI_PHOTOS_URL
 
 export const AIPhotos = () => {
-  const { isSubscribed } = useAuthStore();
+  const { isSubscribed, authState } = useAuthStore();
+  const [aiPhotosModalShown, setAIPhotosModalShow] = useState(false)
   const images = [Image1, Image2, Image3, Image4];
   var settings = {
     dots: true,
@@ -33,6 +28,29 @@ export const AIPhotos = () => {
     slidesToScroll: 1,
   };
 
+  const [showLink, setShowLink] = useState(false)
+
+  useEffect(() => {
+    if (auth.currentUser?.email) {
+      console.log("YESSS::")
+      const products = [ProductType.AIPhotos]
+      // Check if the user has paid for AI Photos
+      hasUserPaid(auth.currentUser?.email, products).then((response) => {
+        // if any products bought by the user are in the requiredProductsToSkipPaywall
+        if (
+          response.data.purchasedProducts.some((product: ProductType) =>
+            products.includes(product)
+          )
+        ) {
+          setShowLink(true)
+        }
+      });
+    } else {
+      setShowLink(false)
+      console.log("NOOO::")
+    }
+  }, [authState])
+
   useEffect(() => {
     if ((window as any).gtag) {
       (window as any).gtag("event", "photos_start", {
@@ -42,13 +60,10 @@ export const AIPhotos = () => {
     }
   }, []);
 
-  const FULL_PRICE_LINK = "https://buy.stripe.com/3cscNJdlUfGV6vmeVe";
-  const DISCOUNTED_PRICE_LINK = "https://buy.stripe.com/5kAaFBepY7apbPG6oO";
-
   return (
     <div className="-mt-8 max-w-lg mx-auto mt-6">
       <Helmet>
-            <meta name="description" content="AI Enhanced Photos. Double your swipes with more charming you" />
+        <meta name="description" content="AI Enhanced Photos. Double your swipes with more charming you" />
       </Helmet>
       <div className="w-full mt-2">
         {/* <div className="flex items-center justify-center mt-3">
@@ -112,48 +127,45 @@ export const AIPhotos = () => {
           </ul>
         </div>
         <div className="mt-8 mb-4 mx-4">
-          {isSubscribed === null ? (
-            <div className="flex items-center justify-center">
-              <svg
-                className="animate-spin h-10 w-10 text-black"
-                xmlns="http://www.w3.org/2000/svg"
-                fill="none"
-                viewBox="0 0 24 24"
+          {!showLink ? (
+            isSubscribed === null ? (
+              <div className="flex items-center justify-center">
+                <svg
+                  className="animate-spin h-10 w-10 text-black"
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                >
+                  <circle
+                    className="opacity-25"
+                    cx="12"
+                    cy="12"
+                    r="10"
+                    stroke="currentColor"
+                    strokeWidth="4"
+                  ></circle>
+                  <path
+                    className="opacity-75"
+                    fill="currentColor"
+                    d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
+                  ></path>
+                </svg>
+              </div>
+            ) : (
+              <button
+                type="button"
+                onClick={() => {
+                  setAIPhotosModalShow(true);
+                  if (window.gtag) {
+                    window.gtag("event", "photos_unlock", {
+                      event_category: "funnel",
+                      product: "photos",
+                    });
+                  }
+                }}
+                className="mt-2 flex items-center justify-center w-full bg-brand-primary text-white py-3 rounded-full font-semibold"
               >
-                <circle
-                  className="opacity-25"
-                  cx="12"
-                  cy="12"
-                  r="10"
-                  stroke="currentColor"
-                  stroke-width="4"
-                ></circle>
-                <path
-                  className="opacity-75"
-                  fill="currentColor"
-                  d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
-                ></path>
-              </svg>
-            </div>
-          ) : (
-            <button
-              type="button"
-              onClick={() => {
-                window.open(
-                  isSubscribed ? DISCOUNTED_PRICE_LINK : FULL_PRICE_LINK,
-                  "_blank"
-                );
-                if ((window as any).gtag) {
-                  (window as any).gtag("event", "photos_unlock", {
-                    event_category: "funnel",
-                    product: "photos",
-                  });
-                }
-              }}
-              className="mt-2 flex items-center justify-center w-full bg-brand-primary text-white py-3 rounded-full font-semibold"
-            >
-              Enhance my photos -
-              <>
+                Enhance my photos -
                 {isSubscribed === null ? (
                   <svg
                     className="animate-spin ml-2 mr-2 h-5 w-5 text-white"
@@ -167,7 +179,7 @@ export const AIPhotos = () => {
                       cy="12"
                       r="10"
                       stroke="currentColor"
-                      stroke-width="4"
+                      strokeWidth="4"
                     ></circle>
                     <path
                       className="opacity-75"
@@ -177,7 +189,6 @@ export const AIPhotos = () => {
                   </svg>
                 ) : (
                   <>
-                    {" "}
                     {isSubscribed ? (
                       <>
                         <span className="line-through ml-1">$34</span>
@@ -188,12 +199,30 @@ export const AIPhotos = () => {
                     )}
                   </>
                 )}
-              </>
+              </button>
+            )
+          ) : (
+            <button
+              type="button"
+              onClick={() => {
+                window.open(AI_PHOTOS_URL, "_blank", "noopener,noreferrer");
+              }}
+              className="mt-2 flex items-center justify-center w-full bg-brand-primary text-white py-3 rounded-full font-semibold"
+            >
+              Open AI Photos
             </button>
           )}
-
         </div>
       </div>
+      <UnlockAIPhotosModal
+        open={aiPhotosModalShown}
+        setOpen={setAIPhotosModalShow}
+        redirectHandler={async () => {
+          setAIPhotosModalShow(false);
+          window.open(AI_PHOTOS_URL, "_blank", "noopener,noreferrer");
+          toast.success("You have successfully unlocked AI Photos!");
+          setShowLink(true)
+        }} />
     </div>
   );
 };

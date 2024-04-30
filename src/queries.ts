@@ -324,5 +324,11 @@ export const createOrGetAuthUser = (uid: string, email: string) => {
 export const setUserSubscription = (email: string, subscriptionId: string) => {
   const body = { email, subscription_id: subscriptionId };
   return axios.post(`${BASE_URL}/set-subscription`, body);
+}
 
+export const paymentIntentForAIPhotos = (email: string) => {
+  const body = {
+    email
+  }
+  return axios.post(`${BASE_URL}/payment-intent-ai-photos`, body);
 }
