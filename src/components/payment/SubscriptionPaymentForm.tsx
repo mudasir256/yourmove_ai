@@ -12,7 +12,6 @@ import { createSubscription } from "../../queries";
 import { PlanType } from "../../constants/payments";
 import { useAuthStore } from "../../stores/auth";
 import { auth } from "../../firebase";
-import { AuthActionType } from "../../constants/auth";
 
 interface Props {
   redirectSuffix: string;
@@ -29,6 +28,7 @@ export default function SubscriptionPaymentForm({
   email,
   planType
 }: Props) {
+  const { abTestGroup } = useUIStore()
   const stripe = useStripe();
   const elements = useElements();
   const [message, setMessage] = useState<string | null>(null);
@@ -45,7 +45,7 @@ export default function SubscriptionPaymentForm({
     return check
   }
 
-  const handleSubmit = async (e) => {    
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
     if (!stripe || !elements) {
@@ -63,22 +63,22 @@ export default function SubscriptionPaymentForm({
     setPaymentIsLoading(true);
 
     // Trigger form validation and wallet collection
-    const {error: submitError} = await elements.submit();
+    const { error: submitError } = await elements.submit();
     if (submitError) {
       setMessage(`${submitError.message ? submitError.message : "An unknown error occurred!"}`)
       setPaymentIsLoading(false);
       return;
     }
 
-    const subscriptionResponse = await createSubscription({ email, term: planType })
-    const {data: {clientSecret = undefined, subscriptionId = undefined} = {}} = subscriptionResponse || {}
+    const subscriptionResponse = await createSubscription({ email, term: planType, group: abTestGroup })
+    const { data: { clientSecret = undefined, subscriptionId = undefined } = {} } = subscriptionResponse || {}
 
     if (!clientSecret) {
       setPaymentIsLoading(false);
       return
     }
 
-    const {error, paymentIntent} = await stripe.confirmPayment({
+    const { error, paymentIntent } = await stripe.confirmPayment({
       elements,
       clientSecret,
       confirmParams: {
@@ -95,7 +95,7 @@ export default function SubscriptionPaymentForm({
         setSubscriptionEmail(email)
         setSubscriptionId(subscriptionId)
       }
-      
+
       if (redirectHandler) {
         redirectHandler();
       }
@@ -117,7 +117,7 @@ export default function SubscriptionPaymentForm({
   const paymentElementOptions: StripePaymentElementOptions = {
     layout: "tabs",
   };
- 
+
   return (
     <div id="payment-form" className="max-h-90">
       <PaymentElement id="payment-element" options={paymentElementOptions} />

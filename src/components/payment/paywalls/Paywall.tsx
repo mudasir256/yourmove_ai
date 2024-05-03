@@ -17,7 +17,7 @@ import { auth } from "../../../firebase";
 import { sleep } from "../../../utils";
 import { useUIStore } from "../../../stores/ui";
 import toast from "react-hot-toast";
-import { AuthActionType } from "../../../constants/auth";
+
 
 interface Props {
   children: any;
@@ -48,7 +48,7 @@ export const Paywall = ({
   const { setAuthModalIsOpen, setShouldAuthenticateForSubscription, shouldAuthenticateForSubscription, authModalIsOpen, setShowAuthSubscriptionDisclaimer } = useAuthStore();
 
   useEffect(() => {
-    if (!authModalIsOpen && !auth.currentUser && shouldAuthenticateForSubscription ) {
+    if (!authModalIsOpen && !auth.currentUser && shouldAuthenticateForSubscription) {
       // authModal closed without login / signup in
       noThanksHandler();
       setPaymentIsLoading(false);
@@ -61,10 +61,10 @@ export const Paywall = ({
       noThanksHandler();
     } else if (isSubscribed === false) {
       // check that the user has bought this product by calling the API.
-    // we send a list of products that if one is bought, we can skip the paywall
-    // it returns a list of products bought by that user
+      // we send a list of products that if one is bought, we can skip the paywall
+      // it returns a list of products bought by that user
 
-    // Only check if the user has paid if they aren't subscribed
+      // Only check if the user has paid if they aren't subscribed
       hasUserPaid(email, requiredProductsToSkipPaywall).then((response) => {
         // if any products bought by the user are in the requiredProductsToSkipPaywall
         if (
@@ -147,7 +147,7 @@ export const Paywall = ({
                 planType={planBeingPurchased}
                 email={auth.currentUser?.email ?? email}
                 redirectHandler={async () => {
-                  
+
                   if (auth.currentUser) {
                     let iterations = 0;
                     const idTokenResult =

@@ -7,6 +7,7 @@ import { useWizardStore } from "../../../stores/wizard";
 import { PlanType } from "../../../constants/payments";
 import { auth } from "../../../firebase";
 import { useAuthStore } from "../../../stores/auth";
+import { useUIStore } from "../../../stores/ui";
 
 // import { auth } from "/firebase";
 
@@ -17,6 +18,7 @@ interface Props {
 export const ProfileWriterPaywall = ({ hideNoThanks }: Props) => {
   const { profileWriterStepResults, setProfileWriterWizardComplete } =
     useWizardStore();
+  const { abTestGroup } = useUIStore()
   const [chosenProduct, setChosenProduct] = useState<ProductType | null>(null);
   const [planBeingPurchased, setPlanBeingPurchased] = useState<PlanType | null>(
     null
@@ -65,7 +67,7 @@ export const ProfileWriterPaywall = ({ hideNoThanks }: Props) => {
                     </div>
                     <div className="flex mt-2 mb-3 items-center">
                       <div>
-                        <h1 className="text-4xl font-semibold">$9</h1>
+                        <h1 className="text-4xl font-semibold">{abTestGroup ? '$12' : '$9'}</h1>
                       </div>
                       <div className="pl-3">
                         <h1 className="text-zinc-500 leading-4">

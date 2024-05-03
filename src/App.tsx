@@ -21,7 +21,7 @@ import Page from "./pages/Page";
 import { Onboarding } from "./pages/Onboarding";
 import { User, signOut } from "firebase/auth";
 import { AuthState } from "./constants/auth";
-
+import { useABTest } from './components/ab-testing/useABTest'
 /* 
 
 Everything is pretty much ready to rock and roll. The only outstanding pieces are:
@@ -76,7 +76,9 @@ function App() {
     setHideTopBar,
     setSubscriptionSuccess
   } = useUIStore();
+
   const location = useLocation();
+  useABTest()
 
   // For hiding the bottom and side nav
   const hiddenBottomNavPages = ["/premium", "/start"];

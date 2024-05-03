@@ -332,3 +332,6 @@ export const paymentIntentForAIPhotos = (email: string) => {
   }
   return axios.post(`${BASE_URL}/payment-intent-ai-photos`, body);
 }
+
+export const fetchIP = async () =>
+  axios.get(`${BASE_URL}/ip`);
