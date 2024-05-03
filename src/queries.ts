@@ -134,11 +134,13 @@ axios.interceptors.response.use(
 
 export const getClientSecret = (
   email: string,
-  product: string
+  product: string,
+  group: number = 0
 ): Promise<AxiosResponse<ClientSecretResponse>> => {
   return axios.post(`${BASE_URL}/client-secret`, {
     email,
     product,
+    group
   });
 };
 

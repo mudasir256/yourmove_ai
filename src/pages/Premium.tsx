@@ -203,7 +203,7 @@ export const Premium = () => {
                                 </div>
                                 <div className="py-1.5">
                                   <h3 className="text-lg flex items-center justify-center">
-                                    {abTestGroup ? '$12.00' : '$9.00'}
+                                    {abTestGroup ? '$12' : '$9'}
                                     <span className="text-lg font-semithin pl-1 mt-0.5">
                                       / month
                                     </span>

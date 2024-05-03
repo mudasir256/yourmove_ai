@@ -25,19 +25,14 @@ export const useABTest = () => {
   }, []);
 
   useEffect(() => {
-    console.log("MY IP ADDRESS IS:: ", ip)
     // Check if group is already stored in localStorage
-    const storedGroup = 1 //parseInt(localStorage.getItem('ABTestGroup') || '0', 10);
+    const storedGroup = parseInt(localStorage.getItem('ABTestGroup') || '0', 10);
 
     if (storedGroup !== null && !isNaN(storedGroup)) {
-      console.log("RESTORING GROUP::")
       // If group is present, set it in state
       setABTestGroup(storedGroup);
-      console.log("MY A/B TESTING GROUP IS:: ", storedGroup)
     } else {
-      console.log("ASSIGNING GROUP::")
       const hash = generateHash(ip);
-      console.log("IP HASH:: ", hash)
       const group = determineGroup(hash);
       localStorage.setItem('ABTestGroup', group.toString());
 
@@ -47,7 +42,6 @@ export const useABTest = () => {
           event_category: 'funnel', product: 'ab_test',
         })
       }
-      console.log("MY A/B TESTING GROUP IS:: ", group)
     }
   }, [ip]);
 };

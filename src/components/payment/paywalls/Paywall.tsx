@@ -44,7 +44,7 @@ export const Paywall = ({
   const [showPlans, setShowPlans] = useState(false);
   const [price, setPrice] = useState<string | null>(null);
   const { isSubscribed, setIsSubscribed } = useAuthStore();
-  const { setPaymentIsLoading } = useUIStore();
+  const { setPaymentIsLoading, abTestGroup } = useUIStore();
   const { setAuthModalIsOpen, setShouldAuthenticateForSubscription, shouldAuthenticateForSubscription, authModalIsOpen, setShowAuthSubscriptionDisclaimer } = useAuthStore();
 
   useEffect(() => {
@@ -85,7 +85,7 @@ export const Paywall = ({
   // Get the client secret from the server when the component loads
   useEffect(() => {
     if (chosenProduct) {
-      getClientSecret(email, chosenProduct).then((response) => {
+      getClientSecret(email, chosenProduct, abTestGroup).then((response) => {
         const clientSecretResponse = response.data as ClientSecretResponse;
         setClientSecret(clientSecretResponse.clientSecret);
         // Divide by 100 as the price is in cents (because of Stripe)
