@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import { auth } from "../../firebase";
 import SubscriptionPaymentForm from "../payment/SubscriptionPaymentForm";
 import { Elements } from "@stripe/react-stripe-js";
-import { Appearance,  StripeElementsOptionsMode, loadStripe } from "@stripe/stripe-js";
+import { Appearance, StripeElementsOptionsMode, loadStripe } from "@stripe/stripe-js";
 import { useUIStore } from "../../stores/ui";
 
 interface Props {
@@ -15,7 +15,7 @@ interface Props {
 const stripePromise = loadStripe(import.meta.env.VITE_STRIPE_PUBLISHABLE_KEY);
 
 export const SubscriptionForm = ({ planType, redirectHandler, email = undefined }: Props) => {
-  const { setSubscriptionSuccess, setStopScroll } = useUIStore();
+  const { setSubscriptionSuccess, setStopScroll, abTestGroup } = useUIStore();
 
   const [userEmail, setUserEmail] = useState(email)
 
@@ -31,7 +31,7 @@ export const SubscriptionForm = ({ planType, redirectHandler, email = undefined 
 
   const options: StripeElementsOptionsMode = {
     mode: 'subscription',
-    amount: planType === PlanType.Monthly ? 900 : 4800,
+    amount: planType === PlanType.Monthly ? (abTestGroup ? 1200 : 900) : (abTestGroup ? 7200 : 4800),
     currency: 'usd',
     appearance,
   };
@@ -59,13 +59,24 @@ export const SubscriptionForm = ({ planType, redirectHandler, email = undefined 
           </svg>
         </div>
         <div className="w-1/2 flex justify-end items-center text-right">
-          {planType === PlanType.Monthly && <>$9.00 per month</>}
-          {planType === PlanType.Yearly && (
-            <div className="my-auto">
-              <span className="mr-1">$4.00 per month</span>
-              <small>(Billed at $48.00 per year)</small>
-            </div>
-          )}
+          {planType === PlanType.Monthly ?
+            (abTestGroup ?
+              <>$12.00 per month</> :
+              <>$9.00 per month</>
+            ) :
+            (planType === PlanType.Yearly ?
+              (abTestGroup ?
+                <div className="my-auto">
+                  <span className="mr-1">$6.00 per month</span>
+                  <small>(Billed at $72.00 per year)</small>
+                </div> :
+                <div className="my-auto">
+                  <span className="mr-1">$4.00 per month</span>
+                  <small>(Billed at $48.00 per year)</small>
+                </div>
+              ) : null
+            )
+          }
         </div>
       </div>
       <div className="mt-4">
@@ -83,7 +94,7 @@ export const SubscriptionForm = ({ planType, redirectHandler, email = undefined 
         )}
       </div>
       <div className="mt-4">
-      <Elements stripe={stripePromise} options={options}>
+        <Elements stripe={stripePromise} options={options}>
           <SubscriptionPaymentForm
             email={userEmail}
             planType={planType}
@@ -101,5 +112,5 @@ export const SubscriptionForm = ({ planType, redirectHandler, email = undefined 
         </Elements>
       </div>
     </div>
-    )
+  )
 };

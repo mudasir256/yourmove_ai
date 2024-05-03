@@ -25,6 +25,10 @@ interface UIStore {
 
   paymentIsLoading: boolean;
   setPaymentIsLoading: (paymentIsLoading: boolean) => void;
+
+  //for A/B Testing
+  abTestGroup: number | undefined
+  setABTestGroup: (abTestGroup: number) => void
 }
 
 export const useUIStore = create<UIStore>((set) => ({
@@ -45,4 +49,6 @@ export const useUIStore = create<UIStore>((set) => ({
     set({ hasCheckedForOnboarding }),
   paymentIsLoading: false,
   setPaymentIsLoading: (paymentIsLoading) => set({ paymentIsLoading }),
+  abTestGroup: undefined,
+  setABTestGroup: (abTestGroup: number) => set({ abTestGroup })
 }));

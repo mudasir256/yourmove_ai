@@ -7,6 +7,7 @@ import { useWizardStore } from "../../../stores/wizard";
 import { PlanType } from "../../../constants/payments";
 import { auth } from "../../../firebase";
 import { useAuthStore } from "../../../stores/auth";
+import { useUIStore } from "../../../stores/ui";
 
 // import { auth } from "/firebase";
 
@@ -17,12 +18,12 @@ interface Props {
 export const ProfileWriterPaywall = ({ hideNoThanks }: Props) => {
   const { profileWriterStepResults, setProfileWriterWizardComplete } =
     useWizardStore();
+  const { abTestGroup } = useUIStore()
   const [chosenProduct, setChosenProduct] = useState<ProductType | null>(null);
   const [planBeingPurchased, setPlanBeingPurchased] = useState<PlanType | null>(
     null
   );
   const [learnMoreModalOpen, setLearnMoreModalOpen] = useState(false);
-  const { setAuthModalIsOpen } = useAuthStore();
 
   useEffect(() => {
     if ((window as any).gtag) {
@@ -31,6 +32,14 @@ export const ProfileWriterPaywall = ({ hideNoThanks }: Props) => {
       });
     }
   }, []);
+
+  useEffect(() => {
+    if ((window as any).gtag) {
+      (window as any).gtag('event', abTestGroup === 0 ? 'experiment_writer_paywall_A' : 'experiment_writer_paywall_B', {
+        event_category: 'funnel', product: 'profile_writer',
+      })
+    }
+  }, [abTestGroup])
 
   return (
     <>
@@ -65,7 +74,7 @@ export const ProfileWriterPaywall = ({ hideNoThanks }: Props) => {
                     </div>
                     <div className="flex mt-2 mb-3 items-center">
                       <div>
-                        <h1 className="text-4xl font-semibold">$9</h1>
+                        <h1 className="text-4xl font-semibold">{abTestGroup ? '$12' : '$9'}</h1>
                       </div>
                       <div className="pl-3">
                         <h1 className="text-zinc-500 leading-4">
@@ -118,6 +127,9 @@ export const ProfileWriterPaywall = ({ hideNoThanks }: Props) => {
                         (window as any).gtag('event', 'writer_purchase_monthly', {
                           event_category: 'funnel', product: 'profile_writer',
                         })
+                          (window as any).gtag('event', abTestGroup === 0 ? 'experiment_writer_activate_subscription_A' : 'experiment_writer_activate_subscription_B', {
+                            event_category: 'funnel', product: 'profile_writer',
+                          })
                       }
                       // If the user isn't signed in, we need to sign them in or sign up
                       // if (!auth.currentUser) {
@@ -139,7 +151,7 @@ export const ProfileWriterPaywall = ({ hideNoThanks }: Props) => {
                     </h2>
                     <div className="flex mt-2 mb-3 items-center">
                       <div>
-                        <h1 className="text-4xl font-semibold">$12</h1>
+                        <h1 className="text-4xl font-semibold">{abTestGroup ? '$15' : '$12'}</h1>
                       </div>
                       <div className=" pl-3">
                         <h1 className="text-zinc-500 leading-4">
@@ -182,7 +194,11 @@ export const ProfileWriterPaywall = ({ hideNoThanks }: Props) => {
                     type="button"
                     onClick={() => {
                       setChosenProduct(ProductType.ProfileWriter)
-                      if ((window as any).gtag) { (window as any).gtag('event', 'writer_purchase_oneoff', { event_category: 'funnel', product: 'profile_writer', }) }
+                      if ((window as any).gtag) {
+                        (window as any).gtag('event', 'writer_purchase_oneoff', { event_category: 'funnel', product: 'profile_writer', })
+                          (window as any).gtag('event', abTestGroup === 0 ? 'experiment_writer_activate_onetime_A' : 'experiment_writer_activate_onetime_B', { event_category: 'funnel', product: 'profile_writer', })
+
+                      }
                     }
                     }
                     className="mt-4 flex items-center justify-center w-full bg-black text-white py-3 rounded-full font-semibold -mb-1"

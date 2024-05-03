@@ -20,7 +20,7 @@ export const Premium = () => {
   );
   const [isLoading, setIsLoading] = useState(true);
   const { authModalIsOpen, setAuthModalIsOpen, isSubscribed, shouldAuthenticateForSubscription, setShouldAuthenticateForSubscription, setShowAuthSubscriptionDisclaimer } = useAuthStore();
-  const { subscriptionSuccess, setSubscriptionSuccess, setStopScroll, setHideBottomNav } = useUIStore();
+  const { subscriptionSuccess, setSubscriptionSuccess, setStopScroll, setHideBottomNav, abTestGroup } = useUIStore();
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -41,7 +41,7 @@ export const Premium = () => {
   }, [subscriptionSuccess]);
 
   useEffect(() => {
-    if (!authModalIsOpen && !auth.currentUser && shouldAuthenticateForSubscription ) {
+    if (!authModalIsOpen && !auth.currentUser && shouldAuthenticateForSubscription) {
       // authModal closed without loggin / signup in
       navigate("/")
     }
@@ -51,14 +51,14 @@ export const Premium = () => {
     <div className="text-center mt-8">
       <Success title="You have successfully subscribed to Premium." />
     </div>
-    
+
   ) : (
     <>
       {isLoading ? (
         <Loading />
       ) : (
         <div
-        
+
           className={` flex justify-center`}
           style={{
             paddingBottom:
@@ -134,8 +134,8 @@ export const Premium = () => {
                   </div>
                   {/*auth.currentUser &&*/ planBeingPurchased ? (
                     <div className="" style={{ marginBottom: "4rem" }}>
-                      <SubscriptionForm 
-                        planType={planBeingPurchased} 
+                      <SubscriptionForm
+                        planType={planBeingPurchased}
                         email={auth.currentUser?.email ?? undefined}
                         redirectHandler={() => {
                           if (!auth.currentUser) {
@@ -187,9 +187,9 @@ export const Premium = () => {
                                 onClick={() => {
                                   setPlanBeingPurchased(PlanType.Monthly);
                                   (window as any).gtag('event', 'subscribe_monthly_click', {
-                                      event_category: 'payment_click',
-                                      product: 'chat_assistant',
-                                    });
+                                    event_category: 'payment_click',
+                                    product: 'chat_assistant',
+                                  });
                                   // If the user isn't signed in, we need to sign them in or sign up
                                   // if (!auth.currentUser) {
                                   //   setAuthModalIsOpen(true);
@@ -203,7 +203,7 @@ export const Premium = () => {
                                 </div>
                                 <div className="py-1.5">
                                   <h3 className="text-lg flex items-center justify-center">
-                                    $9.00{" "}
+                                    {abTestGroup ? '$12' : '$9'}
                                     <span className="text-lg font-semithin pl-1 mt-0.5">
                                       / month
                                     </span>
@@ -228,12 +228,12 @@ export const Premium = () => {
                               >
                                 <div className="bg-brand-primary text-white py-1">
                                   <h4 className="text-white uppercase text-xs sm:text-sm">
-                                    Annual Plan - Save 60%
+                                    {abTestGroup ? 'Annual Plan - Save 50%' : 'Annual Plan - Save 55%'}
                                   </h4>
                                 </div>
                                 <div className="py-1.5">
                                   <h3 className="text-lg flex items-center justify-center">
-                                    $4.00{" "}
+                                    {abTestGroup ? '$6.00' : '$4.00'}
                                     <span className="text-lg font-semithin pl-1 mt-0.5">
                                       / month
                                     </span>

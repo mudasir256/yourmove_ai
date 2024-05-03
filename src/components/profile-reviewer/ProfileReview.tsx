@@ -5,6 +5,7 @@ import { UnlockFullReviewModal } from "../modals/UnlockFullReviewModal";
 import { useWizardStore } from "../../stores/wizard";
 import { WizardStepType } from "../../models/wizard";
 import { AIPhotosModal } from "../ai-photos/AIPhotosModal";
+import { useUIStore } from "../../stores/ui";
 
 const PLAN_FEATURES = [
   "Detailed review of your profile",
@@ -33,11 +34,16 @@ export const ProfileReview = ({ hasPaid, setHasPaid }: Props) => {
     useState(false);
   const { setProfileReviewerWizardComplete, setProfileReviewerStep } =
     useWizardStore();
-  
+  const { abTestGroup } = useUIStore()
 
-  useEffect(() => {if ((window as any).gtag) {
-      (window as any).gtag('event', 'review_results', {event_category: 'funnel',product: 'profile_review',
-      });}}, []);
+
+  useEffect(() => {
+    if ((window as any).gtag) {
+      (window as any).gtag('event', 'review_results', {
+        event_category: 'funnel', product: 'profile_review',
+      });
+    }
+  }, []);
 
   return (
     <div className="pb-40 mt-4">
@@ -88,7 +94,7 @@ export const ProfileReview = ({ hasPaid, setHasPaid }: Props) => {
                   </h1>
                   <div className="flex mt-2 mb-3 items-center border-b-2 border-black pb-3">
                     <div>
-                      <h1 className="text-4xl font-semibold">$12</h1>
+                      <h1 className="text-4xl font-semibold">{abTestGroup ? '$15' : '$12'}</h1>
                     </div>
                     <div className="pl-3">
                       <h1 className="text-zinc-500 leading-4">
@@ -130,7 +136,7 @@ export const ProfileReview = ({ hasPaid, setHasPaid }: Props) => {
                     type="button"
                     onClick={() => {
                       setUnlockFullReviewModalOpen(true)
-                      if ((window as any).gtag) {(window as any).gtag('event', 'review_results_unlock', {event_category: 'funnel',product: 'profile_review',});}
+                      if ((window as any).gtag) { (window as any).gtag('event', 'review_results_unlock', { event_category: 'funnel', product: 'profile_review', }); }
                     }}
                     className="mt-2 flex items-center justify-center w-full bg-brand-primary text-white py-3 rounded-full font-semibold -mb-1"
                   >
