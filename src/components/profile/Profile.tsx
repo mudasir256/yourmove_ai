@@ -25,35 +25,11 @@ export const Profile = () => {
     useState(false);
   const profileHeadingRef = useRef(null);
 
-  const saveSelectedApp = (app: string) => {
-    const stepResults = JSON.parse(
-      localStorage.getItem("profileWriter:stepResults") || "{}"
-    );
-    stepResults.profileType = app
-    localStorage.setItem(
-      "profileWriter:stepResults",
-      JSON.stringify(stepResults)
-    );
-  }
-
-  const saveWritingStyle = (style: string) => {
-    const stepResults = JSON.parse(
-      localStorage.getItem("profileWriter:stepResults") || "{}"
-    );
-    stepResults.writingStyle = style
-    localStorage.setItem(
-      "profileWriter:stepResults",
-      JSON.stringify(stepResults)
-    );
-  }
-
   const getSelectedApp = () => {
     const stepResults = JSON.parse(
       localStorage.getItem("profileWriter:stepResults") || "{}"
     );
-    const profileType = stepResults.profileType ?? supportedApps[0]
-    saveSelectedApp(profileType)
-    return profileType
+    return stepResults.profileType ?? supportedApps[0]
   }
 
   const [selectedApp, setSelectedApp] = useState<string>(getSelectedApp);
@@ -62,9 +38,7 @@ export const Profile = () => {
     const stepResults = JSON.parse(
       localStorage.getItem("profileWriter:stepResults") || "{}"
     );
-    const style = stepResults.writingStyle ?? writingStyles[0]
-    saveWritingStyle(style)
-    return style
+    return stepResults.writingStyle ?? writingStyles[0]
   }
 
   const [selectedWritingStyle, setSelectedWritingStyle] = useState<string>(getSelectedWritingStyle);
@@ -116,6 +90,28 @@ export const Profile = () => {
       });
     }
   }, []);
+
+  const saveSelectedApp = (app: string) => {
+    const stepResults = JSON.parse(
+      localStorage.getItem("profileWriter:stepResults") || "{}"
+    );
+    stepResults.profileType = app
+    localStorage.setItem(
+      "profileWriter:stepResults",
+      JSON.stringify(stepResults)
+    );
+  }
+
+  const saveWritingStyle = (style: string) => {
+    const stepResults = JSON.parse(
+      localStorage.getItem("profileWriter:stepResults") || "{}"
+    );
+    stepResults.writingStyle = style
+    localStorage.setItem(
+      "profileWriter:stepResults",
+      JSON.stringify(stepResults)
+    );
+  }
 
   const onSelectApp = (app: string) => {
     setProfile([])
