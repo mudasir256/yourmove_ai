@@ -65,11 +65,7 @@ export const SubscriptionForm = ({ planType, redirectHandler, email = undefined 
               <>$9.00 per month</>
             ) :
             (planType === PlanType.Yearly ?
-              (abTestGroup ?
-                <div className="my-auto">
-                  <span className="mr-1">$6.00 per month</span>
-                  <small>(Billed at $72.00 per year)</small>
-                </div> :
+              (
                 <div className="my-auto">
                   <span className="mr-1">$4.00 per month</span>
                   <small>(Billed at $48.00 per year)</small>
@@ -111,6 +107,6 @@ export const SubscriptionForm = ({ planType, redirectHandler, email = undefined 
           />
         </Elements>
       </div>
-    </div>
+    </div >
   )
 };

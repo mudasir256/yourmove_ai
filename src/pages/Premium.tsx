@@ -228,12 +228,12 @@ export const Premium = () => {
                               >
                                 <div className="bg-brand-primary text-white py-1">
                                   <h4 className="text-white uppercase text-xs sm:text-sm">
-                                    {abTestGroup ? 'Annual Plan - Save 50%' : 'Annual Plan - Save 55%'}
+                                    Annual Plan - Save 55%
                                   </h4>
                                 </div>
                                 <div className="py-1.5">
                                   <h3 className="text-lg flex items-center justify-center">
-                                    {abTestGroup ? '$6.00' : '$4.00'}
+                                    $4.00
                                     <span className="text-lg font-semithin pl-1 mt-0.5">
                                       / month
                                     </span>
