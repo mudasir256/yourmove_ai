@@ -10,13 +10,14 @@ import { useWizardStore } from "../../stores/wizard";
 import { TextingAssistantModal } from "../modals/TextingAssistantModal";
 import { WizardStepType } from "../../models/wizard";
 import { AIPhotosModal } from "../ai-photos/AIPhotosModal";
+import { supportedApps, writingStyles } from "./data";
+import { DropdownSelect } from "./DropdownSelect"
 
 
 export const Profile = () => {
   const { profile, setProfile, setPrompts } = useProfileStore();
   const {
     setProfileWriterWizardComplete,
-    profileWriterStepResults,
     setProfileWriterStep,
   } = useWizardStore();
   const [feedbackModalOpen, setFeedbackModalOpen] = useState(false);
@@ -24,7 +25,51 @@ export const Profile = () => {
     useState(false);
   const profileHeadingRef = useRef(null);
 
-// Updated list of titles for the loading component
+  const saveSelectedApp = (app: string) => {
+    const stepResults = JSON.parse(
+      localStorage.getItem("profileWriter:stepResults") || "{}"
+    );
+    stepResults.profileType = app
+    localStorage.setItem(
+      "profileWriter:stepResults",
+      JSON.stringify(stepResults)
+    );
+  }
+
+  const saveWritingStyle = (style: string) => {
+    const stepResults = JSON.parse(
+      localStorage.getItem("profileWriter:stepResults") || "{}"
+    );
+    stepResults.writingStyle = style
+    localStorage.setItem(
+      "profileWriter:stepResults",
+      JSON.stringify(stepResults)
+    );
+  }
+
+  const getSelectedApp = () => {
+    const stepResults = JSON.parse(
+      localStorage.getItem("profileWriter:stepResults") || "{}"
+    );
+    const profileType = stepResults.profileType ?? supportedApps[0]
+    saveSelectedApp(profileType)
+    return profileType
+  }
+
+  const [selectedApp, setSelectedApp] = useState<string>(getSelectedApp);
+
+  const getSelectedWritingStyle = () => {
+    const stepResults = JSON.parse(
+      localStorage.getItem("profileWriter:stepResults") || "{}"
+    );
+    const style = stepResults.writingStyle ?? writingStyles[0]
+    saveWritingStyle(style)
+    return style
+  }
+
+  const [selectedWritingStyle, setSelectedWritingStyle] = useState<string>(getSelectedWritingStyle);
+
+  // Updated list of titles for the loading component
   const loadingTitles = [
     "Analyzing your responses…",
     "Choosing the best prompts for you…",
@@ -45,17 +90,14 @@ export const Profile = () => {
     }
   }, [profile]); // Depend on profile state if you only want to scroll when profile updates
 
-
   // Get Prompts
   useEffect(() => {
     // Get profileType if its there if not default to bumble
-    const profileType = profileWriterStepResults.profileType
-      ? profileWriterStepResults.profileType.toLowerCase()
-      : "bumble";
+    const profileType = selectedApp.toLowerCase()
     getPrompts(profileType).then((response) => {
       setPrompts(response.data);
     });
-  }, []);
+  }, [selectedApp]);
 
   // Generate Profile
   useEffect(() => {
@@ -65,11 +107,27 @@ export const Profile = () => {
     generateProfile(stepResults).then((response) => {
       setProfile(response.data);
     });
+  }, [selectedApp, selectedWritingStyle]);
+
+  useEffect(() => {
+    if ((window as any).gtag) {
+      (window as any).gtag('event', 'writer_results', {
+        event_category: 'funnel', product: 'profile_writer',
+      });
+    }
   }, []);
 
-  useEffect(() => {if ((window as any).gtag) {
-    (window as any).gtag('event', 'writer_results', {event_category: 'funnel',product: 'profile_writer',
-    });}}, []);
+  const onSelectApp = (app: string) => {
+    setProfile([])
+    setSelectedApp(app)
+    saveSelectedApp(app)
+  }
+
+  const onSelectWritingStyle = (style: string) => {
+    setProfile([])
+    setSelectedWritingStyle(style)
+    saveWritingStyle(style)
+  }
 
   return (
     <>
@@ -108,6 +166,21 @@ export const Profile = () => {
             <div className="mb-5">
               <h1 className="text-4xl font-bold">Your profile</h1>
             </div>
+            <div className="mb-5 flex flex-1">
+              <DropdownSelect
+                title="Select App"
+                options={supportedApps}
+                selected={selectedApp}
+                onDropdownSelected={onSelectApp}
+              />
+              <DropdownSelect
+                className="ml-3"
+                title="Select writing style"
+                options={writingStyles}
+                selected={selectedWritingStyle}
+                onDropdownSelected={onSelectWritingStyle}
+              />
+            </div>
             {profile.map((profileResponse: ProfileResponse, index: number) => {
               return (
                 <ProfileItem
@@ -132,7 +205,7 @@ export const Profile = () => {
             )}
           </div>
           <div className="px-2 pt-1">
-            <button
+            {/* <button
               onClick={() => {
                 setProfile({});
                 setProfileWriterStep(WizardStepType.PROFILE_TYPE);
@@ -142,7 +215,7 @@ export const Profile = () => {
               className="mt-4 flex items-center justify-center w-full bg-white text-black py-3 rounded-full font-semibold -mb-1 border border-black hover:text-stone-600 hover:border-stone-500"
             >
               choose another app or style
-            </button>
+            </button> */}
             <button
               type="button"
               onClick={() => setFeedbackModalOpen(true)}
@@ -156,8 +229,8 @@ export const Profile = () => {
           </div>
         </div>
       ) : (
-        <Loading titles={loadingTitles} updateInterval={1500}/>
-        )}
+        <Loading titles={loadingTitles} updateInterval={1500} />
+      )}
     </>
   );
 };
