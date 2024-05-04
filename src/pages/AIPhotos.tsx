@@ -199,9 +199,6 @@ export const AIPhotos = () => {
                     </>
                   )}
                 </button>
-                {/* <p className="text-sm text-slate-500 mt-2">
-                  Already purchased AI Photos? Please contact support@yourmove.ai
-                </p></> */}
             )
           ) : (
             <button
