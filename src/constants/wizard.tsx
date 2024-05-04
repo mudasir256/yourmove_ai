@@ -6,7 +6,6 @@ import {
 import * as yup from "yup";
 import { useWizardStore } from "../stores/wizard";
 import { ProfileWriterPaywall } from "../components/payment/paywalls/ProfileWriterPaywall";
-import { ProfileReviewPaywall } from "../components/payment/paywalls/ProfileReviewPaywall";
 
 // Define a list of all of the Wizard Steps to be rendered dynamic
 export const PROFILE_WRITER_WIZARD_STEPS: Array<WizardStep> = [
@@ -29,6 +28,13 @@ export const PROFILE_WRITER_WIZARD_STEPS: Array<WizardStep> = [
       </>
     ),
 
+  },
+  {
+    step: WizardStepType.PROFILE_TYPE,
+    type: WizardStepInputType.SELECT,
+    label: "Which app profile should we create for you?",
+    choices: ["Bumble", "Hinge", "Tinder", "Coffee Meets Bagel"],
+    validator: yup.string(),
   },
   {
     step: WizardStepType.GENDER,
@@ -84,13 +90,6 @@ export const PROFILE_WRITER_WIZARD_STEPS: Array<WizardStep> = [
     type: WizardStepInputType.TEXT,
     label: "What do you do for work?",
     placeholder: "Build awesome React Apps",
-    validator: yup.string(),
-  },
-  {
-    step: WizardStepType.PROFILE_TYPE,
-    type: WizardStepInputType.SELECT,
-    label: "Which app profile should we create for you?",
-    choices: ["Bumble", "Hinge", "Tinder", "Coffee Meets Bagel"],
     validator: yup.string(),
   },
   {
