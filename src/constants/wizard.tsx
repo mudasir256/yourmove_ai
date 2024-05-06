@@ -163,9 +163,6 @@ export const PROFILE_REVIEWER_WIZARD_STEPS: Array<WizardStep> = [
           <p className="text-2xl">
             Open your app of choice and take screenshots of your dating profile.
           </p>
-          <p className="text-2xl pt-4">
-            YourMove works with all dating apps.
-          </p>
         </div>
       </>
     ),
