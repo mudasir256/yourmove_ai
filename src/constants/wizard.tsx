@@ -54,14 +54,14 @@ export const PROFILE_WRITER_WIZARD_STEPS: Array<WizardStep> = [
     step: WizardStepType.ACTIVITIES,
     type: WizardStepInputType.TEXT,
     label: "What activities do you enjoy in your free time?",
-    placeholder: "Surfing and a good book",
+    placeholder: "Surfing",
     validator: yup.string(),
   },
   {
     step: WizardStepType.CHARACTERISTICS,
     type: WizardStepInputType.TEXT,
     label: "What characteristics are you looking for in your partner?",
-    placeholder: "Adventurous, witty, spontaneous",
+    placeholder: "Adventurous, witty and kind",
     validator: yup.string(),
   },
   {
@@ -82,14 +82,14 @@ export const PROFILE_WRITER_WIZARD_STEPS: Array<WizardStep> = [
     step: WizardStepType.TALKING_ABOUT,
     type: WizardStepInputType.TEXT,
     label: "What do you enjoy talking about?",
-    placeholder: "90s sitcoms and craft beer",
+    placeholder: "Old school sitcoms",
     validator: yup.string(),
   },
   {
     step: WizardStepType.WORK_AS,
     type: WizardStepInputType.TEXT,
     label: "What do you do for work?",
-    placeholder: "Build awesome React Apps",
+    placeholder: "Build apps",
     validator: yup.string(),
   },
   {
