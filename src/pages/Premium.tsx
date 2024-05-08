@@ -47,6 +47,14 @@ export const Premium = () => {
     }
   }, [shouldAuthenticateForSubscription, authModalIsOpen])
 
+  useEffect(() => {
+    if ((window as any).gtag && abTestGroup !== undefined) {
+      (window as any).gtag('event', abTestGroup ? 'experiment_premium_page_view_B' : 'experiment_premium_page_view_A', {
+        event_category: 'funnel', product: 'chat_assistant',
+      })
+    }
+  }, [abTestGroup])
+
   return subscriptionSuccess ? (
     <div className="text-center mt-8">
       <Success title="You have successfully subscribed to Premium." />
@@ -71,7 +79,7 @@ export const Premium = () => {
           <div className="max-w-xl">
             <div className="ml-2 mt-3">
               <svg
-                onClick={() => navigate(-1)}
+                onClick={() => planBeingPurchased ? setPlanBeingPurchased(null) : navigate(-1)}
                 xmlns="http://www.w3.org/2000/svg"
                 fill="none"
                 viewBox="0 0 24 24"
@@ -251,7 +259,7 @@ export const Premium = () => {
               </>
             )}
           </div>
-        </div>
+        </div >
       )}
     </>
   );

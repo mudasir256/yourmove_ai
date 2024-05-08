@@ -13,7 +13,7 @@ const AI_PHOTOS_URL = import.meta.env.VITE_AI_PHOTOS_URL
 export const UnlockAIPhotosModal = ({ open, setOpen, redirectHandler }: Props) => {
   return (
     <Modal open={open} setOpen={setOpen}>
-      <div className="w-full overflow-y-scroll">
+      <div className="w-full h-full overflow-y-scroll">
         <div className="w-full flex justify-end">
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -31,10 +31,10 @@ export const UnlockAIPhotosModal = ({ open, setOpen, redirectHandler }: Props) =
             />
           </svg>
         </div>
-        <div className="flex items-center justify-center -mt-7 -mb-7">
+        <div className="flex items-center justify-center">
           <h1 className="text-2xl font-semibold">Unlock AI Photos</h1>
         </div>
-        <div className="overflow-y-scroll h-[30rem]">
+        <div className="overflow-y-scroll">
           <AIPhotosPaywall
             email={auth.currentUser?.email ?? undefined}
             returnUrl={AI_PHOTOS_URL}

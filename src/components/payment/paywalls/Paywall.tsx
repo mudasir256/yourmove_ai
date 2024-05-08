@@ -179,8 +179,8 @@ export const Paywall = ({
                   } else {
                     // open login
                     setShowAuthSubscriptionDisclaimer(true)
-                    setAuthModalIsOpen(true)
                     setShouldAuthenticateForSubscription(true)
+                    setAuthModalIsOpen(true)
                   }
                 }}
               />

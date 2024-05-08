@@ -164,14 +164,12 @@ export const Profile = () => {
             </div>
             <div className="mb-5 flex flex-1">
               <DropdownSelect
-                title="Select App"
                 options={supportedApps}
                 selected={selectedApp}
                 onDropdownSelected={onSelectApp}
               />
               <DropdownSelect
                 className="ml-3"
-                title="Select writing style"
                 options={writingStyles}
                 selected={selectedWritingStyle}
                 onDropdownSelected={onSelectWritingStyle}
