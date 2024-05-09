@@ -69,12 +69,11 @@ export const ProfileReviewPaywall = () => {
                     <h4 className="font-semibold"><b>Unlimited </b>access to:</h4>
                     <div className="mt-1">
                       {[
-                          "Review of you profile and photos + action plan",
-                          "Write bios that show catch attention and highlight your best self",
-                          "Personalized conversation starters for 2.4x more conversion",
-                          "AI texting assistant",
+                          "Choose your best photos with profile review",
+                          "Write a swipe-worth bio with profile writer",
+                          "Get more replies with personalized AI openers",
+                          "Put texting on cruise control with chat assistant",
                           "Works with Hinge, Tinder, Bumble, and more",
-                          "50% off AI-enhanced photos",
                       ].map((feature: string) => (
                         <PlanFeature
                           icon={
