@@ -164,8 +164,9 @@ export const ProfileWriterPaywall = ({ hideNoThanks }: Props) => {
                     <h4 className="font-semibold">What's included:</h4>
                     <div className="mt-1">
                       {[
-                        "Profiles for Hinge, Tinder, Bumble, and more",
-                        "Up to 10 profiles",
+                        "Complete your whole profile",
+                        "120+ top prompts from Hinge, Bumble, CmB, and more",
+                        "Access to our best AI models for best results",
                         "30 day money back guarantee",
                       ].map((feature: string) => (
                         <PlanFeature
