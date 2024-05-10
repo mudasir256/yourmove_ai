@@ -9,7 +9,7 @@ interface Props {
 export const UnlockProfileModal = ({ open, setOpen }: Props) => {
   return (
     <Modal open={open} setOpen={setOpen}>
-      <div className="w-full overflow-y-scroll" style={{ height: "35rem" }}>
+      <div className="w-full overflow-y-scroll" style={{ height: "40rem" }}>
         <div className="w-full flex justify-end">
           <svg
             xmlns="http://www.w3.org/2000/svg"

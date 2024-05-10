@@ -5,7 +5,6 @@ import { LearnMoreModal } from "../../modals/LearnMoreModal";
 import { ProductType } from "../../../constants/payments";
 import { PlanType } from "../../../constants/payments";
 import { useWizardStore } from "../../../stores/wizard";
-import { useAuthStore } from "../../../stores/auth";
 
 type Props = {
   hideNoThanks?: boolean
