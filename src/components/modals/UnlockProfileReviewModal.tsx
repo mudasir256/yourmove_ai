@@ -1,6 +1,5 @@
-import React from "react";
-import { ProfileReviewPaywall } from "../payment/paywalls/ProfileReviewPaywall";
 import { Modal } from "./Modal";
+import { ProfileReviewPaywall } from "../payment/paywalls/ProfileReviewPaywall";
 
 interface Props {
   open: boolean;
@@ -30,8 +29,8 @@ export const UnlockProfileReviewModal = ({ open, setOpen }: Props) => {
         </div>
         <div className="-mt-10">
           <ProfileReviewPaywall hideNoThanks={true} onComplete={() => setOpen(false)} />
-        </div>
-      </div>
-    </Modal>
+        </div >
+      </div >
+    </Modal >
   );
 };

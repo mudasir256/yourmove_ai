@@ -5,7 +5,6 @@ import { LearnMoreModal } from "../../modals/LearnMoreModal";
 import { ProductType } from "../../../constants/payments";
 import { PlanType } from "../../../constants/payments";
 import { useWizardStore } from "../../../stores/wizard";
-import { auth } from "../../../firebase";
 import { useAuthStore } from "../../../stores/auth";
 
 type Props = {
@@ -185,7 +184,7 @@ export const ProfileReviewPaywall = ({ hideNoThanks, onComplete }: Props) => {
                 </button>
               </div>
             </div>
-            {hideNoThanks && <div className="mt-4 flex items-center justify-center mb-6">
+            {!hideNoThanks && <div className="mt-4 flex items-center justify-center mb-6">
               <h3
                 className="cursor-pointer text-lg text-zinc-500 hover:text-zinc-600 hover:underline"
                 onClick={() => {
