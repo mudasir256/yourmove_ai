@@ -1,14 +1,12 @@
-import { Fragment, useState } from "react";
+import { Fragment } from "react";
 import { Listbox, Transition } from "@headlessui/react";
 import { CheckIcon, ChevronUpDownIcon } from "@heroicons/react/20/solid";
-import React from "react";
 
 function classNames(...classes: any) {
   return classes.filter(Boolean).join(" ");
 }
 
 interface Props {
-  title?: string
   options: string[];
   selected: string;
   onDropdownSelected: (value: string) => void;
@@ -16,7 +14,6 @@ interface Props {
 }
 
 export const DropdownSelect = ({
-  title = undefined,
   selected,
   options,
   onDropdownSelected,
@@ -25,7 +22,6 @@ export const DropdownSelect = ({
 
   return (
     <div className={`flex-1 mt-2 ${className}`}>
-      {title && <p className="text-zinc-500 whitespace-nowrap overflow-hidden truncate">{title}</p>}
       <Listbox
         value={selected}
         onChange={onDropdownSelected}

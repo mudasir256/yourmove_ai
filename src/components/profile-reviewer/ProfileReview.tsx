@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { useProfileStore } from "../../stores/profile";
 import Markdown from "react-markdown";
-import { UnlockFullReviewModal } from "../modals/UnlockFullReviewModal";
+import { UnlockProfileReviewModal } from "../modals/UnlockProfileReviewModal";
 import { useWizardStore } from "../../stores/wizard";
 import { WizardStepType } from "../../models/wizard";
 import { AIPhotosModal } from "../ai-photos/AIPhotosModal";
@@ -47,8 +47,7 @@ export const ProfileReview = ({ hasPaid, setHasPaid }: Props) => {
 
   return (
     <div className="pb-40 mt-4">
-      <UnlockFullReviewModal
-        setHasPaid={setHasPaid}
+      <UnlockProfileReviewModal
         open={unlockFullReviewModalOpen}
         setOpen={setUnlockFullReviewModalOpen}
       />
@@ -87,8 +86,37 @@ export const ProfileReview = ({ hasPaid, setHasPaid }: Props) => {
           >
             <div className="w-full h-full relative">
               {/* Unlock */}
-              <div className="absolute w-full p-3 bottom-0">
-                <div className="bg-white h-full border-2 border-black rounded-lg p-5">
+              <div className="absolute w-full px-4 bottom-8">
+                <button
+                  type="button"
+                  onClick={() => {
+                    setUnlockFullReviewModalOpen(true)
+                    if ((window as any).gtag) {
+                      (window as any).gtag("event", "writer_results_unlock", {
+                        event_category: "funnel",
+                        product: "profile_writer",
+                      });
+                    }
+                  }}
+                  className="w-full cursor-pointer border border-black bg-white py-2 text-lg font-semibold flex items-center justify-center shadow-lg rounded-md"
+                >
+                  Unlock Full Profile Review
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    strokeWidth="2.5"
+                    stroke="currentColor"
+                    className="w-5 h-5 ml-3"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      d="M13.5 10.5V6.75a4.5 4.5 0 119 0v3.75M3.75 21.75h10.5a2.25 2.25 0 002.25-2.25v-6.75a2.25 2.25 0 00-2.25-2.25H3.75a2.25 2.25 0 00-2.25 2.25v6.75a2.25 2.25 0 002.25 2.25z"
+                    />
+                  </svg>
+                </button>
+                {/* <div className="bg-white h-full border-2 border-black rounded-lg p-5">
                   <h1 className="text-2xl font-bold">
                     Unlock your full review
                   </h1>
@@ -142,7 +170,7 @@ export const ProfileReview = ({ hasPaid, setHasPaid }: Props) => {
                   >
                     Activate
                   </button>
-                </div>
+                </div> */}
               </div>
             </div>
           </div>

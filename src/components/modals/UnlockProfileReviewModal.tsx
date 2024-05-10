@@ -1,12 +1,12 @@
-import { ProfileWriterPaywall } from "../payment/paywalls/ProfileWriterPaywall";
 import { Modal } from "./Modal";
+import { ProfileReviewPaywall } from "../payment/paywalls/ProfileReviewPaywall";
 
 interface Props {
   open: boolean;
   setOpen: (open: boolean) => void;
 }
 
-export const UnlockProfileModal = ({ open, setOpen }: Props) => {
+export const UnlockProfileReviewModal = ({ open, setOpen }: Props) => {
   return (
     <Modal open={open} setOpen={setOpen}>
       <div className="w-full overflow-y-scroll" style={{ height: "40rem" }}>
@@ -28,9 +28,9 @@ export const UnlockProfileModal = ({ open, setOpen }: Props) => {
           </svg>
         </div>
         <div className="-mt-10">
-          <ProfileWriterPaywall hideNoThanks={true} onComplete={() => setOpen(false)} />
-        </div>
-      </div>
-    </Modal>
+          <ProfileReviewPaywall hideNoThanks={true} onComplete={() => setOpen(false)} />
+        </div >
+      </div >
+    </Modal >
   );
 };

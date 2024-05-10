@@ -13,9 +13,10 @@ import { useUIStore } from "../../../stores/ui";
 
 interface Props {
   hideNoThanks?: boolean;
+  onComplete?: VoidFunction
 }
 
-export const ProfileWriterPaywall = ({ hideNoThanks }: Props) => {
+export const ProfileWriterPaywall = ({ hideNoThanks, onComplete }: Props) => {
   const { profileWriterStepResults, setProfileWriterWizardComplete } =
     useWizardStore();
   const { abTestGroup } = useUIStore()
@@ -59,6 +60,7 @@ export const ProfileWriterPaywall = ({ hideNoThanks }: Props) => {
             noThanksHandler={() => setProfileWriterWizardComplete(true)}
             chosenProduct={chosenProduct}
             planBeingPurchased={planBeingPurchased}
+            onComplete={onComplete}
           >
             <div className="pb-20">
               {" "}

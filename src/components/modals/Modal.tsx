@@ -40,13 +40,13 @@ export const Modal = ({ children, open, setOpen, backgroundColor, onClose }: Pro
         leaveFrom="opacity-100 rotate-0 scale-100"
         leaveTo="opacity-0 scale-95 "
       >
-        <div className="h-screen w-full left-0 top-0 flex items-center justify-center z-50 fixed z-50 -mt-6">
+        <div className="h-screen w-full left-0 top-0 flex items-center justify-center z-50 fixed -mt-6">
           <div
             ref={modalRef}
             style={{
               backgroundColor: backgroundColor ? backgroundColor : "#f7fafc",
             }}
-            className="max-h-fit relative transform overflow-hidden rounded-lg px-2 pb-4 pt-5 text-left shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-3xl sm:p-6 border-2 border-black w-full z-50 mx-1"
+            className="max-h-fit relative transform overflow-hidden rounded-lg px-2 pb-4 pt-5 text-left shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-4xl sm:p-6 border-2 border-black w-full z-50 mx-1"
           >
             {children}
           </div>
