@@ -211,14 +211,14 @@ export const Profile = () => {
               className="mt-4 flex items-center justify-center w-full bg-white text-black py-3 rounded-full font-semibold -mb-1 border border-black hover:text-stone-600 hover:border-stone-500"
             >
               choose another app or style
-            </button> */}
+            </button> 
             <button
               type="button"
               onClick={() => setFeedbackModalOpen(true)}
               className="mt-4 flex items-center justify-center w-full bg-white text-black py-3 rounded-full font-semibold -mb-1 border border-black hover:text-stone-600 hover:border-stone-500"
             >
               leave feedback
-            </button>
+            </button>*/}
           </div>
           <div className="mt-2 mb-10">
             <AIPhotosModal />
