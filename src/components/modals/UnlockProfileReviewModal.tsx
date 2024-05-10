@@ -1,4 +1,5 @@
-import { ProfileWriterPaywall } from "../payment/paywalls/ProfileWriterPaywall";
+import React from "react";
+import { ProfileReviewPaywall } from "../payment/paywalls/ProfileReviewPaywall";
 import { Modal } from "./Modal";
 
 interface Props {
@@ -6,7 +7,7 @@ interface Props {
   setOpen: (open: boolean) => void;
 }
 
-export const UnlockProfileModal = ({ open, setOpen }: Props) => {
+export const UnlockProfileReviewModal = ({ open, setOpen }: Props) => {
   return (
     <Modal open={open} setOpen={setOpen}>
       <div className="w-full overflow-y-scroll" style={{ height: "35rem" }}>
@@ -28,7 +29,7 @@ export const UnlockProfileModal = ({ open, setOpen }: Props) => {
           </svg>
         </div>
         <div className="-mt-10">
-          <ProfileWriterPaywall hideNoThanks={true} onComplete={() => setOpen(false)} />
+          <ProfileReviewPaywall hideNoThanks={true} onComplete={() => setOpen(false)} />
         </div>
       </div>
     </Modal>

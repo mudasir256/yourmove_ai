@@ -29,6 +29,7 @@ interface Props {
   noThanksHandler: () => void;
   email: string;
   redirectHandler?: () => void;
+  onComplete?: VoidFunction
 }
 
 export const Paywall = ({
@@ -39,6 +40,7 @@ export const Paywall = ({
   noThanksHandler,
   email,
   redirectHandler,
+  onComplete
 }: Props) => {
   const [clientSecret, setClientSecret] = useState("");
   const [showPlans, setShowPlans] = useState(false);
@@ -147,7 +149,6 @@ export const Paywall = ({
                 planType={planBeingPurchased}
                 email={auth.currentUser?.email ?? email}
                 redirectHandler={async () => {
-
                   if (auth.currentUser) {
                     let iterations = 0;
                     const idTokenResult =
@@ -178,6 +179,7 @@ export const Paywall = ({
                     }
                   } else {
                     // open login
+                    onComplete?.()
                     setShowAuthSubscriptionDisclaimer(true)
                     setShouldAuthenticateForSubscription(true)
                     setAuthModalIsOpen(true)

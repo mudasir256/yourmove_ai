@@ -13,9 +13,10 @@ import { useUIStore } from "../../../stores/ui";
 
 interface Props {
   hideNoThanks?: boolean;
+  onComplete?: VoidFunction
 }
 
-export const ProfileWriterPaywall = ({ hideNoThanks }: Props) => {
+export const ProfileWriterPaywall = ({ hideNoThanks, onComplete }: Props) => {
   const { profileWriterStepResults, setProfileWriterWizardComplete } =
     useWizardStore();
   const { abTestGroup } = useUIStore()
@@ -59,6 +60,7 @@ export const ProfileWriterPaywall = ({ hideNoThanks }: Props) => {
             noThanksHandler={() => setProfileWriterWizardComplete(true)}
             chosenProduct={chosenProduct}
             planBeingPurchased={planBeingPurchased}
+            onComplete={onComplete}
           >
             <div className="pb-20">
               {" "}
@@ -164,8 +166,9 @@ export const ProfileWriterPaywall = ({ hideNoThanks }: Props) => {
                     <h4 className="font-semibold">What's included:</h4>
                     <div className="mt-1">
                       {[
-                        "Profiles for Hinge, Tinder, Bumble, and more",
-                        "Up to 10 profiles",
+                        "Complete your whole profile",
+                        "120+ top prompts from Hinge, Bumble, CmB, and more",
+                        "Access to our best AI models for best results",
                         "30 day money back guarantee",
                       ].map((feature: string) => (
                         <PlanFeature
