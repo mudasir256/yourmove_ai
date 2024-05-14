@@ -2,7 +2,6 @@ import { Fragment, useState } from "react";
 import { Dialog, Transition } from "@headlessui/react";
 import {
   Bars3Icon,
-  ChevronRightIcon,
   XMarkIcon,
 } from "@heroicons/react/24/outline";
 import { Link, useNavigate } from "react-router-dom";
@@ -16,10 +15,6 @@ import { Logo } from "../Logo";
 import { SideNavListItem } from "./SideNavListItem"
 
 const APP_STORE_URL = "https://apps.apple.com/us/app/yourmove-ai/id6444244023";
-
-function classNames(...classes: any) {
-  return classes.filter(Boolean).join(" ");
-}
 
 export const SideNav = () => {
   const [sidebarOpen, setSidebarOpen] = useState(false);
@@ -150,7 +145,7 @@ export const SideNav = () => {
                                 250
                               );
                             }} />
-                            <SideNavListItem key="0" title="Profile Writer" onNavItemClick={() => {
+                            <SideNavListItem key="1" title="Profile Writer" onNavItemClick={() => {
                               setSidebarOpen(false);
                               setTimeout(
                                 () => navigate("/profile-writer"),
@@ -180,8 +175,15 @@ export const SideNav = () => {
                             250
                           );
                         }} />
+                        {user && <SideNavListItem key="5" containerStyle="-mx-2 mb-4" title="User Settings" onNavItemClick={() => {
+                          setSidebarOpen(false);
+                          setTimeout(
+                            () => navigate("/user-settings"),
+                            250
+                          );
+                        }} />}
                         <SideNavListItem
-                          key="5"
+                          key="6"
                           containerStyle="-mx-2"
                           title="Download iOS"
                           titleStyle="text-brand-primary"

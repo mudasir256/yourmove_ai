@@ -22,6 +22,7 @@ import { Onboarding } from "./pages/Onboarding";
 import { User, signOut } from "firebase/auth";
 import { AuthState } from "./constants/auth";
 import { useABTest } from './components/ab-testing/useABTest'
+import { UserSettings } from "./pages/UserSettings";
 /* 
 
 Everything is pretty much ready to rock and roll. The only outstanding pieces are:
@@ -219,6 +220,14 @@ function App() {
           element={
             <Page title="AI Enhanced Photos">
               <AIPhotos />
+            </Page>
+          }
+        />
+        <Route
+          path="/user-settings"
+          element={
+            <Page title="User Settings">
+              <UserSettings />
             </Page>
           }
         />
