@@ -15,7 +15,7 @@ import { auth } from "../../firebase";
 
 import { MessageStyleSelector } from "./selectors/MessageStyleSelector";
 import { useUIStore } from "../../stores/ui";
-import { toast } from 'react-toastify'; 
+import { toast } from 'react-hot-toast'; 
 
 
 // exported so other components can use it
