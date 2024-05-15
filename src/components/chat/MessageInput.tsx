@@ -15,6 +15,8 @@ import { auth } from "../../firebase";
 
 import { MessageStyleSelector } from "./selectors/MessageStyleSelector";
 import { useUIStore } from "../../stores/ui";
+import { toast } from 'react-toastify'; 
+
 
 // exported so other components can use it
 export const submitMessage = (message: string, file: File | null) => {
@@ -102,17 +104,37 @@ export const MessageInput = ({
 
   const fileInputRef = useRef<HTMLInputElement | null>(null);
 
+  const checkImageSize = (file) => {
+    return new Promise((resolve, reject) => {
+      const img = new Image();
+      img.src = URL.createObjectURL(file);
+      img.onload = () => {
+        if (img.width > 7500 || img.height > 7500) {
+          reject('Screenshot too large. Please upload a smaller screenshot.'); // Image exceeds the dimensions
+        } else {
+          resolve(true); // Image is within the dimensions
+        }
+      };
+      img.onerror = () => reject('error loading image');
+    });
+  };
+
   const handleFileUpload = () => {
     if (fileInputRef.current) {
       fileInputRef.current.click();
     }
   };
 
-  const handleFileChange = (event: ChangeEvent<HTMLInputElement>) => {
+  const handleFileChange = async (event: ChangeEvent<HTMLInputElement>) => {
     const selectedFile = event.target.files && event.target.files[0];
     // Handle the selected file as needed
     if (selectedFile) {
-      setFile(selectedFile);
+      try {
+        await checkImageSize(selectedFile);
+        setFile(selectedFile); // Set file if image is within size limits
+      } catch (error) {
+        toast.error(error); // Display a toast notification if the image is too large or fails to load
+      }
     }
   };
 
