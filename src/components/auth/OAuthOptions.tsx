@@ -2,12 +2,13 @@ import {
   signInWithPopup,
   GoogleAuthProvider,
   OAuthProvider,
+  getAdditionalUserInfo,
 } from "firebase/auth";
 import { auth } from "../../firebase";
 import { successfulSignIn } from "../../utils";
 import { useAuthStore } from "../../stores/auth";
 import toast from "react-hot-toast";
-import { migrateUser } from "../../queries";
+import { addUserReferral, migrateUser } from "../../queries";
 
 const googleProvider = new GoogleAuthProvider();
 const appleProvider = new OAuthProvider("apple.com");
@@ -21,13 +22,30 @@ export const OAuthOptions = () => {
     }
   };
 
+  const handleReferralSignUp = async (userId: string) => {
+    const referral = localStorage.getItem('referredCode')
+    if (referral) {
+      const response = await addUserReferral(userId, referral)
+      console.log("ADD REFERRAL RESPONSE:: ", response)
+      localStorage.removeItem('referredCode')
+    }
+  }
+
   const launchGoogleAuth = () => {
     signInWithPopup(auth, googleProvider)
       .then((result) => {
+        console.log("RESULT GOOGLE:: ", result)
+        const addInfo = getAdditionalUserInfo(result)
+        console.log("ADDITIONAL INFO:: ", addInfo)
+        console.log("NEW USER:: ", addInfo?.isNewUser)
         if (result.user.email) {
           successfulSignIn(result.user.email);
           // Migrate just the user
           migrateUser(result.user.email);
+        }
+        const userId = result.user.uid
+        if (addInfo?.isNewUser) {
+          handleReferralSignUp(userId)
         }
       })
       .catch((error) => {
@@ -40,10 +58,16 @@ export const OAuthOptions = () => {
   const launchAppleAuth = () => {
     signInWithPopup(auth, appleProvider)
       .then((result) => {
+        console.log("RESULT APPLE:: ", result)
+        const addInfo = getAdditionalUserInfo(result)
         if (result.user.email) {
           successfulSignIn(result.user.email);
           // Migrate just the user
           migrateUser(result.user.email);
+        }
+        const userId = result.user.uid
+        if (addInfo?.isNewUser) {
+          handleReferralSignUp(userId)
         }
       })
       .catch((error) => {

@@ -5,6 +5,7 @@ import { LearnMoreModal } from "../../modals/LearnMoreModal";
 import { ProductType } from "../../../constants/payments";
 import { PlanType } from "../../../constants/payments";
 import { useWizardStore } from "../../../stores/wizard";
+import { useNavigate } from "react-router-dom";
 
 type Props = {
   hideNoThanks?: boolean
@@ -12,6 +13,7 @@ type Props = {
 }
 
 export const ProfileReviewPaywall = ({ hideNoThanks, onComplete }: Props) => {
+  const navigate = useNavigate()
   const { profileReviewerStepResults, setProfileReviewerWizardComplete } =
     useWizardStore();
   const [chosenProduct, setChosenProduct] = useState<ProductType | null>(null);
@@ -183,6 +185,9 @@ export const ProfileReviewPaywall = ({ hideNoThanks, onComplete }: Props) => {
                 </button>
               </div>
             </div>
+            <button className="w-full bg-brand-primary text-white py-2 rounded-xl mt-4" onClick={() => navigate('/user-referrals')}>
+              Get Premium for Free
+            </button>
             {!hideNoThanks && <div className="mt-4 flex items-center justify-center mb-6">
               <h3
                 className="cursor-pointer text-lg text-zinc-500 hover:text-zinc-600 hover:underline"

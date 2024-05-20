@@ -5,9 +5,8 @@ import { Paywall } from "./Paywall";
 import { ProductType } from "../../../constants/payments";
 import { useWizardStore } from "../../../stores/wizard";
 import { PlanType } from "../../../constants/payments";
-import { auth } from "../../../firebase";
-import { useAuthStore } from "../../../stores/auth";
 import { useUIStore } from "../../../stores/ui";
+import { useNavigate } from "react-router-dom";
 
 // import { auth } from "/firebase";
 
@@ -17,6 +16,7 @@ interface Props {
 }
 
 export const ProfileWriterPaywall = ({ hideNoThanks, onComplete }: Props) => {
+  const navigate = useNavigate();
   const { profileWriterStepResults, setProfileWriterWizardComplete } =
     useWizardStore();
   const { abTestGroup } = useUIStore()
@@ -210,6 +210,9 @@ export const ProfileWriterPaywall = ({ hideNoThanks, onComplete }: Props) => {
                   </button>
                 </div>
               </div>
+              <button className="w-full bg-brand-primary text-white py-2 rounded-xl mt-4" onClick={() => navigate('/user-referrals')}>
+                Get Premium for Free
+              </button>
               {!hideNoThanks && (
                 <div className="mt-4 flex items-center justify-center mb-6">
                   <h3
