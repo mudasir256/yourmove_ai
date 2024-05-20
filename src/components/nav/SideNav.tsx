@@ -102,7 +102,7 @@ export const SideNav = () => {
                           fill="none"
                           xmlns="http://www.w3.org/2000/svg"
                         >
-                          <g clip-path="url(#clip0_1295_6150)">
+                          <g clipPath="url(#clip0_1295_6150)">
                             <rect width="320" height="72" fill="#270006" />
                             <circle
                               cx="65.5"

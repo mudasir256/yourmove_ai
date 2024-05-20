@@ -5,6 +5,7 @@ import { LearnMoreModal } from "../../modals/LearnMoreModal";
 import { ProductType } from "../../../constants/payments";
 import { PlanType } from "../../../constants/payments";
 import { useWizardStore } from "../../../stores/wizard";
+import { useUIStore } from "../../../stores/ui";
 
 type Props = {
   hideNoThanks?: boolean
@@ -17,14 +18,15 @@ export const ProfileReviewPaywall = ({ hideNoThanks, onComplete }: Props) => {
   const [chosenProduct, setChosenProduct] = useState<ProductType | null>(null);
   const [planBeingPurchased, setPlanBeingPurchased] = useState<PlanType | null>(null);
   const [learnMoreModalOpen, setLearnMoreModalOpen] = useState(false);
+  const { abTestGroup } = useUIStore()
 
   useEffect(() => {
     if ((window as any).gtag) {
-      (window as any).gtag('event', 'review_paywall', {
+      (window as any).gtag('event', abTestGroup === 0 ? 'experiment_review_paywall_A' : 'experiment_review_paywall_B', {
         event_category: 'funnel', product: 'profile_review',
-      });
+      })
     }
-  }, []);
+  }, [abTestGroup])
 
   return (
     <>
@@ -62,7 +64,7 @@ export const ProfileReviewPaywall = ({ hideNoThanks, onComplete }: Props) => {
                   </div>
                   <div className="flex mt-2 mb-3 items-center">
                     <div>
-                      <h1 className="text-4xl font-semibold">$9</h1>
+                      <h1 className="text-4xl font-semibold">{abTestGroup ? '$12' : '$12'}</h1>
                     </div>
                     <div className="pl-3">
                       <h1 className="text-zinc-500 leading-4">
@@ -109,6 +111,9 @@ export const ProfileReviewPaywall = ({ hideNoThanks, onComplete }: Props) => {
                   onClick={() => {
                     setPlanBeingPurchased(PlanType.Monthly);
                     if ((window as any).gtag) { (window as any).gtag('event', 'review_purchase_monthly', { event_category: 'funnel', product: 'profile_review', }) }
+                    (window as any).gtag('event', abTestGroup === 0 ? 'experiment_review_activate_subscription_A' : 'experiment_review_activate_subscription_B', {
+                      event_category: 'funnel', product: 'profile_review',
+                    })
                     // If the user isn't signed in, we need to sign them in or sign up
                     // if (!auth.currentUser) {
                     //   setAuthModalIsOpen(true);
@@ -131,7 +136,7 @@ export const ProfileReviewPaywall = ({ hideNoThanks, onComplete }: Props) => {
                   </h2>
                   <div className="flex mt-2 mb-3 items-center">
                     <div>
-                      <h1 className="text-4xl font-semibold">$12</h1>
+                      <h1 className="text-4xl font-semibold">{abTestGroup ? '$15' : '$15'}</h1>
                     </div>
                     <div className=" pl-3">
                       <h1 className="text-zinc-500 leading-4">
@@ -176,6 +181,9 @@ export const ProfileReviewPaywall = ({ hideNoThanks, onComplete }: Props) => {
                   onClick={() => {
                     setChosenProduct(ProductType.ProfileReview)
                     if ((window as any).gtag) { (window as any).gtag('event', 'review_purchase_oneoff', { event_category: 'funnel', product: 'profile_review', }) }
+                    (window as any).gtag('event', abTestGroup === 0 ? 'experiment_review_activate_onetime_A' : 'experiment_review_activate_onetime_B', {
+                      event_category: 'funnel', product: 'profile_review',
+                    })
                   }}
                   className="mt-4 flex items-center justify-center w-full bg-black text-white py-3 rounded-full font-semibold -mb-1"
                 >
