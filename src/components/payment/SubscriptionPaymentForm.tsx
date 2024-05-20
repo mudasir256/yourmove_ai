@@ -1,4 +1,3 @@
-import React from "react";
 import { XCircleIcon } from "@heroicons/react/24/outline";
 import {
   PaymentElement,
@@ -6,7 +5,7 @@ import {
   useStripe,
 } from "@stripe/react-stripe-js";
 import { StripePaymentElementOptions } from "@stripe/stripe-js";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useUIStore } from "../../stores/ui";
 import { createSubscription } from "../../queries";
 import { PlanType } from "../../constants/payments";
