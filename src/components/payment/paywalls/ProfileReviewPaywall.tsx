@@ -66,7 +66,7 @@ export const ProfileReviewPaywall = ({ hideNoThanks, onComplete }: Props) => {
                   </div>
                   <div className="flex mt-2 mb-3 items-center">
                     <div>
-                      <h1 className="text-4xl font-semibold">{abTestGroup ? '$12' : '$12'}</h1>
+                      <h1 className="text-4xl font-semibold">{abTestGroup ? '$14' : '$12'}</h1>
                     </div>
                     <div className="pl-3">
                       <h1 className="text-zinc-500 leading-4">
