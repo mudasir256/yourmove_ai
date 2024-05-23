@@ -46,7 +46,7 @@ export const SettingsModal = ({ open, setOpen }: Props) => {
 
         <div className="mt-5">
           <div className="mb-2">
-            <h3 className="font-bold">Gender</h3>
+            <h3 className="font-bold">Gender (you)</h3>
           </div>
           <GenderSelector />
         </div>
