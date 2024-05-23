@@ -120,6 +120,12 @@ export const ProfileReviewPaywall = ({ hideNoThanks, onComplete }: Props) => {
                 >
                   Activate
                 </button>
+                <p className="my-2 text-center font-medium">OR</p>
+                <button
+                  className="mt-2 flex items-center justify-center w-full bg-brand-primary text-white py-3 rounded-full font-semibold -mb-1"
+                  onClick={() => navigate('/user-referrals')}>
+                  Share for free access
+                </button>
               </div>
             </div>
 
@@ -185,9 +191,6 @@ export const ProfileReviewPaywall = ({ hideNoThanks, onComplete }: Props) => {
                 </button>
               </div>
             </div>
-            <button className="w-full bg-brand-primary text-white py-2 rounded-xl mt-4" onClick={() => navigate('/user-referrals')}>
-              Get Premium for Free
-            </button>
             {!hideNoThanks && <div className="mt-4 flex items-center justify-center mb-6">
               <h3
                 className="cursor-pointer text-lg text-zinc-500 hover:text-zinc-600 hover:underline"

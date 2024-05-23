@@ -162,7 +162,7 @@ export const Premium = () => {
                     <>
                       <div
                         className="overflow-y-scroll px-4 mt-4"
-                        style={{ height: `${window.innerHeight - 455}px` }}
+                        style={{ height: `${window.innerHeight - 405}px` }}
                         onScroll={() => setShowScrollForMoreFeatures(false)}
                       >
                         {/* Limitless Responses */}
@@ -182,13 +182,13 @@ export const Premium = () => {
                         </div>
                       </div>
 
-                      <div className="text-center pt-4 h-[14rem] w-full absolute bg-white w-full border-t-2 border-black fixed bottom-0 left-0 right-0">
+                      <div className="text-center pt-4 h-[10rem] w-full absolute bg-white w-full border-t-2 border-black fixed bottom-0 left-0 right-0">
                         <div className="flex">
                           <div className="w-1/4 lg:block hidden"></div>
-                          <div className="lg:w-1/2 lg:mx-20 w-full r">
+                          <div className="lg:w-1/2 lg:mx-20 w-full">
                             <h3 className="font-bold">Select your plan</h3>
 
-                            <div className="flex mt-3 -mt-10 pb-3">
+                            <div className="flex mt-3 -mt-10 pb-10">
                               {/* Monthly */}
                               <div
                                 className="w-1/2 border-2 border-brand-secondary rounded-lg mx-2 cursor-pointer z-50"
@@ -211,7 +211,7 @@ export const Premium = () => {
                                 </div>
                                 <div className="py-1.5">
                                   <h3 className="text-lg flex items-center justify-center">
-                                    {abTestGroup ? '$12' : '$9'}
+                                    {abTestGroup ? '$12' : '$12'}
                                     <span className="text-lg font-semithin pl-1 mt-0.5">
                                       / month
                                     </span>
@@ -248,12 +248,6 @@ export const Premium = () => {
                                   </h3>
                                 </div>
                               </div>
-                            </div>
-                            <p className="font-bold">OR</p>
-                            <div className="mx-4">
-                              <button className="w-full bg-brand-primary text-white py-2 rounded-xl mt-3" onClick={() => navigate('/user-referrals')}>
-                                Get Premium for Free
-                              </button>
                             </div>
                           </div>
                           <div className="w-1/4 hidden lg:block"></div>
