@@ -23,6 +23,7 @@ import { User, signOut } from "firebase/auth";
 import { AuthState } from "./constants/auth";
 import { useABTest } from './components/ab-testing/useABTest'
 import { UserSettings } from "./pages/UserSettings";
+import { UserReferrals } from "./pages/referral/Referral"
 /* 
 
 Everything is pretty much ready to rock and roll. The only outstanding pieces are:
@@ -58,6 +59,11 @@ if (import.meta.env.VITE_SENTRY_DSN) {
   });
 }
 
+const useSearchReferralCode = () => {
+  const queryParams = new URLSearchParams(useLocation().search)
+  return queryParams.get('referralCode')
+}
+
 function App() {
   const {
     setIsSubscribed,
@@ -79,6 +85,8 @@ function App() {
   } = useUIStore();
 
   const location = useLocation();
+  const referralCode = useSearchReferralCode()
+
   useABTest()
 
   // For hiding the bottom and side nav
@@ -87,12 +95,15 @@ function App() {
   useEffect(() => {
     setHideBottomNav(hiddenBottomNavPages.includes(location.pathname));
     setHideTopBar(hiddenTopNavPages.includes(location.pathname));
-  }, [location]);
 
-  // When the URL changes, set the default stopScroll back to false
-  useEffect(() => {
+    // When the URL changes, set the default stopScroll back to false
     setStopScroll(false);
   }, [location]);
+
+  useEffect(() => {
+    if (referralCode) localStorage.setItem('referredCode', referralCode);
+  }, [referralCode])
+
 
   const checkForSubscription = () => {
     if (auth.currentUser) {
@@ -228,6 +239,14 @@ function App() {
           element={
             <Page title="User Settings">
               <UserSettings />
+            </Page>
+          }
+        />
+        <Route
+          path="/user-referrals"
+          element={
+            <Page title="YourMove - Referrals">
+              <UserReferrals />
             </Page>
           }
         />

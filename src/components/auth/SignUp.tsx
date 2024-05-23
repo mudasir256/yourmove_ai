@@ -8,6 +8,8 @@ import { ErrorAlert } from "../ErrorAlert";
 import { useAuthStore } from "../../stores/auth";
 import { successfulSignUp } from "../../utils";
 import { AuthActionType } from "../../constants/auth";
+import { FirebaseError } from "firebase/app";
+import { addUserReferral } from "../../queries";
 
 export const SignUp = () => {
   const [submitting, setSubmitting] = useState(false);
@@ -59,14 +61,21 @@ export const SignUp = () => {
             setError("");
             setSubmitting(true);
             try {
-              await createUserWithEmailAndPassword(
+              const signupUser = await createUserWithEmailAndPassword(
                 auth,
                 values.email,
                 values.password
               );
               successfulSignUp();
+              const referral = localStorage.getItem('referredCode')
+              const userId = signupUser.user?.uid
+              if (referral && userId) {
+                // add referrealUser
+                await addUserReferral(userId, referral)
+                localStorage.removeItem('referredCode')
+              }
             } catch (error) {
-              if (error.code === "auth/email-already-in-use") {
+              if ((error as FirebaseError)?.code === "auth/email-already-in-use") {
                 setError("Email already in use");
               }
             }

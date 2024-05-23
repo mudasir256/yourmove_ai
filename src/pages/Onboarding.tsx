@@ -38,7 +38,7 @@ export const Onboarding = () => {
   return (
     <div className="max-w-lg mx-auto mt-0">
       <Helmet>
-            <meta name="description" content="What's your next move? Get more matches with online dating, or turn your existing matches into dates." />
+        <meta name="description" content="What's your next move? Get more matches with online dating, or turn your existing matches into dates." />
       </Helmet>
       <div>
         {/* <div className="flex items-center justify-center">
@@ -52,20 +52,18 @@ export const Onboarding = () => {
           {OPTIONS.map((option) => {
             return (
               <div
-                className={`bg-white border-2 mr-4 p-4 w-1/2 rounded-2xl cursor-pointer ${
-                  isOptionSelected(option.title)
+                className={`bg-white border-2 mr-4 p-4 w-1/2 rounded-2xl cursor-pointer ${isOptionSelected(option.title)
                     ? "border-brand-primary"
                     : "border-black"
-                }`}
+                  }`}
                 onClick={() => setSelectedOption(option.title)}
               >
                 <h1 className="text-4xl">{option.emoji}</h1>
                 <h2
-                  className={`leading-7 text-2xl font-semibold mt-2 ${
-                    isOptionSelected(option.title)
+                  className={`leading-7 text-2xl font-semibold mt-2 ${isOptionSelected(option.title)
                       ? "text-brand-primary"
                       : "text-black"
-                  }`}
+                    }`}
                 >
                   {option.title}
                 </h2>

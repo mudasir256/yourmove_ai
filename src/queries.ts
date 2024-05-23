@@ -335,5 +335,38 @@ export const paymentIntentForAIPhotos = (email: string) => {
   return axios.post(`${BASE_URL}/payment-intent-ai-photos`, body);
 }
 
-export const fetchIP = async () =>
-  axios.get(`${BASE_URL}/ip`);
+export const fetchUserReferralCode = (email: string) => {
+  const body = {
+    email
+  }
+  return axios.post(`${BASE_URL}/user/get-referral-code`, body);
+}
+
+export const addUserReferral = (userId: string, referralCode: string) => {
+  const body = {
+    userId,
+    referralCode
+  }
+  return axios.post(`${BASE_URL}/user/add-referral`, body);
+}
+
+export const fetchReferralsCount = (referralCode: string) => {
+  const body = {
+    referralCode
+  }
+  return axios.post(`${BASE_URL}/user/fetch-referrals-count`, body);
+}
+
+export const claimSubscription = (email: string) => {
+  const body = {
+    email
+  }
+  return axios.post(`${BASE_URL}/user/claim-referral-subscription`, body);
+}
+
+export const fetchReferralSubscriptionStatus = (email: string) => {
+  const body = {
+    email
+  }
+  return axios.post(`${BASE_URL}/user/fetch-referral-subscription-status`, body);
+}

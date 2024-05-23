@@ -5,6 +5,7 @@ import { LearnMoreModal } from "../../modals/LearnMoreModal";
 import { ProductType } from "../../../constants/payments";
 import { PlanType } from "../../../constants/payments";
 import { useWizardStore } from "../../../stores/wizard";
+import { useNavigate } from "react-router-dom";
 import { useUIStore } from "../../../stores/ui";
 
 type Props = {
@@ -13,6 +14,7 @@ type Props = {
 }
 
 export const ProfileReviewPaywall = ({ hideNoThanks, onComplete }: Props) => {
+  const navigate = useNavigate()
   const { profileReviewerStepResults, setProfileReviewerWizardComplete } =
     useWizardStore();
   const [chosenProduct, setChosenProduct] = useState<ProductType | null>(null);
@@ -122,6 +124,12 @@ export const ProfileReviewPaywall = ({ hideNoThanks, onComplete }: Props) => {
                   className="mt-2 flex items-center justify-center w-full bg-brand-primary text-white py-3 rounded-full font-semibold -mb-1"
                 >
                   Activate
+                </button>
+                <p className="my-2 text-center font-medium">OR</p>
+                <button
+                  className="mt-2 flex items-center justify-center w-full bg-brand-primary text-white py-3 rounded-full font-semibold -mb-1"
+                  onClick={() => navigate('/user-referrals')}>
+                  Share for free access
                 </button>
               </div>
             </div>
