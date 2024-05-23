@@ -74,7 +74,7 @@ export const ProfileWriterPaywall = ({ hideNoThanks, onComplete }: Props) => {
                     </div>
                     <div className="flex mt-2 mb-3 items-center">
                       <div>
-                        <h1 className="text-4xl font-semibold">{abTestGroup ? '$12' : '$9'}</h1>
+                        <h1 className="text-4xl font-semibold">{abTestGroup ? '$12' : '$12'}</h1>
                       </div>
                       <div className="pl-3">
                         <h1 className="text-zinc-500 leading-4">
@@ -157,7 +157,7 @@ export const ProfileWriterPaywall = ({ hideNoThanks, onComplete }: Props) => {
                     </h2>
                     <div className="flex mt-2 mb-3 items-center">
                       <div>
-                        <h1 className="text-4xl font-semibold">{abTestGroup ? '$15' : '$12'}</h1>
+                        <h1 className="text-4xl font-semibold">{abTestGroup ? '$15' : '$15'}</h1>
                       </div>
                       <div className=" pl-3">
                         <h1 className="text-zinc-500 leading-4">
