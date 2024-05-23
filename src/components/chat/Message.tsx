@@ -23,7 +23,7 @@ export const Message = ({ message }: Props) => {
             }`}
           >
             {message.author === MessageAuthorType.User && (
-              <div className="font-bold text-sm">Your message</div>
+              <div className="font-bold text-sm">Their message</div>
             )}
             {message.content}
           </div>
