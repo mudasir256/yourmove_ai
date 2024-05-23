@@ -25,8 +25,7 @@ export const OAuthOptions = () => {
   const handleReferralSignUp = async (userId: string) => {
     const referral = localStorage.getItem('referredCode')
     if (referral) {
-      const response = await addUserReferral(userId, referral)
-      console.log("ADD REFERRAL RESPONSE:: ", response)
+      await addUserReferral(userId, referral)
       localStorage.removeItem('referredCode')
     }
   }
@@ -34,10 +33,7 @@ export const OAuthOptions = () => {
   const launchGoogleAuth = () => {
     signInWithPopup(auth, googleProvider)
       .then((result) => {
-        console.log("RESULT GOOGLE:: ", result)
         const addInfo = getAdditionalUserInfo(result)
-        console.log("ADDITIONAL INFO:: ", addInfo)
-        console.log("NEW USER:: ", addInfo?.isNewUser)
         if (result.user.email) {
           successfulSignIn(result.user.email);
           // Migrate just the user
@@ -58,7 +54,6 @@ export const OAuthOptions = () => {
   const launchAppleAuth = () => {
     signInWithPopup(auth, appleProvider)
       .then((result) => {
-        console.log("RESULT APPLE:: ", result)
         const addInfo = getAdditionalUserInfo(result)
         if (result.user.email) {
           successfulSignIn(result.user.email);

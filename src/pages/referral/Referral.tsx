@@ -16,7 +16,6 @@ export const UserReferrals = () => {
     referralSubStatus,
     disabled
   } = useReferrals()
-  console.log("REF STATUS::", referralSubStatus)
 
   const handleShareClick = async () => {
     const shareUrl = `https://web.yourmove.com/?referralCode=${referralCode}`;
@@ -26,7 +25,6 @@ export const UserReferrals = () => {
         text: 'Check out YourMove and sign up with my referral code to get benefits!',
         url: shareUrl,
       });
-      console.log('Shared successfully');
     } catch (error) {
       console.error('Error sharing:', error);
     }
