@@ -2,6 +2,7 @@ import { Back } from "../../components/Back"
 import ReferralImage from "../../assets/images/referral-img.png"
 import { useNavigate } from "react-router-dom";
 import { useReferrals } from "./useReferrals"
+import { useEffect, useRef, useState } from "react";
 
 
 const REFERRAL_REQUIRED_FOR_PREMIUM_ACCESS = parseInt(import.meta.env.VITE_REFERRAL_REQUIRED_FOR_PREMIUM_ACCESS || 0)
@@ -17,18 +18,36 @@ export const UserReferrals = () => {
     disabled
   } = useReferrals()
 
-  const handleShareClick = async () => {
-    const shareUrl = `https://web.yourmove.com/?referralCode=${referralCode}`;
+  const [referralLink, setReferralLink] = useState(`https://web.yourmove.com/?referralCode=${referralCode}`)
+
+  useEffect(() => {
+    setReferralLink(`https://web.yourmove.com/?referralCode=${referralCode}`)
+  }, [referralCode])
+
+  const onShareReferralClicked = async () => {
+    (window as any).gtag('event', 'referral_share', {
+      event_category: 'referral_share',
+      product: 'share',
+    });
+
     try {
       await navigator.share({
         title: 'Join YourMove',
         text: 'Check out YourMove and sign up with my referral code to get benefits!',
-        url: shareUrl,
+        url: referralLink,
       });
     } catch (error) {
       console.error('Error sharing:', error);
     }
   };
+
+  const onCopyReferralClicked = () => {
+    (window as any).gtag('event', 'referral_copy', {
+      event_category: 'referral_copy',
+      product: 'share',
+    });
+    navigator.clipboard.writeText(referralLink)
+  }
 
   const canShare = typeof navigator.share === 'function';
 
@@ -55,17 +74,15 @@ export const UserReferrals = () => {
             <div className="flex justify-between items-center border py-2 rounded-full bg-zinc-200 border-black border-opacity-30">
               {referralCode && (
                 <>
-                  <span className="text-black ml-6 truncate flex-grow max-w-[60%]">{`https://web.yourmove.com/?referralCode=${referralCode}`}</span>
-                  <button className="text-brand-primary mr-6 py-1 rounded font-semibold" onClick={() => {
-                    navigator.clipboard.writeText(`https://web.yourmove.com/?referralCode=${referralCode}`)
-                  }}>Copy Link</button>
+                  <span className="text-black ml-6 truncate flex-grow max-w-[60%]">{referralLink}</span>
+                  <button className="text-brand-primary mr-6 py-1 rounded font-semibold" onClick={onCopyReferralClicked}>Copy Link</button>
                 </>
               )}
             </div>
           </>
         }
         {canShare && referralCode && <div className="flex justify-center mt-2">
-          <button className="text-brand-primary rounded font-semibold" onClick={handleShareClick}>
+          <button className="text-brand-primary rounded font-semibold" onClick={onShareReferralClicked}>
             Share Link
           </button>
         </div>}
