@@ -204,7 +204,6 @@ export const ProfileWriterPaywall = ({ hideNoThanks, onComplete }: Props) => {
                       if ((window as any).gtag) {
                         (window as any).gtag('event', 'writer_purchase_oneoff', { event_category: 'funnel', product: 'profile_writer', })
                           (window as any).gtag('event', abTestGroup === 0 ? 'experiment_writer_activate_onetime_A' : 'experiment_writer_activate_onetime_B', { event_category: 'funnel', product: 'profile_writer', })
-
                       }
                     }
                     }
