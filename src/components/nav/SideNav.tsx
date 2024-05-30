@@ -168,14 +168,14 @@ export const SideNav = () => {
                             }} />
                           </ul>
                         </li>
-                        {/* <SideNavListItem key="4" containerStyle="mt-auto -mx-2 mb-4" title="Contact Us" onNavItemClick={() => {
+                        <SideNavListItem key="4" containerStyle="mt-auto -mx-2 mb-4" title="Contact Us" onNavItemClick={() => {
                           setSidebarOpen(false);
                           setTimeout(
                             () => setFeedbackModalOpen(true),
                             250
                           );
                         }} />
-                        {user && <SideNavListItem key="5" containerStyle="-mx-2 mb-4" title="User Settings" onNavItemClick={() => {
+                        {/* {user && <SideNavListItem key="5" containerStyle="-mx-2 mb-4" title="User Settings" onNavItemClick={() => {
                           setSidebarOpen(false);
                           setTimeout(
                             () => navigate("/user-settings"),
@@ -183,7 +183,7 @@ export const SideNav = () => {
                           );
                         }} />} */}
                         <SideNavListItem
-                          key="6"
+                          key="5"
                           containerStyle="-mx-2"
                           title="Download iOS"
                           titleStyle="text-brand-primary"
