@@ -168,7 +168,7 @@ export const SideNav = () => {
                             }} />
                           </ul>
                         </li>
-                        <SideNavListItem key="4" containerStyle="mt-auto -mx-2 mb-4" title="Contact Us" onNavItemClick={() => {
+                        {/* <SideNavListItem key="4" containerStyle="mt-auto -mx-2 mb-4" title="Contact Us" onNavItemClick={() => {
                           setSidebarOpen(false);
                           setTimeout(
                             () => setFeedbackModalOpen(true),
@@ -181,7 +181,7 @@ export const SideNav = () => {
                             () => navigate("/user-settings"),
                             250
                           );
-                        }} />}
+                        }} />} */}
                         <SideNavListItem
                           key="6"
                           containerStyle="-mx-2"
