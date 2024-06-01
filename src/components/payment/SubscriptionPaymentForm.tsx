@@ -9,8 +9,6 @@ import { useState } from "react";
 import { useUIStore } from "../../stores/ui";
 import { createSubscription } from "../../queries";
 import { PlanType } from "../../constants/payments";
-import { useAuthStore } from "../../stores/auth";
-import { auth } from "../../firebase";
 
 interface Props {
   redirectSuffix: string;
@@ -32,10 +30,6 @@ export default function SubscriptionPaymentForm({
   const elements = useElements();
   const [message, setMessage] = useState<string | null>(null);
   const { paymentIsLoading, setPaymentIsLoading } = useUIStore();
-  const {
-    setSubscriptionEmail,
-    setSubscriptionId
-  } = useAuthStore();
 
   const validateEmail = () => {
     if (!email) return false
@@ -90,15 +84,7 @@ export default function SubscriptionPaymentForm({
 
     // This point is reached if we have a payment intent
     if (paymentIntent && paymentIntent.status === "succeeded") {
-      if (!auth.currentUser || !auth.currentUser?.email) {
-        setSubscriptionEmail(email)
-        setSubscriptionId(subscriptionId)
-      }
-
-      if (redirectHandler) {
-        redirectHandler();
-      }
-      return
+      redirectHandler?.();
     }
 
     // This point will only be reached if there is an immediate error when

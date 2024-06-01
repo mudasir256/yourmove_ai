@@ -69,12 +69,6 @@ function App() {
     setIsSubscribed,
     hasCheckedForSubscription,
     setHasCheckedForSubscription,
-    subscriptionEmail,
-    setSubscriptionEmail,
-    subscriptionId,
-    setSubscriptionId,
-    shouldAuthenticateForSubscription,
-    setShouldAuthenticateForSubscription,
     setAuthState
   } = useAuthStore();
   const {
@@ -131,17 +125,6 @@ function App() {
         // create an account here using the id returned from the auth so we can map email to id.
         // fix for apple id issue
         await createOrGetAuthUser(uid, email as string);
-        if (shouldAuthenticateForSubscription && subscriptionEmail && subscriptionId && email) {
-          // case where the user logged in after subscription payment and we must sync the payment with
-          // the currently logged in user
-          // send the subscription id and the payment to the backend
-          await setUserSubscription(email, subscriptionId)
-          setShouldAuthenticateForSubscription(false)
-          setSubscriptionEmail("")
-          setSubscriptionId("")
-          // for chat to proceed
-          setSubscriptionSuccess(true)
-        }
 
         if (!hasCheckedForSubscription) {
           checkForSubscription();
@@ -171,7 +154,7 @@ function App() {
     });
 
     return () => unsubscribe();
-  }, [subscriptionEmail, subscriptionId]);
+  }, []);
 
   return (
     <QueryClientProvider client={queryClient}>

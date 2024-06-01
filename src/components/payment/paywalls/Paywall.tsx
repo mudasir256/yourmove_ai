@@ -47,15 +47,17 @@ export const Paywall = ({
   const [price, setPrice] = useState<string | null>(null);
   const { isSubscribed, setIsSubscribed } = useAuthStore();
   const { setPaymentIsLoading, abTestGroup } = useUIStore();
-  const { setAuthModalIsOpen, setShouldAuthenticateForSubscription, shouldAuthenticateForSubscription, authModalIsOpen, setShowAuthSubscriptionDisclaimer } = useAuthStore();
+  const { setAuthModalIsOpen, authModalIsOpen, setShowAuthSubscriptionDisclaimer } = useAuthStore();
+  const [showAuthModalAfterPayment, setShowAuthModalAfterPayment] = useState(false)
 
   useEffect(() => {
-    if (!authModalIsOpen && !auth.currentUser && shouldAuthenticateForSubscription) {
+    if (!authModalIsOpen && !auth.currentUser && showAuthModalAfterPayment) {
       // authModal closed without login / signup in
       noThanksHandler();
       setPaymentIsLoading(false);
+      setShowAuthModalAfterPayment(false)
     }
-  }, [shouldAuthenticateForSubscription, authModalIsOpen])
+  }, [showAuthModalAfterPayment, authModalIsOpen])
 
   useEffect(() => {
     // If the user is subscribed, then we can skip the paywall
@@ -180,8 +182,8 @@ export const Paywall = ({
                   } else {
                     // open login
                     onComplete?.()
+                    setShowAuthModalAfterPayment(true)
                     setShowAuthSubscriptionDisclaimer(true)
-                    setShouldAuthenticateForSubscription(true)
                     setAuthModalIsOpen(true)
                   }
                 }}
