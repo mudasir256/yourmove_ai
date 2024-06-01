@@ -175,15 +175,15 @@ export const SideNav = () => {
                             250
                           );
                         }} />
-                        {user && <SideNavListItem key="5" containerStyle="-mx-2 mb-4" title="User Settings" onNavItemClick={() => {
+                        {/* {user && <SideNavListItem key="5" containerStyle="-mx-2 mb-4" title="User Settings" onNavItemClick={() => {
                           setSidebarOpen(false);
                           setTimeout(
                             () => navigate("/user-settings"),
                             250
                           );
-                        }} />}
+                        }} />} */}
                         <SideNavListItem
-                          key="6"
+                          key="5"
                           containerStyle="-mx-2"
                           title="Download iOS"
                           titleStyle="text-brand-primary"
