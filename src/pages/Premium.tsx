@@ -11,6 +11,7 @@ import { useUIStore } from "../stores/ui";
 import { useNavigate } from "react-router-dom";
 import { Success } from "../components/Success";
 import { Helmet } from 'react-helmet-async';
+import { AuthState } from "../constants/auth";
 
 
 export const Premium = () => {
@@ -19,9 +20,10 @@ export const Premium = () => {
     null
   );
   const [isLoading, setIsLoading] = useState(true);
-  const { authModalIsOpen, setAuthModalIsOpen, isSubscribed, shouldAuthenticateForSubscription, setShouldAuthenticateForSubscription, setShowAuthSubscriptionDisclaimer } = useAuthStore();
+  const { authModalIsOpen, setAuthModalIsOpen, isSubscribed, setShowAuthSubscriptionDisclaimer, authState } = useAuthStore();
   const { subscriptionSuccess, setSubscriptionSuccess, setStopScroll, setHideBottomNav, abTestGroup } = useUIStore();
   const navigate = useNavigate();
+  const [showAuthModalAfterPayment, setShowAuthModalAfterPayment] = useState(false)
 
   useEffect(() => {
     setHideBottomNav(true);
@@ -41,11 +43,19 @@ export const Premium = () => {
   }, [subscriptionSuccess]);
 
   useEffect(() => {
-    if (!authModalIsOpen && !auth.currentUser && shouldAuthenticateForSubscription) {
-      // authModal closed without loggin / signup in
-      navigate("/")
+    if (showAuthModalAfterPayment && authState === AuthState.Authenticated) {
+      setSubscriptionSuccess(true)
+      setShowAuthModalAfterPayment(false)
     }
-  }, [shouldAuthenticateForSubscription, authModalIsOpen])
+  }, [authState, showAuthModalAfterPayment])
+
+  useEffect(() => {
+    if (!authModalIsOpen && !auth.currentUser && showAuthModalAfterPayment) {
+      // authModal closed without loggin / signup in
+      setSubscriptionSuccess(true)
+      setShowAuthModalAfterPayment(false)
+    }
+  }, [showAuthModalAfterPayment, authModalIsOpen])
 
   useEffect(() => {
     if ((window as any).gtag && abTestGroup !== undefined) {
@@ -148,8 +158,8 @@ export const Premium = () => {
                         redirectHandler={() => {
                           if (!auth.currentUser) {
                             setShowAuthSubscriptionDisclaimer(true)
+                            setShowAuthModalAfterPayment(true)
                             setAuthModalIsOpen(true)
-                            setShouldAuthenticateForSubscription(true)
                           } else {
                             setTimeout(() => {
                               setSubscriptionSuccess(true);

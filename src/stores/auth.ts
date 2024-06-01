@@ -22,18 +22,6 @@ interface AuthStore {
   emailToMigrate: string;
   setEmailToMigrate: (emailToMigrate: string) => void;
 
-  // For Payment
-  subscriptionEmail: string;
-  setSubscriptionEmail: (subscriptionEmail: string) => void;
-
-  // For Subscription
-  subscriptionId: string;
-  setSubscriptionId: (subscriptionId: string) => void;
-
-  // Auth for payment
-  shouldAuthenticateForSubscription: boolean;
-  setShouldAuthenticateForSubscription: (shouldAuthenticateForSubscription: boolean) => void;
-
   showAuthSubscriptionDisclaimer: boolean;
   setShowAuthSubscriptionDisclaimer: (showAuthSubscriptionDisclaimer: boolean) => void;
 
@@ -57,13 +45,6 @@ export const useAuthStore = create<AuthStore>((set) => ({
   setShowOptions: (showOptions) => set({ showOptions }),
   emailToMigrate: "",
   setEmailToMigrate: (emailToMigrate) => set({ emailToMigrate }),
-  subscriptionEmail: "",
-  setSubscriptionEmail: (subscriptionEmail: string) => set({ subscriptionEmail }),
-  subscriptionId: "",
-  setSubscriptionId: (subscriptionId: string) => set({ subscriptionId }),
-  shouldAuthenticateForSubscription: false,
-  setShouldAuthenticateForSubscription: (shouldAuthenticateForSubscription) =>
-    set({ shouldAuthenticateForSubscription }),
   showAuthSubscriptionDisclaimer: false,
   setShowAuthSubscriptionDisclaimer: (showAuthSubscriptionDisclaimer) => set({ showAuthSubscriptionDisclaimer }),
   authState: AuthState.Authenticating,
