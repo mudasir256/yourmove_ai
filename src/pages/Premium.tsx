@@ -67,7 +67,7 @@ export const Premium = () => {
     </div>
 
   ) : (
-    <div className="flex-col flex-1 max-w-lg mx-auto mt-0 overflow-hidden">
+    <div className="flex-col flex-1 max-w-lg mx-auto mt-0 overflow-hidden bg-white">
       <Helmet>
         <meta name="description" content="Unlimited access to YourMove AI suite of tools for online dating" />
       </Helmet>
@@ -84,7 +84,7 @@ export const Premium = () => {
               <h3>You are already subscribed to YourMove premium.</h3>
             </div>
           ) : (
-            <div className="flex-1 px-2 overflow-y-scroll">
+            <div className="flex-1 px-2">
               <div className="mt-2 shadow-xl rounded-2xl">
                 <div
                   className={`bg-white ${planBeingPurchased ? "rounded-2xl" : "rounded-t-2xl"} border-2 border-brand-primary py-4 flex flex-col`}
@@ -92,7 +92,7 @@ export const Premium = () => {
                   <div className="flex gap-x-1 items-center px-4">
                     <div className="font-semibold">YourMove</div>
                     <div
-                      className="text-[#E85E5C] bg-[#E85E5C]/10 px-2 py-1 font-bold font-source-sans-pro rounded"
+                      className="text-brand-primary bg-brand-primary/10 px-2 py-1 font-bold font-source-sans-pro rounded"
                     >
                       Premium
                     </div>
@@ -101,7 +101,7 @@ export const Premium = () => {
                   <h1
                     className="font-source-sans-pro font-black text-3xl tracking-tighter px-4"
                   >
-                    <span className="text-[#E85E5C]">Refresh your dating profiles</span> and
+                    <span className="text-brand-primary">Refresh your dating profiles</span> and
                     send unlimited thoughtful chats
                   </h1>
 
@@ -139,7 +139,7 @@ export const Premium = () => {
                       <div className="flex flex-col items-center justify-center">
                         <div className="flex">
                           <div
-                            className="text-[#E85E5C] bg-[#E85E5C]/10 px-1 py-1 font-bold font-source-sans-pro rounded"
+                            className="text-brand-primary bg-brand-primary/10 px-1 py-1 font-bold font-source-sans-pro rounded"
                           >
                             Premium
                           </div>
@@ -159,7 +159,7 @@ export const Premium = () => {
                       </div>
 
                       <div
-                        className="flex justify-center font-semibold text-[#E85E5C] break-all hyphens-manual"
+                        className="flex justify-center font-semibold text-brand-primary break-all hyphens-manual"
                         lang="en"
                       >
                         Limitless
@@ -176,7 +176,7 @@ export const Premium = () => {
                         <span className="font-normal">Limited</span>
                       </div>
 
-                      <div className="flex justify-center font-semibold text-[#E85E5C]">
+                      <div className="flex justify-center font-semibold text-brand-primary">
                         <span>Limitless</span>
                       </div>
 
@@ -191,15 +191,15 @@ export const Premium = () => {
                         <span className="font-normal">Limited</span>
                       </div>
 
-                      <div className="flex justify-center font-semibold text-[#E85E5C]">
+                      <div className="flex justify-center font-semibold text-brand-primary">
                         <span>Limitless</span>
                       </div>
 
                       <div className="flex flex-col col-span-2">
                         <span className="font-semibold">AI Photos</span>
                         <span className="opacity-60"> Stand Out with AI-Enhanced Photos </span>
-                        <div>
-                          <a href="#" className="text-[#E85E5C] font-medium">{`Learn More ->`}</a>
+                        <div className="text-brand-primary font-medium cursor-pointer" onClick={() => navigate('/ai-photo')}>
+                          {`Learn More ->`}
                         </div>
                       </div>
 
@@ -207,7 +207,7 @@ export const Premium = () => {
                         <span className="font-normal">Full Price</span>
                       </div>
 
-                      <div className="flex justify-center font-semibold text-[#E85E5C]">
+                      <div className="flex justify-center font-semibold text-brand-primary">
                         <span>50% Off</span>
                       </div>
                     </div>
@@ -244,7 +244,7 @@ export const Premium = () => {
                         <span className="font-semibold">Yearly</span>
                         <div className="flex flex-col items-center ml-2">
                           <div
-                            className="text-brand-primary bg-[#E85E5C]/10 px-2 py-1 font-bold font-source-sans-pro text-xxs rounded"
+                            className="text-brand-primary bg-brand-primary/10 px-2 py-1 font-bold font-source-sans-pro text-xxs rounded"
                           >
                             Most Popular
                           </div>
@@ -264,7 +264,7 @@ export const Premium = () => {
                 }
               </div>
               {!planBeingPurchased &&
-                <div className="bg-[#E85E5C] py-6 px-4 mt-10">
+                <div className="bg-brand-primary py-6 px-4 mt-10">
                   <h2 className="text-2xl text-white font-bold">
                     Read what people are saying about their new profiles
                   </h2>
