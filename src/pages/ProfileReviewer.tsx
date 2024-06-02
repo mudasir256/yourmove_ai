@@ -98,8 +98,10 @@ export const ProfileReviewer = () => {
           />
         ) : (
           // <Loading titles={loadingTitles} updateInterval={3750} />
-          <div className="flex flex-col items-center justify-center h-screen px-4 -mt-20">
-            <ProgressBar totalTime={150} complete={reviewedProfile != null} titles={loadingTitles} onCompleted={() => setShowReview(true)} />
+          <div className="flex flex-col items-center justify-center h-screen px-4">
+            <div className="w-full max-w-lg text-center space-y-4 -mt-20 h-32">
+              <ProgressBar totalTime={150} complete={reviewedProfile != null} titles={loadingTitles} onCompleted={() => setShowReview(true)} />
+            </div>
           </div>
         )}
       </Wizard>

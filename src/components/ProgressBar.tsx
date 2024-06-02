@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 
 type Props = {
   onCompleted?: VoidFunction
@@ -10,7 +10,7 @@ type Props = {
 export const ProgressBar = ({ onCompleted, totalTime = 150, complete, titles = [] }: Props) => {
   const [progress, setProgress] = useState<number>(0);
   const [currentTitle, setCurrentTitle] = useState<string>(titles.length > 0 ? titles[0] : "")
-  const updateInterval = totalTime * 1000 / (titles.length || 1)
+  const updateInterval = titles.length > 1 ? 5000 : totalTime
 
   useEffect(() => {
     if (complete) setProgress(totalTime)
@@ -21,7 +21,7 @@ export const ProgressBar = ({ onCompleted, totalTime = 150, complete, titles = [
       const intervalId = setInterval(() => {
         setCurrentTitle(prev => {
           const currentIndex = titles.indexOf(prev);
-          const nextIndex = (currentIndex + 1);
+          const nextIndex = (currentIndex + 1) % titles.length;
           return titles[nextIndex];
         });
       }, updateInterval);
@@ -56,9 +56,9 @@ export const ProgressBar = ({ onCompleted, totalTime = 150, complete, titles = [
           style={{ width: `${percentage}%` }}
         />
       </div>
-      {titles ? <><div className="text-center mt-2">
+      {titles ? (<div className="text-center mt-2">
         <h2 className="text-2xl font-semibold">{currentTitle}</h2>
-      </div></> : <p className="text-black text-right mt-2">{`${Math.round(percentage)}%`}</p>}
+      </div>) : (<p className="text-black text-right mt-2">{`${Math.round(percentage)}%`}</p>)}
     </>
   );
 };
