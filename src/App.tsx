@@ -75,7 +75,6 @@ function App() {
     setStopScroll,
     setHideBottomNav,
     setHideTopBar,
-    setSubscriptionSuccess
   } = useUIStore();
 
   const location = useLocation();
@@ -95,7 +94,17 @@ function App() {
   }, [location]);
 
   useEffect(() => {
-    if (referralCode) localStorage.setItem('referredCode', referralCode);
+    if (referralCode) {
+      const currentCode = localStorage.getItem('referredCode')
+      if (!currentCode || currentCode !== referralCode) {
+        if ((window as any).gtag) {
+          (window as any).gtag('event', 'referral_user_arrive', {
+            event_category: 'funnel', product: 'referrals',
+          })
+        }
+      }
+      localStorage.setItem('referredCode', referralCode);
+    }
   }, [referralCode])
 
 
