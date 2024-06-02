@@ -3,6 +3,12 @@ export default {
   content: ["./index.html", "./src/**/*.{js,ts,jsx,tsx}"],
   theme: {
     extend: {
+      fontSize: {
+        'tiny': '8px',
+        'xxs': '10px',
+        'base': '16px',
+        'xxl': '22px',
+      },
       colors: {
         "brand-primary": "#E85E5C",
         "brand-secondary": "#410B13",
