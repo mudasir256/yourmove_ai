@@ -5,7 +5,7 @@ import { PROFILE_REVIEWER_WIZARD_STEPS } from "../constants/wizard";
 import { useWizardStore } from "../stores/wizard";
 import { generateProfileReview } from "../queries";
 import { useProfileStore } from "../stores/profile";
-import { Loading } from "../components/Loading";
+import { ProgressBar } from "../components/ProgressBar";
 import { ReviewedProfile } from "../models/profile";
 import { auth } from "../firebase";
 import { Helmet } from 'react-helmet-async';
@@ -28,6 +28,8 @@ export const ProfileReviewer = () => {
     hasPaidForProfileReview,
     setHasPaidForProfileReview,
   } = useProfileStore();
+
+  const [showReview, setShowReview] = useState(false)
 
   const loadingTitles = [
     "Analyzing your profile's first impressions...",
@@ -65,9 +67,13 @@ export const ProfileReviewer = () => {
     }
   }, [profileReviewerWizardComplete, profileReviewerFiles]);
 
-  useEffect(() => {if ((window as any).gtag) {
-    (window as any).gtag('event', 'review_start', {event_category: 'funnel',product: 'profile_review',
-    });}}, []);
+  useEffect(() => {
+    if ((window as any).gtag) {
+      (window as any).gtag('event', 'review_start', {
+        event_category: 'funnel', product: 'profile_review',
+      });
+    }
+  }, []);
 
   return (
     <div className="px-4">
@@ -85,15 +91,19 @@ export const ProfileReviewer = () => {
         setStepResult={setProfileReviewerStepResult}
         storeStep={true}
       >
-        {reviewedProfile ? (
+        {showReview ? (
           <ProfileReview
             hasPaid={hasPaidForProfileReview}
             setHasPaid={setHasPaidForProfileReview}
           />
-        ) : (<>
-            <Loading titles={loadingTitles} updateInterval={3750}/>
-          </>          
-          )}
+        ) : (
+          // <Loading titles={loadingTitles} updateInterval={3750} />
+          <div className="flex flex-col items-center justify-center h-screen px-4">
+            <div className="w-full max-w-lg text-center space-y-4 -mt-20 h-32">
+              <ProgressBar totalTime={150} complete={reviewedProfile != null} titles={loadingTitles} onCompleted={() => setShowReview(true)} />
+            </div>
+          </div>
+        )}
       </Wizard>
     </div>
   );
