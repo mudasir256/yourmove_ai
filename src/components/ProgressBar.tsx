@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 
 type Props = {
   onCompleted?: VoidFunction
@@ -10,14 +10,14 @@ type Props = {
 export const ProgressBar = ({ onCompleted, totalTime = 150, complete, titles = [] }: Props) => {
   const [progress, setProgress] = useState<number>(0);
   const [currentTitle, setCurrentTitle] = useState<string>(titles.length > 0 ? titles[0] : "")
-  const updateInterval = titles.length > 1 ? 5000 : totalTime
 
   useEffect(() => {
     if (complete) setProgress(totalTime)
   }, [complete])
 
   useEffect(() => {
-    if (titles && titles.length > 1) {
+    if (titles.length > 1) {
+      const updateInterval = 5000
       const intervalId = setInterval(() => {
         setCurrentTitle(prev => {
           const currentIndex = titles.indexOf(prev);
@@ -27,7 +27,7 @@ export const ProgressBar = ({ onCompleted, totalTime = 150, complete, titles = [
       }, updateInterval);
       return () => clearInterval(intervalId);
     }
-  }, [titles, updateInterval]);
+  }, [titles]);
 
   useEffect(() => {
     const updateInterval = 1000; // update every second
