@@ -9,6 +9,7 @@ import { ProgressBar } from "../components/ProgressBar";
 import { ReviewedProfile } from "../models/profile";
 import { auth } from "../firebase";
 import { Helmet } from 'react-helmet-async';
+import { ProfileReviewLanding } from './ProfileReviewLanding'
 
 
 export const ProfileReviewer = () => {
@@ -20,6 +21,8 @@ export const ProfileReviewer = () => {
     setProfileReviewerStepResult,
     profileReviewerWizardComplete,
     setProfileReviewerWizardComplete,
+    reviewStarted,
+    setReviewStarted
   } = useWizardStore();
   const { setError } = useProfileStore();
   const {
@@ -80,31 +83,34 @@ export const ProfileReviewer = () => {
       <Helmet>
         <meta name="description" content="Get an instant feedback for your dating profile. Trained by top matchmakers, powered by AI" />
       </Helmet>
-      <Wizard
-        name="profileReviewer"
-        steps={PROFILE_REVIEWER_WIZARD_STEPS}
-        wizardComplete={profileReviewerWizardComplete}
-        setWizardComplete={setProfileReviewerWizardComplete}
-        step={profileReviewerStep}
-        setStep={setProfileReviewerStep}
-        stepResults={profileReviewerStepResults}
-        setStepResult={setProfileReviewerStepResult}
-        storeStep={true}
-      >
-        {showReview ? (
-          <ProfileReview
-            hasPaid={hasPaidForProfileReview}
-            setHasPaid={setHasPaidForProfileReview}
-          />
-        ) : (
-          // <Loading titles={loadingTitles} updateInterval={3750} />
-          <div className="flex flex-col items-center justify-center h-screen px-4">
-            <div className="w-full max-w-lg text-center space-y-4 -mt-20 h-32">
-              <ProgressBar totalTime={150} complete={reviewedProfile != null} titles={loadingTitles} onCompleted={() => setShowReview(true)} />
+      {reviewStarted ? (
+        <Wizard
+          name="profileReviewer"
+          steps={PROFILE_REVIEWER_WIZARD_STEPS}
+          wizardComplete={profileReviewerWizardComplete}
+          setWizardComplete={setProfileReviewerWizardComplete}
+          step={profileReviewerStep}
+          setStep={setProfileReviewerStep}
+          stepResults={profileReviewerStepResults}
+          setStepResult={setProfileReviewerStepResult}
+          storeStep={true}
+        >
+          {showReview ? (
+            <ProfileReview
+              hasPaid={hasPaidForProfileReview}
+              setHasPaid={setHasPaidForProfileReview}
+            />
+          ) : (
+            // <Loading titles={loadingTitles} updateInterval={3750} />
+            <div className="flex flex-col items-center justify-center h-screen px-4">
+              <div className="w-full max-w-lg text-center space-y-4 -mt-20 h-32">
+                <ProgressBar totalTime={150} complete={reviewedProfile != null} titles={loadingTitles} onCompleted={() => setShowReview(true)} />
+              </div>
             </div>
-          </div>
-        )}
-      </Wizard>
+          )}
+        </Wizard>) : (
+        <ProfileReviewLanding onGetStartedPress={() => setReviewStarted(true)} />
+      )}
     </div>
   );
 };
