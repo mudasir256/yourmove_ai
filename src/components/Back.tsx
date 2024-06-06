@@ -1,12 +1,12 @@
 import React from "react"
 
 type Props = {
-  onClick: VoidFunction
+  onClick?: VoidFunction
   color?: string
   containerClass?: string
 }
 
-export const Back = ({ onClick, containerClass, color }: Props) => {
+export const Back = ({ onClick = undefined, containerClass, color }: Props) => {
   return (
     <svg
       onClick={onClick}

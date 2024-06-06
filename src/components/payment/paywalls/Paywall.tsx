@@ -183,6 +183,9 @@ export const Paywall = ({
                     // open login
                     onComplete?.()
                     setShowAuthModalAfterPayment(true)
+                    noThanksHandler();
+                    setPaymentIsLoading(false);
+                    // open auth modal
                     setShowAuthSubscriptionDisclaimer(true)
                     setAuthModalIsOpen(true)
                   }
