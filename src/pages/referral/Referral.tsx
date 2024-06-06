@@ -18,10 +18,10 @@ export const UserReferrals = () => {
     disabled
   } = useReferrals()
 
-  const [referralLink, setReferralLink] = useState(`https://web.yourmove.com/?referralCode=${referralCode}`)
+  const [referralLink, setReferralLink] = useState(`https://web.yourmove.ai/?referralCode=${referralCode}`)
 
   useEffect(() => {
-    setReferralLink(`https://web.yourmove.com/?referralCode=${referralCode}`)
+    setReferralLink(`https://web.yourmove.ai/?referralCode=${referralCode}`)
   }, [referralCode])
 
   const onShareReferralClicked = async () => {

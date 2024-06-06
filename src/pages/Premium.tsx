@@ -99,10 +99,10 @@ export const Premium = () => {
                   </div>
 
                   <h1
-                    className="font-source-sans-pro font-black text-3xl tracking-tighter px-4"
+                    className="font-source-sans-pro font-semibold text-3xl px-4"
                   >
-                    <span className="text-brand-primary">Refresh your dating profiles</span> and
-                    send unlimited thoughtful chats
+                    <span className="text-brand-primary">Turn swipes into matches</span> and
+                    matches into dates
                   </h1>
 
                   <hr className="mt-4 text-[#999999]" />
@@ -147,9 +147,9 @@ export const Premium = () => {
                       </div>
 
                       <div className="flex flex-col col-span-2">
-                        <span className="font-normal">AI Chat</span>
+                        <span className="font-semibold">Texting assistant</span>
                         <span className="opacity-60 mb-4">
-                          Message ideas to keep conversations interesting
+                          Stop getting ghosted
                         </span>
                       </div>
 
@@ -163,21 +163,6 @@ export const Premium = () => {
                         lang="en"
                       >
                         Limitless
-                      </div>
-
-                      <div className="flex flex-col col-span-2">
-                        <span className="font-semibold">Profile Review</span>
-                        <span className="opacity-60">
-                          Expert tips from our AI to boost your profile
-                        </span>
-                      </div>
-
-                      <div className="flex flex-col items-center">
-                        <span className="font-normal">Limited</span>
-                      </div>
-
-                      <div className="flex justify-center font-semibold text-brand-primary">
-                        <span>Limitless</span>
                       </div>
 
                       <div className="flex flex-col col-span-2">
@@ -196,8 +181,25 @@ export const Premium = () => {
                       </div>
 
                       <div className="flex flex-col col-span-2">
+                        <span className="font-semibold">Profile Review</span>
+                        <span className="opacity-60">
+                          Expert tips from our AI to boost your profile
+                        </span>
+                      </div>
+
+                      <div className="flex flex-col items-center">
+                        <span className="font-normal">—</span>
+                      </div>
+
+                      <div className="flex justify-center font-semibold text-brand-primary">
+                        <span>Limitless</span>
+                      </div>
+
+
+
+                      <div className="flex flex-col col-span-2">
                         <span className="font-semibold">AI Photos</span>
-                        <span className="opacity-60"> Stand Out with AI-Enhanced Photos </span>
+                        <span className="opacity-60"> Stand Out with the best version of you </span>
                         <div className="text-brand-primary font-medium cursor-pointer" onClick={() => navigate('/ai-photo')}>
                           {`Learn More ->`}
                         </div>
@@ -266,7 +268,7 @@ export const Premium = () => {
               {!planBeingPurchased &&
                 <div className="bg-brand-primary py-6 px-4 mt-10">
                   <h2 className="text-2xl text-white font-bold">
-                    Read what people are saying about their new profiles
+                    What our users are saying
                   </h2>
                   <div className="famewall-embed w-full" data-src="yourmove" data-format="grid" />
                   <script type="text/javascript" src="https://embed.famewall.io/frame.js" defer></script>
