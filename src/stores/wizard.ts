@@ -7,11 +7,6 @@ const checkLocalStorageForInitialStep = (name: string) => {
   return step ? step : WizardStepType.WELCOME;
 };
 
-const getBooleanFromLocalStorage = (key: string): boolean => {
-  const value = localStorage.getItem(key);
-  return value === 'true';
-};
-
 // Checks local storage for initial step results based on wizard name
 const checkLocalStorageForInitialStepResults = (name: string) => {
   const stepResults = localStorage.getItem(`${name}:stepResults`);
@@ -36,8 +31,6 @@ interface WizardStore {
   setProfileReviewerWizardComplete: (wizardComplete: boolean) => void;
   filesUploading: boolean;
   setFilesUploading: (filesUploading: boolean) => void;
-  reviewStarted: boolean;
-  setReviewStarted: (reviewStarted: boolean) => void
 
   profileReviewerFiles: Array<string>;
   setProfileReviewerFiles: (files: Array<string>) => void;
@@ -91,11 +84,11 @@ export const useWizardStore = create<WizardStore>((set) => ({
     "profileReviewer"
   )
     ? JSON.parse(
-      checkLocalStorageForInitialStepResults("profileReviewer").uploadPhoto
-        ? checkLocalStorageForInitialStepResults("profileReviewer")
-          .uploadPhoto
-        : "[]"
-    )
+        checkLocalStorageForInitialStepResults("profileReviewer").uploadPhoto
+          ? checkLocalStorageForInitialStepResults("profileReviewer")
+              .uploadPhoto
+          : "[]"
+      )
     : [],
   setProfileReviewerFiles: (files: Array<string>) =>
     set({ profileReviewerFiles: files }),
@@ -104,9 +97,4 @@ export const useWizardStore = create<WizardStore>((set) => ({
   filesUploading: false,
   setFilesUploading: (filesUploading: boolean) =>
     set({ filesUploading: filesUploading }),
-  reviewStarted: getBooleanFromLocalStorage('reviewStarted'),
-  setReviewStarted: (reviewStarted: boolean) => {
-    localStorage.setItem('reviewStarted', String(reviewStarted));
-    set({ reviewStarted });
-  },
 }));

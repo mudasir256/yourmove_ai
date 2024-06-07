@@ -1,18 +1,15 @@
-import { useCallback, useEffect, useState } from "react";
-import { ProfileReview } from "../components/profile-reviewer/ProfileReviewV2";
+import { useEffect, useState } from "react";
+import { ProfileReview } from "../components/profile-reviewer/ProfileReview";
 import { Wizard } from "../components/wizard/Wizard";
 import { PROFILE_REVIEWER_WIZARD_STEPS } from "../constants/wizard";
 import { useWizardStore } from "../stores/wizard";
+import { generateProfileReview } from "../queries";
 import { useProfileStore } from "../stores/profile";
 import { ProgressBar } from "../components/ProgressBar";
-import { Helmet } from 'react-helmet-async';
-import { ProfileReviewLanding } from './ProfileReviewLanding'
-import { useUIStore } from "../stores/ui";
-import { WizardStepType } from "../models/wizard";
 import { ReviewedProfile } from "../models/profile";
-import { useProfileReviewData } from './useProfileReviewData'
-import { AuthState } from "../constants/auth";
-import { useAuthStore } from "../stores/auth";
+import { auth } from "../firebase";
+import { Helmet } from 'react-helmet-async';
+
 
 export const ProfileReviewer = () => {
   const {
@@ -23,22 +20,14 @@ export const ProfileReviewer = () => {
     setProfileReviewerStepResult,
     profileReviewerWizardComplete,
     setProfileReviewerWizardComplete,
-    reviewStarted,
-    setReviewStarted
   } = useWizardStore();
-
-  const { setError } = useUIStore();
-
+  const { setError } = useProfileStore();
   const {
     reviewedProfile,
     setReviewedProfile,
     hasPaidForProfileReview,
     setHasPaidForProfileReview,
   } = useProfileStore();
-
-  const { paymentIsLoading } = useUIStore()
-
-  const { fetchReview } = useProfileReviewData()
 
   const [showReview, setShowReview] = useState(false)
 
@@ -55,40 +44,28 @@ export const ProfileReviewer = () => {
     "Preparing to unveil the potential of your profile…"
   ];
 
-  const fetchProfileReview = useCallback(async () => {
-    if (profileReviewerFiles && profileReviewerFiles.length > 0) {
-      try {
-        const data = await fetchReview()
-        setReviewedProfile(data as ReviewedProfile);
-        setHasPaidForProfileReview(data.hasPaid);
-      }
-      catch (error) {
-        setError(
-          "There was an error reviewing your profile, please try again later."
-        );
-      };
-    } else {
-      setError(
-        "There was an error retrieving your screenshots. Please go back and try again"
-      );
-      localStorage.setItem(`profileReviewer:step`, WizardStepType.UPLOAD_PHOTO);
-      setProfileReviewerStep(WizardStepType.UPLOAD_PHOTO);
-      setProfileReviewerWizardComplete(false);
-    }
-  }, [profileReviewerFiles])
-
   // On component load, send request
   useEffect(() => {
-    if (profileReviewerWizardComplete) fetchProfileReview();
-  }, [profileReviewerWizardComplete]);
-
-  useEffect(() => {
-    if (profileReviewerWizardComplete && paymentIsLoading === false && showReview) {
-      setReviewedProfile(null)
-      setShowReview(false)
-      fetchProfileReview()
+    if (profileReviewerWizardComplete) {
+      if (profileReviewerFiles && profileReviewerFiles.length > 0) {
+        generateProfileReview(
+          auth.currentUser && auth.currentUser.email ? auth.currentUser.email : profileReviewerStepResults.email,
+          profileReviewerFiles
+        )
+          .then((response) => {
+            setReviewedProfile(response.data as ReviewedProfile);
+            setHasPaidForProfileReview(response.data.hasPaid);
+          })
+          .catch((error) => {
+            setError(
+              "There was an error reviewing your profile, please try again later."
+            );
+          });
+      } else {
+        // throw error
+      }
     }
-  }, [profileReviewerWizardComplete, paymentIsLoading])
+  }, [profileReviewerWizardComplete, profileReviewerFiles]);
 
   useEffect(() => {
     if ((window as any).gtag) {
@@ -98,40 +75,36 @@ export const ProfileReviewer = () => {
     }
   }, []);
 
-
-
   return (
     <div className="px-4">
       <Helmet>
         <meta name="description" content="Get an instant feedback for your dating profile. Trained by top matchmakers, powered by AI" />
       </Helmet>
-      {reviewStarted ? (
-        <Wizard
-          name="profileReviewer"
-          steps={PROFILE_REVIEWER_WIZARD_STEPS}
-          wizardComplete={profileReviewerWizardComplete}
-          setWizardComplete={setProfileReviewerWizardComplete}
-          step={profileReviewerStep}
-          setStep={setProfileReviewerStep}
-          stepResults={profileReviewerStepResults}
-          setStepResult={setProfileReviewerStepResult}
-          storeStep={true}
-        >
-          {showReview ? (
-            <ProfileReview
-              hasPaid={hasPaidForProfileReview}
-              setHasPaid={setHasPaidForProfileReview}
-            />
-          ) : (
-            <div className="flex flex-col items-center justify-center h-screen px-4">
-              <div className="w-full max-w-lg text-center space-y-4 -mt-20 h-32">
-                <ProgressBar totalTime={150} complete={reviewedProfile != null} titles={loadingTitles} onCompleted={() => setShowReview(true)} />
-              </div>
+      <Wizard
+        name="profileReviewer"
+        steps={PROFILE_REVIEWER_WIZARD_STEPS}
+        wizardComplete={profileReviewerWizardComplete}
+        setWizardComplete={setProfileReviewerWizardComplete}
+        step={profileReviewerStep}
+        setStep={setProfileReviewerStep}
+        stepResults={profileReviewerStepResults}
+        setStepResult={setProfileReviewerStepResult}
+        storeStep={true}
+      >
+        {showReview ? (
+          <ProfileReview
+            hasPaid={hasPaidForProfileReview}
+            setHasPaid={setHasPaidForProfileReview}
+          />
+        ) : (
+          // <Loading titles={loadingTitles} updateInterval={3750} />
+          <div className="flex flex-col items-center justify-center h-screen px-4">
+            <div className="w-full max-w-lg text-center space-y-4 -mt-20 h-32">
+              <ProgressBar totalTime={150} complete={reviewedProfile != null} titles={loadingTitles} onCompleted={() => setShowReview(true)} />
             </div>
-          )}
-        </Wizard>) : (
-        <ProfileReviewLanding onGetStartedPress={() => setReviewStarted(true)} />
-      )}
+          </div>
+        )}
+      </Wizard>
     </div>
   );
 };
