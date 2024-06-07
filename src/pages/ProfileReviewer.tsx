@@ -127,7 +127,8 @@ export const ProfileReviewer = () => {
               </div>
             </div>
           )}
-        </Wizard>) : (
+        </Wizard>
+      ) : (
         <ProfileReviewLanding onGetStartedPress={() => setReviewStarted(true)} />
       )}
     </div>

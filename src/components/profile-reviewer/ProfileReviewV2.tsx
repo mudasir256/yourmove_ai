@@ -32,7 +32,6 @@ export const ProfileReview = ({ hasPaid, setHasPaid }: Props) => {
 
   return (
     <>
-      {/* <div className="pb-40 mt-[56px]"> */}
       <div className="mt-8">
         <Back onClick={() => {
           setProfileReviewerWizardComplete(false);
@@ -56,9 +55,9 @@ export const ProfileReview = ({ hasPaid, setHasPaid }: Props) => {
               <p className="font-bold ml-2 text-2xl text-brand-primary">{`${reviewedProfile?.possibleRating ?? 0}/10`}</p>
             </div>
           </div>
-          <div className="px-4 my-4">
+          <div className="px-4 py-4 bg-white rounded-b-2xl">
             {hasPaid ?
-              <FullProfileReview review={reviewedProfile?.reviewSummary ?? ""} /> :
+              <FullProfileReview review={reviewedProfile} /> :
               <PartialProfileReview summary={reviewedProfile?.summary ?? ""} onUnlockFullReviewClick={() => setUnlockFullReviewModalOpen(true)} />}
           </div>
         </div>

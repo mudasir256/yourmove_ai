@@ -1,10 +1,19 @@
-import React from "react"
 import Markdown from "react-markdown"
+import { ReviewedProfile } from "../../models/profile"
 
 type Props = {
-  review: string
+  review: ReviewedProfile | null
 }
 
 export const FullProfileReview = ({ review }: Props) => {
-  return <Markdown className="text-neutral-900 text-sm mb-4">{review}</Markdown>
+  const { reviewSummary = "", summary = "" } = review || {}
+  return (
+    <>
+      <p className="text-xl text-neutral-900 font-semibold mb-2">Summary</p>
+      <div className="prose prose-base leading-tight">
+        <Markdown>{summary}</Markdown>
+        <Markdown>{reviewSummary}</Markdown>
+      </div>
+    </>
+  )
 }

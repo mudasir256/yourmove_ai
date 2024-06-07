@@ -4,7 +4,7 @@ import { WizardStepType } from "../models/wizard";
 // Checks local storage for initial step based on wizard name
 const checkLocalStorageForInitialStep = (name: string) => {
   const step = localStorage.getItem(`${name}:step`);
-  return step ? step : WizardStepType.WELCOME;
+  return step ? step : name === 'profileWriter' ? WizardStepType.WELCOME : WizardStepType.GENDER;
 };
 
 const getBooleanFromLocalStorage = (key: string): boolean => {
