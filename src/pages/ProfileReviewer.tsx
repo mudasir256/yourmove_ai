@@ -11,8 +11,6 @@ import { useUIStore } from "../stores/ui";
 import { WizardStepType } from "../models/wizard";
 import { ReviewedProfile } from "../models/profile";
 import { useProfileReviewData } from './useProfileReviewData'
-import { AuthState } from "../constants/auth";
-import { useAuthStore } from "../stores/auth";
 
 export const ProfileReviewer = () => {
   const {
