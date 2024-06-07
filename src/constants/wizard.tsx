@@ -118,21 +118,6 @@ export const PROFILE_WRITER_WIZARD_STEPS: Array<WizardStep> = [
 
 export const PROFILE_REVIEWER_WIZARD_STEPS: Array<WizardStep> = [
   {
-    step: WizardStepType.WELCOME,
-    type: WizardStepInputType.CONTENT,
-    content: (
-      <>
-        <h1 className="text-5xl font-bold">Profile Reviews</h1>
-        <div className="mt-8">
-          <p className="text-2xl">
-            Your dating profile is your resume. Optimize it and get more matches.
-            Trained by dating coaches, powered by AI.
-          </p>
-        </div>
-      </>
-    ),
-  },
-  {
     step: WizardStepType.GENDER,
     type: WizardStepInputType.RADIO,
     label: "You are a ",

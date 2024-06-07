@@ -9,7 +9,7 @@ type LockedItemProps = {
 const LockedItem = ({ title, className }: LockedItemProps) => {
   return (
     <div className={`flex py-2 ${className}`}>
-      <p className="text-sm font-semibold flex-1">{title}</p>
+      <p className="text-base font-semibold flex-1">{title}</p>
       <LockIcon />
     </div>
   )
@@ -22,8 +22,10 @@ type Props = {
 export const PartialProfileReview = ({ summary, onUnlockFullReviewClick = undefined }: Props) => {
   return (
     <>
-      <p className="text-sm text-neutral-900 font-semibold mb-2">Summary</p>
-      <Markdown className="text-neutral-900 text-sm mb-4">{summary}</Markdown>
+      <p className="text-xl text-neutral-900 font-semibold mb-2">Summary</p>
+      <div className="prose prose-base leading-tight">
+        <Markdown>{summary}</Markdown>
+      </div>
       <LockedItem className="mt-4" title="Detailed Improvement Plan" />
       <LockedItem className="mt-2" title="Detailed Photo Review" />
       <LockedItem className="mt-2" title="Suggested Photo Order" />
