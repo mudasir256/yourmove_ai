@@ -51,6 +51,7 @@ export const ProfileReviewPaywall = ({ hideNoThanks, onComplete }: Props) => {
             planBeingPurchased={planBeingPurchased}
             onComplete={onComplete}
           >
+            {" "}
             {/* Premium AI Profile Plan */}
             <div className="mt-4">
               <div className="bg-white p-3 border-2 border-black rounded-lg">

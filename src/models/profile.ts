@@ -40,10 +40,7 @@ export interface FeedbackRequest {
 }
 
 export interface ReviewedProfile {
-  currentRating: number
-  possibleRating: number
-  summary: string
-  reviewSummary: string
+  review: string;
   screenshots: Array<string>;
   hasPaid: boolean;
 }
