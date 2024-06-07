@@ -1,4 +1,5 @@
 import {
+  WizardStepInputType,
   WizardStep as WizardStepModel,
   WizardStepType,
 } from "../../models/wizard";
@@ -46,7 +47,7 @@ export const Wizard = ({
 }: Props) => {
   const { isSubscribed } = useAuthStore();
   const [paymentProcessing, setPaymentProcessing] = useState(false);
-  const { filesUploading } = useWizardStore();
+  const { filesUploading, profileReviewerFiles } = useWizardStore();
   const [nextButtonTranslateY, setNextButtonTranslateY] = useState("32rem");
 
   useEffect(() => {
@@ -103,6 +104,14 @@ export const Wizard = ({
           // If it has a validator
           if (wizardStep.validator) {
             await wizardStep.validator.validate(stepValue);
+          }
+          if (
+            wizardStep.step === WizardStepType.UPLOAD_PHOTO &&
+            wizardStep.type === WizardStepInputType.FILE &&
+            (!profileReviewerFiles || profileReviewerFiles.length === 0)
+          ) {
+            toast.error('Please upload a screenshot of your profile!')
+            return
           }
           if (nextStep) {
             setStep(nextStep.step);
