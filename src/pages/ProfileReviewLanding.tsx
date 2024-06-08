@@ -87,8 +87,8 @@ export const ProfileReviewLanding = ({ onGetStartedPress = undefined }: Props) =
         </div>
       </div>
       <div className='w-screen mt-8 bg-brand-secondary pt-10 -mx-4'>
-        <p className='text-center text-xl font-bold text-white'>150,000+ profiles reviewed</p>
-        <p className='text-center mt-3 mb-6 text-white'>See some of their amazing stories</p>
+        <p className='text-center text-xl font-bold text-white'>25,000+ profiles reviewed</p>
+        {/* <p className='text-center mt-3 mb-6 text-white'>See some of their amazing stories</p> */}
         <div className="famewall-embed w-full mt-4" data-src="yourmove" data-format="grid" />
         <script type="text/javascript" src="https://embed.famewall.io/frame.js" defer></script>
 
