@@ -7,7 +7,7 @@ type Props = {
   titles?: string[]
 }
 
-export const ProgressBar = ({ onCompleted, totalTime = 150, complete, titles = [] }: Props) => {
+export const ProgressBar = ({ onCompleted, totalTime = 100, complete, titles = [] }: Props) => {
   const [progress, setProgress] = useState<number>(0);
   const [currentTitle, setCurrentTitle] = useState<string>(titles.length > 0 ? titles[0] : "")
 
