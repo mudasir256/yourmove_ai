@@ -26,11 +26,11 @@ export const PartialProfileReview = ({ summary, onUnlockFullReviewClick = undefi
       <div className="prose prose-base leading-tight">
         <Markdown>{summary}</Markdown>
       </div>
-      <LockedItem className="mt-4" title="Detailed Improvement Plan" />
-      <LockedItem className="mt-2" title="Detailed Photo Review" />
-      <LockedItem className="mt-2" title="Suggested Photo Order" />
-      <LockedItem className="mt-2" title="Bio review and suggestions" />
-      <LockedItem className="mt-2" title="Style suggestions" />
+      <LockedItem className="mt-4" title="Step by Step Improvement Plan" />
+      <LockedItem className="mt-2" title="Detailed Photo review" />
+      <LockedItem className="mt-2" title="Suggested Photo order" />
+      <LockedItem className="mt-2" title="Bio review & improvements" />
+      <LockedItem className="mt-2" title="Style tips + suggestions" />
       <button
         className="mt-4 flex items-center justify-center w-full bg-brand-primary text-white py-5 rounded-lg font-semibold"
         onClick={onUnlockFullReviewClick}>
