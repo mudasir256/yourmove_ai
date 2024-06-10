@@ -105,7 +105,7 @@ export const Premium = () => {
                     matches into dates
                   </h1>
 
-                  <hr className="mt-1 text-[#999999]" />
+                  <hr className="mt-4 text-[#999999] -mb-2" />
 
                   {planBeingPurchased ? (
                     <div className="" style={{ marginBottom: "4rem" }}>
@@ -148,7 +148,7 @@ export const Premium = () => {
 
                       <div className="flex flex-col col-span-2">
                         <span className="font-semibold">Texting assistant</span>
-                        <span className="opacity-60 mb-4">
+                        <span className="opacity-60 mb-4 text-sm">
                           Put texting on cruise control 
                         </span>
                       </div>
@@ -167,7 +167,7 @@ export const Premium = () => {
 
                       <div className="flex flex-col col-span-2">
                         <span className="font-semibold">Profile Writer</span>
-                        <span className="opacity-60">
+                        <span className="opacity-60 text-sm">
                           Create profile optimized for right swipes
                         </span>
                       </div>
@@ -182,7 +182,7 @@ export const Premium = () => {
 
                       <div className="flex flex-col col-span-2">
                         <span className="font-semibold">Profile Review</span>
-                        <span className="opacity-60">
+                        <span className="opacity-60 text-sm">
                           Expert tips from our AI to boost your profile
                         </span>
                       </div>
@@ -199,14 +199,14 @@ export const Premium = () => {
 
                       <div className="flex flex-col col-span-2">
                         <span className="font-semibold">AI Photos</span>
-                        <span className="opacity-60"> Stand Out with the best version of you </span>
+                        <span className="opacity-60 text-sm"> Stand Out with the best version of you </span>
                         <div className="text-brand-primary font-medium cursor-pointer" onClick={() => navigate('/ai-photo')}>
                           {`Learn More ->`}
                         </div>
                       </div>
 
                       <div className="flex flex-col items-center">
-                        <span className="font-normal">Full Price</span>
+                        <span className="font-normal">—</span>
                       </div>
 
                       <div className="flex justify-center font-semibold text-brand-primary">
