@@ -89,14 +89,14 @@ export const Premium = () => {
                 <div
                   className={`bg-white ${planBeingPurchased ? "rounded-2xl" : "rounded-t-2xl"} border-2 border-brand-primary py-4 flex flex-col`}
                 >
-                  <div className="flex gap-x-1 items-center px-4">
+                  {/* <div className="flex gap-x-1 items-center px-4">
                     <div className="font-semibold">YourMove</div>
                     <div
                       className="text-brand-primary bg-brand-primary/10 px-2 py-1 font-bold font-source-sans-pro rounded"
                     >
                       Premium
                     </div>
-                  </div>
+                  </div> */}
 
                   <h1
                     className="font-source-sans-pro font-semibold text-3xl px-4"
@@ -105,7 +105,7 @@ export const Premium = () => {
                     matches into dates
                   </h1>
 
-                  <hr className="mt-4 text-[#999999]" />
+                  <hr className="mt-1 text-[#999999]" />
 
                   {planBeingPurchased ? (
                     <div className="" style={{ marginBottom: "4rem" }}>
@@ -154,8 +154,8 @@ export const Premium = () => {
                       </div>
 
                       <div className="flex flex-col items-center">
-                        <span className="font-normal text-center">7 Free</span>
-                        <span className="opacity-60">Daily</span>
+                        <span className="font-normal text-center">7/day</span>
+                        {/* <span className="opacity-60">Daily</span> */}
                       </div>
 
                       <div
@@ -173,7 +173,7 @@ export const Premium = () => {
                       </div>
 
                       <div className="flex flex-col items-center">
-                        <span className="font-normal">Limited</span>
+                        <span className="font-normal">basic</span>
                       </div>
 
                       <div className="flex justify-center font-semibold text-brand-primary">
