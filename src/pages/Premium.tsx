@@ -252,7 +252,7 @@ export const Premium = () => {
                           </div>
                         </div>
                       </div>
-                      <div className="font-bold text-brand-primary">
+                      <div className="font-bold">
                         <span className="text-3xl">{abTestGroup ? '$5.00' : '$4.00'}</span><span className="text-xl">/mo</span>
                       </div>
                       <span className="text-sm text-brand-primary mb-2">{`Save ${abTestGroup ? "65%" : "67%"}`}</span>
