@@ -147,9 +147,9 @@ export const Premium = () => {
                       </div>
 
                       <div className="flex flex-col col-span-2">
-                        <span className="font-semibold">Texting assistant</span>
+                        <span className="font-semibold">Chat Assistant</span>
                         <span className="opacity-60 mb-4 text-sm">
-                          Put texting on cruise control 
+                         Stop getting ghosted & put texting on cruise control. 
                         </span>
                       </div>
 
