@@ -101,7 +101,7 @@ export const Premium = () => {
                   <h1
                     className="font-source-sans-pro font-semibold text-3xl px-4"
                   >
-                    <span className="text-brand-primary">Turn swipes into matches</span> and
+                    <span className="text-brand-primary">Turn more swipes into matches</span> and
                     matches into dates
                   </h1>
 
@@ -154,7 +154,7 @@ export const Premium = () => {
                       </div>
 
                       <div className="flex flex-col items-center">
-                        <span className="font-normal text-center">7/day</span>
+                        <span className="font-normal text-center">7 per day</span>
                         {/* <span className="opacity-60">Daily</span> */}
                       </div>
 
