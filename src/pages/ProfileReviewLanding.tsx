@@ -3,8 +3,8 @@ import StarIcon from '../components/StarIcon'
 import WheelIcon from '../components/WheelIcon'
 import TrendingIcon from '../components/TrendingIcon'
 import UploadIcon from '../components/UploadIcon'
-import FamewallEmbed from 'react-famewall'
 import { useEffect, useState } from 'react'
+import { FamewallReviews } from "./FamewallReviews"
 
 const getRandomNumber = (min: number, max: number) => {
   return Math.floor(Math.random() * (max - min + 1)) + min;
@@ -86,17 +86,10 @@ export const ProfileReviewLanding = ({ onGetStartedPress = undefined }: Props) =
           <span className='self-center mt-2 text-sm font-normal'><span className='text-brand-primary text-sm font-semibold'>{`${profileReviewsCount} profiles`}</span> reviewed in the last 24h</span>
         </div>
       </div>
-      <div className='w-screen mt-8 bg-brand-secondary pt-10 -mx-4'>
-        <p className='text-center text-xl font-bold text-white'>25,000+ profiles reviewed</p>
-        {/* <p className='text-center mt-3 mb-6 text-white'>See some of their amazing stories</p> */}
-        <div className="famewall-embed w-full mt-4" data-src="yourmove" data-format="grid" />
-        <script type="text/javascript" src="https://embed.famewall.io/frame.js" defer></script>
-
-        <FamewallEmbed
-          wallUrl="yourmove"
-          carouselMode={true}
-        />
-      </div>
+      <FamewallReviews
+        containerStyle='-mx-4'
+        title='150,000+ profiles reviewed'
+      />
     </>
   )
 }

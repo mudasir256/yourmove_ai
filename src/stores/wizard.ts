@@ -36,12 +36,8 @@ interface WizardStore {
   setProfileReviewerWizardComplete: (wizardComplete: boolean) => void;
   filesUploading: boolean;
   setFilesUploading: (filesUploading: boolean) => void;
-  reviewStarted: boolean;
-  setReviewStarted: (reviewStarted: boolean) => void
-
   profileReviewerFiles: Array<string>;
   setProfileReviewerFiles: (files: Array<string>) => void;
-
   // Generic email field
   email: string;
   setEmail: (email: string) => void;
@@ -104,9 +100,4 @@ export const useWizardStore = create<WizardStore>((set) => ({
   filesUploading: false,
   setFilesUploading: (filesUploading: boolean) =>
     set({ filesUploading: filesUploading }),
-  reviewStarted: getBooleanFromLocalStorage('reviewStarted'),
-  setReviewStarted: (reviewStarted: boolean) => {
-    localStorage.setItem('reviewStarted', String(reviewStarted));
-    set({ reviewStarted });
-  },
 }));

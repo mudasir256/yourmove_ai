@@ -5,7 +5,7 @@ import {
 } from "../../models/wizard";
 import { WizardProgress } from "./WizardProgress";
 import { WizardStep } from "./WizardStep";
-import { getStep } from "../../utils";
+import { getStep, getStepIndex } from "../../utils";
 import toast from "react-hot-toast";
 import { useEffect, useState } from "react";
 import { useAuthStore } from "../../stores/auth";
@@ -31,6 +31,7 @@ interface Props {
   stepResults: Record<string, string>;
   setStepResult: (stepType: string, result: string) => void;
   storeStep?: boolean;
+  onBackPress?: VoidFunction
 }
 
 export const Wizard = ({
@@ -44,6 +45,7 @@ export const Wizard = ({
   stepResults,
   setStepResult,
   storeStep,
+  onBackPress = undefined
 }: Props) => {
   const { isSubscribed } = useAuthStore();
   const [paymentProcessing, setPaymentProcessing] = useState(false);
@@ -142,7 +144,7 @@ export const Wizard = ({
   }, [step]);
 
   return (
-    <div className="">
+    <div>
       {step !== WizardStepType.PAYWALL &&
         !paymentProcessing &&
         !wizardComplete &&
@@ -174,11 +176,11 @@ export const Wizard = ({
           <Loading title="Payment Processing..." />
         </>
       ) : (
-        <div className="mx-auto max-w-xl">
+        <>
           {wizardComplete ? (
             <>{children}</>
           ) : (
-            <>
+            <div className="mx-auto max-w-xl">
               {step !== WizardStepType.PAYWALL ? (
                 <>
                   <div className="mt-6">
@@ -199,6 +201,7 @@ export const Wizard = ({
                                   setStep={setStep}
                                   stepResults={stepResults}
                                   setStepResult={setStepResult}
+                                  onBackPress={onBackPress}
                                 />
                               ) : null}
                             </div>
@@ -216,6 +219,14 @@ export const Wizard = ({
                       <svg
                         onClick={() => {
                           // previous step
+                          const currentStep = getStepIndex(step, steps)
+                          if (currentStep === 0) {
+                            localStorage.removeItem(
+                              `${name}:step`
+                            );
+                            onBackPress?.()
+                            return
+                          }
                           const previousStep = getStep(step, -1, steps);
                           setStep(previousStep.step);
                           localStorage.setItem(
@@ -254,9 +265,9 @@ export const Wizard = ({
                   </div>
                 </div>
               )}
-            </>
+            </div>
           )}
-        </div>
+        </>
       )}
     </div>
   );

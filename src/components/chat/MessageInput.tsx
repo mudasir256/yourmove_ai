@@ -15,7 +15,7 @@ import { auth } from "../../firebase";
 
 import { MessageStyleSelector } from "./selectors/MessageStyleSelector";
 import { useUIStore } from "../../stores/ui";
-import { toast } from 'react-hot-toast'; 
+import { toast } from 'react-hot-toast';
 
 
 // exported so other components can use it
@@ -171,7 +171,7 @@ export const MessageInput = ({
                               rows={5}
                               name="message"
                               id="message"
-                              className="block w-full resize-none border-0 py-0 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6 px-4 py-3"
+                              className="focus:border-blue-950 rounded-tl-lg rounded-tr-lg block w-full resize-none border-0 py-0 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6 px-4 py-3"
                               placeholder={inputConfiguration.placeholder}
                               defaultValue={""}
                             />

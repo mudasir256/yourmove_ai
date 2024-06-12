@@ -5,8 +5,7 @@ import {
   WizardStepInputType,
   WizardStepType,
 } from "../../models/wizard";
-import { useUIStore } from "../../stores/ui";
-import { getStep } from "../../utils";
+import { getStep, getStepIndex } from "../../utils";
 import { FileUploadStep } from "./FileUploadStep";
 
 interface Props {
@@ -18,6 +17,7 @@ interface Props {
   setStep: (step: WizardStepType) => void;
   stepResults: Record<string, string>;
   setStepResult: (stepType: string, result: string) => void;
+  onBackPress?: VoidFunction
 }
 export const WizardStep = ({
   name,
@@ -28,6 +28,7 @@ export const WizardStep = ({
   setStep,
   stepResults,
   setStepResult,
+  onBackPress = undefined
 }: Props) => {
   const getStepValue = () => {
     return stepResults[wizardStep.step];
@@ -48,9 +49,17 @@ export const WizardStep = ({
 
   return (
     <div className="mt-6 mb-20">
-      {!isFirstStep && (
+      {(!isFirstStep || name === "profileReviewer") && (
         <svg
           onClick={() => {
+            const currentStep = getStepIndex(step, steps)
+            if (currentStep === 0) {
+              localStorage.removeItem(
+                `${name}:step`
+              );
+              onBackPress?.()
+              return
+            }
             const previousStep = getStep(step, -1, steps);
             setStep(previousStep.step);
             localStorage.setItem(`${name}:step`, previousStep.step);
@@ -77,8 +86,8 @@ export const WizardStep = ({
           )}
 
           {wizardStep.type === WizardStepInputType.SPACER && (
-              <>{wizardStep.content}</>
-          )}  
+            <>{wizardStep.content}</>
+          )}
 
           {wizardStep.type === WizardStepInputType.TEXT && (
             <div className="mt-4">
@@ -111,11 +120,10 @@ export const WizardStep = ({
                   return (
                     <div
                       key={choice}
-                      className={`${
-                        getStepValue() === choice
-                          ? "border-black border-2 pl-5 pr-3 hover:bg-brand-primary hover:text-white transition duration-300 ease-in-out"
-                          : "border-black px-10 hover:bg-black hover:text-white transition duration-300 ease-in-out"
-                      } bg-white border py-2 mr-4 rounded-full mt-5 cursor-pointer flex stroke-brand-primary hover:stroke-white`}
+                      className={`${getStepValue() === choice
+                        ? "border-black border-2 pl-5 pr-3 hover:bg-brand-primary hover:text-white transition duration-300 ease-in-out"
+                        : "border-black px-10 hover:bg-black hover:text-white transition duration-300 ease-in-out"
+                        } bg-white border py-2 mr-4 rounded-full mt-5 cursor-pointer flex stroke-brand-primary hover:stroke-white`}
                       onClick={() => {
                         setStepResult(wizardStep.step, choice);
                         goToNextStep();
@@ -151,11 +159,10 @@ export const WizardStep = ({
                   return (
                     <div
                       key={choice}
-                      className={`${
-                        getStepValue() === choice
-                          ? "bg-brand-primary text-white pl-5 pr-3"
-                          : "border-black border-2 px-5 bg-white transition duration-300 ease-in-out"
-                      } border py-2 mr-4 rounded-md mt-5 cursor-pointer flex hover:bg-black hover:text-white`}
+                      className={`${getStepValue() === choice
+                        ? "bg-brand-primary text-white pl-5 pr-3"
+                        : "border-black border-2 px-5 bg-white transition duration-300 ease-in-out"
+                        } border py-2 mr-4 rounded-md mt-5 cursor-pointer flex hover:bg-black hover:text-white`}
                       onClick={() => {
                         setStepResult(wizardStep.step, choice);
                         goToNextStep();

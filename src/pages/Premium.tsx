@@ -11,7 +11,7 @@ import { Back } from "../components/Back";
 import { Helmet } from "react-helmet-async";
 import { CheckCircleIcon } from "@heroicons/react/24/outline";
 import { SubscriptionForm } from "../components/premium/SubscriptionForm";
-import FamewallEmbed from 'react-famewall'
+import { FamewallReviews } from "./FamewallReviews";
 
 
 export const Premium = () => {
@@ -65,223 +65,211 @@ export const Premium = () => {
     <div className="text-center mt-8">
       <Success title="You have successfully subscribed to Premium." />
     </div>
-
   ) : (
-    <div className="flex-col flex-1 max-w-lg mx-auto mt-0 overflow-hidden bg-white">
-      <Helmet>
-        <meta name="description" content="Unlimited access to YourMove AI suite of tools for online dating" />
-      </Helmet>
-      {isLoading ? (
-        <Loading />
-      ) : (
-        <div className="flex-col flex-1 max-w-lg mx-auto mt-0 px-2 bg-white">
-          <Back containerClass="w-6 h-10" color="stroke-black" onClick={() => planBeingPurchased ? setPlanBeingPurchased(null) : navigate(-1)} />
-          {isSubscribed ? (
-            <div className="text-center mt-8">
-              <div className="flex items-center justify-center mb-4">
-                <CheckCircleIcon className="text-brand-primary h-16 w-16 stroke flex items-center justify-center" />
-              </div>
-              <h3>You are already subscribed to YourMove premium.</h3>
-            </div>
+    <>
+      <div className="max-w-lg mx-auto">
+        <div className="flex-col flex-1 mt-0 overflow-hidden">
+          <Helmet>
+            <meta name="description" content="Unlimited access to YourMove AI suite of tools for online dating" />
+          </Helmet>
+          {isLoading ? (
+            <Loading />
           ) : (
-            <div className="flex-1 px-2">
-              <div className="mt-2 shadow-xl rounded-2xl">
-                <div
-                  className={`bg-white ${planBeingPurchased ? "rounded-2xl" : "rounded-t-2xl"} border-2 border-brand-primary py-4 flex flex-col`}
-                >
-                  {/* <div className="flex gap-x-1 items-center px-4">
-                    <div className="font-semibold">YourMove</div>
-                    <div
-                      className="text-brand-primary bg-brand-primary/10 px-2 py-1 font-bold font-source-sans-pro rounded"
-                    >
-                      Premium
-                    </div>
-                  </div> */}
-
-                  <h1
-                    className="font-source-sans-pro font-semibold text-3xl px-4"
-                  >
-                    <span className="text-brand-primary">Turn more swipes into matches</span> and
-                    matches into dates
-                  </h1>
-
-                  <hr className="mt-4 text-[#999999] -mb-2" />
-
-                  {planBeingPurchased ? (
-                    <div className="" style={{ marginBottom: "4rem" }}>
-                      <SubscriptionForm
-                        planType={planBeingPurchased}
-                        email={auth.currentUser?.email ?? undefined}
-                        redirectHandler={() => {
-                          if (!auth.currentUser) {
-                            setShowAuthSubscriptionDisclaimer(true)
-                            setShowAuthModalAfterPayment(true)
-                            setAuthModalIsOpen(true)
-                          } else {
-                            setTimeout(() => {
-                              setSubscriptionSuccess(true);
-                            }, 2000);
-                          }
-                        }}
-                      />
-                    </div>
-                  ) : (
-
-                    <div className="grid grid-cols-4 grid-rows-5 px-4 gap-x-1">
-                      <div className="flex items-center col-span-2">
-                        <div className="font-semibold">You&apos;ll get</div>
-                      </div>
-
-                      <div className="flex justify-center items-center">
-                        <div className="font-semibold text-center">Regular</div>
-                      </div>
-
-                      <div className="flex flex-col items-center justify-center">
-                        <div className="flex">
-                          <div
-                            className="text-brand-primary bg-brand-primary/10 px-1 py-1 font-bold font-source-sans-pro rounded"
-                          >
-                            Premium
-                          </div>
-                        </div>
-                      </div>
-
-                      <div className="flex flex-col col-span-2">
-                        <span className="font-semibold">Chat Assistant</span>
-                        <span className="opacity-60 mb-4 text-sm">
-                         Stop getting ghosted & put texting on cruise control. 
-                        </span>
-                      </div>
-
-                      <div className="flex flex-col items-center">
-                        <span className="font-normal text-center">7 per day</span>
-                        {/* <span className="opacity-60">Daily</span> */}
-                      </div>
-
-                      <div
-                        className="flex justify-center font-semibold text-brand-primary break-all hyphens-manual"
-                        lang="en"
-                      >
-                        Limitless
-                      </div>
-
-                      <div className="flex flex-col col-span-2">
-                        <span className="font-semibold">Profile Writer</span>
-                        <span className="opacity-60 text-sm">
-                          Create profile optimized for right swipes
-                        </span>
-                      </div>
-
-                      <div className="flex flex-col items-center">
-                        <span className="font-normal">basic</span>
-                      </div>
-
-                      <div className="flex justify-center font-semibold text-brand-primary">
-                        <span>Limitless</span>
-                      </div>
-
-                      <div className="flex flex-col col-span-2">
-                        <span className="font-semibold">Profile Review</span>
-                        <span className="opacity-60 text-sm">
-                          Expert tips from our AI to boost your profile
-                        </span>
-                      </div>
-
-                      <div className="flex flex-col items-center">
-                        <span className="font-normal">—</span>
-                      </div>
-
-                      <div className="flex justify-center font-semibold text-brand-primary">
-                        <span>Limitless</span>
-                      </div>
-
-
-
-                      <div className="flex flex-col col-span-2">
-                        <span className="font-semibold">AI Photos</span>
-                        <span className="opacity-60 text-sm"> Stand Out with the best version of you </span>
-                        <div className="text-brand-primary font-medium cursor-pointer" onClick={() => navigate('/ai-photo')}>
-                          {`Learn More ->`}
-                        </div>
-                      </div>
-
-                      <div className="flex flex-col items-center">
-                        <span className="font-normal">—</span>
-                      </div>
-
-                      <div className="flex justify-center font-semibold text-brand-primary">
-                        <span>50% Off</span>
-                      </div>
-                    </div>
-                  )}
-                </div>
-                {!planBeingPurchased && <div className="bg-brand-primary rounded-b-2xl p-4 pb-6">
-                  <div className="grid grid-rows-1 grid-cols-2 gap-2 mt-2">
-                    <div
-                      className="bg-white row-start-1 row-end-1 col-start-1 col-end-1 p-2 flex flex-col rounded-lg pt-4 shadow-xl"
-                      onClick={() => {
-                        setPlanBeingPurchased(PlanType.Monthly);
-                        (window as any).gtag('event', 'subscribe_monthly_click', {
-                          event_category: 'payment_click',
-                          product: 'chat_assistant',
-                        });
-                      }}
-                    >
-                      <span className="font-semibold">Monthly</span>
-                      <div className="font-bold">
-                        <span className="text-3xl">{abTestGroup ? '$14' : '$12'}</span><span className="text-xl">/mo</span>
-                      </div>
-                    </div>
-                    <div
-                      className="bg-white row-start-1 row-end-1 col-start-2 col-end-2 p-2 flex flex-col rounded-lg pt-4 shadow-xl"
-                      onClick={() => {
-                        setPlanBeingPurchased(PlanType.Yearly);
-                        (window as any).gtag('event', 'subscribe_annual_click', {
-                          event_category: 'payment_click',
-                          product: 'chat_assistant',
-                        });
-                      }}
-                    >
-                      <div className="flex">
-                        <span className="font-semibold">Yearly</span>
-                        <div className="flex flex-col items-center ml-2">
-                          <div
-                            className="text-brand-primary bg-brand-primary/10 px-2 py-1 font-bold font-source-sans-pro text-xxs rounded"
-                          >
-                            Most Popular
-                          </div>
-                        </div>
-                      </div>
-                      <div className="font-bold">
-                        <span className="text-3xl">{abTestGroup ? '$5.00' : '$4.00'}</span><span className="text-xl">/mo</span>
-                      </div>
-                      <span className="text-sm text-brand-primary mb-2">{`Save ${abTestGroup ? "65%" : "67%"}`}</span>
-                    </div>
+            <div className="px-2 bg-white">
+              <Back containerClass="w-6 h-10" color="stroke-black" onClick={() => planBeingPurchased ? setPlanBeingPurchased(null) : navigate(-1)} />
+              {isSubscribed ? (
+                <div className="text-center mt-8">
+                  <div className="flex items-center justify-center mb-4">
+                    <CheckCircleIcon className="text-brand-primary h-16 w-16 stroke flex items-center justify-center" />
                   </div>
-                  <div className="text-md text-white font-semibold mt-3 text-center">or</div>
-                  <button className="w-full bg-brand-primary text-white py-4 rounded-xl mt-3 border border-white" onClick={() => navigate('/user-referrals')}>
-                    Share for Free Access
-                  </button>
+                  <h3>You are already subscribed to YourMove premium.</h3>
                 </div>
-                }
-              </div>
-              {!planBeingPurchased &&
-                <div className="bg-brand-primary py-6 px-4 mt-10">
-                  <h2 className="text-2xl text-white font-bold">
-                    What our users are saying
-                  </h2>
-                  <div className="famewall-embed w-full" data-src="yourmove" data-format="grid" />
-                  <script type="text/javascript" src="https://embed.famewall.io/frame.js" defer></script>
+              ) : (
+                <div className="flex-1 px-2">
+                  <div className="mt-2 shadow-xl rounded-2xl">
+                    <div
+                      className={`bg-white ${planBeingPurchased ? "rounded-2xl" : "rounded-t-2xl"} border-2 border-brand-primary py-4 flex flex-col`}
+                    >
+                      <h1
+                        className="font-source-sans-pro font-semibold text-3xl px-4"
+                      >
+                        <span className="text-brand-primary">Turn more swipes into matches</span> and
+                        matches into dates
+                      </h1>
 
-                  <FamewallEmbed
-                    wallUrl="yourmove"
-                  />
+                      <hr className="mt-4 text-[#999999] -mb-2" />
+
+                      {planBeingPurchased ? (
+                        <div className="" style={{ marginBottom: "4rem" }}>
+                          <SubscriptionForm
+                            planType={planBeingPurchased}
+                            email={auth.currentUser?.email ?? undefined}
+                            redirectHandler={() => {
+                              if (!auth.currentUser) {
+                                setShowAuthSubscriptionDisclaimer(true)
+                                setShowAuthModalAfterPayment(true)
+                                setAuthModalIsOpen(true)
+                              } else {
+                                setTimeout(() => {
+                                  setSubscriptionSuccess(true);
+                                }, 2000);
+                              }
+                            }}
+                          />
+                        </div>
+                      ) : (
+
+                        <div className="grid grid-cols-4 grid-rows-5 px-4 gap-x-1">
+                          <div className="flex items-center col-span-2">
+                            <div className="font-semibold">You&apos;ll get</div>
+                          </div>
+
+                          <div className="flex justify-center items-center">
+                            <div className="font-semibold text-center">Regular</div>
+                          </div>
+
+                          <div className="flex flex-col items-center justify-center">
+                            <div className="flex">
+                              <div
+                                className="text-brand-primary bg-brand-primary/10 px-1 py-1 font-bold font-source-sans-pro rounded"
+                              >
+                                Premium
+                              </div>
+                            </div>
+                          </div>
+
+                          <div className="flex flex-col col-span-2">
+                            <span className="font-semibold">Chat Assistant</span>
+                            <span className="opacity-60 mb-4 text-sm">
+                              Stop getting ghosted & put texting on cruise control.
+                            </span>
+                          </div>
+
+                          <div className="flex flex-col items-center">
+                            <span className="font-normal text-center">7 per day</span>
+                            {/* <span className="opacity-60">Daily</span> */}
+                          </div>
+
+                          <div
+                            className="flex justify-center font-semibold text-brand-primary break-all hyphens-manual"
+                            lang="en"
+                          >
+                            Limitless
+                          </div>
+
+                          <div className="flex flex-col col-span-2">
+                            <span className="font-semibold">Profile Writer</span>
+                            <span className="opacity-60 text-sm">
+                              Create profile optimized for right swipes
+                            </span>
+                          </div>
+
+                          <div className="flex flex-col items-center">
+                            <span className="font-normal">basic</span>
+                          </div>
+
+                          <div className="flex justify-center font-semibold text-brand-primary">
+                            <span>Limitless</span>
+                          </div>
+
+                          <div className="flex flex-col col-span-2">
+                            <span className="font-semibold">Profile Review</span>
+                            <span className="opacity-60 text-sm">
+                              Expert tips from our AI to boost your profile
+                            </span>
+                          </div>
+
+                          <div className="flex flex-col items-center">
+                            <span className="font-normal">—</span>
+                          </div>
+
+                          <div className="flex justify-center font-semibold text-brand-primary">
+                            <span>Limitless</span>
+                          </div>
+
+
+
+                          <div className="flex flex-col col-span-2">
+                            <span className="font-semibold">AI Photos</span>
+                            <span className="opacity-60 text-sm"> Stand Out with the best version of you </span>
+                            <div className="text-brand-primary font-medium cursor-pointer" onClick={() => navigate('/ai-photo')}>
+                              {`Learn More ->`}
+                            </div>
+                          </div>
+
+                          <div className="flex flex-col items-center">
+                            <span className="font-normal">—</span>
+                          </div>
+
+                          <div className="flex justify-center font-semibold text-brand-primary">
+                            <span>50% Off</span>
+                          </div>
+                        </div>
+                      )}
+                    </div>
+                    {!planBeingPurchased && <div className="bg-brand-primary rounded-b-2xl p-4 pb-6">
+                      <div className="grid grid-rows-1 grid-cols-2 gap-2 mt-2">
+                        <div
+                          className="bg-white row-start-1 row-end-1 col-start-1 col-end-1 p-2 flex flex-col rounded-lg pt-4 shadow-xl"
+                          onClick={() => {
+                            setPlanBeingPurchased(PlanType.Monthly);
+                            (window as any).gtag('event', 'subscribe_monthly_click', {
+                              event_category: 'payment_click',
+                              product: 'chat_assistant',
+                            });
+                          }}
+                        >
+                          <span className="font-semibold">Monthly</span>
+                          <div className="font-bold">
+                            <span className="text-3xl">{abTestGroup ? '$14' : '$12'}</span><span className="text-xl">/mo</span>
+                          </div>
+                        </div>
+                        <div
+                          className="bg-white row-start-1 row-end-1 col-start-2 col-end-2 p-2 flex flex-col rounded-lg pt-4 shadow-xl"
+                          onClick={() => {
+                            setPlanBeingPurchased(PlanType.Yearly);
+                            (window as any).gtag('event', 'subscribe_annual_click', {
+                              event_category: 'payment_click',
+                              product: 'chat_assistant',
+                            });
+                          }}
+                        >
+                          <div className="flex">
+                            <span className="font-semibold">Yearly</span>
+                            <div className="flex flex-col items-center ml-2">
+                              <div
+                                className="text-brand-primary bg-brand-primary/10 px-2 py-1 font-bold font-source-sans-pro text-xxs rounded"
+                              >
+                                Most Popular
+                              </div>
+                            </div>
+                          </div>
+                          <div className="font-bold">
+                            <span className="text-3xl">{abTestGroup ? '$5.00' : '$4.00'}</span><span className="text-xl">/mo</span>
+                          </div>
+                          <span className="text-sm text-brand-primary mb-2">{`Save ${abTestGroup ? "65%" : "67%"}`}</span>
+                        </div>
+                      </div>
+                      <div className="text-md text-white font-semibold mt-3 text-center">or</div>
+                      <button className="w-full bg-brand-primary text-white py-4 rounded-xl mt-3 border border-white" onClick={() => navigate('/user-referrals')}>
+                        Share for Free Access
+                      </button>
+                    </div>
+                    }
+                  </div>
                 </div>
-              }
-            </div>)}
-        </div>
-      )
+              )}
+            </div>
+          )
+          }
+        </div >
+      </div>
+      {!planBeingPurchased &&
+        <FamewallReviews
+          backgroundColor="bg-brand-primary"
+          title='What our users are saying'
+        />
       }
-    </div >
+    </>
   );
 };

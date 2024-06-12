@@ -21,8 +21,6 @@ export const ProfileReviewer = () => {
     setProfileReviewerStepResult,
     profileReviewerWizardComplete,
     setProfileReviewerWizardComplete,
-    reviewStarted,
-    setReviewStarted
   } = useWizardStore();
 
   const { setError } = useUIStore();
@@ -39,6 +37,7 @@ export const ProfileReviewer = () => {
   const { fetchReview } = useProfileReviewData()
 
   const [showReview, setShowReview] = useState(false)
+  const [reviewStarted, setReviewStarted] = useState(false)
 
   const loadingTitles = [
     "Analyzing your profile's first impressions...",
@@ -73,7 +72,7 @@ export const ProfileReviewer = () => {
       setProfileReviewerStep(WizardStepType.UPLOAD_PHOTO);
       setProfileReviewerWizardComplete(false);
     }
-  }, [profileReviewerFiles])
+  }, [profileReviewerFiles, fetchReview, profileReviewerStepResults])
 
   // On component load, send request
   useEffect(() => {
@@ -113,6 +112,7 @@ export const ProfileReviewer = () => {
           setStep={setProfileReviewerStep}
           stepResults={profileReviewerStepResults}
           setStepResult={setProfileReviewerStepResult}
+          onBackPress={() => setReviewStarted(false)}
           storeStep={true}
         >
           {showReview ? (

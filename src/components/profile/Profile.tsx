@@ -128,78 +128,79 @@ export const Profile = () => {
   return (
     <>
       {profile.length > 0 ? (
-        <div className="mt-4 pb-4">
-          <FeedbackModal
-            open={feedbackModalOpen}
-            setOpen={setFeedbackModalOpen}
-            autoOpen={true}
-          />
-          <TextingAssistantModal
-            open={textingAssistantModalOpen}
-            setOpen={setTextingAssistantModalOpen}
-          />
-          <div ref={profileHeadingRef} className="mt-4 px-2">
-            <div className="mb-2 -ml-2">
-              <svg
-                onClick={() => {
-                  setProfile({});
-                  setProfileWriterStep(WizardStepType.PROFILE_TYPE);
-                  setProfileWriterWizardComplete(false);
-                }}
-                xmlns="http://www.w3.org/2000/svg"
-                fill="none"
-                viewBox="0 0 24 24"
-                strokeWidth="2.5"
-                className="w-10 h-10 stroke-zinc-400"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  d="M15.75 19.5L8.25 12l7.5-7.5"
+        <div className="mx-auto max-w-xl">
+          <div className="flex flex-col flex-1 mt-4 pb-4">
+            <FeedbackModal
+              open={feedbackModalOpen}
+              setOpen={setFeedbackModalOpen}
+              autoOpen={true}
+            />
+            <TextingAssistantModal
+              open={textingAssistantModalOpen}
+              setOpen={setTextingAssistantModalOpen}
+            />
+            <div ref={profileHeadingRef} className="mt-4 px-2">
+              <div className="mb-2 -ml-2">
+                <svg
+                  onClick={() => {
+                    setProfile({});
+                    setProfileWriterStep(WizardStepType.PROFILE_TYPE);
+                    setProfileWriterWizardComplete(false);
+                  }}
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  strokeWidth="2.5"
+                  className="w-10 h-10 stroke-zinc-400"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    d="M15.75 19.5L8.25 12l7.5-7.5"
+                  />
+                </svg>
+              </div>
+              <div className="mb-5">
+                <h1 className="text-4xl font-bold">Your profile</h1>
+              </div>
+              <div className="mb-5 flex flex-1">
+                <DropdownSelect
+                  options={supportedApps}
+                  selected={selectedApp}
+                  onDropdownSelected={onSelectApp}
                 />
-              </svg>
-            </div>
-            <div className="mb-5">
-              <h1 className="text-4xl font-bold">Your profile</h1>
-            </div>
-            <div className="mb-5 flex flex-1">
-              <DropdownSelect
-                options={supportedApps}
-                selected={selectedApp}
-                onDropdownSelected={onSelectApp}
-              />
-              <DropdownSelect
-                className="ml-3"
-                options={writingStyles}
-                selected={selectedWritingStyle}
-                onDropdownSelected={onSelectWritingStyle}
-              />
-            </div>
-            {profile.map((profileResponse: ProfileResponse, index: number) => {
-              return (
+                <DropdownSelect
+                  className="ml-3"
+                  options={writingStyles}
+                  selected={selectedWritingStyle}
+                  onDropdownSelected={onSelectWritingStyle}
+                />
+              </div>
+              {profile.map((profileResponse: ProfileResponse, index: number) => {
+                return (
+                  <ProfileItem
+                    lockItem={false}
+                    key={profileResponse.prompt}
+                    profileResponse={profileResponse}
+                    index={index}
+                  />
+                );
+              })}
+              {profile.length == 1 && (
                 <ProfileItem
-                  lockItem={false}
-                  key={profileResponse.prompt}
-                  profileResponse={profileResponse}
-                  index={index}
+                  lockItem={true}
+                  key="dummy"
+                  profileResponse={{
+                    prompt: "im known for",
+                    response:
+                      "This is dummy text, it's here to show you what your profile will look like if you purchase the premium version. If you are reading this you probably removed the CSS that hides this text.",
+                  }}
+                  index={profile.length + 1}
                 />
-              );
-            })}
-            {profile.length == 1 && (
-              <ProfileItem
-                lockItem={true}
-                key="dummy"
-                profileResponse={{
-                  prompt: "im known for",
-                  response:
-                    "This is dummy text, it's here to show you what your profile will look like if you purchase the premium version. If you are reading this you probably removed the CSS that hides this text.",
-                }}
-                index={profile.length + 1}
-              />
-            )}
-          </div>
-          <div className="px-2 pt-1">
-            {/* <button
+              )}
+            </div>
+            <div className="px-2 pt-1">
+              {/* <button
               onClick={() => {
                 setProfile({});
                 setProfileWriterStep(WizardStepType.PROFILE_TYPE);
@@ -217,9 +218,10 @@ export const Profile = () => {
             >
               leave feedback
             </button>*/}
-          </div>
-          <div className="mt-2 mb-10">
-            <AIPhotosModal />
+            </div>
+            <div className="mt-2 mb-10">
+              <AIPhotosModal />
+            </div>
           </div>
         </div>
       ) : (
