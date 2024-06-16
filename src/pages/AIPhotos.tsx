@@ -189,11 +189,11 @@ export const AIPhotos = () => {
                   <>
                     {isSubscribed ? (
                       <>
-                        <span className="line-through ml-1">$34</span>
-                        <span className="ml-1">$17 (50% discount)</span>
+                        <span className="line-through ml-1">$29</span>
+                        <span className="ml-1">$15 (50% discount)</span>
                       </>
                     ) : (
-                      "$34"
+                      "$29"
                     )}
                   </>
                 )}

@@ -27,7 +27,7 @@ export const AIPhotosPaywall = ({
 
   const options: StripeElementsOptionsMode = {
     mode: 'payment',
-    amount: isSubscribed ? 1700 : 3400,
+    amount: isSubscribed ? 1500 : 2900,
     currency: 'usd',
     appearance,
   };
@@ -39,7 +39,7 @@ export const AIPhotosPaywall = ({
           {toHeaderCase(ProductType.AIPhotos)}
         </div>
         <div className="w-2/3 flex justify-end items-center">
-          ${isSubscribed ? '17' : '34'} once off
+          ${isSubscribed ? '15' : '29'} once off
         </div>
       </div>
       <div className="mt-1">
