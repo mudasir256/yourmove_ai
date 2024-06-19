@@ -49,6 +49,7 @@ export interface WizardStep {
   label?: string;
   placeholder?: string;
   choices?: string[];
+  lockedChoices?: string[];
   validator?: yup.AnySchema;
   // For when files are uploaded, we upload to server, then store the URLs to those files
   onFilesUploaded?: (files: Array<string>) => void;

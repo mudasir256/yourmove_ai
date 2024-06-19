@@ -41,7 +41,7 @@ export const ProfileReviewLanding = ({ onGetStartedPress = undefined }: Props) =
 
   return (
     <>
-      <div className="mx-auto max-w-xl">
+      <div className="mx-auto max-w-xl pb-8">
         <div className="flex flex-col flex-1">
           <h1 className="text-[32px] font-bold mt-8 self-center">AI Profile Reviews</h1>
           <img src={ReviewIllustration} alt="profile" className="w-auto h-full mt-4" />

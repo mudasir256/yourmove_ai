@@ -179,6 +179,8 @@ export const Paywall = ({
                       }, 3000);
                       setPaymentIsLoading(false);
                     }
+
+                    onComplete?.()
                   } else {
                     // open login
                     onComplete?.()

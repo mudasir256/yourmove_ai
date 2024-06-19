@@ -14,7 +14,7 @@ import { ProfileReviewer } from "./pages/ProfileReviewer";
 import { Premium } from "./pages/Premium";
 import { useEffect } from "react";
 import { auth } from "./firebase";
-import { checkIfUserSubscribed, createOrGetAuthUser, setUserSubscription } from "./queries";
+import { checkIfUserSubscribed, createOrGetAuthUser } from "./queries";
 import { useAuthStore } from "./stores/auth";
 import { useUIStore } from "./stores/ui";
 import Page from "./pages/Page";

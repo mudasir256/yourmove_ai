@@ -10,8 +10,10 @@ import { useWizardStore } from "../../stores/wizard";
 import { TextingAssistantModal } from "../modals/TextingAssistantModal";
 import { WizardStepType } from "../../models/wizard";
 import { AIPhotosModal } from "../ai-photos/AIPhotosModal";
-import { supportedApps, writingStyles } from "./data";
+import { DropDownOption, supportedApps, writingStyles } from "./data";
 import { DropdownSelect } from "./DropdownSelect"
+import { UnlockProfileModal } from "../modals/UnlockProfileModal";
+import { useAuthStore } from "../../stores/auth";
 
 
 export const Profile = () => {
@@ -20,28 +22,33 @@ export const Profile = () => {
     setProfileWriterWizardComplete,
     setProfileWriterStep,
   } = useWizardStore();
+  const { hasPurchasedProfileWriter } = useProfileStore()
+  const { isSubscribed } = useAuthStore()
+
   const [feedbackModalOpen, setFeedbackModalOpen] = useState(false);
   const [textingAssistantModalOpen, setTextingAssistantModalOpen] =
     useState(false);
   const profileHeadingRef = useRef(null);
 
+
   const getSelectedApp = () => {
     const stepResults = JSON.parse(
       localStorage.getItem("profileWriter:stepResults") || "{}"
     );
-    return stepResults.profileType ?? supportedApps[0]
+    return supportedApps.find(app => app.title === stepResults.profileType) ?? supportedApps[0]
   }
-
-  const [selectedApp, setSelectedApp] = useState<string>(getSelectedApp);
 
   const getSelectedWritingStyle = () => {
     const stepResults = JSON.parse(
       localStorage.getItem("profileWriter:stepResults") || "{}"
     );
-    return stepResults.writingStyle ?? writingStyles[0]
+    return writingStyles.find(style => style.title === stepResults.writingStyle) ?? writingStyles[0]
   }
 
-  const [selectedWritingStyle, setSelectedWritingStyle] = useState<string>(getSelectedWritingStyle);
+  const [selectedApp, setSelectedApp] = useState<DropDownOption>(getSelectedApp);
+  const [selectedWritingStyle, setSelectedWritingStyle] = useState<DropDownOption>(getSelectedWritingStyle);
+
+  const [openUnlockProfileModal, setOpenUnlockProfileModal] = useState(false)
 
   // Updated list of titles for the loading component
   const loadingTitles = [
@@ -67,7 +74,7 @@ export const Profile = () => {
   // Get Prompts
   useEffect(() => {
     // Get profileType if its there if not default to bumble
-    const profileType = selectedApp.toLowerCase()
+    const profileType = selectedApp.title.toLowerCase()
     getPrompts(profileType).then((response) => {
       setPrompts(response.data);
     });
@@ -113,116 +120,112 @@ export const Profile = () => {
     );
   }
 
-  const onSelectApp = (app: string) => {
-    setProfile([])
-    setSelectedApp(app)
-    saveSelectedApp(app)
+  const onSelectApp = (app: DropDownOption) => {
+    if (!app.paid || (hasPurchasedProfileWriter || !!isSubscribed)) {
+      setProfile([])
+      setSelectedApp(app)
+      saveSelectedApp(app.value)
+    }
   }
 
-  const onSelectWritingStyle = (style: string) => {
-    setProfile([])
-    setSelectedWritingStyle(style)
-    saveWritingStyle(style)
+  const onSelectWritingStyle = (style: DropDownOption) => {
+    if (style.paid && !(hasPurchasedProfileWriter || !!isSubscribed)) {
+      setOpenUnlockProfileModal(true)
+    } else {
+      setProfile([])
+      setSelectedWritingStyle(style)
+      saveWritingStyle(style.value)
+    }
   }
 
   return (
     <>
       {profile.length > 0 ? (
         <div className="mx-auto max-w-xl">
-          <div className="flex flex-col flex-1 mt-4 pb-4">
-            <FeedbackModal
-              open={feedbackModalOpen}
-              setOpen={setFeedbackModalOpen}
-              autoOpen={true}
-            />
-            <TextingAssistantModal
-              open={textingAssistantModalOpen}
-              setOpen={setTextingAssistantModalOpen}
-            />
-            <div ref={profileHeadingRef} className="mt-4 px-2">
-              <div className="mb-2 -ml-2">
-                <svg
-                  onClick={() => {
-                    setProfile({});
-                    setProfileWriterStep(WizardStepType.PROFILE_TYPE);
-                    setProfileWriterWizardComplete(false);
-                  }}
-                  xmlns="http://www.w3.org/2000/svg"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  strokeWidth="2.5"
-                  className="w-10 h-10 stroke-zinc-400"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    d="M15.75 19.5L8.25 12l7.5-7.5"
+          <>
+            <div className="flex flex-col flex-1 mt-4 pb-4">
+              <FeedbackModal
+                open={feedbackModalOpen}
+                setOpen={setFeedbackModalOpen}
+                autoOpen={true}
+              />
+              <TextingAssistantModal
+                open={textingAssistantModalOpen}
+                setOpen={setTextingAssistantModalOpen}
+              />
+              <div ref={profileHeadingRef} className="mt-4 px-2">
+                <div className="mb-2 -ml-2">
+                  <svg
+                    onClick={() => {
+                      setProfile({});
+                      setProfileWriterStep(WizardStepType.WRITING_STYLE);
+                      setProfileWriterWizardComplete(false);
+                    }}
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    strokeWidth="2.5"
+                    className="w-10 h-10 stroke-zinc-400"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      d="M15.75 19.5L8.25 12l7.5-7.5"
+                    />
+                  </svg>
+                </div>
+                <div className="mb-5">
+                  <h1 className="text-4xl font-bold">Your profile</h1>
+                </div>
+                <div className="mb-5 flex flex-1">
+                  <DropdownSelect
+                    options={supportedApps}
+                    selected={selectedApp}
+                    onDropdownSelected={onSelectApp}
+                    hasPaid={hasPurchasedProfileWriter || !!isSubscribed}
                   />
-                </svg>
-              </div>
-              <div className="mb-5">
-                <h1 className="text-4xl font-bold">Your profile</h1>
-              </div>
-              <div className="mb-5 flex flex-1">
-                <DropdownSelect
-                  options={supportedApps}
-                  selected={selectedApp}
-                  onDropdownSelected={onSelectApp}
-                />
-                <DropdownSelect
-                  className="ml-3"
-                  options={writingStyles}
-                  selected={selectedWritingStyle}
-                  onDropdownSelected={onSelectWritingStyle}
-                />
-              </div>
-              {profile.map((profileResponse: ProfileResponse, index: number) => {
-                return (
+                  <DropdownSelect
+                    className="ml-3"
+                    options={writingStyles}
+                    selected={selectedWritingStyle}
+                    onDropdownSelected={onSelectWritingStyle}
+                    hasPaid={hasPurchasedProfileWriter || !!isSubscribed}
+                  />
+                </div>
+                {profile.map((profileResponse: ProfileResponse, index: number) => {
+                  return (
+                    <ProfileItem
+                      lockItem={false}
+                      key={profileResponse.prompt}
+                      profileResponse={profileResponse}
+                      index={index}
+                    />
+                  );
+                })}
+                {profile.length == 1 && (
                   <ProfileItem
-                    lockItem={false}
-                    key={profileResponse.prompt}
-                    profileResponse={profileResponse}
-                    index={index}
+                    lockItem={true}
+                    key="dummy"
+                    profileResponse={{
+                      prompt: "im known for",
+                      response:
+                        "This is dummy text, it's here to show you what your profile will look like if you purchase the premium version. If you are reading this you probably removed the CSS that hides this text.",
+                    }}
+                    index={profile.length + 1}
                   />
-                );
-              })}
-              {profile.length == 1 && (
-                <ProfileItem
-                  lockItem={true}
-                  key="dummy"
-                  profileResponse={{
-                    prompt: "im known for",
-                    response:
-                      "This is dummy text, it's here to show you what your profile will look like if you purchase the premium version. If you are reading this you probably removed the CSS that hides this text.",
-                  }}
-                  index={profile.length + 1}
-                />
-              )}
+                )}
+              </div>
+              <div className="px-2 pt-1">
+              </div>
+              <div className="mt-2 mb-10">
+                <AIPhotosModal />
+              </div>
             </div>
-            <div className="px-2 pt-1">
-              {/* <button
-              onClick={() => {
-                setProfile({});
-                setProfileWriterStep(WizardStepType.PROFILE_TYPE);
-                setProfileWriterWizardComplete(false);
-              }}
-              type="button"
-              className="mt-4 flex items-center justify-center w-full bg-white text-black py-3 rounded-full font-semibold -mb-1 border border-black hover:text-stone-600 hover:border-stone-500"
-            >
-              choose another app or style
-            </button> 
-            <button
-              type="button"
-              onClick={() => setFeedbackModalOpen(true)}
-              className="mt-4 flex items-center justify-center w-full bg-white text-black py-3 rounded-full font-semibold -mb-1 border border-black hover:text-stone-600 hover:border-stone-500"
-            >
-              leave feedback
-            </button>*/}
-            </div>
-            <div className="mt-2 mb-10">
-              <AIPhotosModal />
-            </div>
-          </div>
+            <UnlockProfileModal
+              open={openUnlockProfileModal}
+              setOpen={setOpenUnlockProfileModal}
+            />
+          </>
         </div>
       ) : (
         <Loading titles={loadingTitles} updateInterval={1500} />

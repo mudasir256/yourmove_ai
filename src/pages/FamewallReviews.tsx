@@ -11,11 +11,11 @@ type Props = {
 export const FamewallReviews = ({
   title = undefined,
   description = undefined,
-  carousal = true,
+  carousal = false,
   backgroundColor = undefined,
   containerStyle = undefined,
 }: Props) => (
-  <div className={`w-screen mt-8 pt-10 ${backgroundColor ? backgroundColor : "bg-brand-secondary"} ${containerStyle}`}>
+  <div className={`w-screen pt-10 ${backgroundColor ? backgroundColor : "bg-brand-secondary"} ${containerStyle}`}>
     {title &&
       <p className='text-center text-xl font-bold text-white'>{title}</p>
     }

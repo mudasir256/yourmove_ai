@@ -32,6 +32,7 @@ interface Props {
   setStepResult: (stepType: string, result: string) => void;
   storeStep?: boolean;
   onBackPress?: VoidFunction
+  hasPaid?: boolean
 }
 
 export const Wizard = ({
@@ -45,6 +46,7 @@ export const Wizard = ({
   stepResults,
   setStepResult,
   storeStep,
+  hasPaid = false,
   onBackPress = undefined
 }: Props) => {
   const { isSubscribed } = useAuthStore();
@@ -198,6 +200,7 @@ export const Wizard = ({
                                   goToNextStep={goToNextStep}
                                   steps={steps}
                                   step={step}
+                                  hasPaid={hasPaid}
                                   setStep={setStep}
                                   stepResults={stepResults}
                                   setStepResult={setStepResult}

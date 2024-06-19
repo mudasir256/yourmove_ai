@@ -370,3 +370,7 @@ export const fetchReferralSubscriptionStatus = (email: string) => {
   }
   return axios.post(`${BASE_URL}/user/fetch-referral-subscription-status`, body);
 }
+
+export const checkUserSubscription = (email: string) => {
+  return axios.get(`${BASE_URL}/user/subscribed`, { params: { email } });
+};

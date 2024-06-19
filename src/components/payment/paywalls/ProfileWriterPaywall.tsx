@@ -126,15 +126,11 @@ export const ProfileWriterPaywall = ({ hideNoThanks, onComplete }: Props) => {
                       if ((window as any).gtag) {
                         (window as any).gtag('event', 'writer_purchase_monthly', {
                           event_category: 'funnel', product: 'profile_writer',
+                        });
+                        (window as any).gtag('event', abTestGroup === 0 ? 'experiment_writer_activate_subscription_A' : 'experiment_writer_activate_subscription_B', {
+                          event_category: 'funnel', product: 'profile_writer',
                         })
-                          (window as any).gtag('event', abTestGroup === 0 ? 'experiment_writer_activate_subscription_A' : 'experiment_writer_activate_subscription_B', {
-                            event_category: 'funnel', product: 'profile_writer',
-                          })
                       }
-                      // If the user isn't signed in, we need to sign them in or sign up
-                      // if (!auth.currentUser) {
-                      //   setAuthModalIsOpen(true);
-                      // }
                     }}
                     className="mt-2 flex items-center justify-center w-full bg-brand-primary text-white py-3 rounded-full font-semibold -mb-1"
                   >

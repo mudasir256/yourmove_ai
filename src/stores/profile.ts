@@ -15,6 +15,8 @@ interface ProfileStore {
   setReviewedProfile: (reviewedProfile: ReviewedProfile) => void;
   hasPaidForProfileReview: boolean;
   setHasPaidForProfileReview: (hasPaidForProfileReview: boolean) => void;
+  hasPurchasedProfileWriter: boolean;
+  setHasPurchasedProfileWriter: (hasPurchasedProfileWriter: boolean) => void;
 }
 
 export const useProfileStore = create<ProfileStore>((set) => ({
@@ -31,4 +33,6 @@ export const useProfileStore = create<ProfileStore>((set) => ({
   hasPaidForProfileReview: false,
   setHasPaidForProfileReview: (hasPaidForProfileReview) =>
     set({ hasPaidForProfileReview }),
+  hasPurchasedProfileWriter: false,
+  setHasPurchasedProfileWriter: (hasPurchasedProfileWriter) => set({ hasPurchasedProfileWriter })
 }));

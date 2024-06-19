@@ -92,13 +92,6 @@ export const PROFILE_WRITER_WIZARD_STEPS: Array<WizardStep> = [
     validator: yup.string(),
   },
   {
-    step: WizardStepType.WRITING_STYLE,
-    type: WizardStepInputType.SELECT,
-    label: "Pick your writing style",
-    choices: ["Flirty", "Thoughtful"],
-    validator: yup.string(),
-  },
-  {
     step: WizardStepType.EMAIL,
     type: WizardStepInputType.EMAIL,
     label: "What's your email?",
@@ -107,6 +100,14 @@ export const PROFILE_WRITER_WIZARD_STEPS: Array<WizardStep> = [
       .string()
       .email("Please enter a valid email")
       .required("Email is required"),
+  },
+  {
+    step: WizardStepType.WRITING_STYLE,
+    type: WizardStepInputType.SELECT,
+    label: "Pick your writing style",
+    choices: ["Flirty"],
+    lockedChoices: ["Thoughtful", "Feisty"],
+    validator: yup.string(),
   },
   {
     step: WizardStepType.PAYWALL,
