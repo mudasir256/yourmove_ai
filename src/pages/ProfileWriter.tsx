@@ -30,6 +30,21 @@ export const ProfileWriter = () => {
 
     const subscriptionResponse = await checkUserSubscription(profileWriterStepResults.email)
     setIsSubscribed(subscriptionResponse.data.isSubscribed)
+
+    // not subscribed and hasn't purchased writer
+    if (profileWriterStep === "writingStyle" && !productResponse.data.purchasedProducts.includes(ProductType.ProfileWriter) && !subscriptionResponse.data.isSubscribed) {
+      const writerResults = localStorage.getItem(`profileWriter:stepResults`);
+      const results = writerResults ? JSON.parse(writerResults) : {}
+      if (results?.writingStyle !== "Flirty") {
+        results.writingStyle = 'Flirty'
+        // remove this once you debug the step results posting delay
+        localStorage.setItem(
+          `profileWriter:stepResults`,
+          JSON.stringify(results)
+        );
+        setProfileWriterStepResult("writingStyle", "Flirty")
+      }
+    }
   }
 
   useEffect(() => {

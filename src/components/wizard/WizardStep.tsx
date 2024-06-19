@@ -134,7 +134,6 @@ export const WizardStep = ({
                           } bg-white border py-2 mr-4 rounded-full mt-5 cursor-pointer flex stroke-brand-primary hover:stroke-white`}
                         onClick={() => {
                           setStepResult(wizardStep.step, choice);
-                          console.log("Going to next step:: 1")
                           goToNextStep();
                         }}
                       >
@@ -174,7 +173,6 @@ export const WizardStep = ({
                           } border py-2 mr-4 rounded-md mt-5 cursor-pointer flex hover:bg-black hover:text-white px-5`}
                         onClick={() => {
                           setStepResult(wizardStep.step, choice);
-                          console.log("Going to next step:: 2")
                           goToNextStep();
                         }}
                       >
@@ -214,7 +212,6 @@ export const WizardStep = ({
                             setOpenUnlockProfileModal(true)
                           } else {
                             setStepResult(wizardStep.step, choice);
-                            console.log("Going to next step:: 3")
                             goToNextStep();
                           }
                         }}
