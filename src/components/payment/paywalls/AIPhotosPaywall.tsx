@@ -1,7 +1,5 @@
 import { Elements } from "@stripe/react-stripe-js";
 import { Appearance, StripeElementsOptionsMode, loadStripe } from "@stripe/stripe-js";
-import { ProductType } from "../../../constants/payments";
-import { toHeaderCase } from "js-convert-case";
 import { useAuthStore } from "../../../stores/auth";
 import AIPhotosPaymentForm from "../AIPhotosPaymentForm";
 
@@ -36,7 +34,7 @@ export const AIPhotosPaywall = ({
     <div className="bg-white rounded-lg border border-black p-4 overflow-y-scroll mt-10">
       <div className="flex mb-4">
         <div className="w-1/3 font-semibold">
-          {toHeaderCase(ProductType.AIPhotos)}
+          AI Enhanced Photos
         </div>
         <div className="w-2/3 flex justify-end items-center">
           ${isSubscribed ? '15' : '29'} once off

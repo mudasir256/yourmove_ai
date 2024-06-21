@@ -60,7 +60,6 @@ export const WizardStep = ({
           <svg
             onClick={() => {
               const currentStep = getStepIndex(step, steps)
-              console.log("CURRENT STEP:", currentStep)
               if (currentStep === 0) {
                 localStorage.removeItem(
                   `${name}:step`

@@ -93,6 +93,16 @@ export const Wizard = ({
     }
   }, [window.location]);
 
+  useEffect(() => {
+    if (storeStep) {
+      localStorage.setItem(`${name}:step`, step);
+      localStorage.setItem(
+        `${name}:stepResults`,
+        JSON.stringify(stepResults)
+      );
+    }
+  }, [stepResults, step])
+
   const goToNextStep = async () => {
     const nextStep = getStep(step, 1, steps);
     if (step === WizardStepType.WELCOME) {
@@ -119,13 +129,6 @@ export const Wizard = ({
           }
           if (nextStep) {
             setStep(nextStep.step);
-          }
-          if (storeStep) {
-            localStorage.setItem(`${name}:step`, step);
-            localStorage.setItem(
-              `${name}:stepResults`,
-              JSON.stringify(stepResults)
-            );
           }
           // If there is no more next step, we are at the end
           if (!nextStep) {
