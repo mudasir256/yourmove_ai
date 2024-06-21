@@ -22,10 +22,10 @@ export const OAuthOptions = () => {
     }
   };
 
-  const handleReferralSignUp = async (userId: string) => {
+  const handleReferralSignUp = async (userId: string, email: string = '') => {
     const referral = localStorage.getItem('referredCode')
     if (referral) {
-      await addUserReferral(userId, referral)
+      await addUserReferral(userId, email, referral)
       localStorage.removeItem('referredCode')
     }
   }
@@ -41,7 +41,7 @@ export const OAuthOptions = () => {
         }
         const userId = result.user.uid
         if (addInfo?.isNewUser) {
-          handleReferralSignUp(userId)
+          handleReferralSignUp(userId, result?.user?.email ?? '')
         }
       })
       .catch((error) => {
@@ -62,7 +62,7 @@ export const OAuthOptions = () => {
         }
         const userId = result.user.uid
         if (addInfo?.isNewUser) {
-          handleReferralSignUp(userId)
+          handleReferralSignUp(userId, result?.user?.email ?? '')
         }
       })
       .catch((error) => {

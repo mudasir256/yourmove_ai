@@ -71,7 +71,7 @@ export const SignUp = () => {
               const userId = signupUser.user?.uid
               if (referral && userId) {
                 // add referrealUser
-                await addUserReferral(userId, referral)
+                await addUserReferral(userId, signupUser.user?.email ?? values.email ?? '', referral)
                 localStorage.removeItem('referredCode')
               }
             } catch (error) {

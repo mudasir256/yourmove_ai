@@ -342,9 +342,10 @@ export const fetchUserReferralCode = (email: string) => {
   return axios.post(`${BASE_URL}/user/get-referral-code`, body);
 }
 
-export const addUserReferral = (userId: string, referralCode: string) => {
+export const addUserReferral = (userId: string, userEmail: string, referralCode: string) => {
   const body = {
     userId,
+    userEmail,
     referralCode
   }
   return axios.post(`${BASE_URL}/user/add-referral`, body);
