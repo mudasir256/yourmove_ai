@@ -1,3 +1,5 @@
+import toast from "react-hot-toast";
+import { useProfileStore } from "../../stores/profile";
 import { ProfileWriterPaywall } from "../payment/paywalls/ProfileWriterPaywall";
 import { Modal } from "./Modal";
 
@@ -7,6 +9,7 @@ interface Props {
 }
 
 export const UnlockProfileModal = ({ open, setOpen }: Props) => {
+  const { setHasPurchasedProfileWriter } = useProfileStore()
   return (
     <Modal open={open} setOpen={setOpen}>
       <div className="w-full overflow-y-scroll" style={{ height: "40rem" }}>
@@ -28,7 +31,12 @@ export const UnlockProfileModal = ({ open, setOpen }: Props) => {
           </svg>
         </div>
         <div className="-mt-10">
-          <ProfileWriterPaywall hideNoThanks={true} onComplete={() => setOpen(false)} />
+          <ProfileWriterPaywall hideNoThanks={true} onComplete={() => {
+            setOpen(false)
+            setHasPurchasedProfileWriter(true)
+            toast.success("You have successfully unlocked profile writer!");
+          }}
+          />
         </div>
       </div>
     </Modal>

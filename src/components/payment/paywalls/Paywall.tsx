@@ -128,7 +128,12 @@ export const Paywall = ({
                   <Elements options={options} stripe={stripePromise}>
                     <PaymentForm
                       redirectSuffix={toKebabCase(chosenProduct)}
-                      redirectHandler={redirectHandler}
+                      redirectHandler={async () => {
+                        redirectHandler?.()
+                        noThanksHandler();
+                        setPaymentIsLoading(false);
+                        onComplete?.()
+                      }}
                       returnUrl={
                         chosenProduct === ProductType.AIPhotos
                           ? "https://ai-photo.streamlit.app/"

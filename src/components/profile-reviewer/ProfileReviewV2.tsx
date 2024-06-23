@@ -68,7 +68,8 @@ export const ProfileReview = ({ hasPaid }: Props) => {
               <div className="px-4 py-4 bg-white rounded-b-2xl">
                 {hasPaid ?
                   <FullProfileReview review={reviewedProfile} /> :
-                  <PartialProfileReview summary={reviewedProfile?.summary ?? ""} onUnlockFullReviewClick={onUnlockFullReviewClick} />}
+                  <PartialProfileReview summary={reviewedProfile?.summary ?? ""} onUnlockFullReviewClick={onUnlockFullReviewClick} />
+                }
               </div>
             </div>
             <div className="mt-8 mb-10">

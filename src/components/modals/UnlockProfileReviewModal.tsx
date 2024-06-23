@@ -1,5 +1,7 @@
 import { Modal } from "./Modal";
 import { ProfileReviewPaywall } from "../payment/paywalls/ProfileReviewPaywall";
+import { useProfileStore } from "../../stores/profile";
+import toast from "react-hot-toast";
 
 interface Props {
   open: boolean;
@@ -7,6 +9,7 @@ interface Props {
 }
 
 export const UnlockProfileReviewModal = ({ open, setOpen }: Props) => {
+  const { setHasPaidForProfileReview } = useProfileStore()
   return (
     <Modal open={open} setOpen={setOpen}>
       <div className="w-full overflow-y-scroll" style={{ height: "40rem" }}>
@@ -28,7 +31,12 @@ export const UnlockProfileReviewModal = ({ open, setOpen }: Props) => {
           </svg>
         </div>
         <div className="-mt-10">
-          <ProfileReviewPaywall hideNoThanks={true} onComplete={() => setOpen(false)} />
+          <ProfileReviewPaywall hideNoThanks={true} onComplete={() => {
+            setOpen(false)
+            setHasPaidForProfileReview(true)
+            toast.success("You have successfully unlocked your full review!");
+          }}
+          />
         </div >
       </div >
     </Modal >
