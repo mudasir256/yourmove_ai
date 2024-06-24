@@ -31,7 +31,7 @@ export const SubscriptionForm = ({ planType, redirectHandler, email = undefined 
 
   const options: StripeElementsOptionsMode = {
     mode: 'subscription',
-    amount: planType === PlanType.Monthly ? (abTestGroup ? 1400 : 1200) : (abTestGroup ? 6000 : 4800),
+    amount: planType === PlanType.Monthly ? (abTestGroup ? 1400 : 1400) : (abTestGroup ? 6000 : 6000),
     currency: 'usd',
     appearance,
   };
@@ -62,14 +62,14 @@ export const SubscriptionForm = ({ planType, redirectHandler, email = undefined 
           {planType === PlanType.Monthly ?
             (abTestGroup ?
               <>$14.00 per month</> :
-              <>$12.00 per month</>
+              <>$14.00 per month</>
             ) :
             (planType === PlanType.Yearly ?
               (
                 <div className="my-auto">
-                  <span className="mr-1">{`${abTestGroup ? "$5.00" : "$4.00"} per month`}</span>
+                  <span className="mr-1">{`${abTestGroup ? "$5.00" : "$5.00"} per month`}</span>
                   <div>
-                    <small>{`Billed at ${abTestGroup ? "$60.00" : "$48.00"} per year`}</small>
+                    <small>{`Billed at ${abTestGroup ? "$60.00" : "$60.00"} per year`}</small>
                   </div>
                 </div>
               ) : null

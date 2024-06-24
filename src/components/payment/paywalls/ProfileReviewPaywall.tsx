@@ -36,7 +36,7 @@ export const ProfileReviewPaywall = ({ hideNoThanks, onComplete }: Props) => {
   const onMonthlyPress = () => {
     setPlanBeingPurchased(PlanType.Monthly);
     const params: EventParams = {
-      amount: abTestGroup ? '14' : '12',
+      amount: abTestGroup ? '14' : '14',
       payment_type: 'monthly'
     }
     logEvent('purchase_click', 'profile_review', params, 'payment')
@@ -49,7 +49,7 @@ export const ProfileReviewPaywall = ({ hideNoThanks, onComplete }: Props) => {
   const onProductPress = () => {
     setChosenProduct(ProductType.ProfileReview)
     const params: EventParams = {
-      amount: '15',
+      amount: abTestGroup ? '19' : '19',
       payment_type: 'oneoff'
     }
     logEvent('purchase_click', 'profile_review', params, 'payment')
@@ -95,7 +95,7 @@ export const ProfileReviewPaywall = ({ hideNoThanks, onComplete }: Props) => {
                   </div>
                   <div className="flex mt-2 mb-3 items-center">
                     <div>
-                      <h1 className="text-4xl font-semibold">{abTestGroup ? '$14' : '$12'}</h1>
+                      <h1 className="text-4xl font-semibold">{abTestGroup ? '$14' : '$14'}</h1>
                     </div>
                     <div className="pl-3">
                       <h1 className="text-zinc-500 leading-4">
@@ -155,7 +155,7 @@ export const ProfileReviewPaywall = ({ hideNoThanks, onComplete }: Props) => {
 
             {/* One time payment */}
 
-            <div className="mt-4">
+            {abTestGroup ? <div className="mt-4">
               <div className="bg-white p-3 border-2 border-black rounded-lg">
                 <div className="border-b-2 border-black">
                   <h2 className="text-xl font-semibold">
@@ -163,7 +163,7 @@ export const ProfileReviewPaywall = ({ hideNoThanks, onComplete }: Props) => {
                   </h2>
                   <div className="flex mt-2 mb-3 items-center">
                     <div>
-                      <h1 className="text-4xl font-semibold">{abTestGroup ? '$15' : '$15'}</h1>
+                      <h1 className="text-4xl font-semibold">{abTestGroup ? '$19' : '$19'}</h1>
                     </div>
                     <div className=" pl-3">
                       <h1 className="text-zinc-500 leading-4">
@@ -212,6 +212,8 @@ export const ProfileReviewPaywall = ({ hideNoThanks, onComplete }: Props) => {
                 </button>
               </div>
             </div>
+              : null
+            }
             {!hideNoThanks && <div className="mt-4 flex items-center justify-center mb-6">
               <h3
                 className="cursor-pointer text-lg text-zinc-500 hover:text-zinc-600 hover:underline"

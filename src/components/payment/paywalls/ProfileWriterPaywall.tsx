@@ -30,7 +30,7 @@ export const ProfileWriterPaywall = ({ hideNoThanks, onComplete }: Props) => {
   const onMonthlyPress = () => {
     setPlanBeingPurchased(PlanType.Monthly);
     const params: EventParams = {
-      amount: abTestGroup ? '14' : '12',
+      amount: abTestGroup ? '14' : '14',
       payment_type: 'monthly'
     }
     logEvent('purchase_click', 'profile_writer', params, 'payment')
@@ -47,7 +47,7 @@ export const ProfileWriterPaywall = ({ hideNoThanks, onComplete }: Props) => {
   const onProductPress = () => {
     setChosenProduct(ProductType.ProfileWriter)
     const params: EventParams = {
-      amount: abTestGroup ? '19' : '15',
+      amount: abTestGroup ? '19' : '19',
       payment_type: 'oneoff'
     }
     logEvent('purchase_click', 'profile_writer', params, 'payment')
@@ -96,7 +96,7 @@ export const ProfileWriterPaywall = ({ hideNoThanks, onComplete }: Props) => {
           >
             <div className="pb-20">
               {" "}
-              {/* Premium AI Profile Plan */}
+              {/* Premium AI Profile - Subscription Plan */}
               <div className="mt-4">
                 <div className="bg-white p-3 border-2 border-black rounded-lg">
                   <div className="border-b-2 border-black">
@@ -108,7 +108,7 @@ export const ProfileWriterPaywall = ({ hideNoThanks, onComplete }: Props) => {
                     </div>
                     <div className="flex mt-2 mb-3 items-center">
                       <div>
-                        <h1 className="text-4xl font-semibold">{abTestGroup ? '$14' : '$12'}</h1>
+                        <h1 className="text-4xl font-semibold">{abTestGroup ? '$14' : '$14'}</h1>
                       </div>
                       <div className="pl-3">
                         <h1 className="text-zinc-500 leading-4">
@@ -168,82 +168,87 @@ export const ProfileWriterPaywall = ({ hideNoThanks, onComplete }: Props) => {
                   </button>
                 </div>
               </div>
-              {/* One time payment */}
-              <div className="mt-4">
-                <div className="bg-white p-3 border-2 border-black rounded-lg">
-                  <div className="border-b-2 border-black">
-                    <h2 className="text-xl font-semibold">
-                      Premium AI Profile
-                    </h2>
-                    <div className="flex mt-2 mb-3 items-center">
-                      <div>
-                        <h1 className="text-4xl font-semibold">{abTestGroup ? '$19' : '$15'}</h1>
-                      </div>
-                      <div className=" pl-3">
-                        <h1 className="text-zinc-500 leading-4">
-                          one-time <br /> payment
-                        </h1>
+              {/* Premium AI Profile - Product Plan */}
+              {abTestGroup ?
+                <div className="mt-4">
+                  <div className="bg-white p-3 border-2 border-black rounded-lg">
+                    <div className="border-b-2 border-black">
+                      <h2 className="text-xl font-semibold">
+                        Premium AI Profile
+                      </h2>
+                      <div className="flex mt-2 mb-3 items-center">
+                        <div>
+                          <h1 className="text-4xl font-semibold">{abTestGroup ? '$19' : '$19'}</h1>
+                        </div>
+                        <div className=" pl-3">
+                          <h1 className="text-zinc-500 leading-4">
+                            one-time <br /> payment
+                          </h1>
+                        </div>
                       </div>
                     </div>
-                  </div>
-                  <div className="mt-2">
-                    <h4 className="font-semibold">What's included:</h4>
-                    <div className="mt-1">
-                      {[
-                        "Complete your whole profile",
-                        "120+ top prompts from Hinge, Bumble, CmB, and more",
-                        "Access to our best AI models for best results",
-                        "30 day money back guarantee",
-                      ].map((feature: string) => (
-                        <PlanFeature
-                          icon={
-                            <svg
-                              xmlns="http://www.w3.org/2000/svg"
-                              fill="none"
-                              viewBox="0 0 24 24"
-                              strokeWidth="1.5"
-                              stroke="currentColor"
-                              className="w-4 h-6"
-                            >
-                              <path
-                                strokeLinecap="round"
-                                strokeLinejoin="round"
-                                d="M4.5 12.75l6 6 9-13.5"
-                              />
-                            </svg>
-                          }
-                          feature={feature}
-                        />
-                      ))}
+                    <div className="mt-2">
+                      <h4 className="font-semibold">What's included:</h4>
+                      <div className="mt-1">
+                        {[
+                          "Complete your whole profile",
+                          "120+ top prompts from Hinge, Bumble, CmB, and more",
+                          "Access to our best AI models for best results",
+                          "30 day money back guarantee",
+                        ].map((feature: string) => (
+                          <PlanFeature
+                            icon={
+                              <svg
+                                xmlns="http://www.w3.org/2000/svg"
+                                fill="none"
+                                viewBox="0 0 24 24"
+                                strokeWidth="1.5"
+                                stroke="currentColor"
+                                className="w-4 h-6"
+                              >
+                                <path
+                                  strokeLinecap="round"
+                                  strokeLinejoin="round"
+                                  d="M4.5 12.75l6 6 9-13.5"
+                                />
+                              </svg>
+                            }
+                            feature={feature}
+                          />
+                        ))}
+                      </div>
                     </div>
+                    <button
+                      type="button"
+                      onClick={onProductPress}
+                      className="mt-4 flex items-center justify-center w-full bg-black text-white py-3 rounded-full font-semibold -mb-1"
+                    >
+                      Activate
+                    </button>
+                  </div >
+                </div >
+                : null
+              }
+              {
+                !hideNoThanks && (
+                  <div className="mt-4 flex items-center justify-center mb-6">
+                    <h3
+                      className="cursor-pointer text-lg text-zinc-500 hover:text-zinc-600 hover:underline"
+                      onClick={() => {
+                        logEvent('no_thanks', 'profile_writer')
+                        window.scrollTo(0, 0);
+                        setProfileWriterWizardComplete(true);
+                      }}
+                    >
+                      no thanks
+                    </h3>
                   </div>
-                  <button
-                    type="button"
-                    onClick={onProductPress}
-                    className="mt-4 flex items-center justify-center w-full bg-black text-white py-3 rounded-full font-semibold -mb-1"
-                  >
-                    Activate
-                  </button>
-                </div>
-              </div>
-              {!hideNoThanks && (
-                <div className="mt-4 flex items-center justify-center mb-6">
-                  <h3
-                    className="cursor-pointer text-lg text-zinc-500 hover:text-zinc-600 hover:underline"
-                    onClick={() => {
-                      logEvent('no_thanks', 'profile_writer')
-                      window.scrollTo(0, 0);
-                      setProfileWriterWizardComplete(true);
-                    }}
-                  >
-                    no thanks
-                  </h3>
-                </div>
-              )}
-            </div>
-          </Paywall>
-        </div>
-      </div>
+                )
+              }
+            </div >
+          </Paywall >
+        </div >
+      </div >
     </>
   );
 };

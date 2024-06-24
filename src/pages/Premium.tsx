@@ -63,7 +63,7 @@ export const Premium = () => {
   const onMonthlyPress = () => {
     setPlanBeingPurchased(PlanType.Monthly);
     const params: EventParams = {
-      amount: abTestGroup ? '14' : '12',
+      amount: abTestGroup ? '14' : '14',
       payment_type: 'monthly'
     }
     logEvent('purchase_click', 'chat_assistant', params, 'payment')
@@ -76,7 +76,7 @@ export const Premium = () => {
   const onYearlyPress = () => {
     setPlanBeingPurchased(PlanType.Yearly);
     const params: EventParams = {
-      amount: abTestGroup ? '60' : '48',
+      amount: abTestGroup ? '60' : '60',
       payment_type: 'annual'
     }
     logEvent('purchase_click', 'chat_assistant', params, 'payment')
@@ -88,7 +88,7 @@ export const Premium = () => {
 
   const logPurchaseEvent = () => {
     const params: EventParams = {
-      amount: abTestGroup ? planBeingPurchased === PlanType.Monthly ? '14' : '60' : planBeingPurchased === PlanType.Monthly ? '12' : '48',
+      amount: abTestGroup ? planBeingPurchased === PlanType.Monthly ? '14' : '60' : planBeingPurchased === PlanType.Monthly ? '14' : '60',
       payment_type: planBeingPurchased === PlanType.Monthly ? 'monthly' : 'annual'
     }
     logEvent('purchase_activate', 'chat_assistant', params, 'payment')
@@ -241,7 +241,7 @@ export const Premium = () => {
                                 </div>
                                 <div className="py-1.5">
                                   <h3 className="text-lg flex items-center justify-center">
-                                    {abTestGroup ? '$14' : '$12'}
+                                    {abTestGroup ? '$14' : '$14'}
                                     <span className="text-lg font-semithin pl-1 mt-0.5">
                                       / month
                                     </span>
@@ -256,12 +256,12 @@ export const Premium = () => {
                               >
                                 <div className="bg-brand-primary text-white py-1">
                                   <h4 className="text-white uppercase text-xs sm:text-sm">
-                                    {`Annual Plan - Save ${abTestGroup ? "65%" : "67%"}`}
+                                    {`Annual Plan - Save ${abTestGroup ? "65%" : "65%"}`}
                                   </h4>
                                 </div>
                                 <div className="py-1.5">
                                   <h3 className="text-lg flex items-center justify-center">
-                                    {abTestGroup ? '$5.00' : '$4.00'}
+                                    {abTestGroup ? '$5.00' : '$5.00'}
                                     <span className="text-lg font-semithin pl-1 mt-0.5">
                                       / month
                                     </span>

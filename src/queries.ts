@@ -137,11 +137,17 @@ export const getClientSecret = (
   product: string,
   group: number = 0
 ): Promise<AxiosResponse<ClientSecretResponse>> => {
-  return axios.post(`${BASE_URL}/client-secret`, {
+  const source = localStorage.getItem('utm_source')
+  const campaign = localStorage.getItem('utm_campaign')
+  const params = {
     email,
     product,
-    group
-  });
+    group,
+    ...(source && { source: source }),
+    ...(campaign && { campaign: campaign }),
+  }
+
+  return axios.post(`${BASE_URL}/client-secret`, params);
 };
 
 export const getPrompts = (
@@ -294,6 +300,11 @@ export const generateProfileReview = (
 export const createSubscription = (
   createSubscriptionRequest: CreateSubscriptionRequest
 ) => {
+  const source = localStorage.getItem('utm_source')
+  const campaign = localStorage.getItem('utm_campaign')
+  if (source) createSubscriptionRequest.source = source
+  if (campaign) createSubscriptionRequest.campaign = campaign
+
   return axios.post(`${BASE_URL}/subscribe`, createSubscriptionRequest);
 };
 

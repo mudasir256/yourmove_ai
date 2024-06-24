@@ -114,7 +114,7 @@ export const Paywall = ({
 
   const logPurchaseEvent = () => {
     const params: EventParams = {
-      amount: abTestGroup ? '14' : '12',
+      amount: abTestGroup ? '14' : '14',
       payment_type: 'monthly'
     }
     logEvent('purchase_activate', product, params, 'payment')
@@ -122,7 +122,7 @@ export const Paywall = ({
 
   const logProductPurchaseEvent = () => {
     const params: EventParams = {
-      amount: product === ProductType.ProfileWriter && abTestGroup ? '19' : '15',
+      amount: product === ProductType.ProfileWriter && abTestGroup ? '19' : '19',
       payment_type: 'oneoff'
     }
     logEvent('purchase_activate', product, params, 'payment')

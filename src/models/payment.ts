@@ -8,5 +8,7 @@ export interface ClientSecretResponse {
 export interface CreateSubscriptionRequest {
   email: string;
   term: PlanType;
-  group?: number
+  group?: number;
+  source?: string;
+  campaign?: string;
 }
