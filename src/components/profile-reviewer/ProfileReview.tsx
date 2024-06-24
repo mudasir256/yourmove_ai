@@ -6,6 +6,7 @@ import { useWizardStore } from "../../stores/wizard";
 import { WizardStepType } from "../../models/wizard";
 import { AIPhotosModal } from "../ai-photos/AIPhotosModal";
 import { useUIStore } from "../../stores/ui";
+import { logEvent, useLogEvent } from "../../analytics";
 
 const PLAN_FEATURES = [
   "Detailed review of your profile",
@@ -28,6 +29,7 @@ interface Props {
   }
 `}</style>
 
+// Deprecated in favor of ProfileReviewV2
 export const ProfileReview = ({ hasPaid, setHasPaid }: Props) => {
   const { reviewedProfile, setReviewedProfile } = useProfileStore();
   const [unlockFullReviewModalOpen, setUnlockFullReviewModalOpen] =
@@ -36,14 +38,15 @@ export const ProfileReview = ({ hasPaid, setHasPaid }: Props) => {
     useWizardStore();
   const { abTestGroup } = useUIStore()
 
+  useLogEvent('review_results', 'profile_review')
 
-  useEffect(() => {
-    if ((window as any).gtag) {
-      (window as any).gtag('event', 'review_results', {
-        event_category: 'funnel', product: 'profile_review',
-      });
-    }
-  }, []);
+  // useEffect(() => {
+  //   if ((window as any).gtag) {
+  //     (window as any).gtag('event', 'review_results', {
+  //       event_category: 'funnel', product: 'profile_review',
+  //     });
+  //   }
+  // }, []);
 
   return (
     <div className="pb-40 mt-4">
@@ -91,12 +94,13 @@ export const ProfileReview = ({ hasPaid, setHasPaid }: Props) => {
                   type="button"
                   onClick={() => {
                     setUnlockFullReviewModalOpen(true)
-                    if ((window as any).gtag) {
-                      (window as any).gtag("event", "writer_results_unlock", {
-                        event_category: "funnel",
-                        product: "profile_writer",
-                      });
-                    }
+                    logEvent('review_results_unlock', 'profile_review')
+                    // if ((window as any).gtag) {
+                    //   (window as any).gtag("event", "review_results_unlock", {
+                    //     event_category: "funnel",
+                    //     product: "profile_review",
+                    //   });
+                    // }
                   }}
                   className="w-full cursor-pointer border border-black bg-white py-2 text-lg font-semibold flex items-center justify-center shadow-lg rounded-md"
                 >

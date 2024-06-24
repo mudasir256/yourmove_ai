@@ -12,6 +12,7 @@ import { ProductType } from "../constants/payments";
 import { auth } from "../firebase";
 import { hasUserPaid } from "../queries";
 import toast from "react-hot-toast";
+import { useLogEvent, logEvent, EventParams } from "../analytics";
 
 const AI_PHOTOS_URL = import.meta.env.VITE_AI_PHOTOS_URL
 
@@ -49,14 +50,39 @@ export const AIPhotos = () => {
     }
   }, [authState])
 
-  useEffect(() => {
-    if ((window as any).gtag) {
-      (window as any).gtag("event", "photos_start", {
-        event_category: "funnel",
-        product: "photos",
-      });
+  useLogEvent('start', 'photos')
+
+  const onPurchasePress = () => {
+    setAIPhotosModalShow(true);
+    logEvent('purchase_unlock', 'photos')
+    // if (window.gtag) {
+    //   window.gtag("event", "photos_unlock", {
+    //     event_category: "funnel",
+    //     product: "photos",
+    //   });
+    // }
+  }
+
+  // useEffect(() => {
+  //   if ((window as any).gtag) {
+  //     (window as any).gtag("event", "photos_start", {
+  //       event_category: "funnel",
+  //       product: "photos",
+  //     });
+  //   }
+  // }, []);
+
+  const onPurchaseSuccess = async () => {
+    const params: EventParams = {
+      amount: isSubscribed ? '15' : '29',
+      payment_type: 'oneoff'
     }
-  }, []);
+    logEvent('purchase_activate', 'photos', params, 'payment')
+    setAIPhotosModalShow(false);
+    window.open(AI_PHOTOS_URL, "_blank", "noopener,noreferrer");
+    toast.success("You have successfully unlocked AI Photos!");
+    setShowLink(true)
+  }
 
   return (
     <div className="-mt-8 max-w-lg mx-auto mt-6">
@@ -152,15 +178,7 @@ export const AIPhotos = () => {
             ) : (
               <button
                 type="button"
-                onClick={() => {
-                  setAIPhotosModalShow(true);
-                  if (window.gtag) {
-                    window.gtag("event", "photos_unlock", {
-                      event_category: "funnel",
-                      product: "photos",
-                    });
-                  }
-                }}
+                onClick={onPurchasePress}
                 className="mt-2 flex items-center justify-center w-full bg-brand-primary text-white py-3 rounded-full font-semibold"
               >
                 Enhance my photos -
@@ -215,12 +233,7 @@ export const AIPhotos = () => {
       <UnlockAIPhotosModal
         open={aiPhotosModalShown}
         setOpen={setAIPhotosModalShow}
-        redirectHandler={async () => {
-          setAIPhotosModalShow(false);
-          window.open(AI_PHOTOS_URL, "_blank", "noopener,noreferrer");
-          toast.success("You have successfully unlocked AI Photos!");
-          setShowLink(true)
-        }} />
+        redirectHandler={onPurchaseSuccess} />
     </div >
   );
 };

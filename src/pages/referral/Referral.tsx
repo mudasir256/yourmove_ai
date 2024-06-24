@@ -3,6 +3,7 @@ import ReferralImage from "../../assets/images/referral-img.png"
 import { useNavigate } from "react-router-dom";
 import { useReferrals } from "./useReferrals"
 import { useEffect, useRef, useState } from "react";
+import { logEvent } from "../../analytics";
 
 
 const REFERRAL_REQUIRED_FOR_PREMIUM_ACCESS = parseInt(import.meta.env.VITE_REFERRAL_REQUIRED_FOR_PREMIUM_ACCESS || 0)
@@ -25,10 +26,11 @@ export const UserReferrals = () => {
   }, [referralCode])
 
   const onShareReferralClicked = async () => {
-    (window as any).gtag('event', 'referral_share', {
-      event_category: 'referral_share',
-      product: 'share',
-    });
+    logEvent('referral_share', 'referrals')
+    // (window as any).gtag('event', 'referral_share', {
+    //   event_category: 'referral_share',
+    //   product: 'share',
+    // });
 
     try {
       await navigator.share({
@@ -42,10 +44,11 @@ export const UserReferrals = () => {
   };
 
   const onCopyReferralClicked = () => {
-    (window as any).gtag('event', 'referral_copy', {
-      event_category: 'referral_copy',
-      product: 'share',
-    });
+    logEvent('referral_copy', 'referrals')
+    // (window as any).gtag('event', 'referral_copy', {
+    //   event_category: 'referral_copy',
+    //   product: 'share',
+    // });
     navigator.clipboard.writeText(referralLink)
   }
 

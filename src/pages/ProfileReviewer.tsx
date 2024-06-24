@@ -11,6 +11,7 @@ import { useUIStore } from "../stores/ui";
 import { WizardStepType } from "../models/wizard";
 import { ReviewedProfile } from "../models/profile";
 import { useProfileReviewData } from './useProfileReviewData'
+import { useLogEvent } from "../analytics";
 
 export const ProfileReviewer = () => {
   const {
@@ -87,15 +88,15 @@ export const ProfileReviewer = () => {
     }
   }, [profileReviewerWizardComplete, paymentIsLoading])
 
-  useEffect(() => {
-    if ((window as any).gtag) {
-      (window as any).gtag('event', 'review_start', {
-        event_category: 'funnel', product: 'profile_review',
-      });
-    }
-  }, []);
+  // useEffect(() => {
+  //   if ((window as any).gtag) {
+  //     (window as any).gtag('event', 'review_start', {
+  //       event_category: 'funnel', product: 'profile_review',
+  //     });
+  //   }
+  // }, []);
 
-
+  useLogEvent('start', 'profile_review')
 
   return (
     <div className="px-4">

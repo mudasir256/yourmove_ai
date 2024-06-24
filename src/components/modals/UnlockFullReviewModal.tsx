@@ -37,6 +37,7 @@ export const UnlockFullReviewModal = ({ open, setOpen, setHasPaid }: Props) => {
         </div>
         <div className="overflow-y-scroll h-[30rem]">
           <Paywall
+            product={ProductType.ProfileReview}
             email={profileReviewerStepResults.email}
             requiredProductsToSkipPaywall={[ProductType.ProfileReview]}
             noThanksHandler={() => setOpen(false)}

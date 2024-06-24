@@ -6,6 +6,7 @@ import { useState, useEffect } from "react";
 import { createCopy, generateSingleProfileResponse } from "../../queries";
 import { UnlockProfileModal } from "../modals/UnlockProfileModal";
 import { useWizardStore } from "../../stores/wizard";
+import { logEvent } from "../../analytics";
 
 interface Props {
   lockItem: boolean;
@@ -34,14 +35,14 @@ export const ProfileItem = ({ lockItem, profileResponse, index }: Props) => {
     });
   };
 
-  useEffect(() => {
-    if ((window as any).gtag) {
-      (window as any).gtag("event", "writer_results", {
-        event_category: "funnel",
-        product: "profile_writer",
-      });
-    }
-  }, []);
+  // useEffect(() => {
+  //   if ((window as any).gtag) {
+  //     (window as any).gtag("event", "writer_results", {
+  //       event_category: "funnel",
+  //       product: "profile_writer",
+  //     });
+  //   }
+  // }, []);
 
   return (
     <div className="bg-white mb-4 shadow-md rounded-md p-4 relative">
@@ -80,12 +81,13 @@ export const ProfileItem = ({ lockItem, profileResponse, index }: Props) => {
                 type="button"
                 onClick={() => {
                   setUnlockModalIsOpen(true);
-                  if ((window as any).gtag) {
-                    (window as any).gtag("event", "writer_results_unlock", {
-                      event_category: "funnel",
-                      product: "profile_writer",
-                    });
-                  }
+                  logEvent('purchase_unlock', 'profile_writer')
+                  // if ((window as any).gtag) {
+                  //   (window as any).gtag("event", "writer_results_unlock", {
+                  //     event_category: "funnel",
+                  //     product: "profile_writer",
+                  //   });
+                  // }
                 }}
                 className="cursor-pointer border border-black bg-white mx-10 py-2 text-lg font-semibold w-full flex items-center justify-center shadow-lg rounded-md"
               >

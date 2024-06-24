@@ -12,6 +12,7 @@ import { useNavigate } from "react-router-dom";
 import { Success } from "../components/Success";
 import { Helmet } from 'react-helmet-async';
 import { AuthState } from "../constants/auth";
+import { EventParams, logEvent, useLogEvent } from "../analytics";
 
 
 export const Premium = () => {
@@ -57,13 +58,41 @@ export const Premium = () => {
     }
   }, [showAuthModalAfterPayment, authModalIsOpen])
 
-  useEffect(() => {
-    if ((window as any).gtag && abTestGroup !== undefined) {
-      (window as any).gtag('event', abTestGroup ? 'experiment_premium_page_view_B' : 'experiment_premium_page_view_A', {
-        event_category: 'funnel', product: 'chat_assistant',
-      })
+  useLogEvent('premium_page_view', 'chat_assistant')
+
+  const onMonthlyPress = () => {
+    setPlanBeingPurchased(PlanType.Monthly);
+    const params: EventParams = {
+      amount: abTestGroup ? '14' : '12',
+      payment_type: 'monthly'
     }
-  }, [abTestGroup])
+    logEvent('purchase_click', 'chat_assistant', params, 'payment')
+    // (window as any).gtag('event', 'subscribe_monthly_click', {
+    //   event_category: 'payment_click',
+    //   product: 'chat_assistant',
+    // });
+  }
+
+  const onYearlyPress = () => {
+    setPlanBeingPurchased(PlanType.Yearly);
+    const params: EventParams = {
+      amount: abTestGroup ? '60' : '48',
+      payment_type: 'annual'
+    }
+    logEvent('purchase_click', 'chat_assistant', params, 'payment')
+    // (window as any).gtag('event', 'subscribe_annual_click', {
+    //   event_category: 'payment_click',
+    //   product: 'chat_assistant',
+    // });
+  }
+
+  const logPurchaseEvent = () => {
+    const params: EventParams = {
+      amount: abTestGroup ? planBeingPurchased === PlanType.Monthly ? '14' : '60' : planBeingPurchased === PlanType.Monthly ? '12' : '48',
+      payment_type: planBeingPurchased === PlanType.Monthly ? 'monthly' : 'annual'
+    }
+    logEvent('purchase_activate', 'chat_assistant', params, 'payment')
+  }
 
   return subscriptionSuccess ? (
     <div className="text-center mt-8">
@@ -165,6 +194,7 @@ export const Premium = () => {
                               setSubscriptionSuccess(true);
                             }, 2000);
                           }
+                          logPurchaseEvent()
                         }}
                       />
                     </div>
@@ -202,17 +232,7 @@ export const Premium = () => {
                               {/* Monthly */}
                               <div
                                 className="w-1/2 border-2 border-brand-secondary rounded-lg mx-2 cursor-pointer z-50"
-                                onClick={() => {
-                                  setPlanBeingPurchased(PlanType.Monthly);
-                                  (window as any).gtag('event', 'subscribe_monthly_click', {
-                                    event_category: 'payment_click',
-                                    product: 'chat_assistant',
-                                  });
-                                  // If the user isn't signed in, we need to sign them in or sign up
-                                  // if (!auth.currentUser) {
-                                  //   setAuthModalIsOpen(true);
-                                  // }
-                                }}
+                                onClick={onMonthlyPress}
                               >
                                 <div className="bg-brand-secondary text-white py-1">
                                   <h4 className="text-white uppercase text-xs sm:text-sm">
@@ -232,17 +252,7 @@ export const Premium = () => {
                               {/* Yearly */}
                               <div
                                 className="w-1/2 border-2 border-brand-primary rounded-lg mx-2 cursor-pointer"
-                                onClick={() => {
-                                  setPlanBeingPurchased(PlanType.Yearly);
-                                  (window as any).gtag('event', 'subscribe_annual_click', {
-                                    event_category: 'payment_click',
-                                    product: 'chat_assistant',
-                                  });
-                                  // If the user isn't signed in, we need to sign them in or sign up
-                                  // if (!auth.currentUser) {
-                                  //   setAuthModalIsOpen(true);
-                                  // }
-                                }}
+                                onClick={onYearlyPress}
                               >
                                 <div className="bg-brand-primary text-white py-1">
                                   <h4 className="text-white uppercase text-xs sm:text-sm">

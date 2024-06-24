@@ -16,7 +16,7 @@ import { auth } from "../../firebase";
 import { MessageStyleSelector } from "./selectors/MessageStyleSelector";
 import { useUIStore } from "../../stores/ui";
 import { toast } from 'react-hot-toast';
-
+import { logEvent } from "../../analytics";
 
 // exported so other components can use it
 export const submitMessage = (message: string, file: File | null) => {
@@ -41,17 +41,16 @@ export const submitMessage = (message: string, file: File | null) => {
       file ? file : null,
       chatResponse?.queryDecoded ? chatResponse.queryDecoded : null,
       auth.currentUser ? auth.currentUser.accessToken : null
-    )
-      .then((response) => {
-        state.setChatResponse(response.data as ChatResponse);
-        state.setSendingMessage(false);
+    ).then((response) => {
+      state.setChatResponse(response.data as ChatResponse);
+      state.setSendingMessage(false);
 
-        // Unhide the upsell
-        useUIStore.getState().setHideUpsell(false);
-      })
-      .catch((error) => {
-        // handleNoChats();
-      });
+      // Unhide the upsell
+      useUIStore.getState().setHideUpsell(false);
+    }).catch((error) => {
+      // handleNoChats();
+      console.log("ERROR:: ", error)
+    });
   } else {
     state.setChatRequestType(ChatRequestType.Text);
     sendChatText(
@@ -60,17 +59,20 @@ export const submitMessage = (message: string, file: File | null) => {
       message,
       state.curiosityModeEnabled,
       auth.currentUser ? auth.currentUser.accessToken : null
-    )
-      .then((response) => {
-        state.setChatResponse(response.data as ChatResponse);
-        state.setSendingMessage(false);
+    ).then((response) => {
+      state.setChatResponse(response.data as ChatResponse);
+      state.setSendingMessage(false);
 
-        // Unhide the upsell
-        useUIStore.getState().setHideUpsell(false);
-      })
-      .catch((error) => {
-        // handleNoChats();
-      });
+      // Unhide the upsell
+      useUIStore.getState().setHideUpsell(false);
+    }).catch((error) => {
+      // handleNoChats();
+      console.log("ERROR:: ", error)
+      if (error.response?.status === 429) {
+        if (auth.currentUser) logEvent('paywall', 'chat_assistant')
+        else logEvent('register_popup', 'chat_assistant')
+      }
+    });
   }
 };
 
@@ -79,6 +81,7 @@ interface Props {
   hideInputSettings?: boolean;
   file: File | null;
   setFile: (file: File | null) => void;
+  onGetIdeasPress?: VoidFunction
 }
 
 export const MessageInput = ({
@@ -86,6 +89,7 @@ export const MessageInput = ({
   hideInputSettings,
   file,
   setFile,
+  onGetIdeasPress
 }: Props) => {
   const { selectedMessageType, selectedMessageSubType } = useChatStore();
   const [inputConfiguration, setInputConfiguration] = useState({} as any);
@@ -155,6 +159,7 @@ export const MessageInput = ({
             })}
             onSubmit={(values, actions) => {
               submitMessage(values.message, file);
+              onGetIdeasPress?.()
             }}
             enableReinitialize
           >

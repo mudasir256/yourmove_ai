@@ -13,6 +13,7 @@ import toast from "react-hot-toast";
 import { FeedbackModal } from "../modals/FeedbackModal";
 import { Logo } from "../Logo";
 import { SideNavListItem } from "./SideNavListItem"
+import { EventParams, logEvent } from "../..//analytics";
 
 const APP_STORE_URL = "https://apps.apple.com/us/app/yourmove-ai/id6444244023";
 
@@ -189,11 +190,13 @@ export const SideNav = () => {
                           titleStyle="text-brand-primary"
                           target="_blank" href={APP_STORE_URL}
                           onNavItemClick={() => {
+                            const params: EventParams = { event_label: 'iOS download' }
+                            logEvent('ios_download_click', undefined, params, 'click')
                             setSidebarOpen(false);
-                            (window as any).gtag('event', 'ios_download_click', {
-                              event_category: 'click',
-                              event_label: 'iOS download',
-                            });
+                            // (window as any).gtag('event', 'ios_download_click', {
+                            //   event_category: 'click',
+                            //   event_label: 'iOS download',
+                            // });
                           }}
                         />
                         <li >

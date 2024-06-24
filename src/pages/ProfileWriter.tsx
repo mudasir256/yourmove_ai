@@ -8,6 +8,7 @@ import { checkUserSubscription, hasUserPaid } from '../queries';
 import { ProductType } from '../constants/payments';
 import { useProfileStore } from '../stores/profile';
 import { useAuthStore } from '../stores/auth';
+import { useLogEvent } from '../analytics';
 
 export const ProfileWriter = () => {
   const {
@@ -18,6 +19,8 @@ export const ProfileWriter = () => {
     profileWriterStepResults,
     setProfileWriterStepResult,
   } = useWizardStore();
+
+  useLogEvent('start', 'profile_writer')
 
   const { hasPurchasedProfileWriter, setHasPurchasedProfileWriter } = useProfileStore()
   const { isSubscribed, setIsSubscribed } = useAuthStore()
@@ -57,13 +60,13 @@ export const ProfileWriter = () => {
     checkProfileWriterPurchaseStatus()
   }, [profileWriterStep])
 
-  useEffect(() => {
-    if ((window as any).gtag) {
-      (window as any).gtag('event', 'writer_start', {
-        event_category: 'funnel', product: 'profile_writer',
-      });
-    }
-  }, []);
+  // useEffect(() => {
+  //   if ((window as any).gtag) {
+  //     (window as any).gtag('event', 'writer_start', {
+  //       event_category: 'funnel', product: 'profile_writer',
+  //     });
+  //   }
+  // }, []);
 
   return (
     <div className="px-4">

@@ -10,6 +10,7 @@ import { auth } from "../../firebase";
 import { ErrorAlert } from "../ErrorAlert";
 import { successfulSignIn } from "../../utils";
 import { checkIfUserRequiresMigration } from "../../queries";
+import { EventParams, logEvent } from "../../analytics";
 
 export const SignIn = () => {
   const [submitting, setSubmitting] = useState(false);
@@ -66,7 +67,7 @@ export const SignIn = () => {
               Sign up
             </button>
           </div>
-          {showAuthSubscriptionDisclaimer && 
+          {showAuthSubscriptionDisclaimer &&
             (
               <p className="text-brand-primary">
                 Please sign up / in to activate your subscription. Contact support@yourmove.ai in case of any issues.
@@ -104,6 +105,10 @@ export const SignIn = () => {
                     // Set hasCheckedForSubscription to false so we will check for subscription again
                     setHasCheckedForSubscription(false);
                     successfulSignIn(values.email);
+                    const params: EventParams = {
+                      source: 'email'
+                    }
+                    logEvent('register_signin', undefined, params)
                   } catch (error) {
                     console.log("the error is");
                     console.log(error);

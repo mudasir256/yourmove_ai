@@ -9,6 +9,7 @@ import { Screenshot } from "../components/chat/Screenshot";
 import { GeneratingRepliesLoader } from "../components/chat/GeneratingRepliesLoader";
 import { useState, useEffect } from "react";
 import { Helmet } from 'react-helmet-async';
+import { useLogEvent, logEvent } from '../analytics'
 
 
 export const ChatAssistant = () => {
@@ -34,6 +35,8 @@ export const ChatAssistant = () => {
     setChatRequestType(null);
   };
 
+  useLogEvent('start', 'chat_assistant')
+
   // Apply a soft reset whenever a user who has a screenshot switches
   useEffect(() => {
     if (needReset) {
@@ -41,6 +44,10 @@ export const ChatAssistant = () => {
       useChatStore.getState().setNeedReset(false); // Reset the flag
     }
   }, [needReset]);
+
+  const onGetIdeasPress = () => {
+    logEvent('generate', 'chat_assistant')
+  }
 
   return (
     <div className=" max-w-xl mx-auto px-4">
@@ -95,6 +102,7 @@ export const ChatAssistant = () => {
 
                         // re-run with no file object. it will check if there is a recentQuery and use that instead
                         submitMessage(message, null);
+                        onGetIdeasPress()
                       }}
                     >
                       More Ideas
@@ -133,6 +141,7 @@ export const ChatAssistant = () => {
             setFile={setFile}
             hideTextInput={!!chatResponse || sendingMessage}
             hideInputSettings={!sendingMessage}
+            onGetIdeasPress={onGetIdeasPress}
           />
         </div>
         <div>

@@ -24,6 +24,9 @@ import { AuthState } from "./constants/auth";
 import { useABTest } from './components/ab-testing/useABTest'
 import { UserSettings } from "./pages/UserSettings";
 import { UserReferrals } from "./pages/referral/Referral"
+import { useReferralQueryParams } from "./pages/referral/useReferralQueryParams"
+import { useCampaignQueryParams } from "./pages/useCampaignQueryParams"
+
 /* 
 
 Everything is pretty much ready to rock and roll. The only outstanding pieces are:
@@ -59,11 +62,6 @@ if (import.meta.env.VITE_SENTRY_DSN) {
   });
 }
 
-const useSearchReferralCode = () => {
-  const queryParams = new URLSearchParams(useLocation().search)
-  return queryParams.get('referralCode')
-}
-
 function App() {
   const {
     setIsSubscribed,
@@ -77,8 +75,10 @@ function App() {
     setHideTopBar,
   } = useUIStore();
 
+  useReferralQueryParams();
+  useCampaignQueryParams();
+
   const location = useLocation();
-  const referralCode = useSearchReferralCode()
 
   useABTest()
 
@@ -92,20 +92,6 @@ function App() {
     // When the URL changes, set the default stopScroll back to false
     setStopScroll(false);
   }, [location]);
-
-  useEffect(() => {
-    if (referralCode) {
-      const currentCode = localStorage.getItem('referredCode')
-      if (!currentCode || currentCode !== referralCode) {
-        if ((window as any).gtag) {
-          (window as any).gtag('event', 'referral_user_arrive', {
-            event_category: 'funnel', product: 'referrals',
-          })
-        }
-      }
-      localStorage.setItem('referredCode', referralCode);
-    }
-  }, [referralCode])
 
 
   const checkForSubscription = () => {

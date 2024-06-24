@@ -10,6 +10,7 @@ import { successfulSignUp } from "../../utils";
 import { AuthActionType } from "../../constants/auth";
 import { FirebaseError } from "firebase/app";
 import { addUserReferral } from "../../queries";
+import { logEvent, EventParams } from "../../analytics";
 
 export const SignUp = () => {
   const [submitting, setSubmitting] = useState(false);
@@ -74,6 +75,11 @@ export const SignUp = () => {
                 await addUserReferral(userId, signupUser.user?.email ?? values.email ?? '', referral)
                 localStorage.removeItem('referredCode')
               }
+
+              const params: EventParams = {
+                source: 'email'
+              }
+              logEvent('register_signup', undefined, params)
             } catch (error) {
               if ((error as FirebaseError)?.code === "auth/email-already-in-use") {
                 setError("Email already in use");

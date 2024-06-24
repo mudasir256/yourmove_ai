@@ -8,6 +8,7 @@ import { Back } from "../Back";
 import { FullProfileReview } from './FullProfileReview'
 import { PartialProfileReview } from './PartialProfileReview'
 import { FamewallReviews } from "../../pages/FamewallReviews";
+import { logEvent, useLogEvent } from "../../analytics";
 
 interface Props {
   hasPaid: boolean;
@@ -21,20 +22,23 @@ export const ProfileReview = ({ hasPaid }: Props) => {
   const { setProfileReviewerWizardComplete, setProfileReviewerStep } =
     useWizardStore();
 
-  useEffect(() => {
-    if ((window as any).gtag) {
-      (window as any).gtag('event', 'review_results', {
-        event_category: 'funnel', product: 'profile_review',
-      });
-    }
-  }, []);
+  useLogEvent('results', 'profile_review')
+
+  // useEffect(() => {
+  //   if ((window as any).gtag) {
+  //     (window as any).gtag('event', 'review_results', {
+  //       event_category: 'funnel', product: 'profile_review',
+  //     });
+  //   }
+  // }, []);
 
   const onUnlockFullReviewClick = () => {
-    if ((window as any).gtag) {
-      (window as any).gtag('event', 'review_purchase_open', {
-        event_category: 'funnel', product: 'profile_review',
-      });
-    }
+    logEvent('purchase_unlock', 'profile_review')
+    // if ((window as any).gtag) {
+    //   (window as any).gtag('event', 'review_purchase_open', {
+    //     event_category: 'funnel', product: 'profile_review',
+    //   });
+    // }
     setUnlockFullReviewModalOpen(true)
   }
 

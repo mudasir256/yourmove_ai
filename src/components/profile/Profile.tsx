@@ -14,6 +14,7 @@ import { DropDownOption, supportedApps, writingStyles } from "./data";
 import { DropdownSelect } from "./DropdownSelect"
 import { UnlockProfileModal } from "../modals/UnlockProfileModal";
 import { useAuthStore } from "../../stores/auth";
+import { logEvent } from "../../analytics";
 
 
 export const Profile = () => {
@@ -91,12 +92,16 @@ export const Profile = () => {
   }, [selectedApp, selectedWritingStyle]);
 
   useEffect(() => {
-    if ((window as any).gtag) {
-      (window as any).gtag('event', 'writer_results', {
-        event_category: 'funnel', product: 'profile_writer',
-      });
-    }
-  }, []);
+    if (profile.length > 0) logEvent('results', 'profile_writer')
+  }, [profile])
+
+  // useEffect(() => {
+  //   if ((window as any).gtag) {
+  //     (window as any).gtag('event', 'writer_results', {
+  //       event_category: 'funnel', product: 'profile_writer',
+  //     });
+  //   }
+  // }, []);
 
   const saveSelectedApp = (app: string) => {
     const stepResults = JSON.parse(

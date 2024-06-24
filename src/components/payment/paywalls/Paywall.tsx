@@ -17,9 +17,11 @@ import { auth } from "../../../firebase";
 import { sleep } from "../../../utils";
 import { useUIStore } from "../../../stores/ui";
 import toast from "react-hot-toast";
+import { EventParams, logEvent } from "../../../analytics";
 
 
 interface Props {
+  product: ProductType
   children: any;
   // Which of any of the products they have already paid for which would allow them to skip the paywall
   requiredProductsToSkipPaywall: Array<ProductType>;
@@ -33,6 +35,7 @@ interface Props {
 }
 
 export const Paywall = ({
+  product = ProductType.ProfileWriter,
   children,
   requiredProductsToSkipPaywall,
   chosenProduct,
@@ -109,6 +112,22 @@ export const Paywall = ({
 
   const stripePromise = loadStripe(import.meta.env.VITE_STRIPE_PUBLISHABLE_KEY);
 
+  const logPurchaseEvent = () => {
+    const params: EventParams = {
+      amount: abTestGroup ? '14' : '12',
+      payment_type: 'monthly'
+    }
+    logEvent('purchase_activate', product, params, 'payment')
+  }
+
+  const logProductPurchaseEvent = () => {
+    const params: EventParams = {
+      amount: product === ProductType.ProfileWriter && abTestGroup ? '19' : '15',
+      payment_type: 'oneoff'
+    }
+    logEvent('purchase_activate', product, params, 'payment')
+  }
+
   return (
     <>
       {chosenProduct ? (
@@ -126,9 +145,11 @@ export const Paywall = ({
               {clientSecret && (
                 <div className="mt-1">
                   <Elements options={options} stripe={stripePromise}>
+                    {/* TODO:: Check redirect handler for one time */}
                     <PaymentForm
                       redirectSuffix={toKebabCase(chosenProduct)}
                       redirectHandler={async () => {
+                        logProductPurchaseEvent()
                         redirectHandler?.()
                         noThanksHandler();
                         setPaymentIsLoading(false);
@@ -184,7 +205,6 @@ export const Paywall = ({
                       }, 3000);
                       setPaymentIsLoading(false);
                     }
-
                     onComplete?.()
                   } else {
                     // open login
@@ -196,6 +216,7 @@ export const Paywall = ({
                     setShowAuthSubscriptionDisclaimer(true)
                     setAuthModalIsOpen(true)
                   }
+                  logPurchaseEvent()
                 }}
               />
             </div>

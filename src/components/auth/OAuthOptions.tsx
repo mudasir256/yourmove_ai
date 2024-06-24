@@ -9,6 +9,7 @@ import { successfulSignIn } from "../../utils";
 import { useAuthStore } from "../../stores/auth";
 import toast from "react-hot-toast";
 import { addUserReferral, migrateUser } from "../../queries";
+import { EventParams, logEvent } from "../../analytics";
 
 const googleProvider = new GoogleAuthProvider();
 const appleProvider = new OAuthProvider("apple.com");
@@ -43,6 +44,10 @@ export const OAuthOptions = () => {
         if (addInfo?.isNewUser) {
           handleReferralSignUp(userId, result?.user?.email ?? '')
         }
+        const params: EventParams = {
+          source: 'google'
+        }
+        logEvent(addInfo?.isNewUser ? 'register_signup' : 'register_signin', undefined, params)
       })
       .catch((error) => {
         const errorMessage = error.message;
@@ -64,6 +69,10 @@ export const OAuthOptions = () => {
         if (addInfo?.isNewUser) {
           handleReferralSignUp(userId, result?.user?.email ?? '')
         }
+        const params: EventParams = {
+          source: 'apple'
+        }
+        logEvent(addInfo?.isNewUser ? 'register_signup' : 'register_signin', undefined, params)
       })
       .catch((error) => {
         const errorMessage = error.message;

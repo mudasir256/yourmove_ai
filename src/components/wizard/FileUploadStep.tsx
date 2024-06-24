@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { uploadFiles } from "../../queries";
 import { useWizardStore } from "../../stores/wizard";
 import toast from "react-hot-toast";
+import { useLogEvent } from "../../analytics";
 
 
 interface Props {
@@ -15,15 +16,17 @@ export const FileUploadStep = ({ alreadySetFiles, onFilesUploaded }: Props) => {
   const [selectedFiles, setSelectedFiles] = useState<FileList | null>(null);
   const [inputKey, setInputKey] = useState(Date.now()); // Used to reset the file input
 
-  useEffect(() => {
-    // Check if the gtag function is available in the window object
-    if ((window as any).gtag) {
-      (window as any).gtag("event", "review_upload", {
-        event_category: "funnel",
-        product: "review",
-      });
-    }
-  }, []); // Empty dependency array to ensure this runs only once when the component mounts
+  useLogEvent('upload', 'profile_review')
+
+  // useEffect(() => {
+  //   // Check if the gtag function is available in the window object
+  //   if ((window as any).gtag) {
+  //     (window as any).gtag("event", "review_upload", {
+  //       event_category: "funnel",
+  //       product: "review",
+  //     });
+  //   }
+  // }, []); // Empty dependency array to ensure this runs only once when the component mounts
 
 
   const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {

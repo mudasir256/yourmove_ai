@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { PlanFeature } from "./PlanFeature";
 import { Paywall } from "./Paywall";
 import { LearnMoreModal } from "../../modals/LearnMoreModal";
@@ -7,6 +7,7 @@ import { PlanType } from "../../../constants/payments";
 import { useWizardStore } from "../../../stores/wizard";
 import { useNavigate } from "react-router-dom";
 import { useUIStore } from "../../../stores/ui";
+import { EventParams, logEvent, useLogEvent } from "../../../analytics";
 
 type Props = {
   hideNoThanks?: boolean
@@ -22,13 +23,41 @@ export const ProfileReviewPaywall = ({ hideNoThanks, onComplete }: Props) => {
   const [learnMoreModalOpen, setLearnMoreModalOpen] = useState(false);
   const { abTestGroup } = useUIStore()
 
-  useEffect(() => {
-    if ((window as any).gtag) {
-      (window as any).gtag('event', abTestGroup === 0 ? 'experiment_review_paywall_A' : 'experiment_review_paywall_B', {
-        event_category: 'funnel', product: 'profile_review',
-      })
+  useLogEvent('paywall', 'profile_review')
+
+  // useEffect(() => {
+  //   if ((window as any).gtag) {
+  //     (window as any).gtag('event', abTestGroup === 0 ? 'experiment_review_paywall_A' : 'experiment_review_paywall_B', {
+  //       event_category: 'funnel', product: 'profile_review',
+  //     })
+  //   }
+  // }, [abTestGroup])
+
+  const onMonthlyPress = () => {
+    setPlanBeingPurchased(PlanType.Monthly);
+    const params: EventParams = {
+      amount: abTestGroup ? '14' : '12',
+      payment_type: 'monthly'
     }
-  }, [abTestGroup])
+    logEvent('purchase_click', 'profile_review', params, 'payment')
+    // if ((window as any).gtag) { (window as any).gtag('event', 'review_purchase_monthly', { event_category: 'funnel', product: 'profile_review', }) }
+    // (window as any).gtag('event', abTestGroup === 0 ? 'experiment_review_activate_subscription_A' : 'experiment_review_activate_subscription_B', {
+    //   event_category: 'funnel', product: 'profile_review',
+    // })
+  }
+
+  const onProductPress = () => {
+    setChosenProduct(ProductType.ProfileReview)
+    const params: EventParams = {
+      amount: '15',
+      payment_type: 'oneoff'
+    }
+    logEvent('purchase_click', 'profile_review', params, 'payment')
+    // if ((window as any).gtag) { (window as any).gtag('event', 'review_purchase_oneoff', { event_category: 'funnel', product: 'profile_review', }) }
+    // (window as any).gtag('event', abTestGroup === 0 ? 'experiment_review_activate_onetime_A' : 'experiment_review_activate_onetime_B', {
+    //   event_category: 'funnel', product: 'profile_review',
+    // })
+  }
 
   return (
     <>
@@ -41,6 +70,7 @@ export const ProfileReviewPaywall = ({ hideNoThanks, onComplete }: Props) => {
       <div className="mt-8">
         <div className="-mt-14">
           <Paywall
+            product={ProductType.ProfileReview}
             email={profileReviewerStepResults.email}
             requiredProductsToSkipPaywall={[
               ProductType.ProfileReview,
@@ -109,17 +139,7 @@ export const ProfileReviewPaywall = ({ hideNoThanks, onComplete }: Props) => {
 
                 <button
                   type="button"
-                  onClick={() => {
-                    setPlanBeingPurchased(PlanType.Monthly);
-                    if ((window as any).gtag) { (window as any).gtag('event', 'review_purchase_monthly', { event_category: 'funnel', product: 'profile_review', }) }
-                    (window as any).gtag('event', abTestGroup === 0 ? 'experiment_review_activate_subscription_A' : 'experiment_review_activate_subscription_B', {
-                      event_category: 'funnel', product: 'profile_review',
-                    })
-                    // If the user isn't signed in, we need to sign them in or sign up
-                    // if (!auth.currentUser) {
-                    //   setAuthModalIsOpen(true);
-                    // }
-                  }}
+                  onClick={onMonthlyPress}
                   className="mt-2 flex items-center justify-center w-full bg-brand-primary text-white py-3 rounded-full font-semibold -mb-1"
                 >
                   Activate
@@ -133,7 +153,7 @@ export const ProfileReviewPaywall = ({ hideNoThanks, onComplete }: Props) => {
               </div>
             </div>
 
-            {/* AI enhanced photos */}
+            {/* One time payment */}
 
             <div className="mt-4">
               <div className="bg-white p-3 border-2 border-black rounded-lg">
@@ -185,13 +205,7 @@ export const ProfileReviewPaywall = ({ hideNoThanks, onComplete }: Props) => {
                 </div>
                 <button
                   type="button"
-                  onClick={() => {
-                    setChosenProduct(ProductType.ProfileReview)
-                    if ((window as any).gtag) { (window as any).gtag('event', 'review_purchase_oneoff', { event_category: 'funnel', product: 'profile_review', }) }
-                    (window as any).gtag('event', abTestGroup === 0 ? 'experiment_review_activate_onetime_A' : 'experiment_review_activate_onetime_B', {
-                      event_category: 'funnel', product: 'profile_review',
-                    })
-                  }}
+                  onClick={onProductPress}
                   className="mt-4 flex items-center justify-center w-full bg-black text-white py-3 rounded-full font-semibold -mb-1"
                 >
                   Activate
@@ -203,9 +217,9 @@ export const ProfileReviewPaywall = ({ hideNoThanks, onComplete }: Props) => {
                 className="cursor-pointer text-lg text-zinc-500 hover:text-zinc-600 hover:underline"
                 onClick={() => {
                   setProfileReviewerWizardComplete(true)
-                  if ((window as any).gtag) { (window as any).gtag('event', 'no_thanks', { event_category: 'funnel', product: 'profile_review', }) }
-                }
-                }
+                  logEvent('no_thanks', 'profile_review')
+                  // if ((window as any).gtag) { (window as any).gtag('event', 'no_thanks', { event_category: 'funnel', product: 'profile_review', }) }
+                }}
               >
                 no thanks
               </h3>

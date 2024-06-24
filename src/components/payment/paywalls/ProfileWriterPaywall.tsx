@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { LearnMoreModal } from "../../modals/LearnMoreModal";
 import { PlanFeature } from "./PlanFeature";
 import { Paywall } from "./Paywall";
@@ -7,6 +7,7 @@ import { useWizardStore } from "../../../stores/wizard";
 import { PlanType } from "../../../constants/payments";
 import { useUIStore } from "../../../stores/ui";
 import { useNavigate } from "react-router-dom";
+import { EventParams, logEvent, useLogEvent } from "../../../analytics";
 
 interface Props {
   hideNoThanks?: boolean;
@@ -24,21 +25,53 @@ export const ProfileWriterPaywall = ({ hideNoThanks, onComplete }: Props) => {
   );
   const [learnMoreModalOpen, setLearnMoreModalOpen] = useState(false);
 
-  useEffect(() => {
-    if ((window as any).gtag) {
-      (window as any).gtag('event', 'writer_paywall', {
-        event_category: 'funnel', product: 'profile_writer',
-      });
-    }
-  }, []);
+  useLogEvent('paywall', 'profile_writer')
 
-  useEffect(() => {
-    if ((window as any).gtag) {
-      (window as any).gtag('event', abTestGroup === 0 ? 'experiment_writer_paywall_A' : 'experiment_writer_paywall_B', {
-        event_category: 'funnel', product: 'profile_writer',
-      })
+  const onMonthlyPress = () => {
+    setPlanBeingPurchased(PlanType.Monthly);
+    const params: EventParams = {
+      amount: abTestGroup ? '14' : '12',
+      payment_type: 'monthly'
     }
-  }, [abTestGroup])
+    logEvent('purchase_click', 'profile_writer', params, 'payment')
+    // if ((window as any).gtag) {
+    //   (window as any).gtag('event', 'writer_purchase_monthly', {
+    //     event_category: 'funnel', product: 'profile_writer',
+    //   });
+    //   (window as any).gtag('event', abTestGroup === 0 ? 'experiment_writer_activate_subscription_A' : 'experiment_writer_activate_subscription_B', {
+    //     event_category: 'funnel', product: 'profile_writer',
+    //   })
+    // }
+  }
+
+  const onProductPress = () => {
+    setChosenProduct(ProductType.ProfileWriter)
+    const params: EventParams = {
+      amount: abTestGroup ? '19' : '15',
+      payment_type: 'oneoff'
+    }
+    logEvent('purchase_click', 'profile_writer', params, 'payment')
+    // if ((window as any).gtag) {
+    //   (window as any).gtag('event', 'writer_purchase_oneoff', { event_category: 'funnel', product: 'profile_writer', })
+    //     (window as any).gtag('event', abTestGroup === 0 ? 'experiment_writer_activate_onetime_A' : 'experiment_writer_activate_onetime_B', { event_category: 'funnel', product: 'profile_writer', })
+    // }
+  }
+
+  // useEffect(() => {
+  //   if ((window as any).gtag) {
+  //     (window as any).gtag('event', 'writer_paywall', {
+  //       event_category: 'funnel', product: 'profile_writer',
+  //     });
+  //   }
+  // }, []);
+
+  // useEffect(() => {
+  //   if ((window as any).gtag) {
+  //     (window as any).gtag('event', abTestGroup === 0 ? 'experiment_writer_paywall_A' : 'experiment_writer_paywall_B', {
+  //       event_category: 'funnel', product: 'profile_writer',
+  //     })
+  //   }
+  // }, [abTestGroup])
 
   return (
     <>
@@ -50,6 +83,7 @@ export const ProfileWriterPaywall = ({ hideNoThanks, onComplete }: Props) => {
       <div className="mt-8">
         <div className="-mt-14">
           <Paywall
+            product={ProductType.ProfileWriter}
             email={profileWriterStepResults.email}
             requiredProductsToSkipPaywall={[
               ProductType.ProfileWriter,
@@ -121,17 +155,7 @@ export const ProfileWriterPaywall = ({ hideNoThanks, onComplete }: Props) => {
 
                   <button
                     type="button"
-                    onClick={() => {
-                      setPlanBeingPurchased(PlanType.Monthly);
-                      if ((window as any).gtag) {
-                        (window as any).gtag('event', 'writer_purchase_monthly', {
-                          event_category: 'funnel', product: 'profile_writer',
-                        });
-                        (window as any).gtag('event', abTestGroup === 0 ? 'experiment_writer_activate_subscription_A' : 'experiment_writer_activate_subscription_B', {
-                          event_category: 'funnel', product: 'profile_writer',
-                        })
-                      }
-                    }}
+                    onClick={onMonthlyPress}
                     className="mt-2 flex items-center justify-center w-full bg-brand-primary text-white py-3 rounded-full font-semibold -mb-1"
                   >
                     Activate
@@ -144,7 +168,7 @@ export const ProfileWriterPaywall = ({ hideNoThanks, onComplete }: Props) => {
                   </button>
                 </div>
               </div>
-              {/* AI profile */}
+              {/* One time payment */}
               <div className="mt-4">
                 <div className="bg-white p-3 border-2 border-black rounded-lg">
                   <div className="border-b-2 border-black">
@@ -195,14 +219,7 @@ export const ProfileWriterPaywall = ({ hideNoThanks, onComplete }: Props) => {
                   </div>
                   <button
                     type="button"
-                    onClick={() => {
-                      setChosenProduct(ProductType.ProfileWriter)
-                      if ((window as any).gtag) {
-                        (window as any).gtag('event', 'writer_purchase_oneoff', { event_category: 'funnel', product: 'profile_writer', })
-                          (window as any).gtag('event', abTestGroup === 0 ? 'experiment_writer_activate_onetime_A' : 'experiment_writer_activate_onetime_B', { event_category: 'funnel', product: 'profile_writer', })
-                      }
-                    }
-                    }
+                    onClick={onProductPress}
                     className="mt-4 flex items-center justify-center w-full bg-black text-white py-3 rounded-full font-semibold -mb-1"
                   >
                     Activate
@@ -214,7 +231,7 @@ export const ProfileWriterPaywall = ({ hideNoThanks, onComplete }: Props) => {
                   <h3
                     className="cursor-pointer text-lg text-zinc-500 hover:text-zinc-600 hover:underline"
                     onClick={() => {
-                      if ((window as any).gtag) { (window as any).gtag('event', 'no_thanks', { event_category: 'funnel', product: 'profile_writer', }) }
+                      logEvent('no_thanks', 'profile_writer')
                       window.scrollTo(0, 0);
                       setProfileWriterWizardComplete(true);
                     }}
