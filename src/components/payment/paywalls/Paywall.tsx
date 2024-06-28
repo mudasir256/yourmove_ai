@@ -72,20 +72,24 @@ export const Paywall = ({
       // it returns a list of products bought by that user
 
       // Only check if the user has paid if they aren't subscribed
-      hasUserPaid(email, requiredProductsToSkipPaywall).then((response) => {
-        // if any products bought by the user are in the requiredProductsToSkipPaywall
-        if (
-          response.data.purchasedProducts.some((product: ProductType) =>
-            requiredProductsToSkipPaywall.includes(product)
-          )
-        ) {
-          // then we can skip the paywall
-          noThanksHandler();
-        } else {
-          // else, show plans as they haven't paid
-          setShowPlans(true);
-        }
-      });
+      if (email) {
+        hasUserPaid(email, requiredProductsToSkipPaywall).then((response) => {
+          // if any products bought by the user are in the requiredProductsToSkipPaywall
+          if (
+            response.data.purchasedProducts.some((product: ProductType) =>
+              requiredProductsToSkipPaywall.includes(product)
+            )
+          ) {
+            // then we can skip the paywall
+            noThanksHandler();
+          } else {
+            // else, show plans as they haven't paid
+            setShowPlans(true);
+          }
+        });
+      } else {
+        setShowPlans(true)
+      }
     }
   }, [isSubscribed]);
 

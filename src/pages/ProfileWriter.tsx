@@ -26,37 +26,39 @@ export const ProfileWriter = () => {
   const { isSubscribed, setIsSubscribed } = useAuthStore()
 
   const checkProfileWriterPurchaseStatus = async () => {
-    const productResponse = await hasUserPaid(profileWriterStepResults?.email, [ProductType.ProfileWriter])
-    if (productResponse.data.purchasedProducts.includes(ProductType.ProfileWriter)) {
-      setHasPurchasedProfileWriter(true)
-    }
+    if (profileWriterStepResults?.email) {
+      const productResponse = await hasUserPaid(profileWriterStepResults.email, [ProductType.ProfileWriter])
+      if (productResponse.data.purchasedProducts.includes(ProductType.ProfileWriter)) {
+        setHasPurchasedProfileWriter(true)
+      }
 
-    const subscriptionResponse = await checkUserSubscription(profileWriterStepResults.email)
-    setIsSubscribed(subscriptionResponse.data.isSubscribed)
+      const subscriptionResponse = await checkUserSubscription(profileWriterStepResults.email)
+      setIsSubscribed(subscriptionResponse.data.isSubscribed)
 
-    // not subscribed and hasn't purchased writer
-    if (profileWriterStep === "writingStyle" && !productResponse.data.purchasedProducts.includes(ProductType.ProfileWriter) && !subscriptionResponse.data.isSubscribed) {
-      const writerResults = localStorage.getItem(`profileWriter:stepResults`);
-      const results = writerResults ? JSON.parse(writerResults) : {}
-      if (results?.writingStyle !== "Flirty") {
-        results.writingStyle = 'Flirty'
-        // remove this once you debug the step results posting delay
-        localStorage.setItem(
-          `profileWriter:stepResults`,
-          JSON.stringify(results)
-        );
-        setProfileWriterStepResult("writingStyle", "Flirty")
+      // not subscribed and hasn't purchased writer
+      if (profileWriterStep === "writingStyle" && !productResponse.data.purchasedProducts.includes(ProductType.ProfileWriter) && !subscriptionResponse.data.isSubscribed) {
+        const writerResults = localStorage.getItem(`profileWriter:stepResults`);
+        const results = writerResults ? JSON.parse(writerResults) : {}
+        if (results?.writingStyle !== "Flirty") {
+          results.writingStyle = 'Flirty'
+          // remove this once you debug the step results posting delay
+          localStorage.setItem(
+            `profileWriter:stepResults`,
+            JSON.stringify(results)
+          );
+          setProfileWriterStepResult("writingStyle", "Flirty")
+        }
       }
     }
   }
 
   useEffect(() => {
-    if (!profileWriterStepResults?.email || profileWriterStep === "writingStyle") return
+    if (profileWriterStep === "writingStyle") return
     checkProfileWriterPurchaseStatus()
   }, [])
 
   useEffect(() => {
-    if (!profileWriterStepResults?.email || profileWriterStep !== "writingStyle") return
+    if (profileWriterStep !== "writingStyle") return
     checkProfileWriterPurchaseStatus()
   }, [profileWriterStep])
 
