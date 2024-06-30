@@ -159,12 +159,12 @@ export const ProfileWriterPaywall = ({ hideNoThanks, onComplete }: Props) => {
                   >
                     Activate
                   </button>
-                  <p className="my-2 text-center font-medium">OR</p>
+                  {/* <p className="my-2 text-center font-medium">OR</p>
                   <button
                     className="mt-2 flex items-center justify-center w-full bg-brand-primary text-white py-3 rounded-full font-semibold -mb-1"
                     onClick={() => navigate('/user-referrals')}>
                     Share for free access
-                  </button>
+                  </button> */}
                 </div>
               </div>
               {/* Premium AI Profile - Product Plan */}
