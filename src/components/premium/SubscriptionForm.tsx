@@ -16,7 +16,6 @@ const stripePromise = loadStripe(import.meta.env.VITE_STRIPE_PUBLISHABLE_KEY);
 
 export const SubscriptionForm = ({ planType, redirectHandler, email = undefined }: Props) => {
   const { setSubscriptionSuccess, setStopScroll, abTestGroup } = useUIStore();
-
   const [userEmail, setUserEmail] = useState(email)
 
 
