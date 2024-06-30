@@ -87,7 +87,6 @@ export const ProfileWriterPaywall = ({ hideNoThanks, onComplete }: Props) => {
             email={profileWriterStepResults.email}
             requiredProductsToSkipPaywall={[
               ProductType.ProfileWriter,
-              ProductType.AIPhotos,
             ]}
             noThanksHandler={() => setProfileWriterWizardComplete(true)}
             chosenProduct={chosenProduct}

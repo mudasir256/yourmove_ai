@@ -74,7 +74,6 @@ export const ProfileReviewPaywall = ({ hideNoThanks, onComplete }: Props) => {
             email={profileReviewerStepResults.email}
             requiredProductsToSkipPaywall={[
               ProductType.ProfileReview,
-              ProductType.AIPhotos,
             ]}
             noThanksHandler={() => setProfileReviewerWizardComplete(true)}
             chosenProduct={chosenProduct}

@@ -66,7 +66,7 @@ export const Wizard = ({
   // Checking if a payment has been made, if so we need to show some processing
   useEffect(() => {
     // We got a payment and a redirect
-    if (window.location.search) {
+    if (window.location.search && step === WizardStepType.PAYWALL) {
       // Set that we are processing the payment
       setPaymentProcessing(true);
 
