@@ -1,9 +1,8 @@
 import { useEffect, useState } from "react";
-import { Logo } from "../components/Logo";
 import { Product } from "../components/onboarding/Product";
-import ProfileReview from "../assets/images/onboarding/profile-review.png";
-import ProfileWriter from "../assets/images/onboarding/profile-writer.png";
-import ChatAssistant from "../assets/images/onboarding/chat-assistant.png";
+import ProfileReview from "../assets/images/onboarding/profile-review.webp";
+import ProfileWriter from "../assets/images/onboarding/profile-writer.webp";
+import ChatAssistant from "../assets/images/onboarding/chat-assistant.webp";
 import { useNavigate } from "react-router-dom";
 import { Helmet } from 'react-helmet-async';
 
@@ -53,16 +52,16 @@ export const Onboarding = () => {
             return (
               <div
                 className={`bg-white border-2 mr-4 p-4 w-1/2 rounded-2xl cursor-pointer ${isOptionSelected(option.title)
-                    ? "border-brand-primary"
-                    : "border-black"
+                  ? "border-brand-primary"
+                  : "border-black"
                   }`}
                 onClick={() => setSelectedOption(option.title)}
               >
                 <h1 className="text-4xl">{option.emoji}</h1>
                 <h2
                   className={`leading-7 text-2xl font-semibold mt-2 ${isOptionSelected(option.title)
-                      ? "text-brand-primary"
-                      : "text-black"
+                    ? "text-brand-primary"
+                    : "text-black"
                     }`}
                 >
                   {option.title}
