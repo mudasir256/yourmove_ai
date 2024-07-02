@@ -144,9 +144,7 @@ export const ChatAssistant = () => {
             onGetIdeasPress={onGetIdeasPress}
           />
         </div>
-        <div>
-          <PremiumUpsellPrompt />
-        </div>
+        <PremiumUpsellPrompt />
       </div>
     </div>
   );

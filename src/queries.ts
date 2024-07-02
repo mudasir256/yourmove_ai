@@ -12,7 +12,6 @@ import {
 } from "./models/profile";
 import { ProductType } from "./constants/payments";
 import { useUIStore } from "./stores/ui";
-import { useAuthStore } from "./stores/auth";
 import { useChatStore } from "./stores/chat";
 import { auth } from "./firebase";
 import { history } from "./main";
@@ -71,25 +70,11 @@ axios.interceptors.response.use(
       // If it was a 429 for the chat assistant
       if (error?.response?.status === 429) {
         // If they are signed in, redirect to premium
-        if (auth.currentUser) {
-          console.log("is a current user");
-          toast.error(
-            "You have ran out of free messages for today. Upgrade for unlimited messages, profiles,reviews, and more"
-          );
-          history.push("/premium");
-          useChatStore.getState().setSendingMessage(false);
-        }
-        // If they aren't signed in, show a toast and ask to sign in
-        else {
-          toast.error("Please sign in to continue");
-          useAuthStore.getState().setAuthModalIsOpen(true);
-
-          // Say we aren't submitting chats
-          useChatStore.getState().setSendingMessage(false);
-
-          // Hide the Upsell as we only want to show that if we are signed in
-          useUIStore.getState().setHideUpsell(true);
-        }
+        toast.error(
+          "You have ran out of free messages for today. Upgrade for unlimited messages, profiles,reviews, and more"
+        );
+        history.push("/premium");
+        useChatStore.getState().setSendingMessage(false);
       } else {
         useChatStore.getState().setSendingMessage(false);
         toast.error(
