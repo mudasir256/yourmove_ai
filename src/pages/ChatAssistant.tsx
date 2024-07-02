@@ -10,6 +10,7 @@ import { GeneratingRepliesLoader } from "../components/chat/GeneratingRepliesLoa
 import { useState, useEffect } from "react";
 import { Helmet } from 'react-helmet-async';
 import { useLogEvent, logEvent } from '../analytics'
+import { ChatOnboardingModal } from '../components/chat/onboarding/ChatOnboardingModal'
 
 
 export const ChatAssistant = () => {
@@ -26,6 +27,7 @@ export const ChatAssistant = () => {
     needReset,
   } = useChatStore();
   const [file, setFile] = useState<File | null>(null);
+  const [showOnboarding, setShowOnboarding] = useState(false)
 
   // Start over, clear everything
   const startOver = () => {
@@ -44,6 +46,14 @@ export const ChatAssistant = () => {
       useChatStore.getState().setNeedReset(false); // Reset the flag
     }
   }, [needReset]);
+
+  useEffect(() => {
+    const hasOnboardedChat = Boolean(parseInt(localStorage.getItem('hasOnboardedChat') ?? "0"))
+    if (!hasOnboardedChat) {
+      setShowOnboarding(true)
+      localStorage.setItem("hasOnboardedChat", "1")
+    }
+  }, [])
 
   const onGetIdeasPress = () => {
     logEvent('generate', 'chat_assistant')
@@ -146,6 +156,7 @@ export const ChatAssistant = () => {
         </div>
         <PremiumUpsellPrompt />
       </div>
+      <ChatOnboardingModal open={showOnboarding} setOpen={setShowOnboarding} />
     </div>
   );
 };
