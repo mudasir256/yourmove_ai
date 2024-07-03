@@ -39,51 +39,51 @@ export const AIPhotosModal = () => {
                     <path
                       d="M13 23C18.5228 23 23 18.5228 23 13C23 7.47715 18.5228 3 13 3C7.47715 3 3 7.47715 3 13C3 18.5228 7.47715 23 13 23Z"
                       stroke="#BA1F33"
-                      stroke-width="2"
-                      stroke-linecap="round"
-                      stroke-linejoin="round"
+                      strokeWidth="2"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
                     />
                     <path
                       d="M15.3101 9L21.0501 18.94"
                       stroke="#BA1F33"
-                      stroke-width="2"
-                      stroke-linecap="round"
-                      stroke-linejoin="round"
+                      strokeWidth="2"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
                     />
                     <path
                       d="M10.6899 9H22.1699"
                       stroke="#BA1F33"
-                      stroke-width="2"
-                      stroke-linecap="round"
-                      stroke-linejoin="round"
+                      strokeWidth="2"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
                     />
                     <path
                       d="M8.37988 12.9996L14.1199 3.05957"
                       stroke="#BA1F33"
-                      stroke-width="2"
-                      stroke-linecap="round"
-                      stroke-linejoin="round"
+                      strokeWidth="2"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
                     />
                     <path
                       d="M10.6902 16.9996L4.9502 7.05957"
                       stroke="#BA1F33"
-                      stroke-width="2"
-                      stroke-linecap="round"
-                      stroke-linejoin="round"
+                      strokeWidth="2"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
                     />
                     <path
                       d="M15.3101 17H3.83008"
                       stroke="#BA1F33"
-                      stroke-width="2"
-                      stroke-linecap="round"
-                      stroke-linejoin="round"
+                      strokeWidth="2"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
                     />
                     <path
                       d="M17.6199 13L11.8799 22.94"
                       stroke="#BA1F33"
-                      stroke-width="2"
-                      stroke-linecap="round"
-                      stroke-linejoin="round"
+                      strokeWidth="2"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
                     />
                   </svg>
 
@@ -101,8 +101,8 @@ export const AIPhotosModal = () => {
             </div>
           </div>
           <div className="w-full flex items-center justify-center my-4 px-6">
-            {IMAGES.map((image) => {
-              return <img alt="..." src={image} className="w-1/3 mx-1.5" />;
+            {IMAGES.map((image, index) => {
+              return <img key={index} alt="..." src={image} className="w-1/3 mx-1.5" />;
             })}
           </div>
           <div className="px-4 mb-4">

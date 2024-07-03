@@ -11,7 +11,20 @@ import { useUIStore } from "../stores/ui";
 import { WizardStepType } from "../models/wizard";
 import { ReviewedProfile } from "../models/profile";
 import { useProfileReviewData } from './useProfileReviewData'
-import { useLogEvent } from "../analytics";
+import { logEvent, useLogEvent } from "../analytics";
+
+const loadingTitles = [
+  "Analyzing your profile's first impressions...",
+  "Diving deep into your photos...",
+  "Evaluating photo quality and lighting...",
+  "Scouting for social proof in pictures...",
+  "Rearranging your photo lineup for maximum impact...",
+  "Reviewing your bio",
+  "Generating custom style suggestions…",
+  "Summarizing our findings…",
+  "Crafting your profile upgrade plan…",
+  "Preparing to unveil the potential of your profile…"
+];
 
 export const ProfileReviewer = () => {
   const {
@@ -33,29 +46,18 @@ export const ProfileReviewer = () => {
     setHasPaidForProfileReview,
   } = useProfileStore();
 
-  const { paymentIsLoading } = useUIStore()
-
   const { fetchReview } = useProfileReviewData()
 
   const [showReview, setShowReview] = useState(false)
   const [reviewStarted, setReviewStarted] = useState(false)
 
-  const loadingTitles = [
-    "Analyzing your profile's first impressions...",
-    "Diving deep into your photos...",
-    "Evaluating photo quality and lighting...",
-    "Scouting for social proof in pictures...",
-    "Rearranging your photo lineup for maximum impact...",
-    "Reviewing your bio",
-    "Generating custom style suggestions…",
-    "Summarizing our findings…",
-    "Crafting your profile upgrade plan…",
-    "Preparing to unveil the potential of your profile…"
-  ];
+  useLogEvent('start', 'profile_review')
 
   const fetchProfileReview = useCallback(async () => {
     if (profileReviewerFiles && profileReviewerFiles.length > 0) {
       try {
+        logEvent('review-start', 'profile_review')
+
         const data = await fetchReview()
         setReviewedProfile(data as ReviewedProfile);
         setHasPaidForProfileReview(data.hasPaid);
@@ -64,11 +66,21 @@ export const ProfileReviewer = () => {
         setError(
           "There was an error reviewing your profile, please try again later."
         );
+        const params = (error as Error)?.message ? {
+          reason: (error as Error)?.message
+        } : undefined
+
+        logEvent('review-fail', 'profile_review', params, 'error')
       };
     } else {
       setError(
         "There was an error retrieving your screenshots. Please go back and try again"
       );
+      const params = {
+        reason: 'no_screenshots'
+      }
+      logEvent('review-fail', 'profile_review', params, 'error')
+
       localStorage.setItem(`profileReviewer:step`, WizardStepType.UPLOAD_PHOTO);
       setProfileReviewerStep(WizardStepType.UPLOAD_PHOTO);
       setProfileReviewerWizardComplete(false);
@@ -80,23 +92,10 @@ export const ProfileReviewer = () => {
     if (profileReviewerWizardComplete) fetchProfileReview();
   }, [profileReviewerWizardComplete]);
 
-  useEffect(() => {
-    if (profileReviewerWizardComplete && paymentIsLoading === false && showReview) {
-      setReviewedProfile(null)
-      setShowReview(false)
-      fetchProfileReview()
-    }
-  }, [profileReviewerWizardComplete, paymentIsLoading])
-
-  // useEffect(() => {
-  //   if ((window as any).gtag) {
-  //     (window as any).gtag('event', 'review_start', {
-  //       event_category: 'funnel', product: 'profile_review',
-  //     });
-  //   }
-  // }, []);
-
-  useLogEvent('start', 'profile_review')
+  const resetReview = () => {
+    setReviewedProfile(null)
+    setShowReview(false)
+  }
 
   return (
     <div className="px-4">
@@ -120,6 +119,7 @@ export const ProfileReviewer = () => {
             <ProfileReview
               hasPaid={hasPaidForProfileReview}
               setHasPaid={setHasPaidForProfileReview}
+              onBackPress={resetReview}
             />
           ) : (
             <div className="flex flex-col items-center justify-center h-screen px-4">

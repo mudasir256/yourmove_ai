@@ -278,7 +278,7 @@ export const generateProfileReview = (
   return axios.post(
     `${BASE_URL}/profile-reviewer`,
     { email, screenshots },
-    { timeout: 60000 }
+    { timeout: 120000 }
   );
 };
 

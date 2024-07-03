@@ -11,6 +11,7 @@ import { ErrorAlert } from "../ErrorAlert";
 import { successfulSignIn } from "../../utils";
 import { checkIfUserRequiresMigration } from "../../queries";
 import { EventParams, logEvent } from "../../analytics";
+import { FirebaseError } from "firebase/app";
 
 export const SignIn = () => {
   const [submitting, setSubmitting] = useState(false);
@@ -113,8 +114,9 @@ export const SignIn = () => {
                     console.log("the error is");
                     console.log(error);
                     if (
-                      error.code === "auth/wrong-password" ||
-                      error.code === "auth/user-not-found"
+                      error instanceof FirebaseError &&
+                      (error.code === "auth/wrong-password" ||
+                        error.code === "auth/user-not-found")
                     ) {
                       setSignInError("Incorrect email or password");
                     }

@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { useProfileStore } from "../../stores/profile";
 import { UnlockProfileReviewModal } from "../modals/UnlockProfileReviewModal";
 import { useWizardStore } from "../../stores/wizard";
@@ -13,9 +13,10 @@ import { logEvent, useLogEvent } from "../../analytics";
 interface Props {
   hasPaid: boolean;
   setHasPaid: (hasPaid: boolean) => void;
+  onBackPress?: VoidFunction
 }
 
-export const ProfileReview = ({ hasPaid }: Props) => {
+export const ProfileReview = ({ hasPaid, onBackPress = undefined }: Props) => {
   const { reviewedProfile } = useProfileStore();
   const [unlockFullReviewModalOpen, setUnlockFullReviewModalOpen] =
     useState(false);
@@ -24,22 +25,15 @@ export const ProfileReview = ({ hasPaid }: Props) => {
 
   useLogEvent('results', 'profile_review')
 
-  // useEffect(() => {
-  //   if ((window as any).gtag) {
-  //     (window as any).gtag('event', 'review_results', {
-  //       event_category: 'funnel', product: 'profile_review',
-  //     });
-  //   }
-  // }, []);
-
   const onUnlockFullReviewClick = () => {
     logEvent('purchase_unlock', 'profile_review')
-    // if ((window as any).gtag) {
-    //   (window as any).gtag('event', 'review_purchase_open', {
-    //     event_category: 'funnel', product: 'profile_review',
-    //   });
-    // }
     setUnlockFullReviewModalOpen(true)
+  }
+
+  const goBack = () => {
+    onBackPress?.()
+    setProfileReviewerWizardComplete(false);
+    setProfileReviewerStep(WizardStepType.UPLOAD_PHOTO);
   }
 
   return (
@@ -47,10 +41,7 @@ export const ProfileReview = ({ hasPaid }: Props) => {
       <div className="mx-auto max-w-xl">
         <div className="flex flex-col flex-1">
           <div className="mt-8">
-            <Back onClick={() => {
-              setProfileReviewerWizardComplete(false);
-              setProfileReviewerStep(WizardStepType.UPLOAD_PHOTO);
-            }} />
+            <Back onClick={goBack} />
             <h1 className="text-4xl font-bold mt-4 mb-6">Your Profile Review</h1>
             <div
               className="border-2 border-black rounded-2xl shadow-lg"
