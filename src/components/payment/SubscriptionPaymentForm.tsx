@@ -7,8 +7,10 @@ import {
 import { StripePaymentElementOptions } from "@stripe/stripe-js";
 import { useState } from "react";
 import { useUIStore } from "../../stores/ui";
-import { createSubscription } from "../../queries";
+import { createSubscription, validatePromoCode } from "../../queries";
 import { PlanType } from "../../constants/payments";
+import toast from "react-hot-toast";
+import axios, { Axios } from "axios";
 
 interface Props {
   redirectSuffix: string;
@@ -16,6 +18,7 @@ interface Props {
   returnUrl?: string | null;
   email: string
   planType: PlanType
+  promoCode?: string
 }
 
 export default function SubscriptionPaymentForm({
@@ -23,7 +26,8 @@ export default function SubscriptionPaymentForm({
   redirectHandler,
   returnUrl,
   email,
-  planType
+  planType,
+  promoCode = undefined
 }: Props) {
   const { abTestGroup } = useUIStore()
   const stripe = useStripe();
@@ -63,41 +67,68 @@ export default function SubscriptionPaymentForm({
       return;
     }
 
-    const subscriptionResponse = await createSubscription({ email, term: planType, group: abTestGroup })
-    const { data: { clientSecret = undefined, subscriptionId = undefined } = {} } = subscriptionResponse || {}
+    try {
+      let promoId = undefined
+      if (promoCode) {
+        const promoResponse = await validatePromoCode(promoCode) || {}
+        const { data = {} } = promoResponse || {}
+        const { verified = false, promo: { id = undefined, active = true } = {} } = data || {}
 
-    if (!clientSecret) {
+        if (!verified || !active) {
+          setMessage("Please enter a valid promo code.")
+          toast.error("Please enter a valid promo code.")
+          setPaymentIsLoading(false);
+          return
+        } else {
+          promoId = id
+        }
+      }
+
+      const subscriptionResponse = await createSubscription({ email, term: planType, group: abTestGroup, promoCode: promoId })
+      const { data: { clientSecret = undefined } = {} } = subscriptionResponse || {}
+
+      if (!clientSecret) {
+        toast.error("Failed to get response from our backend. Please try again later or contact support@yourmove.ai for assistance")
+        setPaymentIsLoading(false);
+        return
+      }
+
+      const { error, paymentIntent } = await stripe.confirmPayment({
+        elements,
+        clientSecret,
+        confirmParams: {
+          return_url: returnUrl
+            ? returnUrl
+            : `${import.meta.env.VITE_UI_BASE_URL}/${redirectSuffix}`,
+        },
+        redirect: redirectHandler ? "if_required" : "always",
+      });
+
+      // This point is reached if we have a payment intent
+      if (paymentIntent && paymentIntent.status === "succeeded") {
+        redirectHandler?.();
+      }
+
+      // This point will only be reached if there is an immediate error when
+      // confirming the payment. Otherwise, your customer will be redirected to
+      // your `return_url`. For some payment methods like iDEAL, your customer will
+      // be redirected to an intermediate site first to authorize the payment, then
+      // redirected to the `return_url`.
+
+      if (error) {
+        setMessage(`${error.message ? error.message : "An unknown error occurred!"}`)
+        setPaymentIsLoading(false);
+      }
+
+    } catch (err) {
       setPaymentIsLoading(false);
+      if (axios.isAxiosError(err))
+        toast.error(`Error: ${err.response?.data?.message ?? err.message}`)
+      else
+        toast.error(`Error: ${err}`);
       return
     }
-
-    const { error, paymentIntent } = await stripe.confirmPayment({
-      elements,
-      clientSecret,
-      confirmParams: {
-        return_url: returnUrl
-          ? returnUrl
-          : `${import.meta.env.VITE_UI_BASE_URL}/${redirectSuffix}`,
-      },
-      redirect: redirectHandler ? "if_required" : "always",
-    });
-
-    // This point is reached if we have a payment intent
-    if (paymentIntent && paymentIntent.status === "succeeded") {
-      redirectHandler?.();
-    }
-
-    // This point will only be reached if there is an immediate error when
-    // confirming the payment. Otherwise, your customer will be redirected to
-    // your `return_url`. For some payment methods like iDEAL, your customer will
-    // be redirected to an intermediate site first to authorize the payment, then
-    // redirected to the `return_url`.
-
-    if (error) {
-      setMessage(`${error.message ? error.message : "An unknown error occurred!"}`)
-      setPaymentIsLoading(false);
-    }
-  };
+  }
 
   const paymentElementOptions: StripePaymentElementOptions = {
     layout: "tabs",

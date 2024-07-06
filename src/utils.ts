@@ -66,3 +66,18 @@ export const successfulSignUp = () => {
 export const sleep = (time: number) => {
   return new Promise((resolve) => setTimeout(resolve, time));
 };
+
+export const getEndpoint = (url: string): string => {
+  const lastSlashIndex = url.lastIndexOf('/');
+
+  // If the URL ends with a slash, return an empty string
+  if (lastSlashIndex === url.length - 1) {
+    return '';
+  }
+  // If there's no slash or the last slash is part of the protocol (e.g., http://), return an empty string
+  if (lastSlashIndex === -1 || url.indexOf('/', url.indexOf('//') + 2) === -1) {
+    return '';
+  }
+
+  return url.substring(lastSlashIndex + 1);
+}

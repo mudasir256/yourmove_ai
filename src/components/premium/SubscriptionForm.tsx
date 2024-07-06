@@ -1,5 +1,5 @@
 import { PlanType } from "../../constants/payments";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { auth } from "../../firebase";
 import SubscriptionPaymentForm from "../payment/SubscriptionPaymentForm";
 import { Elements } from "@stripe/react-stripe-js";
@@ -12,11 +12,14 @@ interface Props {
   email?: string
 }
 
+const PROMO_CODE_ENABLED = Boolean(parseInt(import.meta.env.VITE_PROMO_CODE_ENABLED || 0))
+
 const stripePromise = loadStripe(import.meta.env.VITE_STRIPE_PUBLISHABLE_KEY);
 
 export const SubscriptionForm = ({ planType, redirectHandler, email = undefined }: Props) => {
   const { setSubscriptionSuccess, setStopScroll, abTestGroup } = useUIStore();
   const [userEmail, setUserEmail] = useState(email)
+  const [promoCode, setPromoCode] = useState<string | undefined>(undefined)
 
 
   // When the subscription form is showing, we want to re-enable scrolling
@@ -89,11 +92,24 @@ export const SubscriptionForm = ({ planType, redirectHandler, email = undefined 
             />
           </>
         )}
+        {PROMO_CODE_ENABLED &&
+          (
+            <>
+              <label className="block my-2 text-zinc-700">Promo Code</label>
+              <input
+                className="p-2 w-full border-solid border-[1px] border-neutral-200 rounded"
+                type="text"
+                placeholder="Enter Promo Code here"
+                onChange={e => setPromoCode(e.target.value)}
+              />
+            </>
+          )}
       </div>
       <div className="mt-4">
         <Elements stripe={stripePromise} options={options}>
           <SubscriptionPaymentForm
             email={userEmail}
+            promoCode={promoCode}
             planType={planType}
             redirectSuffix="/"
             redirectHandler={() => {

@@ -11,4 +11,5 @@ export interface CreateSubscriptionRequest {
   group?: number;
   source?: string;
   campaign?: string;
+  promoCode?: string
 }

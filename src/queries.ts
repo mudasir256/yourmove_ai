@@ -17,6 +17,7 @@ import { auth } from "./firebase";
 import { history } from "./main";
 import * as Sentry from "@sentry/react";
 import toast from "react-hot-toast";
+import { getEndpoint } from "./utils";
 
 const BASE_URL = import.meta.env.VITE_API_BASE_URL;
 
@@ -82,6 +83,7 @@ axios.interceptors.response.use(
         );
       }
     } else {
+      console.log("ERROR:: ", JSON.stringify(error))
       // If it timed out
       if (error.code === "ECONNABORTED") {
         useUIStore
@@ -90,7 +92,7 @@ axios.interceptors.response.use(
             "Our AI is taking longer than usual. Please wait a few minutes and try again."
           );
         // Handle the timeout error here
-      } else {
+      } else if (getEndpoint(error.config?.url) !== 'validate-promo-code') {
         useUIStore
           .getState()
           .setError(
@@ -105,10 +107,10 @@ axios.interceptors.response.use(
         statusText: error?.response?.statusText,
         headers: error.config.headers,
         data: error.config.data,
-        errorMessage: error.message,
+        errorMessage: error.response.data.message,
       };
 
-      console.error("Axios request failed:", errorDetails);
+      console.error("Axios request failed:", error);
       Sentry.captureException(new Error("Axios request failed"), {
         extra: errorDetails,
       });
@@ -285,6 +287,7 @@ export const generateProfileReview = (
 export const createSubscription = (
   createSubscriptionRequest: CreateSubscriptionRequest
 ) => {
+  console.log("PROMO:: ", createSubscriptionRequest.promoCode)
   const source = localStorage.getItem('utm_source')
   const campaign = localStorage.getItem('utm_campaign')
   if (source) createSubscriptionRequest.source = source
@@ -370,4 +373,9 @@ export const fetchReferralSubscriptionStatus = (email: string) => {
 
 export const checkUserSubscription = (email: string) => {
   return axios.get(`${BASE_URL}/user/subscribed`, { params: { email } });
+};
+
+export const validatePromoCode = (promoCode: string) => {
+  const body = { promo_code: promoCode }
+  return axios.post(`${BASE_URL}/validate-promo-code`, body);
 };
