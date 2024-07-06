@@ -4,18 +4,18 @@ import Step3Illustration from '../../../assets/images/onboarding/chat-ob-3.webp'
 
 export const onboardingSteps = [
   {
-    "title": "Choose your chat type",
-    "content": "Choose openers to start conversations - or reply to help keep them going.",
+    "title": "Select a conversation type",
+    "content": "Generate personalized opening lines for any profile. Replies to keep the conversation going. Or more.",
     "illustration": Step1Illustration
   },
   {
-    "title": "Upload screenshot of profile or conversation",
+    "title": "Upload screenshot of a profile or conversation",
     "content": "Yourmove analyzes the screenshot and generates the perfect responses.",
     "illustration": Step2Illustration
   },
   {
-    "title": "Choose your style & get Ideas",
-    "content": "You decide what’s the outcome of the conversation.",
+    "title": "Turn matches into dates",
+    "content": "Use our suggestions to get more replies, have better conversations, and 2x more dates with 80% less time.",
     "illustration": Step3Illustration
   }
 ]

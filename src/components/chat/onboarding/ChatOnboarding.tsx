@@ -33,7 +33,7 @@ export const ChatOnboarding = ({ onClose = undefined }: Props) => {
       >
         {onboardingSteps.map((step, index) => (
           <div key={index} className="w-full flex-shrink-0">
-            <ChatOnboardingStep illustration={step.illustration} title={step.title} description={step.content} onNext={goToNext} />
+            <ChatOnboardingStep illustration={step.illustration} title={step.title} description={step.content} />
           </div>
         ))}
       </div>
@@ -44,7 +44,7 @@ export const ChatOnboarding = ({ onClose = undefined }: Props) => {
             if (step < onboardingSteps.length - 1) goToNext()
             else onClose?.()
           }}>
-          {step === onboardingSteps.length - 1 ? "Understood!" : "Next"}
+          {step === onboardingSteps.length - 1 ? "Get started!" : "Next"}
         </button>
       </div>
     </div>

@@ -56,7 +56,7 @@ export const ProfileReviewer = () => {
   const fetchProfileReview = useCallback(async () => {
     if (profileReviewerFiles && profileReviewerFiles.length > 0) {
       try {
-        logEvent('review-start', 'profile_review')
+        logEvent('review_ai_start', 'profile_review')
 
         const data = await fetchReview()
         setReviewedProfile(data as ReviewedProfile);
@@ -70,7 +70,7 @@ export const ProfileReviewer = () => {
           reason: (error as Error)?.message
         } : undefined
 
-        logEvent('review-fail', 'profile_review', params, 'error')
+        logEvent('review_ai_fail', 'profile_review', params, 'error')
       };
     } else {
       setError(
@@ -79,7 +79,7 @@ export const ProfileReviewer = () => {
       const params = {
         reason: 'no_screenshots'
       }
-      logEvent('review-fail', 'profile_review', params, 'error')
+      logEvent('review_ai_fail', 'profile_review', params, 'error')
 
       localStorage.setItem(`profileReviewer:step`, WizardStepType.UPLOAD_PHOTO);
       setProfileReviewerStep(WizardStepType.UPLOAD_PHOTO);
