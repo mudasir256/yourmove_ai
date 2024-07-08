@@ -12,4 +12,5 @@ export interface CreateSubscriptionRequest {
   source?: string;
   campaign?: string;
   promoCode?: string
+  toltReferral?: string
 }

@@ -122,7 +122,8 @@ axios.interceptors.response.use(
 export const getClientSecret = (
   email: string,
   product: string,
-  group: number = 0
+  group: number = 0,
+  toltReferral: string | undefined = undefined
 ): Promise<AxiosResponse<ClientSecretResponse>> => {
   const source = localStorage.getItem('utm_source')
   const campaign = localStorage.getItem('utm_campaign')
@@ -132,6 +133,7 @@ export const getClientSecret = (
     group,
     ...(source && { source: source }),
     ...(campaign && { campaign: campaign }),
+    toltReferral
   }
 
   return axios.post(`${BASE_URL}/client-secret`, params);

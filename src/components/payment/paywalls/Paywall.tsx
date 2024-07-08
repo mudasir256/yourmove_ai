@@ -96,7 +96,8 @@ export const Paywall = ({
   // Get the client secret from the server when the component loads
   useEffect(() => {
     if (chosenProduct) {
-      getClientSecret(email, chosenProduct, abTestGroup).then((response) => {
+      const referral = window.tolt_referral
+      getClientSecret(email, chosenProduct, abTestGroup, referral).then((response) => {
         const clientSecretResponse = response.data as ClientSecretResponse;
         setClientSecret(clientSecretResponse.clientSecret);
         // Divide by 100 as the price is in cents (because of Stripe)

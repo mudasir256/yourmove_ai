@@ -84,7 +84,7 @@ export default function SubscriptionPaymentForm({
         }
       }
 
-      const subscriptionResponse = await createSubscription({ email, term: planType, group: abTestGroup, promoCode: promoId })
+      const subscriptionResponse = await createSubscription({ email, term: planType, group: abTestGroup, promoCode: promoId, toltReferral: window.tolt_referral })
       const { data: { clientSecret = undefined } = {} } = subscriptionResponse || {}
 
       if (!clientSecret) {
