@@ -10,7 +10,7 @@ export const PremiumUpsellPrompt = () => {
 
   // only show if there are queries remaining, and they are less than 5 and the user is signed in
   return chatResponse?.queriesRemaining !== undefined &&
-    chatResponse?.queriesRemaining < 7 &&
+    chatResponse?.queriesRemaining < chatResponse.queriesAvailable &&
     !hideUpsell ? (
     <div className="w-full text-center mt-4">
       You have {chatResponse.queriesRemaining} / {chatResponse.queriesAvailable}{" "}
