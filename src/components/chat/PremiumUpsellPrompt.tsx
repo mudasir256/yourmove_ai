@@ -9,18 +9,16 @@ export const PremiumUpsellPrompt = () => {
   const { hideUpsell } = useUIStore();
 
   // only show if there are queries remaining, and they are less than 5 and the user is signed in
-  return chatResponse?.queriesRemaining !== undefined &&
+  return !isSubscribed && chatResponse?.queriesRemaining !== undefined &&
     chatResponse?.queriesRemaining < chatResponse.queriesAvailable &&
     !hideUpsell ? (
     <div className="w-full text-center mt-4">
       You have {chatResponse.queriesRemaining} / {chatResponse.queriesAvailable}{" "}
       free messages remaining for today.{" "}
       {/* Only show option to upgrade if they are not subscribed */}
-      {!isSubscribed && (
-        <Link to="/premium" className="font-bold text-brand-primary">
-          Upgrade for unlimited messages, profiles, reviews, and more.
-        </Link>
-      )}
+      <Link to="/premium" className="font-bold text-brand-primary">
+        Upgrade for unlimited messages, profiles, reviews, and more.
+      </Link>
     </div>
   ) : null;
 };
