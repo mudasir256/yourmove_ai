@@ -90,7 +90,7 @@ export default function SubscriptionPaymentForm({
         promoId.current = id
         setPercentageOff(percent_off)
         setApplyPromoEnabled(false)
-        toast.error("Promo code successful")
+        toast.success("Promo code successful")
       }
     }
   }
