@@ -83,14 +83,14 @@ export default function SubscriptionPaymentForm({
       } = promoResponse || {}
 
       if (!verified || !active || !valid) {
-        setMessage("Please enter a valid promo code.")
-        toast.error("Please enter a valid promo code.")
+        toast.error("Promo code invalid or expired. ")
         setPaymentIsLoading(false);
         return
       } else {
         promoId.current = id
         setPercentageOff(percent_off)
         setApplyPromoEnabled(false)
+        toast.error("Promo code successful")
       }
     }
   }
