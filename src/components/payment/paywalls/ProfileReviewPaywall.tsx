@@ -5,8 +5,6 @@ import { LearnMoreModal } from "../../modals/LearnMoreModal";
 import { ProductType } from "../../../constants/payments";
 import { PlanType } from "../../../constants/payments";
 import { useWizardStore } from "../../../stores/wizard";
-import { useNavigate } from "react-router-dom";
-import { useUIStore } from "../../../stores/ui";
 import { EventParams, logEvent, useLogEvent } from "../../../analytics";
 
 type Props = {
@@ -15,69 +13,46 @@ type Props = {
 }
 
 export const ProfileReviewPaywall = ({ hideNoThanks, onComplete }: Props) => {
-  const navigate = useNavigate()
   const { profileReviewerStepResults, setProfileReviewerWizardComplete } =
     useWizardStore();
-  const [chosenProduct, setChosenProduct] = useState<ProductType | null>(null);
   const [planBeingPurchased, setPlanBeingPurchased] = useState<PlanType | null>(null);
   const [learnMoreModalOpen, setLearnMoreModalOpen] = useState(false);
-  const { abTestGroup } = useUIStore()
 
   useLogEvent('paywall', 'profile_review')
-
-  // useEffect(() => {
-  //   if ((window as any).gtag) {
-  //     (window as any).gtag('event', abTestGroup === 0 ? 'experiment_review_paywall_A' : 'experiment_review_paywall_B', {
-  //       event_category: 'funnel', product: 'profile_review',
-  //     })
-  //   }
-  // }, [abTestGroup])
 
   const onMonthlyPress = () => {
     setPlanBeingPurchased(PlanType.Monthly);
     const params: EventParams = {
-      amount: abTestGroup ? '14' : '14',
+      amount: '14',
       payment_type: 'monthly'
     }
     logEvent('purchase_click', 'profile_review', params, 'payment')
-    // if ((window as any).gtag) { (window as any).gtag('event', 'review_purchase_monthly', { event_category: 'funnel', product: 'profile_review', }) }
-    // (window as any).gtag('event', abTestGroup === 0 ? 'experiment_review_activate_subscription_A' : 'experiment_review_activate_subscription_B', {
-    //   event_category: 'funnel', product: 'profile_review',
-    // })
   }
 
   const onAnnualPress = () => {
     setPlanBeingPurchased(PlanType.Yearly);
     const params: EventParams = {
-      amount: abTestGroup ? '60' : '60',
+      amount: '60',
       payment_type: 'annual'
     }
     logEvent('purchase_click', 'profile_review', params, 'payment')
-    // if ((window as any).gtag) { (window as any).gtag('event', 'review_purchase_monthly', { event_category: 'funnel', product: 'profile_review', }) }
-    // (window as any).gtag('event', abTestGroup === 0 ? 'experiment_review_activate_subscription_A' : 'experiment_review_activate_subscription_B', {
-    //   event_category: 'funnel', product: 'profile_review',
-    // })
   }
 
-  const onProductPress = () => {
-    setChosenProduct(ProductType.ProfileReview)
-    const params: EventParams = {
-      amount: abTestGroup ? '19' : '19',
-      payment_type: 'oneoff'
-    }
-    logEvent('purchase_click', 'profile_review', params, 'payment')
-    // if ((window as any).gtag) { (window as any).gtag('event', 'review_purchase_oneoff', { event_category: 'funnel', product: 'profile_review', }) }
-    // (window as any).gtag('event', abTestGroup === 0 ? 'experiment_review_activate_onetime_A' : 'experiment_review_activate_onetime_B', {
-    //   event_category: 'funnel', product: 'profile_review',
-    // })
-  }
+  // const onProductPress = () => {
+  //   setChosenProduct(ProductType.ProfileReview)
+  //   const params: EventParams = {
+  //     amount: '19',
+  //     payment_type: 'oneoff'
+  //   }
+  //   logEvent('purchase_click', 'profile_review', params, 'payment')
+  // }
 
   return (
     <>
       <LearnMoreModal
         open={learnMoreModalOpen}
         setOpen={setLearnMoreModalOpen}
-        setChosenProduct={setChosenProduct}
+      // setChosenProduct={setChosenProduct}
       />
 
       <div className="mt-8">
@@ -89,11 +64,10 @@ export const ProfileReviewPaywall = ({ hideNoThanks, onComplete }: Props) => {
               ProductType.ProfileReview,
             ]}
             noThanksHandler={() => setProfileReviewerWizardComplete(true)}
-            chosenProduct={chosenProduct}
             planBeingPurchased={planBeingPurchased}
             onComplete={onComplete}
           >
-            {/* Premium AI Profile Plan */}
+            {/* Premium AI Profile Plan - Monthly */}
             <div className="mt-4">
               <div className="bg-white p-3 border-2 border-black rounded-lg">
                 <div className="border-b-2 border-black">
@@ -107,7 +81,7 @@ export const ProfileReviewPaywall = ({ hideNoThanks, onComplete }: Props) => {
                   </div>
                   <div className="flex mt-2 mb-3 items-center">
                     <div>
-                      <h1 className="text-4xl font-semibold">{abTestGroup ? '$14' : '$14'}</h1>
+                      <h1 className="text-4xl font-semibold">$14</h1>
                     </div>
                     <div className="pl-3">
                       <h1 className="text-zinc-500 leading-4">
@@ -164,24 +138,27 @@ export const ProfileReviewPaywall = ({ hideNoThanks, onComplete }: Props) => {
                 </button> */}
               </div>
             </div>
-            {!abTestGroup && <div className="mt-4">
+
+            {/* Premium AI Profile Plan - Yearly */}
+
+            <div className="mt-4">
               <div className="bg-white p-3 border-2 border-black rounded-lg">
                 <div className="border-b-2 border-black">
                   <div className="flex">
                     <h2 className="text-xl font-semibold mr-2">All Access - Annual</h2>
                     <span className="text-sm font-semibold text-red-400 bg-red-100 py-1 px-2 rounded">
-                      Save ${abTestGroup ? "65%" : "65%"}
+                      Save 65%
                     </span>
                   </div>
                   <div className="flex mt-2 mb-3 items-center">
                     <div>
-                      <h1 className="text-4xl font-semibold">{abTestGroup ? '$5' : '$5'}</h1>
+                      <h1 className="text-4xl font-semibold">$5</h1>
                     </div>
                     <div className="pl-3">
                       <h1 className="text-zinc-500 leading-4">
                         per <br /> month
                       </h1>
-                      <small>{`Billed at ${abTestGroup ? "$60.00" : "$60.00"} per year`}</small>
+                      <small>{`Billed at $60 per year`}</small>
                     </div>
                   </div>
                 </div>
@@ -234,11 +211,12 @@ export const ProfileReviewPaywall = ({ hideNoThanks, onComplete }: Props) => {
                     Share for free access
                   </button> */}
               </div>
-            </div>}
+            </div>
 
             {/* One time payment */}
 
-            {abTestGroup ? <div className="mt-4">
+            {/*
+            <div className="mt-4">
               <div className="bg-white p-3 border-2 border-black rounded-lg">
                 <div className="border-b-2 border-black">
                   <h2 className="text-xl font-semibold">
@@ -246,7 +224,7 @@ export const ProfileReviewPaywall = ({ hideNoThanks, onComplete }: Props) => {
                   </h2>
                   <div className="flex mt-2 mb-3 items-center">
                     <div>
-                      <h1 className="text-4xl font-semibold">{abTestGroup ? '$19' : '$19'}</h1>
+                      <h1 className="text-4xl font-semibold">$19</h1>
                     </div>
                     <div className=" pl-3">
                       <h1 className="text-zinc-500 leading-4">
@@ -295,8 +273,7 @@ export const ProfileReviewPaywall = ({ hideNoThanks, onComplete }: Props) => {
                 </button>
               </div>
             </div>
-              : null
-            }
+            */}
             {!hideNoThanks && <div className="mt-4 flex items-center justify-center mb-6">
               <h3
                 className="cursor-pointer text-lg text-zinc-500 hover:text-zinc-600 hover:underline"

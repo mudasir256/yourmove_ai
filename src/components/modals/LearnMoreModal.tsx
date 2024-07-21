@@ -9,7 +9,7 @@ import { ProductType } from "../../constants/payments";
 interface Props {
   open: boolean;
   setOpen: (open: boolean) => void;
-  setChosenProduct: (product: ProductType) => void;
+  setChosenProduct?: (product: ProductType) => void;
 }
 
 export const LearnMoreModal = ({ open, setOpen, setChosenProduct }: Props) => {
@@ -59,7 +59,7 @@ export const LearnMoreModal = ({ open, setOpen, setChosenProduct }: Props) => {
             onClick={() => {
               setOpen(false);
               setTimeout(() => {
-                setChosenProduct(ProductType.AIPhotos);
+                setChosenProduct?.(ProductType.AIPhotos);
               }, 500);
             }}
             className="mt-2 flex items-center justify-center w-full bg-brand-primary text-white py-3 rounded-full font-semibold"

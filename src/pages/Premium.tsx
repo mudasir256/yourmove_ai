@@ -16,7 +16,6 @@ import { EventParams, logEvent, useLogEvent } from "../analytics";
 
 
 export const Premium = () => {
-  const [scrollForMoreFeatures, setShowScrollForMoreFeatures] = useState(true);
   const [planBeingPurchased, setPlanBeingPurchased] = useState<PlanType | null>(
     null
   );
@@ -67,10 +66,6 @@ export const Premium = () => {
       payment_type: 'monthly'
     }
     logEvent('purchase_click', 'chat_assistant', params, 'payment')
-    // (window as any).gtag('event', 'subscribe_monthly_click', {
-    //   event_category: 'payment_click',
-    //   product: 'chat_assistant',
-    // });
   }
 
   const onYearlyPress = () => {
@@ -80,10 +75,6 @@ export const Premium = () => {
       payment_type: 'annual'
     }
     logEvent('purchase_click', 'chat_assistant', params, 'payment')
-    // (window as any).gtag('event', 'subscribe_annual_click', {
-    //   event_category: 'payment_click',
-    //   product: 'chat_assistant',
-    // });
   }
 
   const logPurchaseEvent = () => {
@@ -123,7 +114,7 @@ export const Premium = () => {
                 fill="none"
                 viewBox="0 0 24 24"
                 strokeWidth="2.5"
-                className="w-8 h-8 stroke-zinc-400"
+                className="w-8 h-8 stroke-zinc-400 cursor-pointer"
               >
                 <path
                   strokeLinecap="round"
@@ -203,7 +194,6 @@ export const Premium = () => {
                       <div
                         className="overflow-y-scroll px-4 mt-4"
                         style={{ height: `${window.innerHeight - 455}px` }}
-                        onScroll={() => setShowScrollForMoreFeatures(false)}
                       >
                         {/* Limitless Responses */}
                         <div className="border-2 border-black p-4 rounded-lg bg-white mb-4">

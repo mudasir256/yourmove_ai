@@ -35,8 +35,7 @@ export const UnlockProfileReviewModal = ({ open, setOpen }: Props) => {
             setOpen(false)
             setHasPaidForProfileReview(true)
             toast.success("You have successfully unlocked your full review!");
-          }}
-          />
+          }} />
         </div >
       </div >
     </Modal >

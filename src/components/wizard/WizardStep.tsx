@@ -34,6 +34,7 @@ export const WizardStep = ({
   setStepResult,
   onBackPress = undefined
 }: Props) => {
+
   const getStepValue = () => {
     return stepResults[wizardStep.step];
   };
@@ -48,7 +49,7 @@ export const WizardStep = ({
 
   // If the step is and email and the user is logged in, set the email
   useEffect(() => {
-    if (wizardStep.type === WizardStepInputType.EMAIL && auth.currentUser) {
+    if (wizardStep.type === WizardStepInputType.EMAIL && auth.currentUser && auth.currentUser.email) {
       setStepResult(wizardStep.step, auth.currentUser.email);
     }
   }, []);
@@ -75,7 +76,7 @@ export const WizardStep = ({
             fill="none"
             viewBox="0 0 24 24"
             strokeWidth="2.5"
-            className="w-12 h-12 stroke-zinc-400"
+            className="w-12 h-12 stroke-zinc-400 cursor-pointer"
           >
             <path
               strokeLinecap="round"
@@ -114,7 +115,7 @@ export const WizardStep = ({
                   type="email"
                   value={getStepValue()}
                   placeholder={wizardStep.placeholder}
-                  onChange={(e) => setStepResult(wizardStep.step, e.target.value)}
+                  onChange={(e) => setStepResult(wizardStep.step, e.target.value?.toLocaleLowerCase())}
                   className="bg-transparent text-2xl w-full outline-none text-zinc-500"
                 />
               </div>

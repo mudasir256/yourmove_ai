@@ -289,7 +289,6 @@ export const generateProfileReview = (
 export const createSubscription = (
   createSubscriptionRequest: CreateSubscriptionRequest
 ) => {
-  console.log("PROMO:: ", createSubscriptionRequest.promoCode)
   const source = localStorage.getItem('utm_source')
   const campaign = localStorage.getItem('utm_campaign')
   if (source) createSubscriptionRequest.source = source

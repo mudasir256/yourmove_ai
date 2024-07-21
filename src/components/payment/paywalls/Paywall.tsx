@@ -1,5 +1,5 @@
 import { Elements } from "@stripe/react-stripe-js";
-import { useEffect, useState } from "react";
+import { ReactNode, useEffect, useState } from "react";
 import { loadStripe } from "@stripe/stripe-js";
 import { Loading } from "../../Loading";
 import {
@@ -22,12 +22,12 @@ import { EventParams, logEvent } from "../../../analytics";
 
 interface Props {
   product: ProductType
-  children: any;
+  children?: ReactNode;
   // Which of any of the products they have already paid for which would allow them to skip the paywall
   requiredProductsToSkipPaywall: Array<ProductType>;
   // Which product they want to buy
-  chosenProduct: ProductType | null;
-  planBeingPurchased: PlanType | null;
+  chosenProduct?: ProductType;
+  planBeingPurchased?: PlanType | null;
   noThanksHandler: () => void;
   email: string;
   redirectHandler?: () => void;
@@ -38,8 +38,8 @@ export const Paywall = ({
   product = ProductType.ProfileWriter,
   children,
   requiredProductsToSkipPaywall,
-  chosenProduct,
-  planBeingPurchased,
+  chosenProduct = undefined,
+  planBeingPurchased = undefined,
   noThanksHandler,
   email,
   redirectHandler,

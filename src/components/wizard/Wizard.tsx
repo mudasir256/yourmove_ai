@@ -165,7 +165,7 @@ export const Wizard = ({
                 fill="none"
                 viewBox="0 0 24 24"
                 strokeWidth="2.5"
-                className="w-8 h-8 stroke-white -mr-0.5"
+                className="w-8 h-8 stroke-white -mr-0.5 cursor-pointer"
               >
                 <path
                   strokeLinecap="round"
@@ -244,7 +244,7 @@ export const Wizard = ({
                         fill="none"
                         viewBox="0 0 24 24"
                         strokeWidth="2.5"
-                        className="w-12 h-12 stroke-zinc-400"
+                        className="w-12 h-12 stroke-zinc-400 cursor-pointer"
                       >
                         <path
                           strokeLinecap="round"

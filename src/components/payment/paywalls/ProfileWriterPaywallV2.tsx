@@ -32,7 +32,7 @@ export const ProfileWriterPaywall = ({ hideNoThanks }: Props) => {
               ProductType.AIPhotosWriter,
             ]}
             noThanksHandler={() => setProfileWriterWizardComplete(true)}
-            chosenProduct={chosenProduct}
+          // chosenProduct={chosenProduct}
           >
             <div className="pb-20">
               {" "}

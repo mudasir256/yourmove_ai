@@ -29,7 +29,9 @@ interface Props {
   }
 `}</style>
 
-// Deprecated in favor of ProfileReviewV2
+/**
+ * @deprecated This component is deprecated and will be removed in future releases. Use ProfileReviewV2 instead.
+ */
 export const ProfileReview = ({ hasPaid, setHasPaid }: Props) => {
   const { reviewedProfile, setReviewedProfile } = useProfileStore();
   const [unlockFullReviewModalOpen, setUnlockFullReviewModalOpen] =

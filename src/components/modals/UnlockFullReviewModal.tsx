@@ -10,6 +10,9 @@ interface Props {
   setHasPaid: (hasPaid: boolean) => void;
 }
 
+/**
+ * @deprecated This component is deprecated and will be removed in future releases. Use UnlockProfileReviewModal instead.
+ */
 export const UnlockFullReviewModal = ({ open, setOpen, setHasPaid }: Props) => {
   const { profileReviewerStepResults } = useWizardStore();
   return (
@@ -41,14 +44,12 @@ export const UnlockFullReviewModal = ({ open, setOpen, setHasPaid }: Props) => {
             email={profileReviewerStepResults.email}
             requiredProductsToSkipPaywall={[ProductType.ProfileReview]}
             noThanksHandler={() => setOpen(false)}
-            chosenProduct={ProductType.ProfileReview}
             redirectHandler={() => {
               setOpen(false);
               setHasPaid(true);
               toast.success("You have successfully unlocked your full review!");
             }}
           >
-            <></>
           </Paywall>
         </div>
       </div>
