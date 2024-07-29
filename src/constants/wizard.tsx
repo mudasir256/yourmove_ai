@@ -177,3 +177,16 @@ export const PROFILE_REVIEWER_WIZARD_STEPS: Array<WizardStep> = [
   //   content: <ProfileReviewPaywall />,
   // },
 ];
+
+export const AI_PHOTO_REVIEW_WIZARD_STEPS: Array<WizardStep> = [
+  {
+    step: WizardStepType.EMAIL,
+    type: WizardStepInputType.EMAIL,
+    label: "What's your email?",
+    placeholder: "your.email@gmail.com",
+    validator: yup
+      .string()
+      .email("Please enter a valid email")
+      .required("Email is required"),
+  }
+];

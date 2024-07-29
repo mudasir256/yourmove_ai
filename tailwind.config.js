@@ -15,6 +15,10 @@ export default {
         "brand-dark": "#270006",
         "brand-alt": "#E85E5C",
         main: "#f1f1f1",
+        'brand-primary-light': 'rgba(232, 94, 92, 0.1)',
+      },
+      animation: {
+        spin: 'spin 1s linear infinite',
       },
     },
   },

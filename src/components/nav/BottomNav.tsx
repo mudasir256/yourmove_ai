@@ -4,6 +4,7 @@ const NAV_ITEMS = [
   {
     title: "Chat Assistant",
     link: "/chat-assistant",
+    secondaryLinks: [],
     icon: (
       <path
         fillRule="evenodd"
@@ -15,6 +16,7 @@ const NAV_ITEMS = [
   {
     title: "Profile Writer",
     link: "/profile-writer",
+    secondaryLinks: [],
     icon: (
       <path
         fillRule="evenodd"
@@ -26,6 +28,7 @@ const NAV_ITEMS = [
   {
     title: "Profile Review",
     link: "/profile-review",
+    secondaryLinks: ["/ai-photo-review"],
     icon: (
       <path
         fillRule="evenodd"
@@ -37,6 +40,7 @@ const NAV_ITEMS = [
   {
     title: "AI Photos",
     link: "/ai-photo",
+    secondaryLinks: [],
     // plsfix - this is a placeholder icon. needs to change dynamically if selected. can be found in figma.
     icon: (
       <path
@@ -55,6 +59,7 @@ export const BottomNav = () => {
     <div className="fixed bottom-0 left-0 w-full h-16 z-10 bg-white border-t shadow-md">
       <nav className="flex justify-around items-center h-16 max-w-xl mx-auto">
         {NAV_ITEMS.map((navItem) => {
+          const isActive = location.pathname === navItem.link || navItem.secondaryLinks.includes(location.pathname);
           return (
             <Link
               to={navItem.link}
@@ -67,9 +72,7 @@ export const BottomNav = () => {
                     width="29"
                     height="28"
                     viewBox="0 0 29 28"
-                    fill={
-                      location.pathname == navItem.link ? "black" : "#999999"
-                    }
+                    fill={isActive ? "black" : "#999999"}
                     xmlns="http://www.w3.org/2000/svg"
                   >
                     {navItem.icon}
@@ -79,8 +82,7 @@ export const BottomNav = () => {
                   <span
                     className="text-sm"
                     style={{
-                      color:
-                        location.pathname == navItem.link ? "black" : "#999999",
+                      color: isActive ? "black" : "#999999"
                     }}
                   >
                     {navItem.title}

@@ -57,7 +57,7 @@ export const WizardStep = ({
   return (
     <div className="mt-6 mb-20">
       <>
-        {(!isFirstStep || name === "profileReviewer") && (
+        {(!isFirstStep || (name === "profileReviewer" || name === "photoReview")) && (
           <svg
             onClick={() => {
               const currentStep = getStepIndex(step, steps)

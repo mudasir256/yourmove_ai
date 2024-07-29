@@ -109,19 +109,17 @@ export const Wizard = ({
       setStep(nextStep.step);
     } else {
       const stepValue = stepResults[step];
-      const wizardStep = steps.find((wizardStep: WizardStepModel) => {
-        return wizardStep.step === step;
-      });
+      const currentStep = steps.find((wizardStep: WizardStepModel) => wizardStep.step === step);
 
-      if (wizardStep) {
+      if (currentStep) {
         try {
           // If it has a validator
-          if (wizardStep.validator) {
-            await wizardStep.validator.validate(stepValue);
+          if (currentStep.validator) {
+            await currentStep.validator.validate(stepValue);
           }
           if (
-            wizardStep.step === WizardStepType.UPLOAD_PHOTO &&
-            wizardStep.type === WizardStepInputType.FILE &&
+            currentStep.step === WizardStepType.UPLOAD_PHOTO &&
+            currentStep.type === WizardStepInputType.FILE &&
             (!profileReviewerFiles || profileReviewerFiles.length === 0)
           ) {
             toast.error('Please upload a screenshot of your profile!')

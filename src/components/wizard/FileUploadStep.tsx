@@ -1,8 +1,7 @@
-import { useEffect, useState } from "react";
-import { uploadFiles } from "../../queries";
 import { useWizardStore } from "../../stores/wizard";
-import toast from "react-hot-toast";
 import { useLogEvent } from "../../analytics";
+import toast from "react-hot-toast";
+import { useFileUpload } from "./useFileUpload";
 
 
 interface Props {
@@ -13,72 +12,29 @@ interface Props {
 
 export const FileUploadStep = ({ alreadySetFiles, onFilesUploaded }: Props) => {
   const { filesUploading, setFilesUploading } = useWizardStore();
-  const [selectedFiles, setSelectedFiles] = useState<FileList | null>(null);
-  const [inputKey, setInputKey] = useState(Date.now()); // Used to reset the file input
+
+  const onUploadFailed = (error: string) => { toast.error(error) }
+  const onUploadStart = (files: FileList | null) => {
+    setFilesUploading(true);
+  }
+  const onUploadSuccess = (urls: string[]) => {
+    onFilesUploaded(urls);
+    console.log("URL:: ", urls)
+    // set that we are no longer uploading
+    setFilesUploading(false);
+    // After upload check the number of files uploaded and show toast if needed
+    if (urls.length === 1) {
+      toast.error("Upload more screenshots showing your entire profile for best results");
+      // toast("Consider uploading more photos to better showcase your profile.");
+    }
+  }
+
+  const { onFileUpload } = useFileUpload({ onUploadFailed, onUploadStart, onUploadSuccess })
 
   useLogEvent('upload', 'profile_review')
 
-  // useEffect(() => {
-  //   // Check if the gtag function is available in the window object
-  //   if ((window as any).gtag) {
-  //     (window as any).gtag("event", "review_upload", {
-  //       event_category: "funnel",
-  //       product: "review",
-  //     });
-  //   }
-  // }, []); // Empty dependency array to ensure this runs only once when the component mounts
-
-
-  const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    if (event.target.files) {
-      // setSelectedFiles(event.target.files);
-      const filesArray = Array.from(event.target.files);
-
-      if (filesArray.length > 8) {
-        // Inform the user they can only upload up to 8 images
-        toast.error("Please upload up to 8 screenshots");
-        return; // Prevent further execution
-      }
-
-      const isValidFileType = (file: File) => {
-        const validExtensions = ['image/png', 'image/jpeg', 'image/jpg', 'image/webp', 'image/gif'];
-        // alert('valid file type');
-        return validExtensions.includes(file.type);
-      };
-
-      const isValidFileSize = (file: File) => {
-        const maxSize = 10 * 1024 * 1024; // 10MB in bytes
-        return file.size <= maxSize;
-      };
-
-
-      if (!filesArray.every(isValidFileType)) {
-        toast.error("Unsupported file type. Screenshots must be png, jpg, webp or gif");
-        setInputKey(Date.now()); // Reset the input
-        return; // Stop further execution
-      }
-      if (!filesArray.every(isValidFileSize)) {
-        toast.error("Screenshots must be 10mb or smaller");
-        setInputKey(Date.now()); // Reset the input
-        return; // Stop further execution
-      }
-      // Call additional handler functions here if needed
-      // e.g., uploadFiles(filesArray);
-      setSelectedFiles(event.target.files);
-      setFilesUploading(true);
-      uploadFiles(event.target.files).then((response) => {
-        // we have the URLs for the files, call onFilesUploaded
-        onFilesUploaded(response.data.urls);
-        // set that we are no longer uploading
-        setFilesUploading(false);
-        // After upload check the number of files uploaded and show toast if needed
-        if (response.data.urls.length === 1) {
-          toast.error("Upload more screenshots showing your entire profile for best results");
-          // toast("Consider uploading more photos to better showcase your profile.");
-        }
-      });
-    }
-  };
+  const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) =>
+    onFileUpload(event.target.files)
 
   return (
     <div>

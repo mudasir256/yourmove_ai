@@ -380,3 +380,20 @@ export const validatePromoCode = (promoCode: string) => {
   const body = { promo_code: promoCode }
   return axios.post(`${BASE_URL}/validate-promo-code`, body);
 };
+
+export const reviewPhoto = (email: string, url: string) => {
+  const body = { email, photo: url }
+  return axios.post(`${BASE_URL}/photo-review`, body);
+};
+
+export const fetchPhotoReviewsCount = (email: string) => {
+  return axios.get(`${BASE_URL}/fetch-photo-reviews-count?email=${email}`);
+};
+
+export const fetchPhotoReviews = (email: string, loadMore: string | undefined = undefined) => {
+  const url = new URL(`${BASE_URL}/photo-reviews`);
+  url.searchParams.append('email', email);
+  if (loadMore) url.searchParams.append('lastVisible', loadMore);
+
+  return axios.get(url.toString());
+};

@@ -12,6 +12,7 @@ import { WizardStepType } from "../models/wizard";
 import { ReviewedProfile } from "../models/profile";
 import { useProfileReviewData } from './useProfileReviewData'
 import { logEvent, useLogEvent } from "../analytics";
+import { useNavigate } from "react-router-dom";
 
 const loadingTitles = [
   "Analyzing your profile's first impressions...",
@@ -27,6 +28,8 @@ const loadingTitles = [
 ];
 
 export const ProfileReviewer = () => {
+  const navigate = useNavigate()
+
   const {
     profileReviewerFiles,
     profileReviewerStep,
@@ -97,6 +100,8 @@ export const ProfileReviewer = () => {
     setShowReview(false)
   }
 
+  const onAIPhotoReviewClick = () => navigate('/ai-photo-review')
+
   return (
     <div className="px-4">
       <Helmet>
@@ -130,7 +135,7 @@ export const ProfileReviewer = () => {
           )}
         </Wizard>
       ) : (
-        <ProfileReviewLanding onGetStartedPress={() => setReviewStarted(true)} />
+        <ProfileReviewLanding onProfileReviewClick={() => setReviewStarted(true)} onPhotoReviewClick={onAIPhotoReviewClick} />
       )}
     </div>
   );

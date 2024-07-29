@@ -4,7 +4,7 @@ import { WizardStepType } from "../models/wizard";
 // Checks local storage for initial step based on wizard name
 const checkLocalStorageForInitialStep = (name: string) => {
   const step = localStorage.getItem(`${name}:step`);
-  return step ? step : name === 'profileWriter' ? WizardStepType.WELCOME : WizardStepType.GENDER;
+  return step ? step : name === 'profileWriter' ? WizardStepType.WELCOME : name === 'photoReview' ? WizardStepType.EMAIL : WizardStepType.GENDER;
 };
 
 const getBooleanFromLocalStorage = (key: string): boolean => {
@@ -41,6 +41,14 @@ interface WizardStore {
   // Generic email field
   email: string;
   setEmail: (email: string) => void;
+
+  // For ai photo review
+  photoReviewStep: WizardStepType;
+  setPhotoReviewStep: (step: WizardStepType) => void;
+  photoReviewStepResults: Record<string, string>;
+  setPhotoReviewStepResults: (stepType: string, result: string) => void;
+  photoReviewWizardComplete: boolean;
+  setPhotoReviewWizardComplete: (wizardComplete: boolean) => void;
 }
 
 export const useWizardStore = create<WizardStore>((set) => ({
@@ -100,4 +108,24 @@ export const useWizardStore = create<WizardStore>((set) => ({
   filesUploading: false,
   setFilesUploading: (filesUploading: boolean) =>
     set({ filesUploading: filesUploading }),
+
+  // AI Photo review
+  photoReviewStep: checkLocalStorageForInitialStep(
+    "photoReview"
+  ) as WizardStepType,
+  setPhotoReviewStep: (step: WizardStepType) =>
+    set({ photoReviewStep: step }),
+  photoReviewStepResults:
+    checkLocalStorageForInitialStepResults("photoReview"),
+  setPhotoReviewStepResults: (stepType, result) => {
+    set((state) => ({
+      photoReviewStepResults: {
+        ...state.photoReviewStepResults,
+        [stepType]: result,
+      },
+    }));
+  },
+  photoReviewWizardComplete: false,
+  setPhotoReviewWizardComplete: (wizardComplete: boolean) =>
+    set({ photoReviewWizardComplete: wizardComplete }),
 }));

@@ -62,14 +62,6 @@ export const ProfileWriter = () => {
     checkProfileWriterPurchaseStatus()
   }, [profileWriterStep])
 
-  // useEffect(() => {
-  //   if ((window as any).gtag) {
-  //     (window as any).gtag('event', 'writer_start', {
-  //       event_category: 'funnel', product: 'profile_writer',
-  //     });
-  //   }
-  // }, []);
-
   return (
     <div className="px-4">
       <Helmet>

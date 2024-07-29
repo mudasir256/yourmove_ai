@@ -33,7 +33,7 @@ export const PartialProfileReview = ({ summary, onUnlockFullReviewClick = undefi
       <button
         className="mt-4 flex items-center justify-center w-full bg-brand-primary text-white py-5 rounded-lg font-semibold"
         onClick={onUnlockFullReviewClick}>
-        <span className="mr-2"><LockIcon color="white" /></span>
+        <span className="mr-2"><LockIcon className="text-white" /></span>
         <p className="text-xl">Get Full Review</p>
       </button>
     </>

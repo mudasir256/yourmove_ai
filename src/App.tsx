@@ -26,7 +26,7 @@ import { UserSettings } from "./pages/UserSettings";
 import { UserReferrals } from "./pages/referral/Referral"
 import { useReferralQueryParams } from "./pages/referral/useReferralQueryParams"
 import { useCampaignQueryParams } from "./pages/useCampaignQueryParams"
-
+import { AIPhotoReviewWizard } from "./pages/photo-review/AIPhotoReviewWizard";
 /* 
 
 Everything is pretty much ready to rock and roll. The only outstanding pieces are:
@@ -225,6 +225,14 @@ function App() {
           element={
             <Page title="YourMove - Referrals">
               <UserReferrals />
+            </Page>
+          }
+        />
+        <Route
+          path="/ai-photo-review"
+          element={
+            <Page title="AI Photo Review">
+              <AIPhotoReviewWizard />
             </Page>
           }
         />
