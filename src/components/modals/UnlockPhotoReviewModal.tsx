@@ -1,8 +1,7 @@
 import { Modal } from "./Modal";
-import { ProfileReviewPaywall } from "../payment/paywalls/ProfileReviewPaywall";
 import { useProfileStore } from "../../stores/profile";
 import toast from "react-hot-toast";
-import React from "react";
+import { AIPhotoReviewPaywall } from "../payment/paywalls/AIPhotoReviewPaywall";
 
 interface Props {
   open: boolean;
@@ -32,7 +31,7 @@ export const UnlockPhotoReviewModal = ({ open, setOpen }: Props) => {
           </svg>
         </div>
         <div className="-mt-10">
-          <ProfileReviewPaywall hideNoThanks={true} onComplete={() => {
+          <AIPhotoReviewPaywall hideNoThanks={true} onComplete={() => {
             setOpen(false)
             setHasPaidForProfileReview(true)
             toast.success("You have successfully unlocked your full review!");

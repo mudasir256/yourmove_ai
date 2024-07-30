@@ -119,8 +119,8 @@ export const Paywall = ({
 
   const logPurchaseEvent = () => {
     const params: EventParams = {
-      amount: abTestGroup ? '14' : '14',
-      payment_type: 'monthly'
+      amount: planBeingPurchased === PlanType.Monthly ? '14' : '60',
+      payment_type: planBeingPurchased === PlanType.Monthly ? 'monthly' : 'annual'
     }
     logEvent('purchase_activate', product, params, 'payment')
   }

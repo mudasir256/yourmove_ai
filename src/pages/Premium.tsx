@@ -62,7 +62,7 @@ export const Premium = () => {
   const onMonthlyPress = () => {
     setPlanBeingPurchased(PlanType.Monthly);
     const params: EventParams = {
-      amount: abTestGroup ? '14' : '14',
+      amount: '14',
       payment_type: 'monthly'
     }
     logEvent('purchase_click', 'chat_assistant', params, 'payment')
@@ -71,7 +71,7 @@ export const Premium = () => {
   const onYearlyPress = () => {
     setPlanBeingPurchased(PlanType.Yearly);
     const params: EventParams = {
-      amount: abTestGroup ? '60' : '60',
+      amount: '60',
       payment_type: 'annual'
     }
     logEvent('purchase_click', 'chat_assistant', params, 'payment')
@@ -79,7 +79,7 @@ export const Premium = () => {
 
   const logPurchaseEvent = () => {
     const params: EventParams = {
-      amount: abTestGroup ? planBeingPurchased === PlanType.Monthly ? '14' : '60' : planBeingPurchased === PlanType.Monthly ? '14' : '60',
+      amount: planBeingPurchased === PlanType.Monthly ? '14' : '60',
       payment_type: planBeingPurchased === PlanType.Monthly ? 'monthly' : 'annual'
     }
     logEvent('purchase_activate', 'chat_assistant', params, 'payment')

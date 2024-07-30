@@ -6,7 +6,6 @@ import { ProductType } from "../../../constants/payments";
 import { PlanType } from "../../../constants/payments";
 import { useWizardStore } from "../../../stores/wizard";
 import { EventParams, logEvent, useLogEvent } from "../../../analytics";
-import React from "react";
 
 type Props = {
   hideNoThanks?: boolean
