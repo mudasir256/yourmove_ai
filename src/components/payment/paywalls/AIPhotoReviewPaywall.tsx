@@ -85,7 +85,7 @@ export const AIPhotoReviewPaywall = ({ hideNoThanks, onComplete }: Props) => {
                   <div className="mt-1">
                     {[
                       "Choose your best photos",
-                      "Write a swipe - worth bio with profile writer",
+                      "Write a swipe-worth bio with profile writer",
                       "Get more replies with personalized AI openers",
                       "Put texting on cruise control with chat assistant",
                       "Works with Hinge, Tinder, Bumble, and more"
@@ -152,11 +152,11 @@ export const AIPhotoReviewPaywall = ({ hideNoThanks, onComplete }: Props) => {
                   </h4>
                   <div className="mt-1">
                     {[
-                      "Choose your best photos with profile review",
+                      "Choose your best photos",
                       "Write a swipe-worth bio with profile writer",
                       "Get more replies with personalized AI openers",
                       "Put texting on cruise control with chat assistant",
-                      "Works with Hinge, Tinder, Bumble, and more",
+                      "Works with Hinge, Tinder, Bumble, and more"
                     ].map((feature: string) => (
                       <PlanFeature
                         icon={
